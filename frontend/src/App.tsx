@@ -9,6 +9,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage'))
 const IntroductionPage = lazy(() => import('./pages/IntroductionPage'))
 const TutorialPage = lazy(() => import('./pages/TutorialPage'))
 const MapPage = lazy(() => import('./pages/MapPage'))
+const ManagerPage = lazy(() => import('./pages/ManagerPage'))
 const MaterialAndToolPage = lazy(() => import('./pages/MaterialAndToolPage'))
 const ShoppingList = lazy(() => import('./pages/ShoppingList'))
 const AnnouncementPage = lazy(() => import('./pages/AnnouncementPage'))
@@ -47,9 +48,14 @@ function App() {
             <ShoppingList />
           </Suspense>
         } />
+        <Route path='ManagerPage' element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <ManagerPage />
+          </Suspense>
+        } />
         <Route path='LoginPage' element={
           <Suspense fallback={<div>Loading...</div>}>
-            <LoginPage/>
+            <LoginPage />
           </Suspense>
         } />
         <Route path='AnnouncementPage' element={

@@ -10,6 +10,7 @@ export const NavBar = () => {
       <Link to='MaterialAndToolPage'>材料/工具一覽</Link>
       <Link to='TutorialPage'>新手教學</Link>
       <Link to='ShoppingList'>借用清單</Link>
+      <Link to='ManagerPage'>管理員專區</Link>
       <Link to='LoginPage'>Login</Link>
     </nav>
   ) 
