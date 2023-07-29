@@ -20,7 +20,7 @@ pnpm install:all
 
 ```sh
 pnpm frontend
-
+```
 
 This will run react app at port 3000
 
