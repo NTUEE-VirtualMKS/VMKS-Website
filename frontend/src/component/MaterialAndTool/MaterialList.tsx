@@ -3,16 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { Link } from 'react-router-dom';
 import { MaterialType } from './MaterialType';
 import { handleBorrow } from './Handle';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import { Typography, Grid, Paper, Box, Button } from '@mui/material';
 
 
 type MaterialProps = {
     materials: MaterialType[]
 }
 
-const onResize = ()=>{
+const onResize = () => {
 
 }
 
@@ -24,22 +22,40 @@ export const MaterialList = (props: MaterialProps) => {
     return (
         <div className="mateirial-list">
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {props.materials.map(material => {
-                return (
-                    <Grid item xs={1} sm={3} md={3} key={material.id}>
-                        <Paper elevation={3} className="mateirial-preview" key={material.id}>
-                            <div style={{border: '20px', padding: '15px',}}>
+                {props.materials.map(material => {
+                    return (
+                        <Grid item xs={1} sm={3} md={3} key={material.id}>
+                            <Paper elevation={3} className="mateirial-preview" key={material.id} sx={{ p: 5, pb: 2 }}>
                                 <Link to={`/MaterialAndTool/Material/${material.id}`}>
-                                    <img src={material.photoLink} style={{border:'solid black',}} height={window.innerHeight/4}></img>
-                                    <h2>{material.name}</h2>
+                                    <img src={material.photoLink} style={{ border: 'solid black', }} height={window.innerHeight / 4}></img>
+                                    <Typography variant='h4' color="black" sx={{ p: 1, pl: 2 }}>
+                                        {material.name}
+                                    </Typography>
+                                    <Typography variant='h4' color="gray" sx={{ p: 1, pl: 2 }}>
+                                        [{material.position}]
+                                    </Typography>
                                 </Link>
-                                <p>Position: {material.position}</p>
-                                <Button variant="outlined" onClick={handleBorrow}>Borrow</Button>
-                            </div>
-                        </Paper>
-                    </Grid>
-                )
-            })}
+
+                                <Box
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    p={2}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        aria-label="add"
+                                        onClick={handleBorrow}
+                                        style={{ borderRadius: 25, backgroundColor: "#67B9C7" }}
+                                    >
+                                        Borrow
+                                    </Button>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                    )
+                })}
             </Grid>
         </div>
     );
