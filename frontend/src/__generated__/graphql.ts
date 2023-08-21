@@ -348,6 +348,7 @@ export type Query = {
   AllUserMaterials?: Maybe<Array<Maybe<UserMaterial>>>;
   SearchDisposableMaterialsByCategory?: Maybe<Array<Maybe<DisposableMaterial>>>;
   SearchDisposableMaterialsByPosition?: Maybe<Array<Maybe<DisposableMaterial>>>;
+  SearchMachineByName?: Maybe<Array<Maybe<Machine>>>;
   SearchMachinesByCategory?: Maybe<Array<Maybe<Machine>>>;
   SearchMachinesByPosition?: Maybe<Array<Maybe<Machine>>>;
   SearchMaterialsByCategory?: Maybe<Array<Maybe<Material>>>;
@@ -366,6 +367,11 @@ export type QuerySearchDisposableMaterialsByCategoryArgs = {
 
 export type QuerySearchDisposableMaterialsByPositionArgs = {
   position: Scalars['String']['input'];
+};
+
+
+export type QuerySearchMachineByNameArgs = {
+  input: Scalars['String']['input'];
 };
 
 
@@ -559,10 +565,58 @@ export type UserMaterialInput = {
   status: Scalars['String']['input'];
 };
 
-export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type All_Announcement_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryQuery = { __typename?: 'Query', AllAnnouncements?: Array<{ __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null> | null };
+export type All_Announcement_QueryQuery = { __typename?: 'Query', AllAnnouncements?: Array<{ __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null> | null };
+
+export type All_Tool_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
+export type All_Tool_QueryQuery = { __typename?: 'Query', AllTools?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number } | null> | null };
+
+export type All_Disposable_Materials_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_Disposable_Materials_QueryQuery = { __typename?: 'Query', AllDisposableMaterials?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+
+export type All_Machine_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_Machine_QueryQuery = { __typename?: 'Query', AllMachines?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
+
+export type All_Material_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_Material_QueryQuery = { __typename?: 'Query', AllMaterials?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null> | null };
+
+export type All_Threedp_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_Threedp_QueryQuery = { __typename?: 'Query', AllThreeDP?: Array<{ __typename?: 'ThreeDP', id: number, name: string, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, waitingId?: Array<number | null> | null, broken: boolean } | null> | null };
+
+export type All_User_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_User_QueryQuery = { __typename?: 'Query', AllUser?: Array<{ __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink: string, threeDPId?: number | null, laserCutAvailable: boolean, borrowHistoryId?: Array<number | null> | null, articlesId?: Array<number | null> | null } | null> | null };
+
+export type All_User_Material_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_User_Material_QueryQuery = { __typename?: 'Query', AllUserMaterials?: Array<{ __typename?: 'UserMaterial', id: number, name: string, partName?: string | null, borrowerId: number, borrowNum: number, borrowDate: string, returnDate?: string | null, status: string } | null> | null };
+
+export type All_Article_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type All_Article_QueryQuery = { __typename?: 'Query', AllArticles?: Array<{ __typename?: 'Article', id: number, writerId: number, description: string, imageURL?: string | null, time: string, title: string, headline: boolean, content: string, userpic?: string | null } | null> | null };
+
+
+export const All_Announcement_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_ANNOUNCEMENT_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<All_Announcement_QueryQuery, All_Announcement_QueryQueryVariables>;
+export const All_Tool_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_TOOL_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllTools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<All_Tool_QueryQuery, All_Tool_QueryQueryVariables>;
+export const All_Disposable_Materials_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_DISPOSABLE_MATERIALS_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllDisposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<All_Disposable_Materials_QueryQuery, All_Disposable_Materials_QueryQueryVariables>;
+export const All_Machine_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_MACHINE_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllMachines"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<All_Machine_QueryQuery, All_Machine_QueryQueryVariables>;
+export const All_Material_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_MATERIAL_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<All_Material_QueryQuery, All_Material_QueryQueryVariables>;
+export const All_Threedp_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_THREEDP_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllThreeDP"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"waitingId"}},{"kind":"Field","name":{"kind":"Name","value":"broken"}}]}}]}}]} as unknown as DocumentNode<All_Threedp_QueryQuery, All_Threedp_QueryQueryVariables>;
+export const All_User_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_USER_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"borrowHistoryId"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}}]}}]}}]} as unknown as DocumentNode<All_User_QueryQuery, All_User_QueryQueryVariables>;
+export const All_User_Material_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_USER_MATERIAL_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllUserMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"borrowerId"}},{"kind":"Field","name":{"kind":"Name","value":"borrowNum"}},{"kind":"Field","name":{"kind":"Name","value":"borrowDate"}},{"kind":"Field","name":{"kind":"Name","value":"returnDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<All_User_Material_QueryQuery, All_User_Material_QueryQueryVariables>;
+export const All_Article_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ALL_ARTICLE_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"writerId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"headline"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"userpic"}}]}}]}}]} as unknown as DocumentNode<All_Article_QueryQuery, All_Article_QueryQueryVariables>;
