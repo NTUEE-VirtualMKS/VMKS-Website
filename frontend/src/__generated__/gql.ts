@@ -16,6 +16,7 @@ const documents = {
     "\n    mutation AddAnnouncement($announcementInput: AnnouncementInput!) {\n        AddAnnouncement(announcementInput: $announcementInput) {\n          id\n          title\n          date\n          content\n        }\n      }\n": types.AddAnnouncementDocument,
     "\n    query AllAnnouncements {\n        AllAnnouncements {\n            id\n            title\n            date\n            content\n        }\n    }\n": types.AllAnnouncementsDocument,
     "\n    query AllTools {\n        AllTools {\n            id\n            name\n            partName\n            category\n            position\n            description\n            photoLink\n            usage\n            tutorialLink\n            remain\n        }\n  }\n": types.AllToolsDocument,
+    "\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n": types.AnnouncementCreatedDocument,
 };
 
 /**
@@ -44,9 +45,10 @@ export function gql(source: "\n    query AllAnnouncements {\n        AllAnnounce
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    query AllTools {\n        AllTools {\n            id\n            name\n            partName\n            category\n            position\n            description\n            photoLink\n            usage\n            tutorialLink\n            remain\n        }\n  }\n"): (typeof documents)["\n    query AllTools {\n        AllTools {\n            id\n            name\n            partName\n            category\n            position\n            description\n            photoLink\n            usage\n            tutorialLink\n            remain\n        }\n  }\n"];
+export function gql(source: "\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n"): (typeof documents)["\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n"];
 
 export function gql(source: string) {
-  return (documents as any)[source] ?? {};
+    return (documents as any)[source] ?? {};
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;
