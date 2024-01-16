@@ -13,7 +13,7 @@ nvm use
 ```
 
 ### Step 2 : Install the dependencies
-
+ 
 This will install all dependencies for the app
 
 ```sh

@@ -21,7 +21,7 @@ const AnnouncementCreated = () => {
   // const navigate = useNavigate();
   return (
     <>
-      <div>{AnnouncementCreatedSubscription()}</div>
+      {/* <div>{AnnouncementCreatedSubscription()}</div> */}
     </>
   );
 };
