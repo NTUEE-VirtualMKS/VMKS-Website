@@ -1,26 +1,26 @@
 {
-    "user": [
-        {
-            "name": "Po-Chun Wu",
-            "studentID": "B11901000",
-            "password": "manager",
-            "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
-            "threeDPId": null,
-            "laserCutAvailable": true,
-            "borrowHistoryId": [],
-            "articlesId": [],
-            "isAdmin": true
-        },
-        {
-            "name": "Bo-Rui Chen",
-            "studentID": "B10901000",
-            "password": "user",
-            "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
-            "threeDPId": null,
-            "laserCutAvailable": false,
-            "borrowHistoryId": [],
-            "articlesId": [],
-            "isAdmin": false
-        }
-    ]
+  "user": [
+    {
+      "name": "Po-Chun Wu",
+      "studentID": "B11901000",
+      "password": "manager",
+      "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
+      "threeDPId": null,
+      "laserCutAvailable": true,
+      "borrowHistoryId": [],
+      "articlesId": [],
+      "isAdmin": true
+    },
+    {
+      "name": "Bo-Rui Chen",
+      "studentID": "B10901000",
+      "password": "user",
+      "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
+      "threeDPId": null,
+      "laserCutAvailable": false,
+      "borrowHistoryId": [],
+      "articlesId": [],
+      "isAdmin": false
+    }
+  ]
 }
