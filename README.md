@@ -13,7 +13,7 @@ nvm use
 ```
 
 ### Step 2 : Install the dependencies
-
+ 
 This will install all dependencies for the app
 
 ```sh
@@ -82,7 +82,7 @@ kill the port being stucked : `sudo kill -9 $(sudo lsof -t -i:port)`. If you wan
 
 ```sh
 cd frontend
-pnpm compile
+pnpm codegen
 ```
 
 ### Step 2 : Start React app(frontend)

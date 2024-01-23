@@ -9,7 +9,8 @@
     "format": "prettier --write .",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint --fix .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "codegen": "graphql-codegen --config ./codegen.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^8.15.13",
@@ -23,6 +24,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.5",
     "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
