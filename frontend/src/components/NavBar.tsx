@@ -28,7 +28,7 @@ const buttonstyle2 = {
   color: "black",
 };
 const divstyle = {
-  position: "absolute" as "absolute",
+  position: "absolute" as const,
   width: "87px",
   left: "3px",
   margin: "0px 0 0 0",

@@ -1,45 +1,20 @@
-// import React from 'react'
 import ImageURL from "../images/footer_logo.png";
-// import "../images/footer_logo.png"
+import FacebookURL from "../images/facebook.png";
+import InstagramURL from "../images/instagram.png";
+import GithubURL from "../images/github.png";
+
 const Footer = () => {
   return (
-    <footer>
-      <img
-        src={ImageURL}
-        alt="Footer"
-        style={{
-          width: "100px",
-          height: "100px",
-          float: "left",
-          marginRight: "100px",
-        }}
-      />
-
+    <footer className="flex flex-row">
+      <img src={ImageURL} alt="footer" className="w-30 h-30 float-left" />
       <a href="https://www.facebook.com/ntuee.makerspace/?locale=zh_TW">
-        <img
-          src={"https://cdn-icons-png.flaticon.com/512/4628/4628653.png"}
-          alt="FB link"
-          style={{
-            width: "50px",
-            height: "50px",
-            /*float: 'left',
-            marginRight: '10px',*/
-          }}
-        />
+        <img src={FacebookURL} alt="facebook link" className="w-12 m-2" />
       </a>
       <a href="https://www.instagram.com/ntu.taiwan/">
-        <img
-          src={
-            "https://cdn.icon-icons.com/icons2/2066/PNG/512/instagram_icon_125245.png"
-          }
-          alt="FB link"
-          style={{
-            width: "50px",
-            height: "50px",
-            /*float: 'left',
-            marginRight: '10px',*/
-          }}
-        />
+        <img src={InstagramURL} alt="instagram link" className="w-12 m-2" />
+      </a>
+      <a href="https://github.com/NTUEE-VirtualMKS">
+        <img src={GithubURL} alt="github link" className="w-12 m-2" />
       </a>
     </footer>
   );

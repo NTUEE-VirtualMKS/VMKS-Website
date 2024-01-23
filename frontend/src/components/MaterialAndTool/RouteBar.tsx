@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Link } from "react-router-dom";
 
 type RouteBarProps = {
@@ -13,7 +13,7 @@ export const RouteBar = (props: RouteBarProps) => {
         <Link to="/">Home</Link>
       </nav>
     );
-  let routes: string[] = [];
+  const routes: string[] = [];
   let tmpRoute = "";
   for (let index = 0; index < props.Route.length; index++) {
     if (props.Route[index] === ",") {
@@ -30,7 +30,7 @@ export const RouteBar = (props: RouteBarProps) => {
       <Link to="/">Home</Link>
       {routes.map((route) => {
         return (
-          <span>
+          <span key={route}>
             {">  "} <Link to={"/" + route}>{route}</Link>
           </span>
         );

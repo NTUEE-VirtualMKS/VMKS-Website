@@ -1,6 +1,5 @@
-// import React from "react";
 // import Button from "@mui/material/Button";
-import "./HomePage.css"; // Import your custom CSS file
+import "./HomePage.css";
 import "../images/MKS_environment.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
