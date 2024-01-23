@@ -1,19 +1,19 @@
-import { GraphQLScalarType, Kind } from 'graphql';
+import { GraphQLScalarType, Kind } from "graphql";
 
 const DateTime = new GraphQLScalarType({
-  name: 'DateTime',
-  description: 'DateTime custom scalar type',
+  name: "DateTime",
+  description: "DateTime custom scalar type",
   async serialize(value) {
     if (value instanceof Date) {
       return value.getTime(); // Convert outgoing Date to integer for JSON
     }
-    throw Error('GraphQL Date Scalar serializer expected a Date object');
+    throw Error("GraphQL Date Scalar serializer expected a Date object");
   },
   async parseValue(value) {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return new Date(value); // Convert incoming integer to Date
     }
-    throw new Error('GraphQL Date Scalar parser expected a number');
+    throw new Error("GraphQL Date Scalar parser expected a number");
   },
   async parseLiteral(ast) {
     if (ast.kind === Kind.INT) {
@@ -367,4 +367,4 @@ const typeDefs = `#graphql
   }
 `;
 
-export { typeDefs, DateTime }
+export { typeDefs, DateTime };
