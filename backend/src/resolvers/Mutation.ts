@@ -18,6 +18,7 @@ import {
   UserEditInput,
   UserMachineUpdateInput,
   ArticleInput,
+  IntroductionInput
 } from "../types/types.ts";
 
 const Mutation = {
@@ -27,7 +28,7 @@ const Mutation = {
     context,
   ) => {
     const { title, content } = args.announcementInput;
-    const date = new Date().toUTCString();
+    const date = new Date().toLocaleString();
     const newAnnouncement = await prisma.announcement.create({
       data: {
         title: title,
@@ -717,7 +718,7 @@ const Mutation = {
       throw new Error("Borrower not found!");
     }
 
-    const borrowDate = new Date().toUTCString();
+    const borrowDate = new Date().toLocaleString();
     const newUserMaterial = await prisma.userMaterial.create({
       data: {
         name: name,
@@ -1119,7 +1120,7 @@ const Mutation = {
       throw new Error("Writer not found!");
     }
 
-    const date = new Date().toUTCString();
+    const date = new Date().toLocaleString();
     const newArticle = await prisma.article.create({
       data: {
         writerId: writerId,
@@ -1143,6 +1144,41 @@ const Mutation = {
     });
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
+  },
+
+  UpdateIntroduction: async (_parents, args: { introductionInput : IntroductionInput }, context) => {
+    const existence = await prisma.introduction.findMany({
+      orderBy: {
+        updatedAt: "desc"
+      },
+      take: 1
+    });
+    console.log(args);
+    const { content } = args.introductionInput;
+    
+    if(existence[0] === null || existence[0] === undefined) {
+      const newIntroduction = await prisma.introduction.create({
+        data: {
+          content: content,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+      pubsub.publish("INTRODUCTION_CREATED", { IntroductionCreated: newIntroduction });
+      return newIntroduction;
+    } else {
+      const id = existence[0].id;
+      const updatedIntroduction = await prisma.introduction.update({
+        where: {
+          id: id,
+        },
+        data: {
+          content: content,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+      pubsub.publish("INTRODUCTION_UPDATED", { IntroductionUpdated: updatedIntroduction});
+      return updatedIntroduction;
+    }
   },
 };
 

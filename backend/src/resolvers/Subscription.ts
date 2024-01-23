@@ -79,6 +79,12 @@ const Subscription = {
   ArticleCreated: {
     subscribe: () => pubsub.asyncIterator(["ARTICLE_CREATED"]),
   },
+  IntroductionCreated: {
+    subscribe: () => pubsub.asyncIterator(["INTRODUCTION_CREATED"]),
+  },
+  IntroductionUpdated: {
+    subscribe: () => pubsub.asyncIterator(["INTRODUCTION_UPDATED"]),
+  },
 };
 
 export { Subscription };

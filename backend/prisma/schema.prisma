@@ -14,6 +14,12 @@ model Announcement {
   content String
 }
 
+model Introduction {
+  id      Int    @id @default(autoincrement())
+  content String
+  updatedAt String
+}
+
 model DisposableMaterial {
   id           Int     @id @default(autoincrement())
   name         String

@@ -275,6 +275,15 @@ const typeDefs = `#graphql
     userpic: String,
   }
 
+  type Introduction {
+    id: Int!,
+    content: String!,
+  }
+
+  input IntroductionInput {
+    content: String!,
+  }
+
 
   ### Define Resolvers ###
 
@@ -303,6 +312,7 @@ const typeDefs = `#graphql
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
+    CurrentIntroduction: Introduction
   }
 
   type Mutation {
@@ -335,6 +345,7 @@ const typeDefs = `#graphql
     EditUser(id: Int!, userEditInput: UserEditInput!): User
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
+    UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
   }
 
   type Subscription {
@@ -364,6 +375,8 @@ const typeDefs = `#graphql
     UserUpdated: User
     UserMachineUpdate: User
     ArticleCreated: Article
+    IntroductionCreated: Introduction
+    IntroductionUpdated: Introduction
   }
 `;
 
