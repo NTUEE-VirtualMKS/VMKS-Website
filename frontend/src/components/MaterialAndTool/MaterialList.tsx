@@ -1,7 +1,6 @@
-// import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { MaterialType } from "./MaterialType";
+import type { MaterialType } from "./MaterialType";
 import { handleBorrow } from "./Handle";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";

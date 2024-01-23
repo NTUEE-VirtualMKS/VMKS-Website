@@ -34,6 +34,7 @@ module.exports = {
       "warn",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
+    "no-console": "off",
   },
   settings: {
     react: {

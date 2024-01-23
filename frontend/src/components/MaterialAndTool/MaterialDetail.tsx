@@ -1,19 +1,25 @@
 import { useParams } from "react-router-dom";
-import useFetchMaterial from "../../hooks/useFetchMaterial";
+// import useFetchMaterial from "../../hooks/useFetchMaterial";
 import { handleBorrow, handleRepair } from "./Handle";
 import { Button } from "@mui/material";
 // import Paper from "@mui/material";
 import { Stack } from "@mui/material";
 import { RouteBar } from "./RouteBar";
+import { useQuery } from "@apollo/client";
+import { ALL_MATERIAL_QUERY } from "../../graphql/queries";
 
 const MaterialDetail = () => {
-  const tmpUrl = "http://localhost:8000/materials/";
   const { id } = useParams();
-  const { data: eachMaterial, isPending } = useFetchMaterial(tmpUrl + id);
+  const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  const allMaterials = JSON.parse(JSON.stringify(data?.AllMaterials));
+  const eachMaterial = allMaterials.find(
+    (material: any) => material.id === parseInt(id as string)
+  );
 
   return (
     <div className="material-detail">
-      {isPending && <div>Loading...</div>}
       {eachMaterial && (
         <div>
           <RouteBar Route={eachMaterial?.category} />
@@ -29,7 +35,11 @@ const MaterialDetail = () => {
               )}
               {eachMaterial?.tutorialLink !== "" &&
                 eachMaterial?.tutorialLink !== undefined && (
-                  <a href={eachMaterial?.tutorialLink} target="_blank">
+                  <a
+                    href={eachMaterial?.tutorialLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     Tutorial
                   </a>
                 )}

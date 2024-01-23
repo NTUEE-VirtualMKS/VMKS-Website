@@ -1,8 +1,7 @@
-import React from "react";
 import "../CSS/Intro.css";
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import Card from "@mui/material/Card";
+import { /*Link, Navigate,*/ useNavigate } from "react-router-dom";
+// import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -12,7 +11,7 @@ const cardstyle = {
   width: "50%",
   padding: 15,
   verticalAlign: "top",
-  boxSizing: "content-box" as "content-box",
+  boxSizing: "content-box" as const,
   border: "2px solid rgb(100,100,100)",
 };
 
@@ -86,7 +85,7 @@ export const Introduction = () => {
       </div>
       <table
         style={{
-          borderCollapse: "separate" as "separate",
+          borderCollapse: "separate" as const,
           borderSpacing: 0,
           width: "100%",
         }}

@@ -1,17 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { MaterialType } from "../components/MaterialAndTool/MaterialType";
+// import { MaterialType } from "../components/MaterialAndTool/MaterialType";
 import { MaterialList } from "../components/MaterialAndTool/MaterialList";
-import useFetchMaterialList from "../hooks/useFetchMaterialList";
-import useFetchMaterial from "../hooks/useFetchMaterial";
+// import useFetchMaterialList from "../hooks/useFetchMaterialList";
+// import useFetchMaterial from "../hooks/useFetchMaterial";
 import { colors } from "../Color";
 import Icon from "@mdi/react";
 import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
+import { useQuery } from "@apollo/client";
+import { ALL_MATERIAL_QUERY } from "../graphql/queries";
 
 const MaterialAndToolPage = () => {
   const navigate = useNavigate();
-  const { data: materials, isPending } = useFetchMaterialList(
-    "http://localhost:8000/materials"
-  );
+  //const { data: materials } = useFetchMaterialList(
+  //  "http://localhost:8000/materials"
+  //);
+  const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  const materials = JSON.parse(JSON.stringify(data?.AllMaterials));
   return (
     <>
       {/* <div>Material & Tool Page</div>
