@@ -526,6 +526,17 @@ const Query = {
       })
       .flat(); //making the returning array an array of machines without any empty arrays
   },
+
+  CurrentIntroduction: async () => {
+    const introduction = await prisma.introduction.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+      take: 1,
+    });
+    if (!introduction[0]) throw new Error ("No introduction found");
+    else return introduction
+  },
 };
 
 export { Query };

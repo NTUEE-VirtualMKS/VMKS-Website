@@ -130,6 +130,10 @@ interface ArticleInput {
   userpic: string;
 }
 
+interface IntroductionInput {
+  content: string;
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -146,4 +150,5 @@ export type {
   MaterialInput,
   MaterialUsageUpdateInput,
   ArticleInput,
+  IntroductionInput,
 };
