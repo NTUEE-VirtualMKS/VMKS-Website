@@ -255,12 +255,18 @@ const typeDefs = `#graphql
     name: String!
     studentID: String!
     password: String!
-    photoLink: String!
+    photoLink: String
     threeDPId: Int
     laserCutAvailable: Boolean!
     borrowHistoryId: [Int]
     articlesId: [Int]
     isAdmin: Boolean!
+  }
+
+  input signUpInput {
+    name: String!
+    studentID: String!
+    password: String!
   }
 
   type Article {
@@ -346,6 +352,7 @@ const typeDefs = `#graphql
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
+    SignUp(signUpInput: signUpInput!): User
   }
 
   type Subscription {
@@ -377,6 +384,7 @@ const typeDefs = `#graphql
     ArticleCreated: Article
     IntroductionCreated: Introduction
     IntroductionUpdated: Introduction
+    UserSignedUp: User
   }
 `;
 

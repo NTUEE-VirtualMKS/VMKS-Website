@@ -1,6 +1,7 @@
 import { prisma } from "../../prisma/client.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 import {
   AnnouncementInput,
@@ -18,7 +19,8 @@ import {
   UserEditInput,
   UserMachineUpdateInput,
   ArticleInput,
-  IntroductionInput
+  IntroductionInput,
+  SignUpInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -1146,24 +1148,30 @@ const Mutation = {
     return newArticle;
   },
 
-  UpdateIntroduction: async (_parents, args: { introductionInput : IntroductionInput }, context) => {
+  UpdateIntroduction: async (
+    _parents,
+    args: { introductionInput: IntroductionInput },
+    context,
+  ) => {
     const existence = await prisma.introduction.findMany({
       orderBy: {
-        updatedAt: "desc"
+        updatedAt: "desc",
       },
-      take: 1
+      take: 1,
     });
     console.log(args);
     const { content } = args.introductionInput;
-    
-    if(existence[0] === null || existence[0] === undefined) {
+
+    if (existence[0] === null || existence[0] === undefined) {
       const newIntroduction = await prisma.introduction.create({
         data: {
           content: content,
           updatedAt: new Date().toLocaleString(),
         },
       });
-      pubsub.publish("INTRODUCTION_CREATED", { IntroductionCreated: newIntroduction });
+      pubsub.publish("INTRODUCTION_CREATED", {
+        IntroductionCreated: newIntroduction,
+      });
       return newIntroduction;
     } else {
       const id = existence[0].id;
@@ -1176,10 +1184,43 @@ const Mutation = {
           updatedAt: new Date().toLocaleString(),
         },
       });
-      pubsub.publish("INTRODUCTION_UPDATED", { IntroductionUpdated: updatedIntroduction});
+      pubsub.publish("INTRODUCTION_UPDATED", {
+        IntroductionUpdated: updatedIntroduction,
+      });
       return updatedIntroduction;
     }
   },
+
+  SignUp: async (_parents, args: { signUpInput: SignUpInput }) => {
+    const costFactor = 12;
+    const { name, studentID, password } = args.signUpInput;
+    
+    const studentIDExisted = await prisma.user.findFirst({
+      where: {
+        studentID: studentID,
+      },
+    });
+
+    if (studentIDExisted !== null) {
+      throw new Error("This ID is already registered!");
+    } else {
+      const hashedpassword = await bcrypt.hash(password, costFactor);
+      const newUser = await prisma.user.create({
+        data: {
+          name: name,
+          studentID: studentID,
+          password: hashedpassword,
+        },
+      });
+      pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
+      return newUser;
+    }
+
+  },
+
+  // LogIn: async (_parents, args: { name: string; studentID: string; password: string }) => {
+    
+  // },
 };
 
 export { Mutation };

@@ -534,8 +534,8 @@ const Query = {
       },
       take: 1,
     });
-    if (!introduction[0]) throw new Error ("No introduction found");
-    else return introduction
+    if (!introduction[0]) throw new Error("No introduction found");
+    else return introduction;
   },
 };
 
