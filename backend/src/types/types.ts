@@ -103,6 +103,11 @@ interface SignUpInput {
   password: string;
 }
 
+interface LogInInput {
+  studentID: string;
+  password: string;
+}
+
 interface UserInput {
   name: string;
   studentID: string;
@@ -158,4 +163,5 @@ export type {
   ArticleInput,
   IntroductionInput,
   SignUpInput,
+  LogInInput,
 };

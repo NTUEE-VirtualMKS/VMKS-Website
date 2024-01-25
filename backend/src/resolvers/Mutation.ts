@@ -2,6 +2,7 @@ import { prisma } from "../../prisma/client.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { env } from "../../utils/env.ts";
 
 import {
   AnnouncementInput,
@@ -1212,15 +1213,30 @@ const Mutation = {
           password: hashedpassword,
         },
       });
+      console.log(newUser);
+      const token = jwt.sign(
+        {
+          id: newUser.id,
+          name: newUser.name,
+          studentID: newUser.studentID,
+          photoLink: newUser.photoLink,
+          threeDPId: newUser.threeDPId,
+          laserCutAvailable: newUser.laserCutAvailable,
+          borrowHistoryId: newUser.borrowHistoryId,
+          isAdmin: newUser.isAdmin,
+        },
+        env.JWT_SECRET,
+        {
+          expiresIn: env.JWT_EXPIRES_IN,
+        }
+        
+      );
       pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
-      return newUser;
+      return { user: newUser, token: token };
+      // return newUser
     }
 
   },
-
-  // LogIn: async (_parents, args: { name: string; studentID: string; password: string }) => {
-    
-  // },
 };
 
 export { Mutation };

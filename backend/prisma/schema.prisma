@@ -91,7 +91,7 @@ model ThreeDP {
 model User {
   id                Int            @id @default(autoincrement())
   name              String
-  studentID         String
+  studentID         String          @unique
   password          String
   photoLink         String?
   threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id])

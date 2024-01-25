@@ -1,5 +1,7 @@
 import { DisposableMaterial, User } from "@prisma/client";
 import { prisma } from "../../prisma/client.ts";
+import type { LogInInput } from "../types/types.ts";
+import bcrypt from "bcrypt"
 
 const Query = {
   AllAnnouncements: async (_parents, args, context) => {
@@ -537,6 +539,25 @@ const Query = {
     if (!introduction[0]) throw new Error("No introduction found");
     else return introduction;
   },
+
+//   LogIn: async (_parents, args: { logInInput: LogInInput }) => {
+//     const {studentID, password} = args.logInInput;
+//     const hashedpassword = await prisma.user.findUnique({
+//       where: {
+//         studentID: studentID,
+//       },
+//       select: {
+//         password: true,
+//       }
+//     });
+
+//     const isPasswordValid = await bcrypt.compare(password, hashedpassword);
+
+//     if(!isPasswordValid) throw new Error("Invalid password");
+//     else {
+      
+//     }
+//   }
 };
 
 export { Query };

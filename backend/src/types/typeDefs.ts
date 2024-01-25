@@ -263,8 +263,23 @@ const typeDefs = `#graphql
     isAdmin: Boolean!
   }
 
+  type signUpRet {
+    user: User!
+    token: String!
+  }
+
   input signUpInput {
     name: String!
+    studentID: String!
+    password: String!
+  }
+  
+  type logInRet {
+    user: User!
+    token: String!
+  }
+
+  input logInInput {
     studentID: String!
     password: String!
   }
@@ -352,7 +367,8 @@ const typeDefs = `#graphql
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
-    SignUp(signUpInput: signUpInput!): User
+    SignUp(signUpInput: signUpInput!): signUpRet
+    Login(logInInput: logInInput!): logInRet
   }
 
   type Subscription {
@@ -385,6 +401,7 @@ const typeDefs = `#graphql
     IntroductionCreated: Introduction
     IntroductionUpdated: Introduction
     UserSignedUp: User
+    UserLoggedIn: User
   }
 `;
 
