@@ -88,6 +88,9 @@ const Subscription = {
   UserSignedUp: {
     subscribe: () => pubsub.asyncIterator(["USER_SIGNEDUP"]),
   },
+  UserLoggedIn: {
+    subscribe: () => pubsub.asyncIterator(["USER_LOGGEDIN"]),
+  },
 };
 
 export { Subscription };

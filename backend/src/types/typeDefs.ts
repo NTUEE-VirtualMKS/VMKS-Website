@@ -334,6 +334,7 @@ const typeDefs = `#graphql
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
     CurrentIntroduction: Introduction
+    LogIn(logInInput: logInInput!): logInRet
   }
 
   type Mutation {
@@ -368,7 +369,6 @@ const typeDefs = `#graphql
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
     SignUp(signUpInput: signUpInput!): signUpRet
-    Login(logInInput: logInInput!): logInRet
   }
 
   type Subscription {
