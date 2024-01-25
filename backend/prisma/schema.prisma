@@ -102,6 +102,13 @@ model User {
   articles          Article[]
   articlesId        Int[]
   isAdmin           Boolean        @default(false)
+  isMinister        Boolean        @default(false)
+}
+
+model AuthorizedCode {
+  id          Int     @id @default(autoincrement())
+  codeList    String[]
+  updatedAt   String
 }
 
 model UserMaterial {

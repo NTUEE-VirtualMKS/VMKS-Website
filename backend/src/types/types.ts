@@ -145,6 +145,10 @@ interface IntroductionInput {
   content: string;
 }
 
+interface AuthorizedCodeInput {
+  codeList: string[];
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -162,6 +166,7 @@ export type {
   MaterialUsageUpdateInput,
   ArticleInput,
   IntroductionInput,
+  AuthorizedCodeInput,
   SignUpInput,
   LogInInput,
 };

@@ -261,6 +261,7 @@ const typeDefs = `#graphql
     borrowHistoryId: [Int]
     articlesId: [Int]
     isAdmin: Boolean!
+    isMinister: Boolean!
   }
 
   type signUpRet {
@@ -305,6 +306,16 @@ const typeDefs = `#graphql
     content: String!,
   }
 
+  type AuthorizedCode {
+    id: Int!,
+    codeList: [String],
+    updatedAt: String!
+  }
+
+  input AuthorizedCodeInput {
+    codeList: [String],
+  }
+
 
   ### Define Resolvers ###
 
@@ -334,6 +345,7 @@ const typeDefs = `#graphql
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
     CurrentIntroduction: Introduction
+    GetAuthorizedCode: AuthorizedCode
     LogIn(logInInput: logInInput!): logInRet
   }
 
@@ -368,6 +380,7 @@ const typeDefs = `#graphql
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
+    UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: signUpInput!): signUpRet
   }
 

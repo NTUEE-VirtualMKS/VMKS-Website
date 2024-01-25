@@ -21,6 +21,7 @@ import {
   UserMachineUpdateInput,
   ArticleInput,
   IntroductionInput,
+  AuthorizedCodeInput,
   SignUpInput,
 } from "../types/types.ts";
 
@@ -1190,6 +1191,43 @@ const Mutation = {
       });
       return updatedIntroduction;
     }
+  },
+
+  UpdateAuthorizedCode: async (
+    _parents,
+    args: { authorizedCodeInput: AuthorizedCodeInput },
+    context,
+  ) => {
+    const existence = await prisma.authorizedCode.findFirst({
+      
+    });
+    // console.log(args);
+    const { codeList } = args.authorizedCodeInput;
+    let updateAuthorizedCode;
+
+    if (existence === null || existence === undefined) {
+      updateAuthorizedCode = await prisma.authorizedCode.create({
+        data: {
+          codeList,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+    } else {
+      const id = existence.id;
+      updateAuthorizedCode = await prisma.authorizedCode.update({
+        where: {
+          id: id,
+        },
+        data: {
+          codeList,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+    }
+    pubsub.publish("AUTHORIZED_CODE_UPDATED", {
+      AuthorizedCodeUpdated: updateAuthorizedCode,
+    });
+    return updateAuthorizedCode;
   },
 
   SignUp: async (_parents, args: { signUpInput: SignUpInput }) => {
