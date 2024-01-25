@@ -255,12 +255,33 @@ const typeDefs = `#graphql
     name: String!
     studentID: String!
     password: String!
-    photoLink: String!
+    photoLink: String
     threeDPId: Int
     laserCutAvailable: Boolean!
     borrowHistoryId: [Int]
     articlesId: [Int]
     isAdmin: Boolean!
+  }
+
+  type signUpRet {
+    user: User!
+    token: String!
+  }
+
+  input signUpInput {
+    name: String!
+    studentID: String!
+    password: String!
+  }
+  
+  type logInRet {
+    user: User!
+    token: String!
+  }
+
+  input logInInput {
+    studentID: String!
+    password: String!
   }
 
   type Article {
@@ -313,6 +334,7 @@ const typeDefs = `#graphql
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
     CurrentIntroduction: Introduction
+    LogIn(logInInput: logInInput!): logInRet
   }
 
   type Mutation {
@@ -346,6 +368,7 @@ const typeDefs = `#graphql
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
+    SignUp(signUpInput: signUpInput!): signUpRet
   }
 
   type Subscription {
@@ -377,6 +400,8 @@ const typeDefs = `#graphql
     ArticleCreated: Article
     IntroductionCreated: Introduction
     IntroductionUpdated: Introduction
+    UserSignedUp: User
+    UserLoggedIn: User
   }
 `;
 

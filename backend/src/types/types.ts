@@ -97,6 +97,17 @@ interface ThreeDPInput {
   broken: boolean;
 }
 
+interface SignUpInput {
+  name: string;
+  studentID: string;
+  password: string;
+}
+
+interface LogInInput {
+  studentID: string;
+  password: string;
+}
+
 interface UserInput {
   name: string;
   studentID: string;
@@ -151,4 +162,6 @@ export type {
   MaterialUsageUpdateInput,
   ArticleInput,
   IntroductionInput,
+  SignUpInput,
+  LogInInput,
 };

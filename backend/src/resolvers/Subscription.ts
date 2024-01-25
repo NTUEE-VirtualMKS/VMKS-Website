@@ -85,6 +85,12 @@ const Subscription = {
   IntroductionUpdated: {
     subscribe: () => pubsub.asyncIterator(["INTRODUCTION_UPDATED"]),
   },
+  UserSignedUp: {
+    subscribe: () => pubsub.asyncIterator(["USER_SIGNEDUP"]),
+  },
+  UserLoggedIn: {
+    subscribe: () => pubsub.asyncIterator(["USER_LOGGEDIN"]),
+  },
 };
 
 export { Subscription };
