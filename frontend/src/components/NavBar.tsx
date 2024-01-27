@@ -73,6 +73,30 @@ export const NavBar = () => {
                   variant="text"
                   size="large"
                   style={buttonstyle}
+                  onClick={() => navigate("/UserProfilePage")}
+                >
+                  Profile
+                </Button>
+              </dt>
+            </dl>
+            <dl>
+              <dt>
+                <Button
+                  variant="text"
+                  size="large"
+                  style={buttonstyle}
+                  onClick={() => navigate("/AuthorizedCodePage")}
+                >
+                  加簽碼
+                </Button>
+              </dt>
+            </dl>
+            <dl>
+              <dt>
+                <Button
+                  variant="text"
+                  size="large"
+                  style={buttonstyle}
                   onClick={() => navigate("/IntroductionPage")}
                 >
                   MKS介紹

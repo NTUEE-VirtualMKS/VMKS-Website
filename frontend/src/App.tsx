@@ -12,6 +12,8 @@ const LoginPage = lazy(() => import("./containers/LoginPage"));
 const IntroductionPage = lazy(() => import("./containers/IntroductionPage"));
 const TutorialPage = lazy(() => import("./containers/TutorialPage"));
 const MapPage = lazy(() => import("./containers/MapPage"));
+const UserProfilePage = lazy(() => import("./containers/UserProfilePage"));
+const AuthorizedCodePage = lazy(() => import("./containers/AuthorizedCodePage"));
 const MaterialAndToolPage = lazy(
   () => import("./containers/MaterialAndToolPage")
 );
@@ -51,6 +53,22 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <MapPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/UserProfilePage"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <UserProfilePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/AuthorizedCodePage"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <AuthorizedCodePage />
               </Suspense>
             }
           />

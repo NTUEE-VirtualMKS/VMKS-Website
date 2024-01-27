@@ -542,6 +542,13 @@ const Query = {
     else return introduction;
   },
 
+  GetAuthorizedCode: async () => {
+    const authorizedCode = await prisma.authorizedCode.findFirst({
+    });
+    if (!authorizedCode) throw new Error("No introduction found");
+    else return authorizedCode;
+  },
+
   LogIn: async (_parents, args: { logInInput: LogInInput }) => {
     const {studentID, password} = args.logInInput;
     const user = await prisma.user.findUnique({
@@ -564,6 +571,7 @@ const Query = {
           laserCutAvailable: user.laserCutAvailable,
           borrowHistoryId: user.borrowHistoryId,
           isAdmin: user.isAdmin,
+          isMinister: user.isMinister
         },
         env.JWT_SECRET,
         {

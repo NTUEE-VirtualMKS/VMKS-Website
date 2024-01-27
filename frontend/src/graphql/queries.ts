@@ -371,6 +371,7 @@ const ALL_USER_QUERY = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
@@ -388,6 +389,7 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
@@ -407,6 +409,16 @@ const ALL_USER_MATERIAL_QUERY = gql(`
   }
 `);
 
+const GET_AUTHORIZED_CODE_QUERY = gql(`
+  query GetAuthorizedCode {
+    GetAuthorizedCode {
+      id
+      codeList
+      updatedAt
+    }
+  }
+`)
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -416,6 +428,7 @@ export {
   ALL_THREEDP_QUERY,
   ALL_TOOL_QUERY,
   ALL_USER_QUERY,
+  GET_AUTHORIZED_CODE_QUERY,
   ALL_USER_MATERIAL_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_CATEGORY_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_NAME_QUERY,

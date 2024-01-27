@@ -21,6 +21,7 @@ import {
   UserMachineUpdateInput,
   ArticleInput,
   IntroductionInput,
+  AuthorizedCodeInput,
   SignUpInput,
 } from "../types/types.ts";
 
@@ -894,6 +895,7 @@ const Mutation = {
       threeDPId,
       laserCutAvailable,
       isAdmin,
+      isMinister,
     } = args.userInput;
     if (threeDPId) {
       const findThreeDP = await prisma.threeDP.findFirst({
@@ -917,6 +919,7 @@ const Mutation = {
         laserCutAvailable: laserCutAvailable,
         borrowHistoryId: [],
         isAdmin: isAdmin,
+        isMinister,
       },
     });
 
@@ -991,7 +994,7 @@ const Mutation = {
     context,
   ) => {
     const id = args.id;
-    const { name, studentID, password, photoLink, isAdmin } =
+    const { name, studentID, password, photoLink, isAdmin, isMinister } =
       args.userEditInput;
     const findUser = await prisma.user.findFirst({
       where: {
@@ -1012,6 +1015,7 @@ const Mutation = {
         password: password,
         photoLink: photoLink,
         isAdmin: isAdmin,
+        isMinister,
       },
     });
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
@@ -1192,6 +1196,43 @@ const Mutation = {
     }
   },
 
+  UpdateAuthorizedCode: async (
+    _parents,
+    args: { authorizedCodeInput: AuthorizedCodeInput },
+    context,
+  ) => {
+    console.log(args.authorizedCodeInput);
+    const existence = await prisma.authorizedCode.findFirst({
+    });
+    // console.log(args);
+    const { codeList } = args.authorizedCodeInput;
+    let updateAuthorizedCode;
+
+    if (existence === null || existence === undefined) {
+      updateAuthorizedCode = await prisma.authorizedCode.create({
+        data: {
+          codeList,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+    } else {
+      const id = existence.id;
+      updateAuthorizedCode = await prisma.authorizedCode.update({
+        where: {
+          id: id,
+        },
+        data: {
+          codeList,
+          updatedAt: new Date().toLocaleString(),
+        },
+      });
+    }
+    pubsub.publish("AUTHORIZED_CODE_UPDATED", {
+      AuthorizedCodeUpdated: updateAuthorizedCode,
+    });
+    return updateAuthorizedCode;
+  },
+
   SignUp: async (_parents, args: { signUpInput: SignUpInput }) => {
     const costFactor = 12;
     const { name, studentID, password } = args.signUpInput;
@@ -1224,6 +1265,7 @@ const Mutation = {
           laserCutAvailable: newUser.laserCutAvailable,
           borrowHistoryId: newUser.borrowHistoryId,
           isAdmin: newUser.isAdmin,
+          isMinister: newUser.isMinister,
         },
         env.JWT_SECRET,
         {

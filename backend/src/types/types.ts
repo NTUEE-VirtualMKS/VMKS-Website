@@ -116,6 +116,7 @@ interface UserInput {
   threeDPId: number;
   laserCutAvailable: boolean;
   isAdmin: boolean;
+  isMinister: boolean;
 }
 
 interface UserEditInput {
@@ -124,6 +125,7 @@ interface UserEditInput {
   password: string;
   photoLink: string;
   isAdmin: boolean;
+  isMinister: boolean;
 }
 
 interface UserMachineUpdateInput {
@@ -145,6 +147,10 @@ interface IntroductionInput {
   content: string;
 }
 
+interface AuthorizedCodeInput {
+  codeList: string[];
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -162,6 +168,7 @@ export type {
   MaterialUsageUpdateInput,
   ArticleInput,
   IntroductionInput,
+  AuthorizedCodeInput,
   SignUpInput,
   LogInInput,
 };
