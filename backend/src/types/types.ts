@@ -116,6 +116,7 @@ interface UserInput {
   threeDPId: number;
   laserCutAvailable: boolean;
   isAdmin: boolean;
+  isMinister: boolean;
 }
 
 interface UserEditInput {
@@ -124,6 +125,7 @@ interface UserEditInput {
   password: string;
   photoLink: string;
   isAdmin: boolean;
+  isMinister: boolean;
 }
 
 interface UserMachineUpdateInput {

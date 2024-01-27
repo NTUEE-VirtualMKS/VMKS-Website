@@ -571,6 +571,7 @@ const Query = {
           laserCutAvailable: user.laserCutAvailable,
           borrowHistoryId: user.borrowHistoryId,
           isAdmin: user.isAdmin,
+          isMinister: user.isMinister
         },
         env.JWT_SECRET,
         {

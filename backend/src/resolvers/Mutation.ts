@@ -895,6 +895,7 @@ const Mutation = {
       threeDPId,
       laserCutAvailable,
       isAdmin,
+      isMinister,
     } = args.userInput;
     if (threeDPId) {
       const findThreeDP = await prisma.threeDP.findFirst({
@@ -918,6 +919,7 @@ const Mutation = {
         laserCutAvailable: laserCutAvailable,
         borrowHistoryId: [],
         isAdmin: isAdmin,
+        isMinister,
       },
     });
 
@@ -992,7 +994,7 @@ const Mutation = {
     context,
   ) => {
     const id = args.id;
-    const { name, studentID, password, photoLink, isAdmin } =
+    const { name, studentID, password, photoLink, isAdmin, isMinister } =
       args.userEditInput;
     const findUser = await prisma.user.findFirst({
       where: {
@@ -1013,6 +1015,7 @@ const Mutation = {
         password: password,
         photoLink: photoLink,
         isAdmin: isAdmin,
+        isMinister,
       },
     });
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
@@ -1198,8 +1201,8 @@ const Mutation = {
     args: { authorizedCodeInput: AuthorizedCodeInput },
     context,
   ) => {
+    console.log(args.authorizedCodeInput);
     const existence = await prisma.authorizedCode.findFirst({
-      
     });
     // console.log(args);
     const { codeList } = args.authorizedCodeInput;
@@ -1262,6 +1265,7 @@ const Mutation = {
           laserCutAvailable: newUser.laserCutAvailable,
           borrowHistoryId: newUser.borrowHistoryId,
           isAdmin: newUser.isAdmin,
+          isMinister: newUser.isMinister,
         },
         env.JWT_SECRET,
         {
