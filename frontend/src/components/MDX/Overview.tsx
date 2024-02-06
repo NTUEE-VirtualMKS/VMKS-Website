@@ -4,14 +4,14 @@ import "../../CSS/markdown.css";
 
 type OverviewProps = {
   markdown: string;
-  ref: any;
+  overviewRef: React.MutableRefObject<null>;
 };
 
-function Overview({ markdown, ref }: OverviewProps) {
+function Overview({ markdown, overviewRef }: OverviewProps) {
   return (
     <MDXEditor
       markdown={markdown}
-      ref={ref}
+      ref={overviewRef}
       plugins={allPlugins("Hello, world")}
       readOnly
     />

@@ -6,6 +6,7 @@ import { NotFound } from "./containers/NotFound";
 import { HomePage } from "./containers/HomePage";
 import Footer from "./components/Footer";
 import MaterialDetail from "./components/MaterialAndTool/MaterialDetail";
+import MaterialEdit from "./components/MaterialAndTool/MaterialEdit";
 import Advanced from "./Advanced";
 
 const LoginPage = lazy(() => import("./containers/LoginPage"));
@@ -121,11 +122,21 @@ function App() {
               </Suspense>
             }
           />
+
           <Route
             path="/MaterialAndTool/Material/:id"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <MaterialDetail />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/MaterialAndTool/Material/:id/edit"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <MaterialEdit />
               </Suspense>
             }
           />

@@ -19,11 +19,7 @@ const AnnouncementCreatedSubscription = () => {
 
 const AnnouncementCreated = () => {
   // const navigate = useNavigate();
-  return (
-    <>
-      {/* <div>{AnnouncementCreatedSubscription()}</div> */}
-    </>
-  );
+  return <>{/* <div>{AnnouncementCreatedSubscription()}</div> */}</>;
 };
 
 export default AnnouncementCreated;

@@ -1,20 +1,18 @@
-// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import type { MaterialType } from "./MaterialType";
 import { handleBorrow } from "./Handle";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import { useQuery } from "@apollo/client";
+import Overiew from "../MDX/Overview";
 
-type MaterialProps = {
-  materials: MaterialType[];
-};
-
-// const onResize = () => {};
-
-// const WINDOW_WIDTH = window.innerWidth;
-
-export const MaterialList = (props: MaterialProps) => {
+import { ALL_MATERIAL_QUERY } from "../../graphql/queries";
+export const MaterialList = () => {
+  const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  const materials = JSON.parse(JSON.stringify(data?.AllMaterials));
   return (
     <div className="mateirial-list">
       <Grid
@@ -22,7 +20,7 @@ export const MaterialList = (props: MaterialProps) => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {props.materials.map((material) => {
+        {materials.map((material: MaterialType) => {
           return (
             <Grid item xs={1} sm={3} md={3} key={material.id}>
               <Paper
@@ -30,18 +28,14 @@ export const MaterialList = (props: MaterialProps) => {
                 className="mateirial-preview"
                 key={material.id}
               >
-                <div style={{ border: "20px", padding: "15px" }}>
+                <div className="border-1 p-4">
                   <Link to={`/MaterialAndTool/Material/${material.id}`}>
-                    <img
-                      src={material.photoLink}
-                      style={{ border: "solid black" }}
-                      height={window.innerHeight / 4}
-                    ></img>
+                    <Overiew markdown={`![](${material.photoLink})`} />
                     <h2>{material.name}</h2>
                   </Link>
-                  <p>Position: {material.position}</p>
+                  <p>所在位置: {material.position}</p>
                   <Button variant="outlined" onClick={handleBorrow}>
-                    Borrow
+                    借用
                   </Button>
                 </div>
               </Paper>
