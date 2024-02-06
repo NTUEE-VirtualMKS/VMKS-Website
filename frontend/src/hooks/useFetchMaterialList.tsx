@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MaterialType } from "../components/MaterialAndTool/MaterialType";
+import type { MaterialType } from "../components/MaterialAndTool/MaterialType";
 
 const useFetchMaterialList = (url: string) => {
   const [data, setData] = useState<MaterialType[] | null>(null);

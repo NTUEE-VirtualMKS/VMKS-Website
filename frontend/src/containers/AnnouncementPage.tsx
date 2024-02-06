@@ -1,33 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import { useState} from "react";
+import { useState } from "react";
 import type { FunctionComponent } from "react";
 import { ADD_ANNOUNCEMENT_MUTATION } from "../graphql";
 import { useMutation } from "@apollo/client";
 import type { AnnouncementInput } from "../../../backend/src/types/types";
 import Announcement from "../components/Announcement";
-import { Dialog, Button, TextField, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {
+  Dialog,
+  Button,
+  TextField,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { ALL_ANNOUNCEMENT_QUERY } from "../graphql";
 const AnnouncementPage = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [counter, setCounter] = useState(0);
-
-  /* Wang's pervious code
-  let counts=0;
-  const formSubmit = () => {
-    counts++;
-    const newAnnouncement = document.createElement("a");
-    const tmp = document.getElementById("Title") as HTMLInputElement;
-    newAnnouncement.textContent = tmp.value;
-    newAnnouncement.href = "/Announcement/"+counts;
-    setTitle("");
-    setContent("");
-    setVisible(false);
-  }
-  */
-
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
@@ -44,7 +36,6 @@ const AnnouncementPage = () => {
     setVisible(false);
   };
   const formSubmit = ({ title, content }: AnnouncementInput) => {
-    setCounter((c) => (c += 1));
     addAnnouncement({
       variables: {
         announcementInput: {
@@ -56,7 +47,6 @@ const AnnouncementPage = () => {
     setTitle("");
     setContent("");
     handleClose();
-    
   };
 
   return (
@@ -98,14 +88,17 @@ const AnnouncementPage = () => {
           <Button onClick={handleClose} color="primary">
             取消
           </Button>
-          <Button onClick={() => formSubmit({ title, content })} color="primary">
+          <Button
+            onClick={() => formSubmit({ title, content })}
+            color="primary"
+          >
             提交
           </Button>
         </DialogActions>
       </Dialog>
 
       <div className="flex justify-center m-3">
-        <Button  variant="outlined" onClick={() => navigate(-1)}>
+        <Button variant="outlined" onClick={() => navigate(-1)}>
           返回
         </Button>
       </div>

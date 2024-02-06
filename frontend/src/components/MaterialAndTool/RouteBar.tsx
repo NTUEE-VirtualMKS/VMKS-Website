@@ -6,10 +6,9 @@ type RouteBarProps = {
 };
 
 export const RouteBar = (props: RouteBarProps) => {
-  console.log(typeof props.Route);
   if (typeof props.Route !== "string")
     return (
-      <nav>
+      <nav className="text-2xl m-5">
         <Link to="/">Home</Link>
       </nav>
     );
@@ -18,15 +17,14 @@ export const RouteBar = (props: RouteBarProps) => {
   for (let index = 0; index < props.Route.length; index++) {
     if (props.Route[index] === ",") {
       routes.push(tmpRoute);
-      console.log(tmpRoute);
       tmpRoute = "";
       continue;
     }
     tmpRoute = tmpRoute.concat(props.Route[index]);
   }
-  console.log(routes);
+
   return (
-    <nav>
+    <nav className="text-2xl m-5">
       <Link to="/">Home</Link>
       {routes.map((route) => {
         return (

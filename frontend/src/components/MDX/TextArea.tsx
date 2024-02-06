@@ -38,6 +38,7 @@ const imageUploadHandler = async (image: File) => {
   const imageURL = await getDownloadURL(ref(storage, `images/${imageUpload}`))
     .then((url) => {
       // `url` is the download URL for `images/${image.name}`
+      console.log(url);
       return url;
     })
     .catch((error) => {
@@ -87,22 +88,21 @@ const allPlugins = (diffMarkdown: string) => [
 ];
 
 type TextAreaProps = {
-  article?: string;
-  editorRef: React.MutableRefObject<null>;
+  markdown?: string;
+  editorRef: React.MutableRefObject<any>;
+  placeholder?: string;
 };
 
-function TextArea({ article, editorRef }: TextAreaProps) {
-  if (!article) article = "";
-  const placeholder = `# Title`;
-
+function TextArea({ markdown, editorRef, placeholder }: TextAreaProps) {
+  if (!markdown) markdown = "";
   return (
     <>
       <div>
         <MDXEditor
-          placeholder={placeholder}
-          markdown={article}
-          plugins={allPlugins("Hello world")}
+          markdown={markdown}
+          plugins={allPlugins("")}
           ref={editorRef}
+          placeholder={placeholder ? placeholder : ""}
         />
       </div>
     </>

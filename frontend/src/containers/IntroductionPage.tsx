@@ -9,7 +9,7 @@ import TextArea from "../components/MDX/TextArea.tsx";
 import Overview from "../components/MDX/Overview.tsx";
 const IntroductionPage = () => {
   const navigate = useNavigate();
-  const ref = useRef(null);
+  const ref = useRef<any>();
   const [introduction, setIntroduction] = useState(brief_intro);
   const [admin, setAdmin] = useState(false);
   const handleEdit = () => {
@@ -134,9 +134,9 @@ const IntroductionPage = () => {
               }}
             >
               {admin ? (
-                <TextArea editorRef={ref} article={introduction} />
+                <TextArea editorRef={ref} markdown={introduction} />
               ) : (
-                <Overview markdown={introduction} ref={ref} />
+                <Overview markdown={introduction} overviewRef={ref} />
               )}
               <div style={{ height: "100px" }}></div>
             </div>

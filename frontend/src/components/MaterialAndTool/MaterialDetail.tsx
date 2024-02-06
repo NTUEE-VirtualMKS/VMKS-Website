@@ -1,65 +1,73 @@
-import { useParams } from "react-router-dom";
-// import useFetchMaterial from "../../hooks/useFetchMaterial";
+import { useParams, useNavigate } from "react-router-dom";
 import { handleBorrow, handleRepair } from "./Handle";
 import { Button } from "@mui/material";
-// import Paper from "@mui/material";
 import { Stack } from "@mui/material";
+import Icon from "@mdi/react";
 import { RouteBar } from "./RouteBar";
 import { useQuery } from "@apollo/client";
 import { ALL_MATERIAL_QUERY } from "../../graphql/queries";
+import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
+import { allPlugins } from "../MDX/allPlugins.ts";
+import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
+import { colors } from "../../Color.ts";
+import type { MaterialType } from "./MaterialType.tsx";
 
 const MaterialDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   const allMaterials = JSON.parse(JSON.stringify(data?.AllMaterials));
   const eachMaterial = allMaterials.find(
-    (material: any) => material.id === parseInt(id as string)
+    (material: MaterialType) => material.id === parseInt(id as string)
   );
 
   return (
     <div className="material-detail">
       {eachMaterial && (
-        <div>
-          <RouteBar Route={eachMaterial?.category} />
-          <h1 className="bigTitle">
-            <center>{eachMaterial?.name}</center>
-          </h1>
-          <Stack direction="row" spacing={2}>
-            <div>
-              <p>Position: {eachMaterial?.position}</p>
-              <p>Intro: {eachMaterial?.description}</p>
-              {eachMaterial?.remain && (
-                <p>There are {eachMaterial?.remain} remaining</p>
-              )}
-              {eachMaterial?.tutorialLink !== "" &&
-                eachMaterial?.tutorialLink !== undefined && (
-                  <a
-                    href={eachMaterial?.tutorialLink}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Tutorial
-                  </a>
-                )}
-            </div>
-            <div>
-              <img
-                src={eachMaterial?.photoLink}
-                alt="GeeksforGeeks logo"
-                height={window.innerHeight / 3}
-              ></img>
-              <Stack direction="row" spacing={2}>
-                <Button onClick={handleBorrow} variant="outlined">
-                  Borrow
-                </Button>
-                <Button onClick={handleRepair} variant="outlined">
-                  Repair
-                </Button>
-              </Stack>
-            </div>
-          </Stack>
+        <div className="flex flex-col">
+          <div className="flex flex-row">
+            <button
+              onClick={() => navigate("/MaterialAndToolPage")}
+              className="transparent border-none ml-2.5 cursor-pointer"
+            >
+              <Icon
+                path={mdiArrowLeftDropCircleOutline}
+                size={3}
+                color={colors.DarkSlateGray}
+              />
+            </button>
+            <RouteBar Route={eachMaterial?.category} />
+          </div>
+
+          <div className="bg-white m-4 p-5 w-[50%] min-h-[400px] ml-[23%] rounded-lg border border-black py-6 px-10">
+            <MDXEditor
+              markdown={
+                `# ${eachMaterial?.name}:\n` +
+                `## ${eachMaterial?.description}\n` +
+                `![](${eachMaterial?.photoLink})`
+              }
+              plugins={allPlugins("")}
+              readOnly
+            />
+            <Button
+              variant="outlined"
+              onClick={() => navigate(`/MaterialAndTool/Material/${id}/edit`)}
+            >
+              編輯
+            </Button>
+          </div>
+          <div className="mx-2 my-4">
+            <Stack direction="row" spacing={2}>
+              <Button onClick={handleBorrow} variant="outlined">
+                借用
+              </Button>
+              <Button onClick={handleRepair} variant="outlined">
+                報修
+              </Button>
+            </Stack>
+          </div>
           <br></br>
         </div>
       )}
