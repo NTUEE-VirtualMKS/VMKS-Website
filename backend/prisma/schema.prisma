@@ -14,6 +14,12 @@ model Announcement {
   content String
 }
 
+model Introduction {
+  id        Int    @id @default(autoincrement())
+  content   String
+  updatedAt String
+}
+
 model DisposableMaterial {
   id           Int     @id @default(autoincrement())
   name         String
@@ -85,17 +91,24 @@ model ThreeDP {
 model User {
   id                Int            @id @default(autoincrement())
   name              String
-  studentID         String
+  studentID         String          @unique
   password          String
-  photoLink         String
+  photoLink         String?
   threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id])
   threeDPId         Int?
-  laserCutAvailable Boolean
+  laserCutAvailable Boolean        @default(false)
   borrowHistory     UserMaterial[]
   borrowHistoryId   Int[]
   articles          Article[]
   articlesId        Int[]
-  isAdmin           Boolean
+  isAdmin           Boolean        @default(false)
+  isMinister        Boolean        @default(false)
+}
+
+model AuthorizedCode {
+  id          Int     @id @default(autoincrement())
+  codeList    String[]
+  updatedAt   String
 }
 
 model UserMaterial {

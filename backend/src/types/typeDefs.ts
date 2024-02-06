@@ -255,12 +255,34 @@ const typeDefs = `#graphql
     name: String!
     studentID: String!
     password: String!
-    photoLink: String!
+    photoLink: String
     threeDPId: Int
     laserCutAvailable: Boolean!
     borrowHistoryId: [Int]
     articlesId: [Int]
     isAdmin: Boolean!
+    isMinister: Boolean!
+  }
+
+  type signUpRet {
+    user: User!
+    token: String!
+  }
+
+  input signUpInput {
+    name: String!
+    studentID: String!
+    password: String!
+  }
+  
+  type logInRet {
+    user: User!
+    token: String!
+  }
+
+  input logInInput {
+    studentID: String!
+    password: String!
   }
 
   type Article {
@@ -273,6 +295,25 @@ const typeDefs = `#graphql
     headline: Boolean!,
     content: String!,
     userpic: String,
+  }
+
+  type Introduction {
+    id: Int!,
+    content: String!,
+  }
+
+  input IntroductionInput {
+    content: String!,
+  }
+
+  type AuthorizedCode {
+    id: Int!,
+    codeList: [String],
+    updatedAt: String!
+  }
+
+  input AuthorizedCodeInput {
+    codeList: [String],
   }
 
 
@@ -303,6 +344,9 @@ const typeDefs = `#graphql
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
+    CurrentIntroduction: Introduction
+    GetAuthorizedCode: AuthorizedCode
+    LogIn(logInInput: logInInput!): logInRet
   }
 
   type Mutation {
@@ -335,6 +379,9 @@ const typeDefs = `#graphql
     EditUser(id: Int!, userEditInput: UserEditInput!): User
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
+    UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
+    UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
+    SignUp(signUpInput: signUpInput!): signUpRet
   }
 
   type Subscription {
@@ -364,6 +411,10 @@ const typeDefs = `#graphql
     UserUpdated: User
     UserMachineUpdate: User
     ArticleCreated: Article
+    IntroductionCreated: Introduction
+    IntroductionUpdated: Introduction
+    UserSignedUp: User
+    UserLoggedIn: User
   }
 `;
 

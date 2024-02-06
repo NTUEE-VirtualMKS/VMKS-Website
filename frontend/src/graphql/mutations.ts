@@ -331,6 +331,7 @@ const ADD_USER_MUTATION = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
@@ -348,6 +349,7 @@ const DELETE_USER_MUTATION = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
@@ -365,6 +367,7 @@ const EDIT_USER_MUTATION = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
@@ -486,9 +489,22 @@ const USER_MACHINE_USAGE_UPDATE_MUTATION = gql(`
       borrowHistoryId
       articlesId
       isAdmin
+      isMinister
     }
   }
 `);
+
+//update authorizedCode
+const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
+  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {
+    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {
+      id
+      codeList
+      updatedAt
+    }
+  }
+`)
+
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -519,4 +535,5 @@ export {
   MATERIAL_USAGE_UPDATE_MUTATION,
   TOOL_USAGE_UPDATE_MUTATION,
   USER_MACHINE_USAGE_UPDATE_MUTATION,
+  AUTHORIZED_CODE_UPDATE_MUTATION,
 };

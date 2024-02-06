@@ -1,6 +1,10 @@
 import { DisposableMaterial, User } from "@prisma/client";
 import { prisma } from "../../prisma/client.ts";
-
+import type { LogInInput } from "../types/types.ts";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+import { env } from "../../utils/env.ts";
+import { pubsub } from "../PubSub/pubsub.ts";
 const Query = {
   AllAnnouncements: async (_parents, args, context) => {
     const announcements = await prisma.announcement.findMany({
@@ -526,6 +530,59 @@ const Query = {
       })
       .flat(); //making the returning array an array of machines without any empty arrays
   },
+
+  CurrentIntroduction: async () => {
+    const introduction = await prisma.introduction.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+      take: 1,
+    });
+    if (!introduction[0]) throw new Error("No introduction found");
+    else return introduction;
+  },
+
+  GetAuthorizedCode: async () => {
+    const authorizedCode = await prisma.authorizedCode.findFirst({
+    });
+    if (!authorizedCode) throw new Error("No introduction found");
+    else return authorizedCode;
+  },
+
+  LogIn: async (_parents, args: { logInInput: LogInInput }) => {
+    const {studentID, password} = args.logInInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        studentID: studentID,
+      },
+    });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if(!isPasswordValid) throw new Error("Invalid password");
+    else {
+      const token = jwt.sign(
+        {
+          id: user.id,
+          name: user.name,
+          studentID: user.studentID,
+          photoLink: user.photoLink,
+          threeDPId: user.threeDPId,
+          laserCutAvailable: user.laserCutAvailable,
+          borrowHistoryId: user.borrowHistoryId,
+          isAdmin: user.isAdmin,
+          isMinister: user.isMinister
+        },
+        env.JWT_SECRET,
+        {
+          expiresIn: env.JWT_EXPIRES_IN,
+        }
+        
+      );
+      pubsub.publish("USER_LOGGEDIN", { UserLoggedIn: user });
+      return { user: user, token: token };
+    }
+  }
 };
 
 export { Query };
