@@ -74,7 +74,7 @@ const typeDefs = `#graphql
     description: String!
     photoLink: String!
     usage: Int!
-    tutorialLink: String!
+    tutorialLink: String
     fee: Int!
     remain: Int!
   }
@@ -196,7 +196,7 @@ const typeDefs = `#graphql
     description: String!
     photoLink: String!
     usage: Int!
-    tutorialLink: String!
+    tutorialLink: String
     fee: Int!
     remain: Int!
   }

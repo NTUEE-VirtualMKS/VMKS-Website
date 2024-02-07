@@ -44,7 +44,7 @@ model Material {
   description  String
   photoLink    String
   usage        Int
-  tutorialLink String
+  tutorialLink String?
   fee          Int
   remain       Int
 }
