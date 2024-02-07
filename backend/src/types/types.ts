@@ -47,7 +47,7 @@ interface MaterialInput {
   description: string;
   photoLink: string;
   usage: number;
-  tutorialLink: string;
+  tutorialLink: string | null;
   fee: number;
   remain: number;
 }
