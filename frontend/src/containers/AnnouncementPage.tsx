@@ -13,7 +13,7 @@ const AnnouncementPage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [counter, setCounter] = useState(0);
-
+  
   /* Wang's pervious code
   let counts=0;
   const formSubmit = () => {
@@ -27,7 +27,6 @@ const AnnouncementPage = () => {
     setVisible(false);
   }
   */
-
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
@@ -62,8 +61,10 @@ const AnnouncementPage = () => {
   return (
     <>
       <div className="flex justify-center m-3">公告一覽</div>
+      
       <div id="announcements">
         <Announcement />
+
       </div>
 
       <Button className="m-3" variant="outlined" onClick={handleOpen}>

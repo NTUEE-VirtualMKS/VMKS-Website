@@ -21,11 +21,14 @@
         "all": "^0.0.0",
         "dotenv-cli": "^7.2.1",
         "eslint": "^8.47.0",
+        "lucide": "^0.320.0",
+        "lucide-react": "^0.320.0",
         "pnpm": "^8.6.3",
         "react-router-dom": "^6.15.0",
         "styled-components": "^6.0.7"
     },
     "devDependencies": {
+        "@types/dotenv": "^8.2.0",
         "@types/react-router-dom": "^5.3.3"
     }
 }

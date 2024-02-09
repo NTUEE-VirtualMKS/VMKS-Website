@@ -1,206 +1,59 @@
-// import React from "react";
-import Button from "@mui/material/Button";
-import "../CSS/NavBar.css";
-import {
-  Link,
-  // Navigate,
-  useNavigate,
-} from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import LogoImageURL from "../images/vmks_logo.png";
-
-const buttonstyle = {
-  backgroundColor: "#67b9c7ff",
-  border: "3px solid #FFFFFF",
-  borderBottomWidth: "0px",
-  borderRightWidth: "0px",
-  borderTopWidth: "0px",
-  width: "90px",
-  borderRadius: "0px",
-  color: "white",
-};
-const buttonstyle2 = {
-  backgroundColor: "#C4E4EA",
-  borderRadius: "0px",
-  width: "100%",
-  color: "black",
-};
-const divstyle = {
-  position: "absolute" as const,
-  width: "87px",
-  left: "3px",
-  margin: "0px 0 0 0",
-  zIndex: -1,
-};
-
+import { Link,useNavigate } from "react-router-dom";
+import { ShoppingCart } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
+import { User } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+// import Button from "@mui/material/Button";
 export const NavBar = () => {
-  const navigate = useNavigate();
-  return (
-    <nav style={{ position: "relative", zIndex: 10 }}>
-      <div id="header" className="button-container">
-        <Link to="/">
-          <img src={LogoImageURL} alt="logo" height="50" />
-        </Link>
-        <Button
-          variant="contained"
-          size="medium"
-          style={{ float: "right", backgroundColor: "#67b9c7ff" }}
-          onClick={() => navigate("/LoginPage")}
-        >
-          <Link
-            to="/LoginPage"
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            Login
-          </Link>
-        </Button>
-      </div>
-      <Box>
-        <AppBar position="static" style={{ backgroundColor: "#67B9C7" }}>
-          <Toolbar
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              minHeight: "24px",
-              position: "relative",
-            }}
-          >
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={buttonstyle}
-                  onClick={() => navigate("/UserProfilePage")}
-                >
-                  Profile
-                </Button>
-              </dt>
-            </dl>
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={buttonstyle}
-                  onClick={() => navigate("/AuthorizedCodePage")}
-                >
-                  加簽碼
-                </Button>
-              </dt>
-            </dl>
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={buttonstyle}
-                  onClick={() => navigate("/IntroductionPage")}
-                >
-                  MKS介紹
-                </Button>
-              </dt>
-            </dl>
-            <Button
-              variant="text"
-              size="large"
-              style={buttonstyle}
-              onClick={() => navigate("MapPage")}
-            >
-              地圖導覽
-            </Button>
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={buttonstyle}
-                  onClick={() => navigate("/MaterialAndToolPage")}
-                >
-                  資源一覽
-                </Button>
-              </dt>
-              <div style={divstyle}>
-                <dd>
-                  <Button
-                    variant="text"
-                    size="large"
-                    style={buttonstyle2}
-                    onClick={() => navigate("/")}
-                  >
-                    耗材
-                  </Button>
-                </dd>
-                <dd>
-                  <Button
-                    variant="text"
-                    size="large"
-                    style={buttonstyle2}
-                    onClick={() => navigate("/")}
-                  >
-                    材料
-                  </Button>
-                </dd>
-                <dd>
-                  <Button
-                    variant="text"
-                    size="large"
-                    style={buttonstyle2}
-                    onClick={() => navigate("/")}
-                  >
-                    工具
-                  </Button>
-                </dd>
-                <dd>
-                  <Button
-                    variant="text"
-                    size="large"
-                    style={buttonstyle2}
-                    onClick={() => navigate("/")}
-                  >
-                    機台
-                  </Button>
-                </dd>
-              </div>
-            </dl>
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={buttonstyle}
-                  onClick={() => navigate("/TutorialPage")}
-                >
-                  新手教學
-                </Button>
-              </dt>
-            </dl>
-            <dl>
-              <dt>
-                <Button
-                  variant="text"
-                  size="large"
-                  style={Object.assign(
-                    { borderRightWidth: "3px" },
-                    buttonstyle
-                  )}
-                  onClick={() => navigate("/advanced")}
-                >
-                  進階功能
-                </Button>
-              </dt>
-            </dl>
-            {/* <Link
-                to="/advanced"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                進階功能
-              </Link> */}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </nav>
-  );
-};
+    const navigate = useNavigate();
+    return (
+        <div className="w-full md:w-[1261px] h-[50px] left-0 md:left-[127px] top-[25px] absolute">
+        <div className="w-full md:w-[418px] h-[50px] left-0 md:left-[843px] top-0 absolute justify-start items-start gap-[15px] inline-flex">
+            <div className="w-[104px] h-[50px] relative">
+                <button className="flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white">
+                    <div className="flex flex-col justify-center items-center w-[38px] h-[23px] left-[34px] top-[13px] absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide" onClick={() => navigate("MapPage")}>map</div>
+                </button>
+            </div>
+            <div className="w-[104px] h-[50px] relative">
+                <button className=" flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white">
+                    <div className="flex flex-col justify-center items-center w-[38px] h-[23px] left-[34px] top-[13px] absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide" onClick={() => navigate("/advanced/forum")}>Forum</div>
+                </button>
+            </div>
+            <div className="w-[50px] h-[50px] relative">
+                <button className="flex flex-col justify-center items-center w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white" >
+                    <ShoppingCart color="#FFFFFF"/>
+                </button>
+            </div>
+            <div className="w-[50px] h-[50px] relative">
+                <button className=" flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white">
+                    <User color="#FFFFFF"/>
+                </button>
+                {/* <div className="w-11 h-11 left-[3px] top-[1px] absolute" /> */}
+            </div>
+            <div className="w-[50px] h-[50px] relative">
+                <button className="flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white">
+                    <HelpCircle color="#FFFFFF"/>
+                </button>
+            </div>
+        </div>
+
+        {/* <div className="w-[45px] h-[45px] left-[55px] top-[2px] absolute">
+            <div className="w-9 h-9 left-[4.50px] top-[4.50px] absolute" />
+        </div>
+         */}
+        <div className="w-[45px] h-[45px] left-0 top-[2px] absolute">
+        {/* <div className="w-9 h-9 py-[9px] justify-center items-center inline-flex" /> */}
+            <button className="flex flex-col justify-center items-center w-[45px] h-[45px] left-0 top-0 absolute bg-zinc-900 rounded-full border border-white" >
+                <ChevronLeft color="#FFFFFF"/>
+            </button>
+            {/* <button className="flex flex-col justify-center items-center w-[45px] h-[45px] left-0 top-0 absolute bg-zinc-900 rounded-full border border-white" > */}
+                {/* <ChevronRight color="#FFFFFF"/>
+            </button> */}
+            <button className="flex flex-col justify-center items-center w-[45px] h-[45px] top-0 absolute bg-zinc-900 rounded-full border border-white left-[60px] absolute" >
+                <ChevronRight color="#FFFFFF"/>
+            </button>
+        </div>
+    </div>
+    );
+}

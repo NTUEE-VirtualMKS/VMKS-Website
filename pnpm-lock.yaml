@@ -32,6 +32,12 @@ dependencies:
   eslint:
     specifier: ^8.47.0
     version: 8.47.0
+  lucide:
+    specifier: ^0.320.0
+    version: 0.320.0
+  lucide-react:
+    specifier: ^0.320.0
+    version: 0.320.0(react@17.0.2)
   pnpm:
     specifier: ^8.6.3
     version: 8.6.3
@@ -43,6 +49,9 @@ dependencies:
     version: 6.0.7(react-dom@17.0.2)(react@17.0.2)
 
 devDependencies:
+  '@types/dotenv':
+    specifier: ^8.2.0
+    version: 8.2.0
   '@types/react-router-dom':
     specifier: ^5.3.3
     version: 5.3.3
@@ -1904,6 +1913,13 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: false
 
+  /@types/dotenv@8.2.0:
+    resolution: {integrity: sha512-ylSC9GhfRH7m1EUXBXofhgx4lUWmFeQDINW5oLuS+gxWdfUeW4zJdeVTYVkexEW+e2VUvlZR2kGnGGipAWR7kw==}
+    deprecated: This is a stub types definition. dotenv provides its own type definitions, so you do not need this installed.
+    dependencies:
+      dotenv: 16.3.1
+    dev: true
+
   /@types/history@4.7.11:
     resolution: {integrity: sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==}
     dev: true
@@ -2291,7 +2307,6 @@ packages:
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
-    dev: false
 
   /electron-to-chromium@1.4.490:
     resolution: {integrity: sha512-6s7NVJz+sATdYnIwhdshx/N/9O6rvMxmhVoDSDFdj6iA45gHR8EQje70+RYsF4GeB+k0IeNSBnP7yG9ZXJFr7A==}
@@ -2783,6 +2798,18 @@ packages:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
       yallist: 3.1.1
+    dev: false
+
+  /lucide-react@0.320.0(react@17.0.2):
+    resolution: {integrity: sha512-HuMmfmFiWwctDkN27wklKVZr8UpwP2TTekLZ3xiLCEjx/STG1k0KLWMbBfIJ/lnNJQDfSjztDZSVU316xA+AQg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 17.0.2
+    dev: false
+
+  /lucide@0.320.0:
+    resolution: {integrity: sha512-cycZhUkfCbqlhCveYkQV7HbxJ6e7Wb1Wb+n/ftX7XHocFG8KbdRmctX3QZC6FXst9OAKSD5HBOol++9dHAxGwA==}
     dev: false
 
   /make-dir@2.1.0:

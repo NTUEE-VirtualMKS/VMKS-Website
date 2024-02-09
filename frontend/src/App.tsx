@@ -2,9 +2,10 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { NavBar } from "./components/NavBar";
+import { SideBar } from "./components/SideBar";
 import { NotFound } from "./containers/NotFound";
 import { HomePage } from "./containers/HomePage";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import MaterialDetail from "./components/MaterialAndTool/MaterialDetail";
 import Advanced from "./Advanced";
 
@@ -19,7 +20,7 @@ const MaterialAndToolPage = lazy(
 );
 const ShoppingList = lazy(() => import("./containers/ShoppingList"));
 const AnnouncementPage = lazy(() => import("./containers/AnnouncementPage"));
-const Announcement = lazy(() => import("./components/Announcement"));
+const EditAnnouncement = lazy(() => import("./components/EditAnnouncement"));
 const AnnouncementCreated = lazy(() => import("./components/Subscription"));
 // const Material = lazy(() => import("./components/MaterialAndTool/Material"));
 const Tool = lazy(() => import("./components/MaterialAndTool/Tool"));
@@ -37,6 +38,7 @@ function App() {
     return (
       <div>
         <NavBar />
+        <SideBar />
         <Routes>
           {/* <Route path='/' element={<HomePage />} /> */}
           <Route path="/" element={<HomePage />} />
@@ -114,10 +116,10 @@ function App() {
             }
           />
           <Route
-            path="/Announcement/:id"
+            path="/EditAnnouncement/:id"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <Announcement />
+                <EditAnnouncement />
               </Suspense>
             }
           />
@@ -141,7 +143,7 @@ function App() {
           <Route path="/advanced/*" element={<Advanced />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   } else {
