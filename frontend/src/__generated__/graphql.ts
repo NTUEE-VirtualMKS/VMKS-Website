@@ -142,7 +142,7 @@ export type Material = {
   photoLink: Scalars['String']['output'];
   position: Scalars['String']['output'];
   remain: Scalars['Int']['output'];
-  tutorialLink: Scalars['String']['output'];
+  tutorialLink?: Maybe<Scalars['String']['output']>;
   usage: Scalars['Int']['output'];
   valuable: Scalars['Boolean']['output'];
 };
@@ -156,7 +156,7 @@ export type MaterialInput = {
   photoLink: Scalars['String']['input'];
   position: Scalars['String']['input'];
   remain: Scalars['Int']['input'];
-  tutorialLink: Scalars['String']['input'];
+  tutorialLink?: InputMaybe<Scalars['String']['input']>;
   usage: Scalars['Int']['input'];
   valuable: Scalars['Boolean']['input'];
 };
@@ -745,14 +745,14 @@ export type AddMaterialMutationVariables = Exact<{
 }>;
 
 
-export type AddMaterialMutation = { __typename?: 'Mutation', AddMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null };
+export type AddMaterialMutation = { __typename?: 'Mutation', AddMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null };
 
 export type DeleteMaterialMutationVariables = Exact<{
   deleteMaterialId: Scalars['Int']['input'];
 }>;
 
 
-export type DeleteMaterialMutation = { __typename?: 'Mutation', DeleteMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null };
+export type DeleteMaterialMutation = { __typename?: 'Mutation', DeleteMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null };
 
 export type EditMaterialMutationVariables = Exact<{
   editMaterialId: Scalars['Int']['input'];
@@ -760,7 +760,7 @@ export type EditMaterialMutationVariables = Exact<{
 }>;
 
 
-export type EditMaterialMutation = { __typename?: 'Mutation', EditMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null };
+export type EditMaterialMutation = { __typename?: 'Mutation', EditMaterial?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null };
 
 export type AddThreeDpMutationVariables = Exact<{
   threeDpInput: ThreeDpInput;
@@ -864,7 +864,7 @@ export type MaterialUsageUpdateMutationVariables = Exact<{
 }>;
 
 
-export type MaterialUsageUpdateMutation = { __typename?: 'Mutation', MaterialUsageUpdate?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null };
+export type MaterialUsageUpdateMutation = { __typename?: 'Mutation', MaterialUsageUpdate?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null };
 
 export type ToolUsageUpdateMutationVariables = Exact<{
   toolUsageUpdateId: Scalars['Int']['input'];
@@ -954,28 +954,28 @@ export type SearchMachinesByPositionQuery = { __typename?: 'Query', SearchMachin
 export type AllMaterialsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllMaterialsQuery = { __typename?: 'Query', AllMaterials?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null> | null };
+export type AllMaterialsQuery = { __typename?: 'Query', AllMaterials?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null> | null };
 
 export type SearchMaterialByNameQueryVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
 
 
-export type SearchMaterialByNameQuery = { __typename?: 'Query', SearchMaterialByName?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null> | null };
+export type SearchMaterialByNameQuery = { __typename?: 'Query', SearchMaterialByName?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null> | null };
 
 export type SearchMaterialsByCategoryQueryVariables = Exact<{
   category: Scalars['String']['input'];
 }>;
 
 
-export type SearchMaterialsByCategoryQuery = { __typename?: 'Query', SearchMaterialsByCategory?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null> | null };
+export type SearchMaterialsByCategoryQuery = { __typename?: 'Query', SearchMaterialsByCategory?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null> | null };
 
 export type SearchMaterialsByPositionQueryVariables = Exact<{
   position: Scalars['String']['input'];
 }>;
 
 
-export type SearchMaterialsByPositionQuery = { __typename?: 'Query', SearchMaterialsByPosition?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee: number, remain: number } | null> | null };
+export type SearchMaterialsByPositionQuery = { __typename?: 'Query', SearchMaterialsByPosition?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number } | null> | null };
 
 export type AllThreeDpQueryVariables = Exact<{ [key: string]: never; }>;
 
