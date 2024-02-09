@@ -37,8 +37,8 @@ function App() {
   if (isMain) {
     return (
       <div>
-        <NavBar />
-        <SideBar />
+        {/* <NavBar /> */}
+        {/* <SideBar /> */}
         <Routes>
           {/* <Route path='/' element={<HomePage />} /> */}
           <Route path="/" element={<HomePage />} />
