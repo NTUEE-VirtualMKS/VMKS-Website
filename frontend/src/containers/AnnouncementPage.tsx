@@ -20,6 +20,8 @@ const AnnouncementPage = () => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [counter, setCounter] = useState(0);
+
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
@@ -36,6 +38,7 @@ const AnnouncementPage = () => {
     setVisible(false);
   };
   const formSubmit = ({ title, content }: AnnouncementInput) => {
+    setCounter((c) => (c += 1));
     addAnnouncement({
       variables: {
         announcementInput: {
@@ -52,6 +55,7 @@ const AnnouncementPage = () => {
   return (
     <>
       <div className="flex justify-center m-3">公告一覽</div>
+
       <div id="announcements">
         <Announcement />
       </div>

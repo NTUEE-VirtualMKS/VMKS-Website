@@ -2,7 +2,7 @@
 import { ANNOUNCEMENT_CREATED_SUBSCRIPTION } from "../graphql";
 import { useSubscription } from "@apollo/client";
 
-const AnnouncementCreatedSubscription = () => {
+export const AnnouncementCreatedSubscription = () => {
   const { loading, error, data } = useSubscription(
     ANNOUNCEMENT_CREATED_SUBSCRIPTION
   );

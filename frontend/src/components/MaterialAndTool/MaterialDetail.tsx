@@ -10,7 +10,7 @@ import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
 import { allPlugins } from "../MDX/allPlugins.ts";
 import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
 import { colors } from "../../Color.ts";
-import type { MaterialType } from "./MaterialType.tsx";
+import type { MaterialType } from "../../shared/type.ts";
 
 const MaterialDetail = () => {
   const { id } = useParams();
@@ -53,7 +53,9 @@ const MaterialDetail = () => {
             />
             <Button
               variant="outlined"
-              onClick={() => navigate(`/MaterialAndTool/Material/${id}/edit`)}
+              onClick={() =>
+                navigate(`/MaterialAndToolPage/Material/${id}/edit`)
+              }
             >
               編輯
             </Button>
