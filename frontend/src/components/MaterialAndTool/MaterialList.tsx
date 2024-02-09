@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { MaterialType } from "./MaterialType";
+import type { MaterialType } from "../../shared/type.ts";
 import { handleBorrow } from "./Handle";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -29,7 +29,7 @@ export const MaterialList = () => {
                 key={material.id}
               >
                 <div className="border-1 p-4">
-                  <Link to={`/MaterialAndTool/Material/${material.id}`}>
+                  <Link to={`/MaterialAndToolPage/Material/${material.id}`}>
                     <Overiew markdown={`![](${material.photoLink})`} />
                     <h2>{material.name}</h2>
                   </Link>

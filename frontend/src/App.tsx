@@ -15,7 +15,9 @@ const IntroductionPage = lazy(() => import("./containers/IntroductionPage"));
 const TutorialPage = lazy(() => import("./containers/TutorialPage"));
 const MapPage = lazy(() => import("./containers/MapPage"));
 const UserProfilePage = lazy(() => import("./containers/UserProfilePage"));
-const AuthorizedCodePage = lazy(() => import("./containers/AuthorizedCodePage"));
+const AuthorizedCodePage = lazy(
+  () => import("./containers/AuthorizedCodePage")
+);
 const MaterialAndToolPage = lazy(
   () => import("./containers/MaterialAndToolPage")
 );
@@ -128,7 +130,6 @@ function App() {
                   </Suspense>
                 }
               />
-
               <Route
                 path="/MaterialAndTool/Material/:id"
                 element={

@@ -35,6 +35,7 @@ module.exports = {
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
     "no-console": "off",
+    "@typescript-eslint/no-explicit-any": "off",
   },
   settings: {
     react: {

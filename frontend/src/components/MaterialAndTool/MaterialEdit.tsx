@@ -6,7 +6,7 @@ import { RouteBar } from "./RouteBar";
 import TextArea from "../MDX/TextArea";
 import { useRef } from "react";
 import { Button } from "@mui/material";
-import type { MaterialType } from "./MaterialType";
+import type { MaterialType } from "../../shared/type.ts";
 
 const MaterialEdit = () => {
   const { id } = useParams();
@@ -59,7 +59,7 @@ const MaterialEdit = () => {
       },
     });
     navigate(
-      `/MaterialAndTool/Material/${updatedMaterial.data?.EditMaterial?.id}`
+      `/MaterialAndToolPage/Material/${updatedMaterial.data?.EditMaterial?.id}`
     );
   };
 
@@ -87,7 +87,7 @@ const MaterialEdit = () => {
         />
         <Button
           variant="outlined"
-          onClick={() => navigate(`/MaterialAndTool/Material/${id}`)}
+          onClick={() => navigate(`/MaterialAndToolPage/Material/${id}`)}
         >
           取消
         </Button>
