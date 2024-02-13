@@ -1,3 +1,15 @@
+export type AnnouncementType = {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+};
+
+export type AnnouncementInputType = {
+  title: string;
+  content: string;
+};
+
 export type UserType = {
   id: number;
   name: string;

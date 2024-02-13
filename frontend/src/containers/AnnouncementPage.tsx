@@ -20,8 +20,21 @@ const AnnouncementPage = () => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [counter, setCounter] = useState(0);
+  // const [counter, setCounter] = useState(0);
 
+  /* Wang's pervious code
+  let counts=0;
+  const formSubmit = () => {
+    counts++;
+    const newAnnouncement = document.createElement("a");
+    const tmp = document.getElementById("Title") as HTMLInputElement;
+    newAnnouncement.textContent = tmp.value;
+    newAnnouncement.href = "/Announcement/"+counts;
+    setTitle("");
+    setContent("");
+    setVisible(false);
+  }
+  */
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
@@ -38,7 +51,7 @@ const AnnouncementPage = () => {
     setVisible(false);
   };
   const formSubmit = ({ title, content }: AnnouncementInput) => {
-    setCounter((c) => (c += 1));
+    // setCounter((c) => (c += 1));
     addAnnouncement({
       variables: {
         announcementInput: {

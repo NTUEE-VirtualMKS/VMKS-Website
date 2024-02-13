@@ -23,7 +23,8 @@ const MaterialAndToolPage = lazy(
 );
 const ShoppingList = lazy(() => import("./containers/ShoppingList"));
 const AnnouncementPage = lazy(() => import("./containers/AnnouncementPage"));
-const Announcement = lazy(() => import("./components/Announcement"));
+// const Announcement = lazy(() => import("./components/Announcement"));
+const EditAnnouncement = lazy(() => import("./components/EditAnnouncement"));
 const AnnouncementCreated = lazy(() => import("./components/Subscription"));
 // const Material = lazy(() => import("./components/MaterialAndTool/Material"));
 const Tool = lazy(() => import("./components/MaterialAndTool/Tool"));
@@ -39,6 +40,7 @@ function App() {
   // check if the page is mainPage or advancedPage
   if (isMain) {
     return (
+
       <div className="flex flex-row">        
         <div className="flex-none">
           <SideBar />
@@ -123,15 +125,16 @@ function App() {
                 }
               />
               <Route
-                path="/Announcement/:id"
+                path="/EditAnnouncement/:id"
                 element={
                   <Suspense fallback={<div>Loading...</div>}>
-                    <Announcement />
+                    <EditAnnouncement />
                   </Suspense>
                 }
               />
+              
               <Route
-                path="/MaterialAndTool/Material/:id"
+                path="/MaterialAndToolPage/Material/:id"
                 element={
                   <Suspense fallback={<div>Loading...</div>}>
                     <MaterialDetail />
@@ -140,7 +143,7 @@ function App() {
               />
 
               <Route
-                path="/MaterialAndTool/Material/:id/edit"
+                path="/MaterialAndToolPage/Material/:id/edit"
                 element={
                   <Suspense fallback={<div>Loading...</div>}>
                     <MaterialEdit />
@@ -149,13 +152,14 @@ function App() {
               />
 
               <Route
-                path="/MaterialAndTool/Tool/:id"
+                path="/MaterialAndToolPage/Tool/:id"
                 element={
                   <Suspense fallback={<div>Loading...</div>}>
                     <Tool />
                   </Suspense>
                 }
               />
+
               <Route path="/advanced/*" element={<Advanced />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
