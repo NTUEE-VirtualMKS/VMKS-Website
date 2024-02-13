@@ -11,6 +11,7 @@ import Advanced from "./Advanced";
 
 const LoginPage = lazy(() => import("./containers/LoginPage"));
 const IntroductionPage = lazy(() => import("./containers/IntroductionPage"));
+const EditIntroduction = lazy(() => import("./components/EditIntroduction"));
 const TutorialPage = lazy(() => import("./containers/TutorialPage"));
 const MapPage = lazy(() => import("./containers/MapPage"));
 const UserProfilePage = lazy(() => import("./containers/UserProfilePage"));
@@ -52,6 +53,16 @@ function App() {
               </Suspense>
             }
           />
+
+          <Route
+            path="/Introduction/edit"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <EditIntroduction />
+              </Suspense>
+            }
+          />
+
           <Route
             path="/MapPage"
             element={

@@ -417,7 +417,16 @@ const GET_AUTHORIZED_CODE_QUERY = gql(`
       updatedAt
     }
   }
-`)
+`);
+
+const CURRENT_INTRODUCTION_QUERY = gql(`
+  query CurrentIntroduction {
+    CurrentIntroduction {
+      id
+      content
+    }
+  }
+`);
 
 export {
   ALL_ANNOUNCEMENT_QUERY,
@@ -445,4 +454,5 @@ export {
   SEARCH_TOOL_BY_NAME_QUERY,
   SEARCH_TOOL_BY_POSITION_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
+  CURRENT_INTRODUCTION_QUERY,
 };

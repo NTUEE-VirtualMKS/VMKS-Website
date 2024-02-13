@@ -2,12 +2,7 @@
 // import { useQuery } from "@apollo/client";
 
 const UserProfilePage = () => {
-
-  return(
-    <>
-
-    </>
-  )
-}
+  return <></>;
+};
 
 export default UserProfilePage;

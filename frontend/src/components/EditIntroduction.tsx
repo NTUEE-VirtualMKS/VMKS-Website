@@ -1,32 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { colors } from "../Color";
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Icon from "@mdi/react";
 import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
-import { useQuery } from "@apollo/client";
-import { CURRENT_INTRODUCTION_QUERY } from "../graphql";
-import Overview from "../components/MDX/Overview.tsx";
+import TextArea from "./MDX/TextArea.tsx";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CURRENT_INTRODUCTION_QUERY,
+  INTRODUCTION_UPDATE_MUTATION,
+} from "../graphql";
+import { Button, Stack } from "@mui/material";
 
-const IntroductionPage = () => {
+const EditIntroduction = () => {
   const navigate = useNavigate();
   const ref = useRef<any>();
   const { data, loading, error } = useQuery(CURRENT_INTRODUCTION_QUERY);
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
   const introduction = JSON.parse(JSON.stringify(data?.CurrentIntroduction));
   const content = introduction.content;
-
-  const handleEdit = () => {
-    navigate("/Introduction/edit");
+  const [
+    updateIntroduction,
+    { loading: introductionLoading, error: introductionError },
+  ] = useMutation(INTRODUCTION_UPDATE_MUTATION, {
+    refetchQueries: [{ query: CURRENT_INTRODUCTION_QUERY }],
+  });
+  const handleSave = async (content: string) => {
+    if (introductionLoading) return "Loading...";
+    if (introductionError) return `Error! ${introductionError.message}`;
+    await updateIntroduction({
+      variables: { introductionInput: { content: content } },
+    });
+    navigate(-1);
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
   return (
     <>
       <div style={{ width: "95%", marginBottom: "30px" }}>
@@ -110,9 +122,17 @@ const IntroductionPage = () => {
               />
             </button>
             <h1 className="my-0 mx-auto">MKS介紹</h1>
-            <Button className="m-3" variant="outlined" onClick={handleEdit}>
-              編輯
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="outlined"
+                onClick={() => handleSave(ref.current?.getMarkdown())}
+              >
+                儲存
+              </Button>
+              <Button variant="outlined" onClick={handleCancel}>
+                取消
+              </Button>
+            </Stack>
           </div>
           <div
             style={{
@@ -131,7 +151,7 @@ const IntroductionPage = () => {
                 padding: "5px",
               }}
             >
-              <Overview markdown={content} overviewRef={ref} />
+              <TextArea editorRef={ref} markdown={content} />
               <div style={{ height: "100px" }}></div>
             </div>
           </div>
@@ -141,4 +161,4 @@ const IntroductionPage = () => {
   );
 };
 
-export default IntroductionPage;
+export default EditIntroduction;

@@ -91,7 +91,7 @@ model ThreeDP {
 model User {
   id                Int            @id @default(autoincrement())
   name              String
-  studentID         String          @unique
+  studentID         String         @unique
   password          String
   photoLink         String?
   threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id])
@@ -106,9 +106,9 @@ model User {
 }
 
 model AuthorizedCode {
-  id          Int     @id @default(autoincrement())
-  codeList    String[]
-  updatedAt   String
+  id        Int      @id @default(autoincrement())
+  codeList  String[]
+  updatedAt String
 }
 
 model UserMaterial {
