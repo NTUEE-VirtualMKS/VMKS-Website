@@ -494,6 +494,15 @@ const USER_MACHINE_USAGE_UPDATE_MUTATION = gql(`
   }
 `);
 
+const INTRODUCTION_UPDATE_MUTATION = gql(`
+  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {
+    UpdateIntroduction(introductionInput: $introductionInput) {
+      id
+      content
+    }
+  }
+`);
+
 //update authorizedCode
 const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
   mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {
@@ -503,7 +512,7 @@ const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
       updatedAt
     }
   }
-`)
+`);
 
 export {
   ADD_ANNOUNCEMENT_MUTATION,
@@ -535,5 +544,6 @@ export {
   MATERIAL_USAGE_UPDATE_MUTATION,
   TOOL_USAGE_UPDATE_MUTATION,
   USER_MACHINE_USAGE_UPDATE_MUTATION,
+  INTRODUCTION_UPDATE_MUTATION,
   AUTHORIZED_CODE_UPDATE_MUTATION,
 };

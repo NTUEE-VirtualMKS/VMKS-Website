@@ -42,6 +42,7 @@ const documents = {
     "\n  mutation MaterialUsageUpdate($materialUsageUpdateId: Int!, $materialUsageUpdateInput: MaterialUsageUpdateInput!) {\n  MaterialUsageUpdate(id: $materialUsageUpdateId, materialUsageUpdateInput: $materialUsageUpdateInput) {\n    id\n    name\n    partName\n    category\n    valuable\n    position\n    description\n    photoLink\n    usage\n    tutorialLink\n    fee\n    remain\n  }\n}\n": types.MaterialUsageUpdateDocument,
     "\n  mutation ToolUsageUpdate($toolUsageUpdateId: Int!, $toolUsageUpdateInput: ToolUsageUpdateInput!) {\n    ToolUsageUpdate(id: $toolUsageUpdateId, toolUsageUpdateInput: $toolUsageUpdateInput) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.ToolUsageUpdateDocument,
     "\n  mutation UserMachineUsageUpdate($userMachineUsageUpdateId: Int!, $userMachineUpdateInput: UserMachineUpdateInput!) {\n    UserMachineUsageUpdate(id: $userMachineUsageUpdateId, userMachineUpdateInput: $userMachineUpdateInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n": types.UserMachineUsageUpdateDocument,
+    "\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n": types.UpdateIntroductionDocument,
     "\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n": types.UpdateAuthorizedCodeDocument,
     "\n  query AllAnnouncements {\n    AllAnnouncements {\n      id\n      title\n      date\n      content\n    }\n  }\n": types.AllAnnouncementsDocument,
     "\n  query AllArticles {\n    AllArticles {\n      id\n      writerId\n      description\n      imageURL\n      time\n      title\n      headline\n      content\n      userpic\n    }\n  }\n": types.AllArticlesDocument,
@@ -68,7 +69,9 @@ const documents = {
     "\n  query SearchUserByName($name: String!) {\n    SearchUserByName(name: $name) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n": types.SearchUserByNameDocument,
     "\n  query AllUserMaterials {\n    AllUserMaterials {\n      id\n      name\n      partName\n      borrowerId\n      borrowNum\n      borrowDate\n      returnDate\n      status\n    }\n  }\n": types.AllUserMaterialsDocument,
     "\n  query GetAuthorizedCode {\n    GetAuthorizedCode {\n      id\n      codeList\n      updatedAt\n    }\n  }\n": types.GetAuthorizedCodeDocument,
-    "\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n": types.AnnouncementCreatedDocument,
+    "\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n": types.CurrentIntroductionDocument,
+    "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n": types.AnnouncementCreatedDocument,
+    "\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n": types.IntroductionUpdatedDocument,
 };
 
 /**
@@ -204,6 +207,10 @@ export function gql(source: "\n  mutation UserMachineUsageUpdate($userMachineUsa
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -308,7 +315,15 @@ export function gql(source: "\n  query GetAuthorizedCode {\n    GetAuthorizedCod
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n"): (typeof documents)["\n    subscription AnnouncementCreated {\n        AnnouncementCreated {\n        id\n        date\n        title\n        content\n        }\n    }\n"];
+export function gql(source: "\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

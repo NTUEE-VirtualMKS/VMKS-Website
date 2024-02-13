@@ -1202,8 +1202,7 @@ const Mutation = {
     context,
   ) => {
     console.log(args.authorizedCodeInput);
-    const existence = await prisma.authorizedCode.findFirst({
-    });
+    const existence = await prisma.authorizedCode.findFirst({});
     // console.log(args);
     const { codeList } = args.authorizedCodeInput;
     let updateAuthorizedCode;
@@ -1236,7 +1235,7 @@ const Mutation = {
   SignUp: async (_parents, args: { signUpInput: SignUpInput }) => {
     const costFactor = 12;
     const { name, studentID, password } = args.signUpInput;
-    
+
     const studentIDExisted = await prisma.user.findFirst({
       where: {
         studentID: studentID,
@@ -1270,14 +1269,12 @@ const Mutation = {
         env.JWT_SECRET,
         {
           expiresIn: env.JWT_EXPIRES_IN,
-        }
-        
+        },
       );
       pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
       return { user: newUser, token: token };
       // return newUser
     }
-
   },
 };
 

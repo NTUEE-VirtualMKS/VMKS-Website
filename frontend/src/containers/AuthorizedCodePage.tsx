@@ -1,8 +1,24 @@
-import { AUTHORIZED_CODE_UPDATE_MUTATION, GET_AUTHORIZED_CODE_QUERY } from "../graphql";
+import {
+  AUTHORIZED_CODE_UPDATE_MUTATION,
+  GET_AUTHORIZED_CODE_QUERY,
+} from "../graphql";
 import { useMutation } from "@apollo/client";
 import type { AuthorizedCodeInput } from "../../../backend/src/types/types";
 import { useState } from "react";
-import { Dialog, Button, FormControl, InputLabel, Select, MenuItem, DialogActions, DialogContent, TextField, DialogContentText, DialogTitle, makeStyles } from "@mui/material";
+import {
+  Dialog,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  DialogActions,
+  DialogContent,
+  TextField,
+  DialogContentText,
+  DialogTitle,
+  makeStyles,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const AuthorizedCodePage = () => {
@@ -20,7 +36,7 @@ const AuthorizedCodePage = () => {
   );
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
-  
+
   // const useStyles = makeStyles((theme) => ({
   //   formControl: {
   //     margin: theme.spacing(1),
@@ -31,29 +47,30 @@ const AuthorizedCodePage = () => {
   const handleGenerate = () => {
     const numberInt: number = Number(number);
     const lengthInt: number = Number(length);
-  
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    const characters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const randomCode: string[] = ["The generated authorized codes are:"];
 
-    for(let i = 0; i < numberInt; i++){
+    for (let i = 0; i < numberInt; i++) {
       let result: string = "";
-      for(let j = 0; j < lengthInt; j++){
+      for (let j = 0; j < lengthInt; j++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         result += characters.charAt(randomIndex);
       }
       randomCode.push(result);
     }
 
-    const alertMessage = randomCode.join('\n');
+    const alertMessage = randomCode.join("\n");
 
     const userResponse = confirm(alertMessage);
-    if(userResponse){
-      formSubmit({codeList: randomCode.slice(1)});
+    if (userResponse) {
+      formSubmit({ codeList: randomCode.slice(1) });
     }
 
     setNumber("10");
     setLength("6");
-  }
+  };
 
   const formSubmit = ({ codeList }: AuthorizedCodeInput) => {
     // const classes = useStyles();
@@ -64,20 +81,28 @@ const AuthorizedCodePage = () => {
         },
       },
     });
-    
+
     setVisible(false);
   };
 
-
-  return(
+  return (
     <>
       <div className="flex justify-center m-3">公告一覽</div>
 
-      <Button className="m-3" variant="outlined" onClick={() => setVisible(true)}>
+      <Button
+        className="m-3"
+        variant="outlined"
+        onClick={() => setVisible(true)}
+      >
         新增加簽碼
       </Button>
 
-      <Dialog open={visible} onClose={() => setVisible(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={visible}
+        onClose={() => setVisible(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>新增公告</DialogTitle>
         <DialogContent>
           <FormControl className="w-50">
@@ -90,7 +115,9 @@ const AuthorizedCodePage = () => {
               value={number}
               onChange={(e) => setNumber(e.target.value)}
             />
-            <InputLabel id="option-input-label" className="w-50">Code length</InputLabel>
+            <InputLabel id="option-input-label" className="w-50">
+              Code length
+            </InputLabel>
             <Select
               labelId="number-input"
               id="option-input"
@@ -117,12 +144,12 @@ const AuthorizedCodePage = () => {
       </Dialog>
 
       <div className="flex justify-center m-3">
-        <Button  variant="outlined" onClick={() => navigate(-1)}>
+        <Button variant="outlined" onClick={() => navigate(-1)}>
           返回
         </Button>
       </div>
     </>
-  )
-}
-  
+  );
+};
+
 export default AuthorizedCodePage;
