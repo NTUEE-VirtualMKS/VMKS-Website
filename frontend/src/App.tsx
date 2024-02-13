@@ -22,7 +22,8 @@ const MaterialAndToolPage = lazy(
 );
 const ShoppingList = lazy(() => import("./containers/ShoppingList"));
 const AnnouncementPage = lazy(() => import("./containers/AnnouncementPage"));
-const Announcement = lazy(() => import("./components/Announcement"));
+// const Announcement = lazy(() => import("./components/Announcement"));
+const EditAnnouncement = lazy(() => import("./components/EditAnnouncement"));
 const AnnouncementCreated = lazy(() => import("./components/Subscription"));
 // const Material = lazy(() => import("./components/MaterialAndTool/Material"));
 const Tool = lazy(() => import("./components/MaterialAndTool/Tool"));
@@ -117,10 +118,10 @@ function App() {
             }
           />
           <Route
-            path="/Announcement/:id"
+            path="/EditAnnouncement/:id"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <Announcement />
+                <EditAnnouncement />
               </Suspense>
             }
           />
