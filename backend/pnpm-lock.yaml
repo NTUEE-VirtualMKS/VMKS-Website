@@ -53,9 +53,6 @@ dependencies:
   ws:
     specifier: ^8.13.0
     version: 8.13.0
-  zod:
-    specifier: ^3.22.4
-    version: 3.22.4
 
 devDependencies:
   "@babel/cli":
@@ -6501,7 +6498,6 @@ packages:
       }
     engines: { node: ">=10" }
     dev: true
-
   /zod@3.22.4:
     resolution:
       {
