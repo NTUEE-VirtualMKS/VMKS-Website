@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 export const NavBar = () => {
     const navigate = useNavigate();
     return (
-      <div className="flex-1 m-3 flex flex-row justify-between">
+      <div className="flex-1 m-3 flex flex-row justify-between ">
         <div className="flex items-start gap-[15px] inline-flex">
             <button className="flex flex-col justify-center items-center w-[45px] h-[45px] rounded-full border border-white" onClick={() => navigate(-1)}>
                 <ChevronLeftIcon  sx={{ color: 'white' }} />
@@ -29,18 +29,18 @@ export const NavBar = () => {
                 </button>
             </div>
             <div className="w-[50px] h-[50px] relative">
-                <button className="flex flex-col justify-center items-center w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white" >
+                <button className="flex flex-col justify-center items-center w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white" onClick={()=>navigate("ShoppingList")}>
                   <ShoppingCartRoundedIcon sx={{ color: 'white' }} />
                 </button>
             </div>
             <div className="w-[50px] h-[50px] relative">
-                <button className=" flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white">
+                <button className=" flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white" onClick={()=>navigate("UserProfilePage")}>
                     <PersonIcon sx={{ color: 'white' }} />
                 </button>
                 {/* <div className="w-11 h-11 left-[3px] top-[1px] absolute" /> */}
             </div>
             <div className="w-[50px] h-[50px] relative">
-                <button className="flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white">
+                <button className="flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white" onClick={()=>navigate("TutorialPage")}>
                     <QuestionMarkIcon sx={{ color: 'white' }} />
                 </button>
             </div>
