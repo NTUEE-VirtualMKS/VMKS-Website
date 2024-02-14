@@ -46,8 +46,10 @@ function App() {
           <SideBar />
         </div>
         <div className=" flex-1 flex-col h-screen ml-20">
-          <NavBar />
-          <div className="flex-1 p-4">
+          <div className="fixed bg-black w-full pr-20">
+            <NavBar />
+          </div>
+          <div className="flex-1 m-4 mt-12">
             <Routes>
               {/* <Route path='/' element={<HomePage />} /> */}
               <Route path="/" element={<HomePage />} />

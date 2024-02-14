@@ -1,11 +1,15 @@
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { useNavigate } from "react-router-dom";
 export const SideBar = () => {
+    const navigate = useNavigate();
     return(
         <>
         {/* <div className="w-[231px] left-[1151px] top-[929px] absolute text-white text-opacity-70 text-sm font-normal font-['Poppins'] leading-tight">copyright © virtual makerspace️</div>  */}
         <div className="w-20 h-full left-0 top-0 fixed bg-slate-900 rounded-2xl border border-zinc-600 flex flex-col">
-            <img className="w-full h-[107px] object-cover" src="/logo.png" alt="Placeholder" />
+            <button onClick={() => navigate("")}>
+                <img className="w-full h-[107px] object-cover" src="/logo.png" alt="Placeholder" />
+            </button>
             <div className="h-px bg-zinc-600" />
             <div className="w-full flex flex-col justify-center items-center p-2">
                 <FavoriteBorderOutlinedIcon className="w-5 h-5 text-white" />
