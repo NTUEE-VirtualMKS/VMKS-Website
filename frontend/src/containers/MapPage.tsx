@@ -23,13 +23,13 @@ const MapPage = () => {
             cursor: "pointer",
           }}
         >
-          <Icon
+          {/* <Icon
             path={mdiArrowLeftDropCircleOutline}
             size={3}
             color={colors.DarkSlateGray}
-          />
+          /> */}
         </button>
-        <h1 style={{ margin: "0 auto" }}>| 地圖導覽 |</h1>
+        <h1 style={{ margin: "0 auto", color: "white"  }}>| 地圖導覽 |</h1>
       </div>
       <div
         style={{

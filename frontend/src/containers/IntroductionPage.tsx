@@ -29,13 +29,12 @@ const IntroductionPage = () => {
 
   return (
     <>
-      <div style={{ width: "95%", marginBottom: "30px" }}>
+      <div style={{ width: "95%", marginBottom: "30px",color: "white",}}>
         <div
           style={{
             width: "120px",
             height: "575px",
             position: "absolute",
-            backgroundColor: "#C4E4EA",
           }}
         >
           <List style={{ paddingTop: "0" }}>
@@ -51,9 +50,10 @@ const IntroductionPage = () => {
                   textAlign: "center",
                   marginTop: "0",
                   marginLeft: "0",
+                  color: "white",
                 }}
               >
-                <ListItemText style={{ color: colors.DarkSlateGray }}>
+                <ListItemText style={{ color: "white" }}>
                   MKS簡介
                 </ListItemText>
               </ListItemButton>
@@ -67,9 +67,10 @@ const IntroductionPage = () => {
                   borderRightWidth: "0px",
                   borderRadius: "0px",
                   textAlign: "center",
+                  color: "white",
                 }}
               >
-                <ListItemText style={{ color: colors.DarkSlateGray }}>
+                <ListItemText style={{ color: "white" }}>
                   管理員班表
                 </ListItemText>
               </ListItemButton>
@@ -84,7 +85,7 @@ const IntroductionPage = () => {
                   textAlign: "center",
                 }}
               >
-                <ListItemText style={{ color: colors.DarkSlateGray }}>
+                <ListItemText style={{ color: "white" }}>
                   使用者規範
                 </ListItemText>
               </ListItemButton>
