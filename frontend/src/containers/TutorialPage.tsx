@@ -34,6 +34,7 @@ const TutorialPage = () => {
           marginLeft: "150px",
           marginTop: "30px",
           marginBottom: "30px",
+          color: "white",
         }}
       >
         <div>Tutorial Page</div>

@@ -104,9 +104,9 @@ const Announcements = () => {
   return (
     <>
       {admin ? (
-        <button onClick={handleEdit}>isAdmin</button>
+        <button className="text-gray-300" onClick={handleEdit}>isAdmin</button>
       ) : (
-        <button onClick={handleEdit}>notAdmin</button>
+        <button className="text-gray-300" onClick={handleEdit}>notAdmin</button>
       )}
       <div
         className="m-3 border-2 border-sky-200"
@@ -124,14 +124,15 @@ const Announcements = () => {
                     padding: "10px",
                   }}
                 >
-                  <h2>{announcement.title}</h2>
-                  <p>Date: {new Date(announcement.date).toLocaleString()}</p>
-                  <p>{announcement.content}</p>
+                  <h2 className="text-white">{announcement.title}</h2>
+                  <p className="text-gray-300">Date: {new Date(announcement.date).toLocaleString()}</p>
+                  <p className="text-white">{announcement.content}</p>
                   {admin && (
                     <button
                       onClick={() =>
                         navigate(`/EditAnnouncement/${announcement.id}`)
                       }
+                      className="text-sky-300"
                     >
                       EDIT
                     </button>

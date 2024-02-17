@@ -66,14 +66,15 @@ const AnnouncementPage = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-center m-3">公告一覽</div>
+    <div>
+      {/* <h1 className="flex justify-center mt-10" style={{ margin: "3 auto", color: "white"  }}>| 公告一覽 |</h1> */}
+      {/* <div className="flex justify-center text-white m-3">公告一覽</div> */}
 
       <div id="announcements">
         <Announcement />
       </div>
 
-      <Button className="m-3" variant="outlined" onClick={handleOpen}>
+      <Button className="m-3 text-sky-300" variant="outlined" onClick={handleOpen}>
         新增公告
       </Button>
 
@@ -114,12 +115,12 @@ const AnnouncementPage = () => {
         </DialogActions>
       </Dialog>
 
-      <div className="flex justify-center m-3">
+      {/* <div className="flex justify-center m-3">
         <Button variant="outlined" onClick={() => navigate(-1)}>
           返回
         </Button>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 };
 

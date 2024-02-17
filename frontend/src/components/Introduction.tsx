@@ -77,8 +77,8 @@ export const Introduction = () => {
   };
   return (
     <Box sx={boxstyle}>
-      <div style={{ margin: "20px 0px 20px 0px", display: "inline" }}>
-        <h2 style={{ marginBottom: "30px", fontSize: "28px" }}>
+      <div style={{ margin: "20px 0px 20px 0px", display: "inline", color: "white", }}>
+        <h2 style={{ marginBottom: "30px", fontSize: "28px", color: "white" }}>
           {" "}
           Introduction{" "}
         </h2>
@@ -88,6 +88,7 @@ export const Introduction = () => {
           borderCollapse: "separate" as const,
           borderSpacing: 0,
           width: "100%",
+          color: "white"
         }}
         className="intro"
       >

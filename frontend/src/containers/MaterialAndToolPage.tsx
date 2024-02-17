@@ -77,14 +77,14 @@ const MaterialAndToolPage = () => {
   return (
     <>
       <div style={{ width: "95%", marginBottom: "30px" }}>
-        <div
+        {/* <div
           style={{
             width: "120px",
             height: "520px",
             position: "absolute",
             backgroundColor: "#C4E4EA",
           }}
-        ></div>
+        ></div> */}
 
         <div className="ml-44">
           <br></br>
@@ -93,13 +93,13 @@ const MaterialAndToolPage = () => {
               onClick={() => navigate("/")}
               className="transparent border-none m-4 cursor-pointer"
             >
-              <Icon
+              {/* <Icon
                 path={mdiArrowLeftDropCircleOutline}
                 size={3}
                 color={colors.DarkSlateGray}
-              />
+              /> */}
             </button>
-            <h1 style={{ margin: "0 auto" }}>| 資源一覽 |</h1>
+            <h1 style={{ margin: "0 auto", color:"white"}}>| 資源一覽 |</h1>
             <Button className="m-3" variant="outlined" onClick={handleOpen}>
               新增材料
             </Button>
