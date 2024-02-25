@@ -1,71 +1,71 @@
 // import Button from "@mui/material/Button";
 import "./HomePage.css";
 import "../images/MKS_environment.jpg";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Introduction } from "../components/Introduction";
-import {HomePageAnnounce} from "../components/HomepageComponents/HomePageAnnounce";
+// import { Link } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { Introduction } from "../components/Introduction";
+import { HomePageAnnounce } from "../components/HomepageComponents/HomePageAnnounce";
 import { HomePageTimetable } from "../components/HomepageComponents/HomePageTimetable";
 import { HomePageForum } from "../components/HomepageComponents/HomePageForum";
 import { HomePageMaterialBox } from "../components/HomepageComponents/HomePageMaterialBox";
-import ImageURL from "../images/MKS_environment.jpg";
+// import ImageURL from "../images/MKS_environment.jpg";
 
 export const HomePage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const navigate = useNavigate();
 
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
+  // const daysOfWeek = [
+  // "Monday",
+  // "Tuesday",
+  // "Wednesday",
+  // "Thursday",
+  // "Friday",
+  // "Saturday",
+  // "Sunday",
+  // ];
 
-  const scheduleData = [
-    [
-      "9:00-12:00",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-    ],
-    [
-      "13:00-16:00 (A)",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-    ],
-    [
-      "13:00-16:00 (B)",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-    ],
-    [
-      "18:00-21:00",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-      "Brian",
-    ],
-  ];
+  // const scheduleData = [
+  //   [
+  //     "9:00-12:00",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //   ],
+  //   [
+  //     "13:00-16:00 (A)",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //   ],
+  //   [
+  //     "13:00-16:00 (B)",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //   ],
+  //   [
+  //     "18:00-21:00",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //     "Brian",
+  //   ],
+  // ];
 
   return (
     // <div>
@@ -186,7 +186,6 @@ export const HomePage = () => {
           <HomePageForum />
         </div>
       </div>
-      
     </div>
   );
 };
