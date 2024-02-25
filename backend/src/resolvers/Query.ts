@@ -554,9 +554,10 @@ const Query = {
         studentID: studentID,
       },
     });
-
+    if (!user) throw new Error("StudentID not found");
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
+    
     if (!isPasswordValid) throw new Error("Invalid password");
     else {
       const token = jwt.sign(
