@@ -41,7 +41,7 @@ function App() {
   // check if the page is mainPage or advancedPage
   if (isMain) {
     return (
-      <div className="flex flex-row">        
+      <div className="flex flex-row">
         <div className="flex-none">
           <SideBar />
         </div>
@@ -69,7 +69,7 @@ function App() {
                     <EditIntroduction />
                   </Suspense>
                 }
-              />   
+              />
               <Route
                 path="/MapPage"
                 element={
@@ -143,7 +143,7 @@ function App() {
                   </Suspense>
                 }
               />
-              
+
               <Route
                 path="/MaterialAndToolPage/Material/:id"
                 element={
@@ -174,7 +174,7 @@ function App() {
               <Route path="/advanced/*" element={<Advanced />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          {/* <Footer /> */}
+            {/* <Footer /> */}
           </div>
         </div>
       </div>
