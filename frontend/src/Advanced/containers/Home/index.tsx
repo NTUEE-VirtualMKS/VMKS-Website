@@ -11,7 +11,6 @@ import {
   PanelGroup,
   // PanelResizeHandle
 } from "react-resizable-panels";
-// import styled from "styled-components";
 import ImageURL from "../../assets/vmks_dusk_ui_bg_v2.png";
 import {
   GlobalStyles,
@@ -24,7 +23,6 @@ import {
 import "../../assets/vmks_logo-removebg.png";
 import "../../assets/vmks_dusk_ui_bg_v2.png";
 import NavBar from "../../components/NavBar";
-// import SideBar from "../../components/SideBar";
 import Footer from "../../components/Footer";
 import Forum from "../Forum";
 
@@ -151,7 +149,6 @@ const Renting: React.FC = () => <div>Renting Page</div>;
 const MapGuide: React.FC = () => (
   <a href="https://360degree.pcwu2022.repl.co/">3D_panorama</a>
 );
-//const Forum: React.FC = () => <div>Forum Page</div>;
 const About: React.FC = () => <div>About Page</div>;
 const UsersGuide: React.FC = () => <div>Users Guide Page</div>;
 

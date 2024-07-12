@@ -1,7 +1,8 @@
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { useNavigate } from "react-router-dom";
-export const SideBar = () => {
+
+function SideBar() {
   const navigate = useNavigate();
   return (
     <>
@@ -63,4 +64,6 @@ export const SideBar = () => {
       </div>
     </>
   );
-};
+}
+
+export default SideBar;

@@ -66,7 +66,6 @@ const MaterialEdit = () => {
   if (queryLoading) return <div>Loading...</div>;
   if (queryError) return <div>{queryError.message}</div>;
 
-  // const materialId = parse(id);
   return (
     <>
       <RouteBar Route={material?.category} />

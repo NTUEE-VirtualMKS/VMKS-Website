@@ -1,37 +1,35 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { NavBar } from "./components/NavBar";
-import { SideBar } from "./components/SideBar";
-import { NotFound } from "./containers/NotFound";
-import { HomePage } from "./containers/HomePage";
-// import Footer from "./components/Footer";
-import MaterialDetail from "./components/MaterialAndTool/MaterialDetail";
-import MaterialEdit from "./components/MaterialAndTool/MaterialEdit";
-import Advanced from "./Advanced";
+import NavBar from "@/components/NavBar";
+import SideBar from "@/components/SideBar";
+import NotFound from "@/containers/NotFound";
+import HomePage from "@/containers/HomePage";
+import MaterialDetail from "@/components/MaterialAndTool/MaterialDetail";
+import MaterialEdit from "@/components/MaterialAndTool/MaterialEdit";
+import Advanced from "@/Advanced";
+import LoaderSpinner from "@/components/LoaderSpinner";
 
-const LoginPage = lazy(() => import("./containers/LoginPage"));
-const IntroductionPage = lazy(() => import("./containers/IntroductionPage"));
-const EditIntroduction = lazy(() => import("./components/EditIntroduction"));
-const TutorialPage = lazy(() => import("./containers/TutorialPage"));
-const MapPage = lazy(() => import("./containers/MapPage"));
-const UserProfilePage = lazy(() => import("./containers/UserProfilePage"));
+const LoginPage = lazy(() => import("@/containers/LoginPage"));
+const IntroductionPage = lazy(() => import("@/containers/IntroductionPage"));
+const EditIntroduction = lazy(() => import("@/components/EditIntroduction"));
+const TutorialPage = lazy(() => import("@/containers/TutorialPage"));
+const MapPage = lazy(() => import("@/containers/MapPage"));
+const UserProfilePage = lazy(() => import("@/containers/UserProfilePage"));
 const AuthorizedCodePage = lazy(
-  () => import("./containers/AuthorizedCodePage")
+  () => import("@/containers/AuthorizedCodePage")
 );
 const MaterialAndToolPage = lazy(
-  () => import("./containers/MaterialAndToolPage")
+  () => import("@/containers/MaterialAndToolPage")
 );
-const ShoppingList = lazy(() => import("./containers/ShoppingList"));
-const AnnouncementPage = lazy(() => import("./containers/AnnouncementPage"));
-// const Announcement = lazy(() => import("./components/Announcement"));
-const EditAnnouncement = lazy(() => import("./components/EditAnnouncement"));
-const AnnouncementCreated = lazy(() => import("./components/Subscription"));
-// const Material = lazy(() => import("./components/MaterialAndTool/Material"));
-const Tool = lazy(() => import("./components/MaterialAndTool/Tool"));
+const ShoppingList = lazy(() => import("@/containers/ShoppingList"));
+const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
+const EditAnnouncement = lazy(() => import("@/components/EditAnnouncement"));
+const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
+const Tool = lazy(() => import("@/components/MaterialAndTool/Tool"));
 
 function App() {
-  const match = useMatch("/advanced/*");
+  const match = useMatch("@/advanced/*");
   const [isMain, setIsMain] = useState(true);
 
   useEffect(() => {
@@ -51,21 +49,19 @@ function App() {
           </div>
           <div className="flex-1 m-4 mt-12">
             <Routes>
-              {/* <Route path='/' element={<HomePage />} /> */}
               <Route path="/" element={<HomePage />} />
               <Route
                 path="/IntroductionPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <IntroductionPage />
                   </Suspense>
                 }
               />
-
               <Route
                 path="/Introduction/edit"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <EditIntroduction />
                   </Suspense>
                 }
@@ -73,7 +69,7 @@ function App() {
               <Route
                 path="/MapPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <MapPage />
                   </Suspense>
                 }
@@ -81,7 +77,7 @@ function App() {
               <Route
                 path="/UserProfilePage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <UserProfilePage />
                   </Suspense>
                 }
@@ -89,7 +85,7 @@ function App() {
               <Route
                 path="/AuthorizedCodePage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <AuthorizedCodePage />
                   </Suspense>
                 }
@@ -97,7 +93,7 @@ function App() {
               <Route
                 path="/MaterialAndToolPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <MaterialAndToolPage />
                   </Suspense>
                 }
@@ -105,7 +101,7 @@ function App() {
               <Route
                 path="/TutorialPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <TutorialPage />
                   </Suspense>
                 }
@@ -113,7 +109,7 @@ function App() {
               <Route
                 path="/ShoppingList"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <ShoppingList />
                   </Suspense>
                 }
@@ -121,7 +117,7 @@ function App() {
               <Route
                 path="/LoginPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <LoginPage />
                   </Suspense>
                 }
@@ -129,7 +125,7 @@ function App() {
               <Route
                 path="/AnnouncementPage"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <AnnouncementPage />
                     <AnnouncementCreated />
                   </Suspense>
@@ -138,43 +134,38 @@ function App() {
               <Route
                 path="/EditAnnouncement/:id"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <EditAnnouncement />
                   </Suspense>
                 }
               />
-
               <Route
                 path="/MaterialAndToolPage/Material/:id"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <MaterialDetail />
                   </Suspense>
                 }
               />
-
               <Route
                 path="/MaterialAndToolPage/Material/:id/edit"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <MaterialEdit />
                   </Suspense>
                 }
               />
-
               <Route
                 path="/MaterialAndToolPage/Tool/:id"
                 element={
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<LoaderSpinner />}>
                     <Tool />
                   </Suspense>
                 }
               />
-
               <Route path="/advanced/*" element={<Advanced />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-            {/* <Footer /> */}
           </div>
         </div>
       </div>

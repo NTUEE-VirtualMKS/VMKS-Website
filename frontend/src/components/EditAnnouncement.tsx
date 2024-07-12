@@ -1,13 +1,7 @@
-// import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-// import { ALL_ANNOUNCEMENT_QUERY } from "../graphql/queries";
-// import { useLocation } from 'react-router-dom';
 import { EDIT_ANNOUNCEMENT_MUTATION, ALL_ANNOUNCEMENT_QUERY } from "../graphql";
-// import { useQuery } from "@apollo/client";
-// import type { AnnouncementInputType } from "../shared/type.ts";
 import { useState } from "react";
-// import { useMutation } from "@apollo/client";
 import {
   Dialog,
   Button,
@@ -17,24 +11,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-// const AllAnnouncements = () => {
-//   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
-//   if (loading) return "Loading...";
-//   if (error) return `Error! ${error.message}`;
+import LoaderSpinner from "./LoaderSpinner";
 
-//   return <div>{JSON.stringify(data?.AllAnnouncements)}</div>;
-// };
-
-// const Announcement = () => {
-//   // const navigate = useNavigate();
-//   return (
-//     <>
-//       <div>{AllAnnouncements()}</div>
-//       {/* <button onClick={() => navigate(-1)}>go back</button> */}
-//     </>
-//   );
-// };
-// export default Announcement;
 const EditAnnouncement = () => {
   const { id } = useParams();
   if (!id) throw new Error("id is undefined");
@@ -47,18 +25,7 @@ const EditAnnouncement = () => {
 
   const allAnnouncements = JSON.parse(JSON.stringify(data?.AllAnnouncements));
   const announcement = allAnnouncements.find((a: any) => a.id === parseInt(id));
-  //   const location = useLocation();
-  //   const { state } = location;
-
-  // Access the passed parameters
-  //   const { editId, editTitle, editContent } = state || {};
-
-  //   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
-  //   const [admin, setAdmin] = useState(false);
   const [visible, setVisible] = useState(true);
-  //   const [title, setTitle] = useState("");
-  //   const [content, setContent] = useState("");
-  //   const [editIdNow, setEditIdNow] = useState(editId);
   const [editTitleNow, setEditTitleNow] = useState(announcement.title);
   const [editContentNow, setEditContentNow] = useState(announcement.content);
 
@@ -66,22 +33,7 @@ const EditAnnouncement = () => {
     setVisible(false);
     navigate(`/AnnouncementPage`);
   };
-  //   const handleEdit = () => {
-  //     if (admin) setAdmin(false);
-  //     else setAdmin(true);
-  //   };
-  //   const handleOpenEdit = (announcementId: number) => {
-  //     const announcementToEdit = announcements.find(a => a?.id === announcementId);
-  //     if (announcementToEdit) {
-  //       setEditId(announcementId);
-  //       setEditTitle(announcementToEdit.title ?? ""); // Use default value if title is null
-  //       setEditContent(announcementToEdit.content ?? ""); // Use default value if content is null
-  //       setVisible(true);
-  //     }
-  //   };
 
-  //   if (loading) return "Loading...";
-  //   if (error) return `Error! ${error.message}`;
   const [editAnnouncement, { loading: editLoading, error: editError }] =
     useMutation(EDIT_ANNOUNCEMENT_MUTATION, {
       refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
@@ -106,38 +58,15 @@ const EditAnnouncement = () => {
         },
       },
     });
-    // setEditTitle("");
-    // setEditContent("");
     handleClose();
     navigate(`/AnnouncementPage`);
   };
-  // const handleDelete = () => {
-  // console.log("delete");
-  // };
-  //   const announcements = data?.AllAnnouncements || [];
-  if (queryLoading) return <div>Loading...</div>;
+
+  if (queryLoading) return <LoaderSpinner />;
   if (queryError) return <div>{queryError.message}</div>;
 
   return (
     <>
-      {/* <div className="m-3 border-2 border-sky-200" style={{ maxHeight: '400px', overflowY: 'auto' }}> */}
-      {/* {admin ? (
-          <button onClick={handleEdit}>isAdmin</button>
-        ) : (
-          <button onClick={handleEdit}>notAdmin</button>
-        )}
-
-        {announcements.map((announcement) => (
-          announcement !== null && ( */}
-      {/* <> */}
-      {/* <button key={announcement.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }} onClick={() => navigate(`/EditAnnouncement/${announcement.id}`)}>
-                <h2>{announcement.title}</h2>
-                <p>Date: {new Date(announcement.date).toLocaleString()}</p>
-                <p>{announcement.content}</p>
-                {admin && <button onClick={() => handleOpenEdit(announcement.id)} >EDIT</button>}
-                <br></br>
-                {admin && <button onClick={handleDelete} >DELETE</button>}
-              </button> */}
       <Dialog open={visible} onClose={handleClose}>
         <DialogTitle>編輯公告</DialogTitle>
         <DialogContent>
@@ -175,11 +104,6 @@ const EditAnnouncement = () => {
         </DialogActions>
       </Dialog>
     </>
-    //       )
-    //     ))}
-    //   </div>
-
-    // </>
   );
 };
 export default EditAnnouncement;

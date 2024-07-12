@@ -1,11 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { MaterialList } from "../components/MaterialAndTool/MaterialList";
-import { colors } from "../Color";
-import Icon from "@mdi/react";
-import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
-import { ALL_MATERIAL_QUERY } from "../graphql/queries";
-import { ADD_MATERIAL_MUTATION } from "../graphql/mutations";
+import { MaterialList } from "@/components/MaterialAndTool/MaterialList";
+import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
+import { ADD_MATERIAL_MUTATION } from "@/graphql/mutations";
 import { useMutation } from "@apollo/client";
 import {
   Dialog,
@@ -14,10 +11,10 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import TextArea from "../components/MDX/TextArea";
-import { placeholder } from "../markdown/placeholder";
+import TextArea from "@/components/MDX/TextArea";
+import { placeholder } from "@/markdown/placeholder";
 
-const MaterialAndToolPage = () => {
+function MaterialAndToolPage() {
   const navigate = useNavigate();
   const ref = useRef<any>();
   const [visible, setVisible] = useState(false);
@@ -77,29 +74,14 @@ const MaterialAndToolPage = () => {
   return (
     <>
       <div style={{ width: "95%", marginBottom: "30px" }}>
-        {/* <div
-          style={{
-            width: "120px",
-            height: "520px",
-            position: "absolute",
-            backgroundColor: "#C4E4EA",
-          }}
-        ></div> */}
-
         <div className="ml-44">
           <br></br>
           <div className="flex items-center">
             <button
               onClick={() => navigate("/")}
               className="transparent border-none m-4 cursor-pointer"
-            >
-              {/* <Icon
-                path={mdiArrowLeftDropCircleOutline}
-                size={3}
-                color={colors.DarkSlateGray}
-              /> */}
-            </button>
-            <h1 style={{ margin: "0 auto", color:"white"}}>| 資源一覽 |</h1>
+            ></button>
+            <h1 style={{ margin: "0 auto", color: "white" }}>| 資源一覽 |</h1>
             <Button className="m-3" variant="outlined" onClick={handleOpen}>
               新增材料
             </Button>
@@ -136,6 +118,6 @@ const MaterialAndToolPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default MaterialAndToolPage;

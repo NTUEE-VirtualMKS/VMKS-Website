@@ -1,7 +1,7 @@
-// import React from "react";
 import "../../assets/footer_logo.png";
 import ImageURL from "../../assets/footer_logo.png";
 // import { LogoContainer, IconContainer } from "./sytles";
+
 const Footer = () => {
   return (
     <footer style={{ backgroundColor: "#868484" }}>
