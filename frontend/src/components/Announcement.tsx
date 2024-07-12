@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ALL_ANNOUNCEMENT_QUERY, EDIT_ANNOUNCEMENT_MUTATION } from "../graphql";
 import { useQuery } from "@apollo/client";
-// import type { AnnouncementInputType } from "../shared/type.ts";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import {
@@ -13,33 +12,13 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-// const AllAnnouncements = () => {
-//   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
-//   if (loading) return "Loading...";
-//   if (error) return `Error! ${error.message}`;
-//
-//   return <div>{JSON.stringify(data?.AllAnnouncements)}</div>;
-// };
 
-// const Announcement = () => {
-//   // const navigate = useNavigate();
-//   return (
-//     <>
-//       <div>{AllAnnouncements()}</div>
-//       {/* <button onClick={() => navigate(-1)}>go back</button> */}
-//     </>
-//   );
-// };
-// export default Announcement;
 const Announcements = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
   const [admin, setAdmin] = useState(false);
   const [visible, setVisible] = useState(false);
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  // const [editId, setEditId] = useState(0);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
@@ -50,20 +29,6 @@ const Announcements = () => {
     if (admin) setAdmin(false);
     else setAdmin(true);
   };
-  // const handleOpenEdit = (announcementId: number) => {
-  //   const announcementToEdit = announcements.find(
-  //     (a) => a?.id === announcementId
-  //   );
-  //   if (announcementToEdit) {
-  //     setEditId(announcementId);
-  //     setEditTitle(announcementToEdit.title ?? ""); // Use default value if title is null
-  //     setEditContent(announcementToEdit.content ?? ""); // Use default value if content is null
-  //     setVisible(true);
-  //   }
-  //   navigate(`/EditAnnouncement/${editId}`, {
-  //     state: { editId, editTitle, editContent },
-  //   });
-  // };
 
   const [editAnnouncement, { loading: editLoading, error: editError }] =
     useMutation(EDIT_ANNOUNCEMENT_MUTATION, {
@@ -95,18 +60,20 @@ const Announcements = () => {
     setEditContent("");
     handleClose();
   };
-  // const handleDelete = () => {
-  //   // console.log("delete");
-  // };
+
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   const announcements = data?.AllAnnouncements || [];
   return (
     <>
       {admin ? (
-        <button className="text-gray-300" onClick={handleEdit}>isAdmin</button>
+        <button className="text-gray-300" onClick={handleEdit}>
+          isAdmin
+        </button>
       ) : (
-        <button className="text-gray-300" onClick={handleEdit}>notAdmin</button>
+        <button className="text-gray-300" onClick={handleEdit}>
+          notAdmin
+        </button>
       )}
       <div
         className="m-3 border-2 border-sky-200"
@@ -125,7 +92,9 @@ const Announcements = () => {
                   }}
                 >
                   <h2 className="text-white">{announcement.title}</h2>
-                  <p className="text-gray-300">Date: {new Date(announcement.date).toLocaleString()}</p>
+                  <p className="text-gray-300">
+                    Date: {new Date(announcement.date).toLocaleString()}
+                  </p>
                   <p className="text-white">{announcement.content}</p>
                   {admin && (
                     <button

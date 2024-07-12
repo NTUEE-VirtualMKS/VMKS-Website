@@ -29,7 +29,7 @@ const IntroductionPage = () => {
 
   return (
     <>
-      <div style={{ width: "95%", marginBottom: "30px",color: "white",}}>
+      <div style={{ width: "95%", marginBottom: "30px", color: "white" }}>
         <div
           style={{
             width: "120px",
@@ -53,9 +53,7 @@ const IntroductionPage = () => {
                   color: "white",
                 }}
               >
-                <ListItemText style={{ color: "white" }}>
-                  MKS簡介
-                </ListItemText>
+                <ListItemText style={{ color: "white" }}>MKS簡介</ListItemText>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>

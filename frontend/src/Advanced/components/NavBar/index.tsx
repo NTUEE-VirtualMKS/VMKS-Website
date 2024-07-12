@@ -1,8 +1,7 @@
-// NavBar.tsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ImgURL from "../../assets/vmks_logo-removebg.png";
-// import styled from "styled-components";
+
 import {
   NavContainer,
   RightContainer,

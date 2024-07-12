@@ -4,12 +4,12 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import PersonIcon from "@mui/icons-material/Person";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-// import Button from "@mui/material/Button";
-export const NavBar = () => {
+
+function NavBar() {
   const navigate = useNavigate();
   return (
     <div className="flex-1 m-3 flex flex-row justify-between ">
-      <div className="flex items-start gap-[15px] inline-flex">
+      <div className="flex items-start gap-[15px]">
         <button
           className="flex flex-col justify-center items-center w-[45px] h-[45px] rounded-full border border-white"
           onClick={() => navigate(-1)}
@@ -23,7 +23,7 @@ export const NavBar = () => {
           <ChevronRightIcon sx={{ color: "white" }} />
         </button>
       </div>
-      <div className="flex items-start gap-[15px] inline-flex">
+      <div className="flex items-start gap-[15px]">
         <div className="w-[104px] h-[50px] relative">
           <button className="flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white">
             <div
@@ -72,4 +72,6 @@ export const NavBar = () => {
       </div>
     </div>
   );
-};
+}
+
+export default NavBar;

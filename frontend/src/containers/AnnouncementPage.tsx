@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import type { FunctionComponent } from "react";
 import { ADD_ANNOUNCEMENT_MUTATION } from "../graphql";
@@ -16,25 +15,10 @@ import {
 } from "@mui/material";
 import { ALL_ANNOUNCEMENT_QUERY } from "../graphql";
 const AnnouncementPage = () => {
-  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  // const [counter, setCounter] = useState(0);
 
-  /* Wang's pervious code
-  let counts=0;
-  const formSubmit = () => {
-    counts++;
-    const newAnnouncement = document.createElement("a");
-    const tmp = document.getElementById("Title") as HTMLInputElement;
-    newAnnouncement.textContent = tmp.value;
-    newAnnouncement.href = "/Announcement/"+counts;
-    setTitle("");
-    setContent("");
-    setVisible(false);
-  }
-  */
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
@@ -51,7 +35,6 @@ const AnnouncementPage = () => {
     setVisible(false);
   };
   const formSubmit = ({ title, content }: AnnouncementInput) => {
-    // setCounter((c) => (c += 1));
     addAnnouncement({
       variables: {
         announcementInput: {
@@ -67,14 +50,15 @@ const AnnouncementPage = () => {
 
   return (
     <div>
-      {/* <h1 className="flex justify-center mt-10" style={{ margin: "3 auto", color: "white"  }}>| 公告一覽 |</h1> */}
-      {/* <div className="flex justify-center text-white m-3">公告一覽</div> */}
-
       <div id="announcements">
         <Announcement />
       </div>
 
-      <Button className="m-3 text-sky-300" variant="outlined" onClick={handleOpen}>
+      <Button
+        className="m-3 text-sky-300"
+        variant="outlined"
+        onClick={handleOpen}
+      >
         新增公告
       </Button>
 
@@ -114,12 +98,6 @@ const AnnouncementPage = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* <div className="flex justify-center m-3">
-        <Button variant="outlined" onClick={() => navigate(-1)}>
-          返回
-        </Button>
-      </div> */}
     </div>
   );
 };
