@@ -29,7 +29,7 @@ const MapPage = () => {
             color={colors.DarkSlateGray}
           /> */}
         </button>
-        <h1 style={{ margin: "0 auto", color: "white" }}>| 地圖導覽 |</h1>
+        <h1 className="mx-auto text-white mt-2">地圖導覽</h1>
       </div>
       <div
         style={{

@@ -1,7 +1,7 @@
-import ImageURL from "../images/footer_logo.png";
-import FacebookURL from "../images/facebook.png";
-import InstagramURL from "../images/instagram.png";
-import GithubURL from "../images/github.png";
+import ImageURL from "@/images/footer_logo.png";
+import FacebookURL from "@/images/facebook.png";
+import InstagramURL from "@/images/instagram.png";
+import GithubURL from "@/images/github.png";
 
 const Footer = () => {
   return (

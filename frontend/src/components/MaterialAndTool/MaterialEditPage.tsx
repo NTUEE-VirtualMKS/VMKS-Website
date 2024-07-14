@@ -1,17 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { ALL_MATERIAL_QUERY } from "../../graphql/queries";
-import { EDIT_MATERIAL_MUTATION } from "../../graphql/mutations";
-import { RouteBar } from "./RouteBar";
-import TextArea from "../MDX/TextArea";
+import { ALL_MATERIAL_QUERY, EDIT_MATERIAL_MUTATION } from "@/graphql";
+import RouteBar from "./RouteBar";
 import { useRef } from "react";
-import { Button } from "@mui/material";
-import type { MaterialType } from "../../shared/type.ts";
+import { Button } from "@/components/ui/button";
+import type { MaterialType } from "@/shared/type.ts";
+import LoaderSpinner from "../LoaderSpinner";
 
-const MaterialEdit = () => {
+function MaterialEditPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   const {
     loading: queryLoading,
     error: queryError,
@@ -29,19 +28,16 @@ const MaterialEdit = () => {
   const handleUpdate = async (material: string) => {
     if (!id) throw new Error("id is undefined");
     if (!material) throw new Error("material is undefined!");
-    if (updateLoading) return "Submitting...";
-    if (updateError) return `Submission error! ${updateError.message}`;
+    if (updateLoading) return <LoaderSpinner />;
+    if (updateError) throw new Error(`Error! ${updateError.message}`);
+
     const updatedMaterial = await updateMaterial({
       variables: {
         editMaterialId: parseInt(id),
         materialInput: {
           name: material.split("\n")[0].split("#")[1].trim(),
           description: material.split("\n")[2].split("##")[1].trim(),
-          photoLink: material
-            .split("\n")[4]
-            .split("![](")[1]
-            .split(")")[0]
-            .trim(),
+          photoLink: "",
           category: material.split("\n")[5].split("類別: ")[1].trim(),
           valuable:
             material.split("\n")[6].split("要錢: ")[1].trim() === "true"
@@ -63,42 +59,39 @@ const MaterialEdit = () => {
     );
   };
 
-  if (queryLoading) return <div>Loading...</div>;
-  if (queryError) return <div>{queryError.message}</div>;
+  if (queryLoading) return <LoaderSpinner />;
+  if (queryError) throw new Error(`Error! ${queryError.message}`);
 
   return (
     <>
-      <RouteBar Route={material?.category} />
-      <div className="bg-white m-4 p-5 w-[50%] min-h-[400px] ml-[23%] rounded-lg border border-black py-6 px-10">
-        <TextArea
-          markdown={
-            `# ${material?.name}\n` +
-            `## ${material?.description}\n` +
-            `![](${material?.photoLink})\n` +
-            `類別: ${material?.category}\n` +
-            `要錢: ${material?.valuable}\n` +
-            `擺放位置: ${material?.position}\n` +
-            `使用量: ${material?.usage}\n` +
-            `剩餘數量: ${material?.remain}\n` +
-            `價錢: ${material?.fee}\n`
-          }
-          editorRef={ref}
+      <div className="flex flex-row">
+        <RouteBar Route={material?.category} />
+      </div>
+      <div className="flex flex-col gap-2 h-full border p-3 bg-white w-6/12 mx-auto rounded-lg my-1">
+        <img
+          src={material?.photoLink}
+          alt={material?.name}
+          className="w-10/12 mx-auto mt-2"
         />
-        <Button
-          variant="outlined"
-          onClick={() => navigate(`/MaterialAndToolPage/Material/${id}`)}
-        >
-          取消
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => handleUpdate(ref.current?.getMarkdown())}
-        >
-          儲存
-        </Button>
+        <h2 className="text-black">{material?.name}</h2>
+        <p className="text-black">所在位置: {material?.position}</p>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+          <Button
+            onClick={() => navigate(`/MaterialAndToolPage/Material/${id}`)}
+            className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+          >
+            取消
+          </Button>
+          <Button
+            onClick={() => handleUpdate(ref.current?.getMarkdown())}
+            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+          >
+            儲存
+          </Button>
+        </div>
       </div>
     </>
   );
-};
+}
 
-export default MaterialEdit;
+export default MaterialEditPage;

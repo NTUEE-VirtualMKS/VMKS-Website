@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button.tsx";
-import { useQuery } from "@apollo/client";
-import { CURRENT_INTRODUCTION_QUERY } from "../graphql";
-import LoaderSpinner from "@/components/LoaderSpinner.tsx";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CURRENT_INTRODUCTION_QUERY,
+  INTRODUCTION_UPDATE_MUTATION,
+} from "@/graphql";
+import { Button } from "./ui/button.tsx";
+import LoaderSpinner from "./LoaderSpinner.tsx";
 
-function IntroductionPage() {
+function EditIntroductionPage() {
   const navigate = useNavigate();
   const sessionA = useRef(null);
   const sessionB = useRef(null);
@@ -34,12 +37,29 @@ function IntroductionPage() {
     sessionId === activeSession ? "text-white" : "text-gray-500";
 
   const { data, loading, error } = useQuery(CURRENT_INTRODUCTION_QUERY);
+  const introduction = JSON.parse(JSON.stringify(data?.CurrentIntroduction));
+  const content = introduction.content;
+  const [
+    updateIntroduction,
+    { loading: introductionLoading, error: introductionError },
+  ] = useMutation(INTRODUCTION_UPDATE_MUTATION, {
+    refetchQueries: [{ query: CURRENT_INTRODUCTION_QUERY }],
+  });
+
+  const handleSave = async (content: string) => {
+    if (introductionLoading) return <LoaderSpinner />;
+    if (introductionError)
+      throw new Error(`Error! ${introductionError.message}`);
+
+    await updateIntroduction({
+      variables: { introductionInput: { content: content } },
+    });
+
+    navigate("/IntroductionPage");
+  };
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
-
-  const introduction = JSON.parse(JSON.stringify(data?.CurrentIntroduction));
-  const content = introduction.content;
 
   return (
     <>
@@ -67,13 +87,19 @@ function IntroductionPage() {
       </div>
       <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
         <h1 className="my-0 mx-auto">MKS介紹 Introduction</h1>
-        <p className="text-white">{content}</p>
+        <p className="text-white" ref={sessionA}>{content}</p>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-3">
           <Button
-            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-            onClick={() => navigate("/Introduction/edit")}
+            onClick={() => navigate("/IntroductionPage")}
+            className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
           >
-            編輯
+            取消
+          </Button>
+          <Button
+            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            onClick={() => handleSave(content)}
+          >
+            儲存
           </Button>
         </div>
       </div>
@@ -81,4 +107,4 @@ function IntroductionPage() {
   );
 }
 
-export default IntroductionPage;
+export default EditIntroductionPage;

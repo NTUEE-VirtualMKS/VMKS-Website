@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useCallback } from "react";
 // import { env } from "../env";
 import { useLazyQuery } from "@apollo/client";
-import { ALL_USER_QUERY } from "../graphql";
-import type { UserType } from "../shared/type.ts";
+import { ALL_USER_QUERY } from "@/graphql";
+import type { UserType } from "@/shared/type.ts";
 
 export type UserContextType = {
   user: UserType | null;

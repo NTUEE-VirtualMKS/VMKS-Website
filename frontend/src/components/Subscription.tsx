@@ -1,13 +1,14 @@
-// import { useNavigate } from "react-router-dom";
 import { ANNOUNCEMENT_CREATED_SUBSCRIPTION } from "../graphql";
 import { useSubscription } from "@apollo/client";
+import LoaderSpinner from "./LoaderSpinner";
 
 export const AnnouncementCreatedSubscription = () => {
   const { loading, error, data } = useSubscription(
     ANNOUNCEMENT_CREATED_SUBSCRIPTION
   );
-  if (loading) return "No new Announcement";
-  if (error) return `Error! ${error.message}`;
+  if (loading) return <LoaderSpinner />;
+  if (error) throw new Error(`Error! ${error.message}`);
+
   return (
     <div>
       <h2>New Announcement:{data?.AnnouncementCreated?.title}</h2>
@@ -18,8 +19,7 @@ export const AnnouncementCreatedSubscription = () => {
 };
 
 const AnnouncementCreated = () => {
-  // const navigate = useNavigate();
-  return <>{/* <div>{AnnouncementCreatedSubscription()}</div> */}</>;
+  return <></>;
 };
 
 export default AnnouncementCreated;

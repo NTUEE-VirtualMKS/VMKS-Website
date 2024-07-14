@@ -1,119 +1,284 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { MaterialList } from "@/components/MaterialAndTool/MaterialList";
-import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
-import { ADD_MATERIAL_MUTATION } from "@/graphql/mutations";
+import { useState } from "react";
+import MaterialList from "@/components/MaterialAndTool/MaterialList";
+import { ALL_MATERIAL_QUERY, ADD_MATERIAL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
   Dialog,
-  Button,
-  DialogActions,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-} from "@mui/material";
-import TextArea from "@/components/MDX/TextArea";
-import { placeholder } from "@/markdown/placeholder";
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import type { MaterialInputType } from "@/shared/type";
 
 function MaterialAndToolPage() {
-  const navigate = useNavigate();
-  const ref = useRef<any>();
   const [visible, setVisible] = useState(false);
-  const [materialDetail, setMaterialDetail] = useState(placeholder);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [photoLink, setPhotoLink] = useState("");
+  const [category, setCategory] = useState("");
+  const [valuable, setValuable] = useState(false);
+  const [position, setPosition] = useState("");
+  const [usage, setUsage] = useState("0");
+  const [remain, setRemain] = useState("0");
+  const [fee, setFee] = useState("0");
+  const [tutorialLink, setTutorialLink] = useState("");
+  const [partName, setPartName] = useState("");
+
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
     refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
   });
-  const handleOpen = () => {
-    setVisible(true);
-  };
 
-  const handleClose = () => {
-    setVisible(false);
-  };
-
-  const handleAddNewMaterial = (materialDetail: string) => {
-    if (loading) return "Submitting...";
-    if (error) return `Submission error! ${error.message}`;
+  const handleAddNewMaterial = ({
+    name,
+    description,
+    photoLink,
+    category,
+    valuable,
+    position,
+    usage,
+    remain,
+    fee,
+    tutorialLink,
+    partName,
+  }: MaterialInputType) => {
+    if (loading) return <LoaderSpinner />;
+    if (error) throw new Error(`Error! ${error.message}`);
     addMaterial({
       variables: {
         materialInput: {
-          name: materialDetail.split("\n")[0].split("#")[1].trim(),
-          description: materialDetail.split("\n")[2].split("##")[1].trim(),
-          photoLink: materialDetail
-            .split("\n")[4]
-            .split("![](")[1]
-            .split(")")[0]
-            .trim(),
-          category: materialDetail.split("\n")[6].split("類別: ")[1].trim(),
-          valuable:
-            materialDetail.split("\n")[8].split("要錢: ")[1].trim() === "true"
-              ? true
-              : false,
-          position: materialDetail
-            .split("\n")[10]
-            .split("擺放位置: ")[1]
-            .trim(),
-
-          usage: parseInt(
-            materialDetail.split("\n")[12].split("使用量: ")[1].trim()
-          ),
-          remain: parseInt(
-            materialDetail.split("\n")[14].split("剩餘數量: ")[1].trim()
-          ),
-          fee: parseInt(
-            materialDetail.split("\n")[16].split("價錢: ")[1].trim()
-          ),
-          tutorialLink: "",
-          partName: "",
+          name,
+          description,
+          photoLink,
+          category,
+          valuable,
+          position,
+          usage: parseInt(usage),
+          remain: parseInt(remain),
+          fee: parseInt(fee),
+          tutorialLink,
+          partName,
         },
       },
     });
-    setMaterialDetail("");
-    handleClose();
+    setName("");
+    setDescription("");
+    setPhotoLink("");
+    setCategory("");
+    setValuable(false);
+    setPosition("");
+    setUsage("0");
+    setRemain("0");
+    setFee("0");
+    setTutorialLink("");
+    setPartName("");
+    setVisible(false);
   };
 
   return (
     <>
-      <div style={{ width: "95%", marginBottom: "30px" }}>
-        <div className="ml-44">
-          <br></br>
-          <div className="flex items-center">
-            <button
-              onClick={() => navigate("/")}
-              className="transparent border-none m-4 cursor-pointer"
-            ></button>
-            <h1 style={{ margin: "0 auto", color: "white" }}>| 資源一覽 |</h1>
-            <Button className="m-3" variant="outlined" onClick={handleOpen}>
-              新增材料
-            </Button>
-
-            <Dialog open={visible} onClose={handleClose}>
-              <DialogTitle>新增材料</DialogTitle>
-              <DialogContent>
-                <TextArea editorRef={ref} markdown={materialDetail} />
-              </DialogContent>
-              <DialogActions>
+      <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
+        <h1 className="text-white">資源一覽 All Materials</h1>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-3">
+          <Dialog
+            open={visible}
+            onOpenChange={(visible) => setVisible(visible)}
+          >
+            <DialogTrigger asChild>
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                 <Button
-                  onClick={handleClose}
-                  color="primary"
-                  variant="outlined"
+                  className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                  onClick={() => setVisible(true)}
+                >
+                  新增材料
+                </Button>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] text-white bg-black">
+              <DialogHeader>
+                <DialogTitle className="text-2xl">新增材料</DialogTitle>
+                <DialogDescription className="text-sm">
+                  請填寫以下資訊:
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-1">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    名稱
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="name"
+                    className="col-span-3 input-class"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="description" className="text-right">
+                    描述
+                  </Label>
+                  <Textarea
+                    id="description"
+                    placeholder="description"
+                    className="col-span-3 input-class"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="photoLink" className="text-right">
+                    圖片連結
+                  </Label>
+                  <Input
+                    id="photoLink"
+                    type="url"
+                    placeholder="photo link"
+                    className="col-span-3 input-class"
+                    value={photoLink}
+                    onChange={(e) => setPhotoLink(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="category" className="text-right">
+                    類別
+                  </Label>
+                  <Input
+                    id="category"
+                    placeholder="category"
+                    className="col-span-3 input-class"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="valuable" className="text-right">
+                    要錢
+                  </Label>
+                  <Checkbox
+                    id="valuable"
+                    className="checkbox-class"
+                    checked={valuable}
+                    onCheckedChange={(checked: boolean) => setValuable(checked)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="position" className="text-right">
+                    擺放位置
+                  </Label>
+                  <Input
+                    id="position"
+                    placeholder="position"
+                    className="col-span-3 input-class"
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="remain" className="text-right">
+                    剩餘數量
+                  </Label>
+                  <Input
+                    id="remain"
+                    type="number"
+                    placeholder="remain"
+                    className="col-span-3 input-class"
+                    value={remain}
+                    onChange={(e) => setRemain(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="usage" className="text-right">
+                    使用量
+                  </Label>
+                  <Input
+                    id="usage"
+                    type="number"
+                    placeholder="usage"
+                    className="col-span-3 input-class"
+                    value={usage}
+                    onChange={(e) => setUsage(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="fee" className="text-right">
+                    價錢
+                  </Label>
+                  <Input
+                    id="fee"
+                    type="number"
+                    placeholder="fee"
+                    className="col-span-3 input-class"
+                    value={fee}
+                    onChange={(e) => setFee(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="tutorialLink" className="text-right">
+                    教學連結
+                  </Label>
+                  <Input
+                    id="tutorialLink"
+                    placeholder="tutorial link"
+                    className="col-span-3 input-class"
+                    value={tutorialLink}
+                    onChange={(e) => setTutorialLink(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="partName" className="text-right">
+                    零件名稱
+                  </Label>
+                  <Input
+                    id="partName"
+                    placeholder="part name"
+                    className="col-span-3 input-class"
+                    value={partName}
+                    onChange={(e) => setPartName(e.target.value)}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  onClick={() => setVisible(false)}
+                  className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
                 >
                   取消
                 </Button>
                 <Button
                   onClick={() =>
-                    handleAddNewMaterial(ref.current?.getMarkdown())
+                    handleAddNewMaterial({
+                      name,
+                      description,
+                      photoLink,
+                      category,
+                      valuable,
+                      position,
+                      usage,
+                      remain,
+                      fee,
+                      tutorialLink,
+                      partName,
+                    })
                   }
-                  color="primary"
-                  variant="outlined"
+                  className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 >
                   提交
                 </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-          <div className="m-5">
-            <MaterialList />
-          </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+        <div className="mt-2">
+          <MaterialList />
         </div>
       </div>
     </>
