@@ -1,9 +1,9 @@
-import "./HomePage.css";
-import "../images/MKS_environment.jpg";
-import { HomePageAnnounce } from "../components/HomepageComponents/HomePageAnnounce";
-import { HomePageTimetable } from "../components/HomepageComponents/HomePageTimetable";
-import { HomePageForum } from "../components/HomepageComponents/HomePageForum";
-import { HomePageMaterialBox } from "../components/HomepageComponents/HomePageMaterialBox";
+// import "./HomePage.css";
+// import "../images/MKS_environment.jpg";
+import HomePageAnnounce from "@/components/HomepageComponents/HomePageAnnounce";
+import HomePageTimetable from "@/components/HomepageComponents/HomePageTimetable";
+import HomePageForum from "@/components/HomepageComponents/HomePageForum";
+import HomePageMaterialBox from "@/components/HomepageComponents/HomePageMaterialBox";
 
 function HomePage() {
   return (

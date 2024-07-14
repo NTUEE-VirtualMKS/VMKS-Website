@@ -1,48 +1,47 @@
 import { Link } from "react-router-dom";
-import type { MaterialType } from "../../shared/type.ts";
-import { handleBorrow } from "./Handle";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import { useQuery } from "@apollo/client";
-import Overiew from "../MDX/Overview";
+import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
+import type { MaterialType } from "@/shared/type.ts";
+import { handleBorrow } from "./Handle";
+import { Button } from "@/components/ui/button";
+import LoaderSpinner from "../LoaderSpinner";
 
-import { ALL_MATERIAL_QUERY } from "../../graphql/queries";
-export const MaterialList = () => {
+function MaterialList() {
   const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (loading) return <LoaderSpinner />;
+  if (error) throw new Error(`Error! ${error.message}`);
+
   const materials = JSON.parse(JSON.stringify(data?.AllMaterials));
+
   return (
-    <div className="mateirial-list">
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-      >
-        {materials.map((material: MaterialType) => {
-          return (
-            <Grid item xs={1} sm={3} md={3} key={material.id}>
-              <Paper
-                elevation={3}
-                className="mateirial-preview"
-                key={material.id}
-              >
-                <div className="border-1 p-4">
-                  <Link to={`/MaterialAndToolPage/Material/${material.id}`}>
-                    <Overiew markdown={`![](${material.photoLink})`} />
-                    <h2>{material.name}</h2>
-                  </Link>
-                  <p>所在位置: {material.position}</p>
-                  <Button variant="outlined" onClick={handleBorrow}>
-                    借用
-                  </Button>
-                </div>
-              </Paper>
-            </Grid>
-          );
-        })}
-      </Grid>
+    <div className="flex flex-col gap-5 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
+      {materials.map((material: MaterialType) => {
+        return (
+          <div className="bg-transparent mb-3 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12">
+            <div className="h-full border p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg">
+              <Link to={`/MaterialAndToolPage/Material/${material.id}`}>
+                <img
+                  src={material.photoLink}
+                  alt={material.name}
+                  className="w-10/12 mx-auto mt-2"
+                />
+                <h2 className="text-white">{material.name}</h2>
+              </Link>
+              <p className="text-white">所在位置: {material.position}</p>
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                <Button
+                  onClick={handleBorrow}
+                  className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                >
+                  借用
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
-};
+}
+
+export default MaterialList;

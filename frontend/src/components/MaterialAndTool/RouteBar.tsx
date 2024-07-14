@@ -4,7 +4,7 @@ type RouteBarProps = {
   Route: undefined | string;
 };
 
-export const RouteBar = (props: RouteBarProps) => {
+function RouteBar(props: RouteBarProps) {
   if (typeof props.Route !== "string")
     return (
       <nav className="text-2xl m-5">
@@ -23,15 +23,16 @@ export const RouteBar = (props: RouteBarProps) => {
   }
 
   return (
-    <nav className="text-2xl m-5">
+    <nav className="text-2xl m-5 text-white">
       <Link to="/">Home</Link>
       {routes.map((route) => {
         return (
           <span key={route}>
-            {">  "} <Link to={"/" + route}>{route}</Link>
+            {" >  "} <Link to={"/" + route}>{route}</Link>
           </span>
         );
       })}
     </nav>
   );
-};
+}
+export default RouteBar;

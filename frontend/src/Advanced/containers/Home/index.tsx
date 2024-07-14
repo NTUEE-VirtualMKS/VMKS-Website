@@ -139,7 +139,7 @@ const Home: React.FC = () => {
         </Routes>
 
         {/* footer */}
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }

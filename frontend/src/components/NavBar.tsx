@@ -8,16 +8,16 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 function NavBar() {
   const navigate = useNavigate();
   return (
-    <div className="flex-1 m-3 flex flex-row justify-between ">
+    <div className="flex-1 m-3 flex flex-row justify-between bg-black">
       <div className="flex items-start gap-[15px]">
         <button
-          className="flex flex-col justify-center items-center w-[45px] h-[45px] rounded-full border border-white"
+          className="flex flex-col justify-center items-center w-[45px] h-[45px] rounded-full border border-white transform active:scale-90 transition-transform duration-200"
           onClick={() => navigate(-1)}
         >
           <ChevronLeftIcon sx={{ color: "white" }} />
         </button>
         <button
-          className="flex flex-col justify-center items-center w-[45px] h-[45px]  rounded-full border border-white"
+          className="flex flex-col justify-center items-center w-[45px] h-[45px]  rounded-full border border-white transform active:scale-90 transition-transform duration-200"
           onClick={() => navigate(1)}
         >
           <ChevronRightIcon sx={{ color: "white" }} />
@@ -25,9 +25,9 @@ function NavBar() {
       </div>
       <div className="flex items-start gap-[15px]">
         <div className="w-[104px] h-[50px] relative">
-          <button className="flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white">
+          <button className="flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
             <div
-              className="flex flex-col justify-center items-center w-[38px] h-[23px] left-[34px] top-[13px] absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide"
+              className="flex flex-col justify-center items-center w-[38px] h-[23px] left-[34px] top-[13px] absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide "
               onClick={() => navigate("MapPage")}
             >
               map
@@ -35,7 +35,7 @@ function NavBar() {
           </button>
         </div>
         <div className="w-[104px] h-[50px] relative">
-          <button className=" flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white">
+          <button className=" flex flex-col justify-center items-center w-[104px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
             <div
               className="flex flex-col justify-center items-center w-[38px] h-[23px] left-[34px] top-[13px] absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide"
               onClick={() => navigate("/advanced/forum")}
@@ -46,7 +46,7 @@ function NavBar() {
         </div>
         <div className="w-[50px] h-[50px] relative">
           <button
-            className="flex flex-col justify-center items-center w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white"
+            className="flex flex-col justify-center items-center w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
             onClick={() => navigate("ShoppingList")}
           >
             <ShoppingCartRoundedIcon sx={{ color: "white" }} />
@@ -54,7 +54,7 @@ function NavBar() {
         </div>
         <div className="w-[50px] h-[50px] relative">
           <button
-            className=" flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white"
+            className=" flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
             onClick={() => navigate("UserProfilePage")}
           >
             <PersonIcon sx={{ color: "white" }} />
@@ -63,7 +63,7 @@ function NavBar() {
         </div>
         <div className="w-[50px] h-[50px] relative">
           <button
-            className="flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white"
+            className="flex flex-col justify-center items-center  w-[50px] h-[50px] left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
             onClick={() => navigate("TutorialPage")}
           >
             <QuestionMarkIcon sx={{ color: "white" }} />

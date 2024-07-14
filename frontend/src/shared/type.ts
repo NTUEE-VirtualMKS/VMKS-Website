@@ -38,3 +38,17 @@ export type MaterialType = {
   fee: number;
   remain: number;
 };
+
+export type MaterialInputType = {
+  name: string;
+  description: string;
+  photoLink: string;
+  category: string;
+  valuable: boolean;
+  position: string;
+  usage: string;
+  remain: string;
+  fee: string;
+  tutorialLink?: string;
+  partName?: string;
+};

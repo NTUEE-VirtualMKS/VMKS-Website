@@ -1,9 +1,9 @@
 import {
   AUTHORIZED_CODE_UPDATE_MUTATION,
   GET_AUTHORIZED_CODE_QUERY,
-} from "../graphql";
+} from "@/graphql";
 import { useMutation } from "@apollo/client";
-import type { AuthorizedCodeInput } from "../../../backend/src/types/types";
+import type { AuthorizedCodeInput } from "../../../backend/src/types/types"; // TODO: new a type in `shared/type.ts`
 import { useState } from "react";
 import {
   Dialog,
@@ -20,6 +20,7 @@ import {
   makeStyles,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LoaderSpinner from "@/components/LoaderSpinner";
 
 const AuthorizedCodePage = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -34,8 +35,8 @@ const AuthorizedCodePage = () => {
       refetchQueries: [{ query: GET_AUTHORIZED_CODE_QUERY }],
     }
   );
-  if (loading) return "Submitting...";
-  if (error) return `Submission error! ${error.message}`;
+  if (loading) return <LoaderSpinner />;
+  if (error) throw new Error(`Error! ${error.message}`);
 
   // const useStyles = makeStyles((theme) => ({
   //   formControl: {

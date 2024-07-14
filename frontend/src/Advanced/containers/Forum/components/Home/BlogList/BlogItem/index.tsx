@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 // Exporting the Blog type so we can use it in other files
 export interface BlogData {
-  id: number;
+  id: string;
   description: string;
   title: string;
   createdAt: string; // or Date if you're using a Date object
