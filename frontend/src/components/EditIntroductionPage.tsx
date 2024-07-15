@@ -87,7 +87,9 @@ function EditIntroductionPage() {
       </div>
       <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
         <h1 className="my-0 mx-auto">MKS介紹 Introduction</h1>
-        <p className="text-white" ref={sessionA}>{content}</p>
+        <p className="text-white" ref={sessionA}>
+          {content}
+        </p>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-3">
           <Button
             onClick={() => navigate("/IntroductionPage")}

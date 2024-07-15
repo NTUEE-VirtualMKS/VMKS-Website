@@ -1,5 +1,3 @@
-// import "./HomePage.css";
-// import "../images/MKS_environment.jpg";
 import HomePageAnnounce from "@/components/HomepageComponents/HomePageAnnounce";
 import HomePageTimetable from "@/components/HomepageComponents/HomePageTimetable";
 import HomePageForum from "@/components/HomepageComponents/HomePageForum";

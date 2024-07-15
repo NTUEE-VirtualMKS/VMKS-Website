@@ -1,3 +1,4 @@
+// TODO: replace this with dialog and modify backend schema
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";

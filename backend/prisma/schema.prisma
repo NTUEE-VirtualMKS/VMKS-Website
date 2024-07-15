@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Announcement {
-  id      Int    @id @default(autoincrement())
+  id      Int    @id @default(autoincrement()) // TODO: string & uuid()
   title   String
   date    String
   content String
@@ -94,7 +94,7 @@ model User {
   studentID         String         @unique
   password          String
   photoLink         String?
-  threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id])
+  threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id]) // TODO: add cascade
   threeDPId         Int?
   laserCutAvailable Boolean        @default(false)
   borrowHistory     UserMaterial[]
@@ -115,7 +115,7 @@ model UserMaterial {
   id         Int     @id @default(autoincrement())
   name       String
   partName   String?
-  borrower   User    @relation(fields: [borrowerId], references: [id])
+  borrower   User    @relation(fields: [borrowerId], references: [id]) // TODO: add cascade
   borrowerId Int
   borrowNum  Int
   borrowDate String
@@ -125,7 +125,7 @@ model UserMaterial {
 
 model Article {
   id          Int     @id @default(autoincrement())
-  writer      User    @relation(fields: [writerId], references: [id])
+  writer      User    @relation(fields: [writerId], references: [id]) // TODO: add cascade
   writerId    Int
   description String
   imageURL    String?

@@ -1,3 +1,4 @@
+// TODO: delete announcement and connect with user's permission
 import { useState } from "react";
 import { useNavigate /* useParams */ } from "react-router-dom";
 import {
@@ -10,57 +11,16 @@ import { Button } from "@/components/ui/button";
 
 function Announcements() {
   const navigate = useNavigate();
-  // const { id } = useParams();
   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
   const [admin, setAdmin] = useState(true);
-  // const [visible, setVisible] = useState(false);
-  // const [editTitle, setEditTitle] = useState("");
-  // const [editContent, setEditContent] = useState("");
-
-  // const handleClose = () => {
-  //   setVisible(false);
-  // };
 
   const handleEdit = () => {
     if (admin) setAdmin(false);
     else setAdmin(true);
   };
 
-  // const [editAnnouncement, { loading: editLoading, error: editError }] =
-  //   useMutation(EDIT_ANNOUNCEMENT_MUTATION, {
-  //     refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
-  //   });
-
-  // const formSubmit = ({
-  //   id,
-  //   editTitle,
-  //   editContent,
-  // }: {
-  //   id: string | undefined;
-  //   editTitle: string;
-  //   editContent: string;
-  // }) => {
-  //   if (editLoading) return <LoaderSpinner />;
-  //   if (editError) throw new Error(`Error! ${editError.message}`);
-
-  //   if (!id) throw new Error("id is not defined");
-
-  //   editAnnouncement({
-  //     variables: {
-  //       editAnnouncementId: parseInt(id),
-  //       announcementInput: {
-  //         title: editTitle,
-  //         content: editContent,
-  //       },
-  //     },
-  //   });
-  //   setEditTitle("");
-  //   setEditContent("");
-  //   handleClose();
-  // };
-
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = (id: number) => {
+    console.log(id);
   };
 
   if (loading) return <LoaderSpinner />;
@@ -76,38 +36,36 @@ function Announcements() {
           {announcements.map(
             (announcement) =>
               announcement !== null && (
-                <>
-                  <div
-                    key={announcement.id}
-                    className="border border-gray-300 my-2.5 mx-3 p-2.5 rounded-xl cursor-pointer"
-                  >
-                    <h2 className="text-white px-2">{announcement.title}</h2>
-                    <p className="text-gray-400 text-base px-2">
-                      Date: {new Date(announcement.date).toLocaleString()}
-                    </p>
-                    <p className="text-white text-lg px-2">
-                      {announcement.content}
-                    </p>
-                    {admin && (
-                      <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                        <Button
-                          onClick={handleDelete}
-                          className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-                        >
-                          delete
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            navigate(`/EditAnnouncement/${announcement.id}`)
-                          }
-                          className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-                        >
-                          edit
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </>
+                <div
+                  key={announcement.id}
+                  className="border border-gray-300 my-2.5 mx-3 p-2.5 rounded-xl cursor-pointer"
+                >
+                  <h2 className="text-white px-2">{announcement.title}</h2>
+                  <p className="text-gray-400 text-base px-2">
+                    Date: {new Date(announcement.date).toLocaleString()}
+                  </p>
+                  <p className="text-white text-lg px-2">
+                    {announcement.content}
+                  </p>
+                  {admin && (
+                    <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                      <Button
+                        onClick={() => handleDelete(announcement.id)}
+                        className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                      >
+                        delete
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          navigate(`/EditAnnouncement/${announcement.id}`)
+                        }
+                        className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                      >
+                        edit
+                      </Button>
+                    </div>
+                  )}
+                </div>
               )
           )}
         </div>

@@ -17,8 +17,10 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { useUser } from "@/context/userContext";
 
 function AnnouncementPage() {
+  const { user } = useUser();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -52,7 +54,8 @@ function AnnouncementPage() {
       <Announcement />
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>
-          {
+          {user?.isAdmin && (
+            // TODO: only admin can add announcements
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
               <Button
                 className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
@@ -61,7 +64,7 @@ function AnnouncementPage() {
                 新增公告
               </Button>
             </div>
-          }
+          )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]  text-white bg-black">
           <DialogHeader>

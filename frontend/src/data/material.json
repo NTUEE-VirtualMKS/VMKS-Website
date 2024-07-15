@@ -1,46 +1,69 @@
 {
   "materials": [
     {
-      "id": 1,
       "name": "HC-SR04",
       "partName": null,
       "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
-      "valuable": false,
+      "valuable": 0,
       "position": "Tree-De",
       "description": "ultra sonic, precise up to 4 meters",
       "photoLink": "https://www.mouser.tw/images/marketingid/2019/img/177109536.png?v=070223.0241",
       "usage": 0,
-      "tutorialLink": "",
+      "tutorialLink": "https://youtu.be/dQw4w9WgXcQ?feature=shared",
       "fee": 0,
       "remain": 40
     },
     {
-      "id": 2,
       "name": "RC-522",
       "partName": null,
       "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
-      "valuable": false,
-      "position": "i don't know",
+      "valuable": 0,
+      "position": "Tree-De",
       "description": "RFID module",
       "photoLink": "https://domoticx.com/wp-content/uploads/2021/01/rc522-rfid-nfc-module-bovenkant.jpg",
       "usage": 0,
-      "tutorialLink": "",
+      "tutorialLink": "https://youtu.be/dQw4w9WgXcQ?feature=shared",
       "fee": 0,
       "remain": 5
     },
     {
-      "id": 3,
       "name": "HC-05",
       "partName": null,
       "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
-      "valuable": false,
+      "valuable": 0,
       "position": "Tree-De",
       "description": "Bluetooth module",
       "photoLink": "https://m.media-amazon.com/images/I/612CH8mJu-L._AC_UF894,1000_QL80_.jpg",
-      "usage": 0,
-      "tutorialLink": "",
+      "usage": 1,
+      "tutorialLink": "https://youtu.be/dQw4w9WgXcQ?feature=shared",
       "fee": 0,
-      "remain": 0
+      "remain": 10
+    },
+    {
+      "name": "200 OK",
+      "partName": "http cat",
+      "category": "MaterialAndToolPage",
+      "valuable": 0,
+      "position": "拍拍手",
+      "description": "200 OK",
+      "photoLink": "https://http.cat/200",
+      "usage": 200,
+      "tutorialLink": "https://youtu.be/dQw4w9WgXcQ?feature=shared",
+      "fee": 200,
+      "remain": 200
+    },
+    {
+      "name": "404 Not Found",
+      "partName": "http cat",
+      "category": "MaterialAndToolPage",
+      "valuable": 0,
+      "position": "拍拍手",
+      "description": "404 Not Found",
+      "photoLink": "https://http.cat/404",
+      "usage": 404,
+      "tutorialLink": "https://youtu.be/dQw4w9WgXcQ?feature=shared",
+      "fee": 404,
+      "remain": 404
     }
   ]
 }

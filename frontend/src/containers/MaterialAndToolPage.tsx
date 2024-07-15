@@ -1,3 +1,4 @@
+// TODO: only admin can upload and edit materials
 import { useState } from "react";
 import MaterialList from "@/components/MaterialAndTool/MaterialList";
 import { ALL_MATERIAL_QUERY, ADD_MATERIAL_MUTATION } from "@/graphql";
@@ -17,7 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import type { MaterialInputType } from "@/shared/type";
+import type { MaterialInput } from "@/shared/type";
+import ImportButton from "@/components/ImportButton";
 
 function MaterialAndToolPage() {
   const [visible, setVisible] = useState(false);
@@ -32,12 +34,13 @@ function MaterialAndToolPage() {
   const [fee, setFee] = useState("0");
   const [tutorialLink, setTutorialLink] = useState("");
   const [partName, setPartName] = useState("");
+  const [materials, setMaterials] = useState<MaterialInput[]>([]);
 
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
     refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
   });
 
-  const handleAddNewMaterial = ({
+  const handleAddMaterial = ({
     name,
     description,
     photoLink,
@@ -49,7 +52,7 @@ function MaterialAndToolPage() {
     fee,
     tutorialLink,
     partName,
-  }: MaterialInputType) => {
+  }: MaterialInput) => {
     if (loading) return <LoaderSpinner />;
     if (error) throw new Error(`Error! ${error.message}`);
     addMaterial({
@@ -61,9 +64,9 @@ function MaterialAndToolPage() {
           category,
           valuable,
           position,
-          usage: parseInt(usage),
-          remain: parseInt(remain),
-          fee: parseInt(fee),
+          usage: parseInt(`${usage}`),
+          remain: parseInt(`${remain}`),
+          fee: parseInt(`${fee}`),
           tutorialLink,
           partName,
         },
@@ -83,9 +86,34 @@ function MaterialAndToolPage() {
     setVisible(false);
   };
 
+  const handleAddMaterials = (materials: MaterialInput[]) => {
+    if (loading) return <LoaderSpinner />;
+    if (error) throw new Error(`Error! ${error.message}`);
+    materials.map((material) => {
+      addMaterial({
+        variables: {
+          materialInput: {
+            name: material.name,
+            partName: material.partName,
+            category: material.category,
+            valuable: material.valuable,
+            position: material.position,
+            description: material.description,
+            photoLink: material.photoLink,
+            usage: parseInt(`${material.usage}`),
+            tutorialLink: material.tutorialLink,
+            fee: parseInt(`${material.fee}`),
+            remain: parseInt(`${material.remain}`),
+          },
+        },
+      });
+    });
+    setMaterials([]);
+  };
+
   return (
     <>
-      <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
+      <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
         <h1 className="text-white">資源一覽 All Materials</h1>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-3">
           <Dialog
@@ -104,7 +132,9 @@ function MaterialAndToolPage() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] text-white bg-black">
               <DialogHeader>
-                <DialogTitle className="text-2xl">新增材料</DialogTitle>
+                <DialogTitle className="text-2xl">
+                  新增材料 New Material
+                </DialogTitle>
                 <DialogDescription className="text-sm">
                   請填寫以下資訊:
                 </DialogDescription>
@@ -235,7 +265,7 @@ function MaterialAndToolPage() {
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="partName" className="text-right">
-                    零件名稱
+                    型號
                   </Label>
                   <Input
                     id="partName"
@@ -255,7 +285,7 @@ function MaterialAndToolPage() {
                 </Button>
                 <Button
                   onClick={() =>
-                    handleAddNewMaterial({
+                    handleAddMaterial({
                       name,
                       description,
                       photoLink,
@@ -276,6 +306,17 @@ function MaterialAndToolPage() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <ImportButton setMaterials={setMaterials} />
+          </div>
+          {materials.length !== 0 && (
+            <Button
+              onClick={() => handleAddMaterials(materials)}
+              className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            >
+              Upload
+            </Button>
+          )}
         </div>
         <div className="mt-2">
           <MaterialList />

@@ -39,16 +39,22 @@ export type MaterialType = {
   remain: number;
 };
 
-export type MaterialInputType = {
+export type MaterialInput = {
   name: string;
-  description: string;
-  photoLink: string;
+  partName: string | null;
   category: string;
   valuable: boolean;
   position: string;
-  usage: string;
-  remain: string;
-  fee: string;
-  tutorialLink?: string;
-  partName?: string;
+  description: string;
+  photoLink: string;
+  usage: number | string;
+  tutorialLink: string | null;
+  fee: number | string;
+  remain: number | string;
+};
+
+export type NavButtonProps = {
+  onClick: () => void;
+  Icon: React.ElementType;
+  ariaLabel: string;
 };

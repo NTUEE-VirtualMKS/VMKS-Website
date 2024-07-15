@@ -1,0 +1,6 @@
+﻿name,partName,category,valuable,position,description,photoLink,usage,tutorialLink,fee,remain
+HC-SR04,,"IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",0,Tree-De,"ultra sonic, precise up to 4 meters",https://www.mouser.tw/images/marketingid/2019/img/177109536.png?v=070223.0241,0,https://youtu.be/dQw4w9WgXcQ?feature=shared,0,40
+RC-522,,"IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",0,Tree-De,RFID module,https://domoticx.com/wp-content/uploads/2021/01/rc522-rfid-nfc-module-bovenkant.jpg,0,https://youtu.be/dQw4w9WgXcQ?feature=shared,0,5
+HC-05,,"IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",0,Tree-De,Bluetooth module,"https://m.media-amazon.com/images/I/612CH8mJu-L._AC_UF894,1000_QL80_.jpg",1,https://youtu.be/dQw4w9WgXcQ?feature=shared,0,10
+200 OK,http cat,MaterialAndToolPage,0,拍拍手,200 OK,https://http.cat/200,200,https://youtu.be/dQw4w9WgXcQ?feature=shared,200,200
+404 Not Found,http cat,MaterialAndToolPage,0,拍拍手,404 Not Found,https://http.cat/404,404,https://youtu.be/dQw4w9WgXcQ?feature=shared,404,404

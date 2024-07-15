@@ -1,3 +1,4 @@
+// TODO: some id's type: number to string
 import { GraphQLScalarType, Kind } from "graphql";
 
 const DateTime = new GraphQLScalarType({

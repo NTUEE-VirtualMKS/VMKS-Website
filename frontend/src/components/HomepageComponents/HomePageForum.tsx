@@ -1,3 +1,4 @@
+// TODO: link to the detailed page of the forum post
 import { useNavigate } from "react-router-dom";
 
 function HomePageForum() {

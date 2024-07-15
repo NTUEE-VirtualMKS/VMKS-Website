@@ -1,3 +1,4 @@
+// TODO: implement updateMaterial and UI
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { ALL_MATERIAL_QUERY, EDIT_MATERIAL_MUTATION } from "@/graphql";

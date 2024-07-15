@@ -1,8 +1,9 @@
+// TODO: implement UserProfilePage
 // import { GET_AUTHORIZED_CODE_QUERY } from "../graphql";
 // import { useQuery } from "@apollo/client";
 
-const UserProfilePage = () => {
+function UserProfilePage() {
   return <></>;
-};
+}
 
 export default UserProfilePage;
