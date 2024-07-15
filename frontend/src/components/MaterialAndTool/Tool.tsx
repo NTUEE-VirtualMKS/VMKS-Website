@@ -1,6 +1,7 @@
+// TODO: implement ToolPage
 import { useNavigate } from "react-router-dom";
 
-const Tool = () => {
+function ToolPage() {
   const navigate = useNavigate();
   return (
     <>
@@ -11,6 +12,6 @@ const Tool = () => {
       <button onClick={() => navigate(-1)}>go back</button>
     </>
   );
-};
+}
 
-export default Tool;
+export default ToolPage;

@@ -1,23 +1,6 @@
+// TODO: connect timetable with backend
+import { timetable } from "@/constants";
 import { useNavigate } from "react-router-dom";
-
-const timetable = [
-  {
-    time: "09:00-12:00",
-    name: "吳柏均A",
-  },
-  {
-    time: "13:00-16:00(A)",
-    name: "吳柏均B",
-  },
-  {
-    time: "13:00-16:00(B)",
-    name: "吳柏均C",
-  },
-  {
-    time: "18:00-21:00",
-    name: "吳柏均D",
-  },
-];
 
 function HomePageTimetable() {
   const navigate = useNavigate();

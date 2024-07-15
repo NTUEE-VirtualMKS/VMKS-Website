@@ -1,3 +1,4 @@
+// TODO: link to the detailed page of the announcement
 import { useNavigate } from "react-router-dom";
 import { ALL_ANNOUNCEMENT_QUERY } from "../../graphql";
 import { useQuery } from "@apollo/client";

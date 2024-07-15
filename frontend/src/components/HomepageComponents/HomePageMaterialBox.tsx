@@ -1,3 +1,4 @@
+// TODO: link to material and tool page separately
 import { useNavigate } from "react-router-dom";
 import Searchbar from "@/components/Searchbar";
 

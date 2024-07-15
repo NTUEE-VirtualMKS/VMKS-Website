@@ -1,3 +1,4 @@
+// TODO: connect to backend
 import { useRef, useEffect, useState } from "react";
 import {
   interaction1,
@@ -6,7 +7,7 @@ import {
   list,
 } from "@/constants/index";
 
-const TutorialPage = () => {
+function TutorialPage() {
   const sessionA = useRef(null);
   const sessionB = useRef(null);
   const sessionC = useRef(null);
@@ -35,7 +36,7 @@ const TutorialPage = () => {
 
   return (
     <>
-      <div className="w-1/12 h-24 fixed ml-8 mt-8">
+      <div className="w-1/12 h-24 fixed ml-3 mt-8">
         <ul className="list-none text-lg">
           <li
             onClick={() => scrollToSection(sessionA, "sessionA")}
@@ -57,7 +58,7 @@ const TutorialPage = () => {
           </li>
         </ul>
       </div>
-      <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
+      <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
         <h1 ref={sessionA}>教學 Tutorial</h1>
         <br />
         <h2>互動</h2>
@@ -85,6 +86,6 @@ const TutorialPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default TutorialPage;

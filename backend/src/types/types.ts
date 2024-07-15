@@ -1,3 +1,4 @@
+// TODO: some id's type: number to string
 interface AnnouncementInput {
   title: string;
   content: string;

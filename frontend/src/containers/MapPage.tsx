@@ -1,3 +1,4 @@
+// TODO: make this alive
 import { useNavigate } from "react-router-dom";
 import "../images/interior2D.jpg";
 import { colors } from "../Color.ts";
@@ -100,7 +101,6 @@ const MapPage = () => {
           ></area>
         </map>
       </div>
-      {/* <button onClick={() => navigate(-1)}>go back</button> */}
     </>
   );
 };

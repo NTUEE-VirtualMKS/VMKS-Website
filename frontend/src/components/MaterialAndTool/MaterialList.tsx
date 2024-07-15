@@ -1,3 +1,4 @@
+// TODO: can upload info through csv file
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
@@ -14,10 +15,13 @@ function MaterialList() {
   const materials = JSON.parse(JSON.stringify(data?.AllMaterials));
 
   return (
-    <div className="flex flex-col gap-5 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
+    <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
       {materials.map((material: MaterialType) => {
         return (
-          <div className="bg-transparent mb-3 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12">
+          <div
+            className="bg-transparent mb-4 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
+            key={material.id}
+          >
             <div className="h-full border p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg">
               <Link to={`/MaterialAndToolPage/Material/${material.id}`}>
                 <img

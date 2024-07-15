@@ -1,12 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { OctagonX } from "lucide-react";
 
 function NotFound() {
-  const navigate = useNavigate();
-
   return (
     <>
-      <div>Page Not Found</div>
-      <button onClick={() => navigate("/")}>back to home</button>
+      <section className="flex flex-col size-full flex-center">
+        <OctagonX size={400} className="text-red-500" />
+        <div className="flex-center w-full flex-col">
+          <p className="w-full text-5xl text-center font-bold text-white p-2">
+            Page Not Found
+          </p>
+        </div>
+      </section>
     </>
   );
 }

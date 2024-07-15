@@ -1,3 +1,4 @@
+// TODO: replace it with Breadcrumb from shadcn
 import { Link } from "react-router-dom";
 
 type RouteBarProps = {
