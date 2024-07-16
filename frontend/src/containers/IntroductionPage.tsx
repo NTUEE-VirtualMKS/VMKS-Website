@@ -39,8 +39,8 @@ function IntroductionPage() {
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const introduction = JSON.parse(JSON.stringify(data?.CurrentIntroduction));
-  const content = introduction.content;
+  const introduction = data?.CurrentIntroduction;
+  const content = introduction!.content;
 
   return (
     <>

@@ -1,41 +1,74 @@
-// TODO: UI
 import { useParams, useNavigate } from "react-router-dom";
 import { handleBorrow, handleRepair } from "./Handle";
 import { Button } from "@/components/ui/button";
 import RouteBar from "./RouteBar";
 import { useQuery } from "@apollo/client";
-import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
-import type { MaterialType } from "@/shared/type.ts";
+import { GET_MATERIAL_BY_ID_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner.tsx";
+import { Input } from "@/components/ui/input";
+import { Label } from "../ui/label.tsx";
 
 function MaterialDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
+
+  const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
+    variables: { id: parseInt(id as string) },
+  });
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const allMaterials = JSON.parse(JSON.stringify(data?.AllMaterials));
-  const eachMaterial = allMaterials.find(
-    (material: MaterialType) => material.id === parseInt(id as string)
-  );
+  const material = data?.GetMaterialById;
 
   return (
     <div>
-      {eachMaterial && (
+      {material && (
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <RouteBar Route={eachMaterial?.category} />
+            <RouteBar route={material?.category} />
           </div>
-          <div className="flex flex-col gap-2 h-full border p-3 bg-white w-6/12 mx-auto rounded-lg my-1">
-            <img
-              src={eachMaterial?.photoLink}
-              alt={eachMaterial?.name}
-              className="w-10/12 mx-auto mt-2"
-            />
-            <h2 className="text-black">{eachMaterial?.name}</h2>
-            <p className="text-black">所在位置: {eachMaterial?.position}</p>
+          <div className="flex flex-col gap-2 border p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5">
+            <div className="flex flex-row my-4 mx-2">
+              <img
+                src={material?.photoLink}
+                alt={material?.name}
+                className="w-6/12 mt-3 ml-1"
+              />
+              <div className="w-8/12 flex flex-col ml-5">
+                <h1 className="text-white text-5xl">{material?.name}</h1>
+                <p className="text-white">描述: {material?.description}</p>
+                {material?.partName && (
+                  <p className="text-white">型號: {material?.partName}</p>
+                )}
+                <p className="text-white">位置: {material?.position}</p>
+                <div className="flex flex-row gap-2">
+                  <Label htmlFor="valuable" className="text-white text-lg">
+                    要錢:{" "}
+                  </Label>
+                  <Input
+                    id="valuable"
+                    type="checkbox"
+                    checked={material?.valuable}
+                    className="size-4 mt-1.5 bg-[#15171C] text-white"
+                    onChange={() => {}}
+                  />
+                </div>
+                <p className="text-white">剩餘數量: {material?.remain}（個）</p>
+                <p className="text-white">使用量: {material?.usage}（個）</p>
+                <p className="text-white">價錢: NT${material?.fee}</p>
+                {material?.tutorialLink && (
+                  <a
+                    href={material?.tutorialLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sky-300 cursor-pointer hover:underline text-lg w-3/12 active:scale-95 transition-transform duration-200 focus:text-blue-600"
+                  >
+                    使用教學
+                  </a>
+                )}
+              </div>
+            </div>
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
               <Button
                 onClick={() =>

@@ -182,6 +182,26 @@ const ALL_MATERIAL_QUERY = gql(`
   }
 `);
 
+const GET_MATERIAL_BY_ID_QUERY = gql(`
+  query GetMaterialById($id: Int!) {
+    GetMaterialById(id: $id) {
+      id
+      name
+      partName
+      category
+      valuable
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      fee
+      remain
+    }
+  }
+
+  `);
+
 const SEARCH_MATERIAL_BY_NAME_QUERY = gql(`
   query SearchMaterialByName($name: String!) {
     SearchMaterialByName(name: $name) {
@@ -445,6 +465,7 @@ export {
   SEARCH_MACHINE_BY_CATEGORY_QUERY,
   SEARCH_MACHINE_BY_NAME_QUERY,
   SEARCH_MACHINE_BY_POSITION_QUERY,
+  GET_MATERIAL_BY_ID_QUERY,
   SEARCH_MATERIAL_BY_CATEGORY_QUERY,
   SEARCH_MATERIAL_BY_NAME_QUERY,
   SEARCH_MATERIAL_BY_POSITION_QUERY,

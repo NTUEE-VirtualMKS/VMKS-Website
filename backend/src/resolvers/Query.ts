@@ -277,6 +277,16 @@ const Query = {
     return materials;
   },
 
+  GetMaterialById: async (_parents, args: { id: number }, context) => {
+    const id = args.id;
+    const material = await prisma.material.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return material;
+  },
+
   SearchMaterialsByCategory: async (
     _parents,
     args: { category: string },

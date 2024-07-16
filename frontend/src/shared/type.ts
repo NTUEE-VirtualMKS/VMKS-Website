@@ -27,14 +27,14 @@ export type UserType = {
 export type MaterialType = {
   id: number;
   name: string;
-  partName?: string;
+  partName?: string | null;
   category: string;
   valuable: boolean;
   position: string;
   description: string;
   photoLink: string;
   usage: number;
-  tutorialLink?: string;
+  tutorialLink?: string | null;
   fee: number;
   remain: number;
 };
@@ -57,4 +57,8 @@ export type NavButtonProps = {
   onClick: () => void;
   Icon: React.ElementType;
   ariaLabel: string;
+};
+
+export type RouteBarProps = {
+  route: string | undefined;
 };

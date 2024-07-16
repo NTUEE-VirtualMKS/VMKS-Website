@@ -16,10 +16,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import LoaderSpinner from "./LoaderSpinner";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "./ui/use-toast";
 
 const EditAnnouncement = () => {
+  const { toast } = useToast();
   const { id } = useParams();
-  if (!id) throw new Error("id is undefined");
+  if (!id) {
+    return toast({ title: "id is undefined", variant: "destructive" });
+  }
   const navigate = useNavigate();
   const {
     data,
@@ -27,11 +31,14 @@ const EditAnnouncement = () => {
     error: queryError,
   } = useQuery(ALL_ANNOUNCEMENT_QUERY);
 
-  const allAnnouncements = JSON.parse(JSON.stringify(data?.AllAnnouncements));
-  const announcement = allAnnouncements.find((a: any) => a.id === parseInt(id));
+  const allAnnouncements = data?.AllAnnouncements;
+  // TODO: get announcement by id
+  const announcement = allAnnouncements!.find(
+    (a: any) => a.id === parseInt(id)
+  );
   const [visible, setVisible] = useState(true);
-  const [title, setEditTitleNow] = useState(announcement.title);
-  const [content, setEditContentNow] = useState(announcement.content);
+  const [title, setEditTitleNow] = useState(announcement!.title);
+  const [content, setEditContentNow] = useState(announcement!.content);
 
   const handleClose = () => {
     setVisible(false);
@@ -43,17 +50,16 @@ const EditAnnouncement = () => {
       refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
     });
 
-  const formSubmit = ({
+  const handleSubmit = ({
     title,
     content,
   }: {
     title: string;
     content: string;
   }) => {
-    if (!id) throw new Error("id is undefined");
-    if (editLoading) return <LoaderSpinner />;
-    if (editError) throw new Error(`Error! ${editError.message}`);
-
+    if (!id) {
+      return toast({ title: "id is undefined", variant: "destructive" });
+    }
     editAnnouncement({
       variables: {
         editAnnouncementId: parseInt(id),
@@ -63,12 +69,20 @@ const EditAnnouncement = () => {
         },
       },
     });
-    handleClose();
-    navigate(`/AnnouncementPage`);
+    if (editLoading) return <LoaderSpinner />;
+    if (editError) {
+      toast({ title: `${editError.message}`, variant: "destructive" });
+    } else {
+      handleClose();
+      navigate(`/AnnouncementPage`);
+      toast({ title: "Announcement edited successfully!" });
+    }
   };
 
   if (queryLoading) return <LoaderSpinner />;
-  if (queryError) throw new Error(`Error! ${queryError.message}`);
+  if (queryError) {
+    return toast({ title: `${queryError.message}`, variant: "destructive" });
+  }
 
   return (
     <>
@@ -124,7 +138,7 @@ const EditAnnouncement = () => {
               取消
             </Button>
             <Button
-              onClick={() => formSubmit({ title, content })}
+              onClick={() => handleSubmit({ title, content })}
               className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
             >
               提交
