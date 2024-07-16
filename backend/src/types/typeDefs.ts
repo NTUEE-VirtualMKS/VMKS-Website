@@ -327,6 +327,7 @@ const typeDefs = `#graphql
     SearchDisposableMaterialsByPosition(position: String!): [DisposableMaterial]
     SearchDisposableMaterialsByName(name: String!): [DisposableMaterial]
     AllMaterials: [Material]
+    GetMaterialById(id: Int!): Material
     SearchMaterialsByCategory(category: String!): [Material]
     SearchMaterialsByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]

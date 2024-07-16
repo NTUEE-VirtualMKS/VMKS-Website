@@ -1,17 +1,28 @@
-"use client";
-
 import { Input } from "./ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import { useDebounce } from "@/lib/useDebounce";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Searchbar() {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const debounceValue = useDebounce(search, 500);
+
+  useEffect(() => {
+    if (debounceValue) {
+      navigate(`/MaterialAndToolPage?search=${debounceValue}`);
+    } else if (!debounceValue && pathname === "/MaterialAndToolPage") {
+      navigate("/MaterialAndToolPage");
+    }
+  }, [navigate, pathname, debounceValue]);
 
   return (
     <div className="relative block">
       <Input
         className="input-class py-6 pl-12 focus-visible:ring-offset-blue-600"
-        placeholder="Search tools"
+        placeholder="Search materials"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onLoad={() => setSearch("")}

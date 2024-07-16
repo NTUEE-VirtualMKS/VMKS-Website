@@ -37,8 +37,8 @@ function EditIntroductionPage() {
     sessionId === activeSession ? "text-white" : "text-gray-500";
 
   const { data, loading, error } = useQuery(CURRENT_INTRODUCTION_QUERY);
-  const introduction = JSON.parse(JSON.stringify(data?.CurrentIntroduction));
-  const content = introduction.content;
+  const introduction = data?.CurrentIntroduction;
+  const content = introduction!.content;
   const [
     updateIntroduction,
     { loading: introductionLoading, error: introductionError },

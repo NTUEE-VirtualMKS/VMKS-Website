@@ -18,9 +18,11 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@/context/userContext";
+import { useToast } from "@/components/ui/use-toast";
 
 function AnnouncementPage() {
   const { user } = useUser();
+  const { toast } = useToast();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -32,10 +34,7 @@ function AnnouncementPage() {
     }
   );
 
-  if (loading) return <LoaderSpinner />;
-  if (error) throw new Error(error.message);
-
-  const formSubmit = ({ title, content }: AnnouncementInput) => {
+  const handleSubmit = ({ title, content }: AnnouncementInput) => {
     addAnnouncement({
       variables: {
         announcementInput: {
@@ -44,9 +43,15 @@ function AnnouncementPage() {
         },
       },
     });
-    setTitle("");
-    setContent("");
-    setVisible(false);
+    if (loading) return <LoaderSpinner />;
+    if (error) {
+      toast({ title: `${error.message}`, variant: "destructive" });
+    } else {
+      setTitle("");
+      setContent("");
+      setVisible(false);
+      toast({ title: "Announcement added successfully!" });
+    }
   };
 
   return (
@@ -107,7 +112,7 @@ function AnnouncementPage() {
               取消
             </Button>
             <Button
-              onClick={() => formSubmit({ title, content })}
+              onClick={() => handleSubmit({ title, content })}
               className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
             >
               提交
