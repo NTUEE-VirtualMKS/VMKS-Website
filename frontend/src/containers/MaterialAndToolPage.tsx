@@ -1,4 +1,4 @@
-// TODO: need userContext and search
+// TODO: implement searching
 import { useState } from "react";
 import MaterialList from "@/components/MaterialAndTool/MaterialList";
 import { ALL_MATERIAL_QUERY, ADD_MATERIAL_MUTATION } from "@/graphql";
@@ -22,9 +22,11 @@ import type { MaterialInput } from "@/shared/type";
 import ImportButton from "@/components/ImportButton";
 import { useToast } from "@/components/ui/use-toast";
 import Searchbar from "@/components/Searchbar";
+import { useUser } from "@/context/userContext";
 
 function MaterialAndToolPage() {
   const { toast } = useToast();
+  const { user } = useUser();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -38,7 +40,6 @@ function MaterialAndToolPage() {
   const [tutorialLink, setTutorialLink] = useState("");
   const [partName, setPartName] = useState("");
   const [materials, setMaterials] = useState<MaterialInput[]>([]);
-  const [admin, setAdmin] = useState(true);
 
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
     refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
@@ -123,13 +124,6 @@ function MaterialAndToolPage() {
     }
   };
 
-  
-  // test only
-  const handleEdit = () => {
-    if (admin) setAdmin(false);
-    else setAdmin(true);
-  };
-
   return (
     <>
       <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
@@ -139,22 +133,7 @@ function MaterialAndToolPage() {
         </div>
 
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-          {admin ? (
-            <Button
-              className="my-3 text-sky-300 rounded-lg border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
-              onClick={handleEdit}
-            >
-              is admin
-            </Button>
-          ) : (
-            <Button
-              className="my-3 text-sky-300 rounded-lg border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
-              onClick={handleEdit}
-            >
-              not admin
-            </Button>
-          )}
-          {admin && (
+          {user?.isAdmin && (
             <>
               <Dialog
                 open={visible}
@@ -363,7 +342,7 @@ function MaterialAndToolPage() {
           )}
         </div>
         <div className="mt-2">
-          <MaterialList admin={admin}/>
+          <MaterialList />
         </div>
       </div>
     </>

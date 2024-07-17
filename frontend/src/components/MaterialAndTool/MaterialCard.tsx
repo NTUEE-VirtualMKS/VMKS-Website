@@ -1,4 +1,3 @@
-// TODO: need userContext
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { handleBorrow } from "./Handle";
@@ -8,15 +7,11 @@ import { useMutation } from "@apollo/client";
 import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/context/userContext";
 
-function MaterialCard({
-  material,
-  admin,
-}: {
-  material: MaterialType;
-  admin: boolean;
-}) {
+function MaterialCard({ material }: { material: MaterialType }) {
   const { toast } = useToast();
+  const { user } = useUser();
 
   const [deleteMaterial, { loading, error }] = useMutation(
     DELETE_MATERIAL_MUTATION,
@@ -26,16 +21,18 @@ function MaterialCard({
   );
 
   const handleDelete = () => {
-    deleteMaterial({
-      variables: {
-        deleteMaterialId: material.id,
-      },
-    });
-    if (loading) return <LoaderSpinner />;
-    if (error) {
-      toast({ title: `${error.message}`, variant: "destructive" });
-    } else {
-      toast({ title: "Material deleted successfully!" });
+    if (window.confirm("Are you sure you want to delete this material?")) {
+      deleteMaterial({
+        variables: {
+          deleteMaterialId: material.id,
+        },
+      });
+      if (loading) return <LoaderSpinner />;
+      if (error) {
+        toast({ title: `${error.message}`, variant: "destructive" });
+      } else {
+        toast({ title: "Material deleted successfully!" });
+      }
     }
   };
 
@@ -62,7 +59,7 @@ function MaterialCard({
           <p className="text-white text-16">使用量: {material?.usage}（個）</p>
         </Link>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-          {admin && (
+          {user?.isAdmin && (
             <Button
               onClick={handleDelete}
               className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"

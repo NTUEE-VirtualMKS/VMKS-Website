@@ -606,6 +606,7 @@ export type UserEditInput = {
 
 export type UserInput = {
   isAdmin: Scalars['Boolean']['input'];
+  isMinister: Scalars['Boolean']['input'];
   laserCutAvailable: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];

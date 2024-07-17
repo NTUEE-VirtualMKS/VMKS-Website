@@ -7,9 +7,12 @@ import {
   Info,
 } from "lucide-react";
 import NavButton from "./NavButton";
+import { useUser } from "@/context/userContext";
 
 function NavBar() {
   const navigate = useNavigate();
+  const { user } = useUser();
+
   return (
     <nav className="flex-1 m-3 flex flex-row justify-between bg-black">
       <div className="flex items-start gap-4">
@@ -25,6 +28,18 @@ function NavBar() {
         />
       </div>
       <div className="flex items-start gap-[15px]">
+        {user?.isMinister && (
+          <div className="w-28 h-12 relative">
+            <button className="flex flex-col justify-center items-center w-28 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
+              <div
+                className="flex flex-col justify-center items-center w-9 h-6 top-3 absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide "
+                onClick={() => navigate("/AuthorizedCodePage")}
+              >
+                Authorized Code
+              </div>
+            </button>
+          </div>
+        )}
         {/* TODO: optimize the following code just like the above one */}
         <div className="w-28 h-12 relative">
           <button className="flex flex-col justify-center items-center w-28 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">

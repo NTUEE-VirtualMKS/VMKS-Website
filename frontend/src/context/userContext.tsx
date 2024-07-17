@@ -3,15 +3,18 @@ import { createContext, useContext, useState, useCallback } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { ALL_USER_QUERY } from "@/graphql";
 import type { UserType } from "@/shared/type.ts";
+import { useToast } from "@/components/ui/use-toast";
 
 export type UserContextType = {
   user: UserType | null;
-  fetchUser: () => Promise<void>;
+  signIn: () => Promise<void>;
+  logOut: () => void;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
-  fetchUser: async () => {},
+  signIn: async () => {},
+  logOut: () => {},
 });
 
 type UserProviderProps = {
@@ -20,9 +23,9 @@ type UserProviderProps = {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserType | null>(null);
+  const { toast } = useToast();
   const [getUsers] = useLazyQuery(ALL_USER_QUERY);
-
-  const fetchUser = useCallback(async () => {
+  const signIn = useCallback(async () => {
     const { data } = await getUsers();
 
     if (!data?.AllUser) {
@@ -45,11 +48,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         isAdmin: findUser.isAdmin,
         isMinister: findUser.isMinister,
       });
+      toast({ title: "Sign in successfully!" });
     }
   }, [getUsers]);
 
+  const logOut = () => {
+    setUser(null);
+    toast({ title: "Log out successfully!" });
+  };
+
   return (
-    <UserContext.Provider value={{ user, fetchUser }}>
+    <UserContext.Provider value={{ user, signIn, logOut }}>
       {children}
     </UserContext.Provider>
   );

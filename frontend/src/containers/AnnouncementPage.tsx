@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ALL_ANNOUNCEMENT_QUERY, ADD_ANNOUNCEMENT_MUTATION } from "@/graphql";
 import type { AnnouncementInput } from "../../../backend/src/types/types";
-import Announcement from "@/components/Announcement";
+import Announcement from "@/components/AnnouncementList";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,12 +55,11 @@ function AnnouncementPage() {
   };
 
   return (
-    <div className="w-11/12 mx-auto">
-      <Announcement />
+    <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
+      <h1 className="text-white">所有公告 All AnnouncementList</h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>
           {user?.isAdmin && (
-            // TODO: only admin can add announcements
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
               <Button
                 className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
@@ -120,6 +119,7 @@ function AnnouncementPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <Announcement />
     </div>
   );
 }

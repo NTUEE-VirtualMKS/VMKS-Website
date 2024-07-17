@@ -1,14 +1,14 @@
-// TODO: finished?
+// TODO: UI
 import {
   AUTHORIZED_CODE_UPDATE_MUTATION,
   GET_AUTHORIZED_CODE_QUERY,
 } from "@/graphql";
 import { useMutation } from "@apollo/client";
-import type { AuthorizedCodeInput } from "../../../backend/src/types/types"; // TODO: new a type in `shared/type.ts`
+import type { AuthorizedCodeInputType } from "@/shared/type";
 import { useState } from "react";
+// TODO: replace with shadcn/ui
 import {
   Dialog,
-  Button,
   FormControl,
   InputLabel,
   Select,
@@ -16,19 +16,18 @@ import {
   DialogActions,
   DialogContent,
   TextField,
-  DialogContentText,
   DialogTitle,
-  makeStyles,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button.tsx";
 import LoaderSpinner from "@/components/LoaderSpinner";
+import { useToast } from "@/components/ui/use-toast";
 
 const AuthorizedCodePage = () => {
+  const { toast } = useToast();
   const [visible, setVisible] = useState<boolean>(false);
   const [number, setNumber] = useState<string>("10");
   const [length, setLength] = useState<string>("6");
-  const [list, setList] = useState<string[]>([]);
-  const navigate = useNavigate();
+  // const [list, setList] = useState<string[]>([]);
 
   const [updateAuthorizedCode, { loading, error }] = useMutation(
     AUTHORIZED_CODE_UPDATE_MUTATION,
@@ -36,15 +35,6 @@ const AuthorizedCodePage = () => {
       refetchQueries: [{ query: GET_AUTHORIZED_CODE_QUERY }],
     }
   );
-  if (loading) return <LoaderSpinner />;
-  if (error) throw new Error(`Error! ${error.message}`);
-
-  // const useStyles = makeStyles((theme) => ({
-  //   formControl: {
-  //     margin: theme.spacing(1),
-  //     minWidth: 120,
-  //   },
-  // }));
 
   const handleGenerate = () => {
     const numberInt: number = Number(number);
@@ -74,8 +64,7 @@ const AuthorizedCodePage = () => {
     setLength("6");
   };
 
-  const formSubmit = ({ codeList }: AuthorizedCodeInput) => {
-    // const classes = useStyles();
+  const formSubmit = ({ codeList }: AuthorizedCodeInputType) => {
     updateAuthorizedCode({
       variables: {
         authorizedCodeInput: {
@@ -83,72 +72,77 @@ const AuthorizedCodePage = () => {
         },
       },
     });
-
-    setVisible(false);
+    if (loading) return <LoaderSpinner />;
+    if (error) {
+      toast({ title: `${error.message}`, variant: "destructive" });
+    } else {
+      setVisible(false);
+    }
   };
 
   return (
     <>
-      <div className="flex justify-center m-3">公告一覽</div>
-
-      <Button
-        className="m-3"
-        variant="outlined"
-        onClick={() => setVisible(true)}
-      >
-        新增加簽碼
-      </Button>
-
-      <Dialog
-        open={visible}
-        onClose={() => setVisible(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>新增公告</DialogTitle>
-        <DialogContent>
-          <FormControl className="w-50">
-            <TextField
-              margin="dense"
-              id="number"
-              label="內文"
-              type="number"
-              fullWidth
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-            />
-            <InputLabel id="option-input-label" className="w-50">
-              Code length
-            </InputLabel>
-            <Select
-              labelId="number-input"
-              id="option-input"
-              value={length}
-              onChange={(e) => setLength(e.target.value)}
+      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
+        <h1 className="text-white">生成加簽碼</h1>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-3">
+          <Button
+            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            onClick={() => setVisible(true)}
+          >
+            生成加簽碼
+          </Button>
+        </div>
+        <Dialog
+          open={visible}
+          onClose={() => setVisible(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>生成加簽碼</DialogTitle>
+          <DialogContent>
+            <FormControl className="w-50">
+              <TextField
+                margin="dense"
+                id="number"
+                label="內文"
+                type="number"
+                fullWidth
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+              />
+              <InputLabel id="option-input-label" className="w-50">
+                Code length
+              </InputLabel>
+              <Select
+                labelId="number-input"
+                id="option-input"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
+              >
+                <MenuItem value="5">5</MenuItem>
+                <MenuItem value="6">6</MenuItem>
+                <MenuItem value="7">7</MenuItem>
+                <MenuItem value="8">8</MenuItem>
+                <MenuItem value="9">9</MenuItem>
+                <MenuItem value="10">10</MenuItem>
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setVisible(false)}
+              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
             >
-              <MenuItem value="5">5</MenuItem>
-              <MenuItem value="6">6</MenuItem>
-              <MenuItem value="7">7</MenuItem>
-              <MenuItem value="8">8</MenuItem>
-              <MenuItem value="9">9</MenuItem>
-              <MenuItem value="10">10</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setVisible(false)} color="primary">
-            取消
-          </Button>
-          <Button onClick={() => handleGenerate()} color="primary">
-            Generate
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <div className="flex justify-center m-3">
-        <Button variant="outlined" onClick={() => navigate(-1)}>
-          返回
-        </Button>
+              取消
+            </Button>
+            <Button
+              onClick={() => handleGenerate()}
+              className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            >
+              Generate
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

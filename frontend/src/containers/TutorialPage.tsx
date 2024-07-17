@@ -60,22 +60,35 @@ function TutorialPage() {
       </div>
       <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
         <h1 ref={sessionA}>教學 Tutorial</h1>
-        <br />
-        <h2>互動</h2>
+        <a
+          href="#interaction"
+          onClick={() => scrollToSection(sessionA, "sessionA")}
+        >
+          <h2 className="mt-5">互動</h2>
+        </a>
         <div className="p-1">
           <p className="indent-first-letter">{interaction1}</p>
           <p className="indent-first-letter">{interaction2}</p>
           <p className="indent-first-letter">{interaction3}</p>
         </div>
-        <br />
-        <h2 ref={sessionB}>一覽</h2>
+        <a
+          href="#overview"
+          onClick={() => scrollToSection(sessionB, "sessionB")}
+        >
+          <h2 ref={sessionB} className="mt-5">
+            一覽
+          </h2>
+        </a>
         <ul className="p-2 ml-3 list-disc">
           {list.map((item: string) => (
             <li>{item}</li>
           ))}
         </ul>
-        <br />
-        <h2 ref={sessionC}>教學影片</h2>
+        <a href="#videos" onClick={() => scrollToSection(sessionC, "sessionC")}>
+          <h2 ref={sessionC} className="mt-5">
+            教學影片
+          </h2>
+        </a>
         <center>
           <iframe
             src="https://www.youtube.com/embed/u10oLI85Ip0"

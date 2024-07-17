@@ -1,4 +1,3 @@
-// TODO: implement updateMaterial and UI
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_MATERIAL_BY_ID_QUERY, EDIT_MATERIAL_MUTATION } from "@/graphql";
@@ -37,7 +36,9 @@ function MaterialEditPage() {
   });
 
   if (queryLoading) return <LoaderSpinner />;
-  if (queryError) throw new Error(`Error! ${queryError.message}`);
+  if (queryError) {
+    toast({ title: `${queryError.message}`, variant: "destructive" });
+  }
 
   const material = data?.GetMaterialById;
 
@@ -77,8 +78,12 @@ function MaterialEditPage() {
     tutorialLink,
     partName,
   }: MaterialInput) => {
-    if (!id) throw new Error("id is undefined");
-    if (!material) throw new Error("material is undefined!");
+    if (!id) {
+      toast({ title: "id is undefined", variant: "destructive" });
+    }
+    if (!material) {
+      toast({ title: "Material is undefined", variant: "destructive" });
+    }
 
     const updatedMaterial = await updateMaterial({
       variables: {
@@ -299,4 +304,4 @@ function MaterialEditPage() {
   );
 }
 
-export default MaterialEditPage;
+export default MaterialEditPage as React.FC;

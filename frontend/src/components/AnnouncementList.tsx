@@ -1,38 +1,50 @@
-// TODO: delete announcement and connect with user's permission
-import { useState } from "react";
-import { useNavigate /* useParams */ } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  ALL_ANNOUNCEMENT_QUERY /* EDIT_ANNOUNCEMENT_MUTATION */,
+  ALL_ANNOUNCEMENT_QUERY,
+  DELETE_ANNOUNCEMENT_MUTATION,
 } from "@/graphql";
-import { useQuery } from "@apollo/client";
-// import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import LoaderSpinner from "./LoaderSpinner";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/userContext";
+import { useToast } from "./ui/use-toast";
 
-function Announcements() {
+function AnnouncementList() {
   const navigate = useNavigate();
+  const { user } = useUser();
+  const { toast } = useToast();
   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
-  const [admin, setAdmin] = useState(true);
-
-  const handleEdit = () => {
-    if (admin) setAdmin(false);
-    else setAdmin(true);
-  };
-
-  const handleDelete = (id: number) => {
-    console.log(id);
-  };
+  const [deleteAnnouncement, { loading: deleteLoading, error: deleteError }] =
+    useMutation(DELETE_ANNOUNCEMENT_MUTATION, {
+      refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
+    });
 
   if (loading) return <LoaderSpinner />;
-  if (error) throw new Error(`Error! ${error.message}`);
+  if (error) {
+    toast({ title: `${error.message}`, variant: "destructive" });
+  }
 
   const announcements = data?.AllAnnouncements || [];
 
+  const handleDelete = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this announcement?")) {
+      deleteAnnouncement({
+        variables: {
+          deleteAnnouncementId: id,
+        },
+      });
+      if (deleteLoading) return <LoaderSpinner />;
+      if (deleteError) {
+        toast({ title: `${deleteError.message}`, variant: "destructive" });
+      } else {
+        toast({ title: "Announcement deleted successfully!" });
+      }
+    }
+  };
   return (
     <>
-      <h1 className="text-white mt-20">所有公告 All Announcements</h1>
       {announcements.length && (
-        <div className="flex flex-col m-3 border-2 border-blue-600 rounded-xl max-h-[500px] overflow-y-auto">
+        <div className="flex flex-col mx-3 border-2 border-blue-600 rounded-xl max-h-[500px] overflow-y-auto">
           {announcements.map(
             (announcement) =>
               announcement !== null && (
@@ -47,7 +59,7 @@ function Announcements() {
                   <p className="text-white text-lg px-2">
                     {announcement.content}
                   </p>
-                  {admin && (
+                  {user?.isAdmin && (
                     <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                       <Button
                         onClick={() => handleDelete(announcement.id)}
@@ -70,24 +82,7 @@ function Announcements() {
           )}
         </div>
       )}
-      <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-        {admin ? (
-          <button
-            className="p-2 mx-3 text-sky-300 rounded-lg border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
-            onClick={handleEdit}
-          >
-            is admin
-          </button>
-        ) : (
-          <button
-            className="p-2 mx-3 text-sky-300 rounded-lg border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
-            onClick={handleEdit}
-          >
-            not admin
-          </button>
-        )}
-      </div>
     </>
   );
 }
-export default Announcements;
+export default AnnouncementList;
