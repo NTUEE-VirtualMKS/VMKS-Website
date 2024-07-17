@@ -919,7 +919,7 @@ const Mutation = {
         laserCutAvailable: laserCutAvailable,
         borrowHistoryId: [],
         isAdmin: isAdmin,
-        isMinister,
+        isMinister: isMinister,
       },
     });
 
