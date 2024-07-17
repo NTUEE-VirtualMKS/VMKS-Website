@@ -123,6 +123,7 @@ const typeDefs = `#graphql
     threeDPId: Int
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
+    isMinister: Boolean!
   }
 
   input UserEditInput {
