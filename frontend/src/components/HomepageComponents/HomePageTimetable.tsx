@@ -12,7 +12,7 @@ function HomePageTimetable() {
           <div className="text-2xl text-white">今日管理員班表 📅 </div>
           <button
             className="self-end mt-1.5 text-sm text-right whitespace-nowrap text-white text-opacity-50 transform active:scale-90 transition-transform duration-200"
-            onClick={() => navigate("IntroductionPage")}
+            onClick={() => navigate("/IntroductionPage")}
           >
             See all
           </button>

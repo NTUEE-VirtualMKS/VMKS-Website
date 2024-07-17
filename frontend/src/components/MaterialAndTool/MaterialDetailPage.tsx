@@ -7,11 +7,12 @@ import { GET_MATERIAL_BY_ID_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner.tsx";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label.tsx";
+import { useUser } from "@/context/userContext.tsx";
 
 function MaterialDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const { user } = useUser();
   const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
     variables: { id: parseInt(id as string) },
   });
@@ -69,16 +70,18 @@ function MaterialDetailPage() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-              <Button
-                onClick={() =>
-                  navigate(`/MaterialAndToolPage/Material/${id}/edit`)
-                }
-                className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-              >
-                編輯
-              </Button>
-            </div>
+            {user?.isAdmin && (
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                <Button
+                  onClick={() =>
+                    navigate(`/MaterialAndToolPage/Material/${id}/edit`)
+                  }
+                  className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                >
+                  編輯
+                </Button>
+              </div>
+            )}
           </div>
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
             <Button

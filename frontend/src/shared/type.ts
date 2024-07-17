@@ -53,6 +53,10 @@ export type MaterialInput = {
   remain: number | string;
 };
 
+export type AuthorizedCodeInputType = {
+  codeList: string[];
+};
+
 export type NavButtonProps = {
   onClick: () => void;
   Icon: React.ElementType;

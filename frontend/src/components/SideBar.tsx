@@ -1,20 +1,7 @@
+// TODO: implement the sidebar component
 import { useNavigate } from "react-router-dom";
 import { CirclePlus, Heart } from "lucide-react";
-
-const images = [
-  {
-    url: "https://http.cat/200",
-    alt: "200 OK",
-  },
-  {
-    url: "https://http.cat/400",
-    alt: "400 Bad Request",
-  },
-  {
-    url: "https://http.cat/404",
-    alt: "404 Not Found",
-  },
-];
+import { images } from "@/constants/index";
 
 function SideBar() {
   const navigate = useNavigate();

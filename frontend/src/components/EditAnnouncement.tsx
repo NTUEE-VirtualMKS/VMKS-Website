@@ -149,4 +149,4 @@ const EditAnnouncement = () => {
     </>
   );
 };
-export default EditAnnouncement;
+export default EditAnnouncement as React.FC;
