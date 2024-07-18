@@ -39,6 +39,13 @@ export type MaterialType = {
   remain: number;
 };
 
+export type AuthorizedCodeType = {
+  __typename?: "AuthorizedCode" | undefined;
+  id: number;
+  codeList?: Array<string | null> | null;
+  updatedAt: string;
+};
+
 export type MaterialInput = {
   name: string;
   partName: string | null;
