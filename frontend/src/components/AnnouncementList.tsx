@@ -6,7 +6,7 @@ import {
 import { useQuery, useMutation } from "@apollo/client";
 import LoaderSpinner from "./LoaderSpinner";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/UserContext";
 import { useToast } from "./ui/use-toast";
 
 function AnnouncementList() {
@@ -57,7 +57,9 @@ function AnnouncementList() {
                     Date: {new Date(announcement.date).toLocaleString()}
                   </p>
                   <p className="text-white text-lg px-2">
-                    {announcement.content}
+                    {announcement.content.length > 350
+                      ? announcement.content.slice(0, 350) + "..."
+                      : announcement.content}
                   </p>
                   {user?.isAdmin && (
                     <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">

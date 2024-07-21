@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, useMatch } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Routes, Route /*, useMatch */ } from "react-router-dom";
+// import { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import NotFound from "@/containers/NotFound";
@@ -31,15 +31,15 @@ const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
 const Tool = lazy(() => import("@/components/MaterialAndTool/Tool"));
 
 function App() {
-  const match = useMatch("@/advanced/*");
-  const [isMain, setIsMain] = useState(true);
+  // const match = useMatch("@/advanced/*");
+  // const [isMain, setIsMain] = useState(true);
 
-  useEffect(() => {
-    setIsMain(!match); // match will be non-null if the route matches
-  }, [match]);
+  // useEffect(() => {
+  //   setIsMain(!match); // match will be non-null if the route matches
+  // }, [match]);
 
   // check if the page is mainPage or advancedPage
-  return isMain ? (
+  return (
     <div className="flex flex-row">
       <div className="flex-none z-10">
         <SideBar />
@@ -116,7 +116,7 @@ function App() {
               }
             />
             <Route
-              path="/LoginPage"
+              path="/Login"
               element={
                 <Suspense fallback={<LoaderSpinner />}>
                   <LoginPage />
@@ -170,11 +170,12 @@ function App() {
         </div>
       </div>
     </div>
-  ) : (
-    <Routes>
-      <Route path="/advanced/*" element={<Advanced />} />
-    </Routes>
   );
+  // ) : (
+  //   <Routes>
+  //     <Route path="/advanced/*" element={<Advanced />} />
+  //   </Routes>
+  // );
 }
 
 export default App;

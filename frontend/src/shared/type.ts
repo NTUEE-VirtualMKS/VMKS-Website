@@ -11,15 +11,16 @@ export type AnnouncementInputType = {
 };
 
 export type UserType = {
+  __typename?: "User";
   id: number;
   name: string;
   studentID: string;
   password: string;
-  photoLink?: string;
-  threeDPId?: string;
+  photoLink?: string | null;
+  threeDPId?: number | null;
   laserCutAvailable: boolean;
-  borrowHistoryId?: number[];
-  articlesId?: number[];
+  borrowHistoryId?: Array<number | null> | null;
+  articlesId?: Array<number | null> | null;
   isAdmin: boolean;
   isMinister: boolean;
 };
@@ -72,4 +73,15 @@ export type NavButtonProps = {
 
 export type RouteBarProps = {
   route: string | undefined;
+};
+
+export type SignupProps = {
+  name: string;
+  studentID: string;
+  password: string;
+};
+
+export type LoginProps = {
+  studentID: string;
+  password: string;
 };

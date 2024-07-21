@@ -1,5 +1,5 @@
+// TODO: handle rborrow and repair buttons
 import { useParams, useNavigate } from "react-router-dom";
-import { handleBorrow, handleRepair } from "./Handle";
 import { Button } from "@/components/ui/button";
 import RouteBar from "./RouteBar";
 import { useQuery } from "@apollo/client";
@@ -7,7 +7,7 @@ import { GET_MATERIAL_BY_ID_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner.tsx";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label.tsx";
-import { useUser } from "@/context/userContext.tsx";
+import { useUser } from "@/context/UserContext.tsx";
 
 function MaterialDetailPage() {
   const { id } = useParams();
@@ -21,6 +21,8 @@ function MaterialDetailPage() {
   if (error) throw new Error(`Error! ${error.message}`);
 
   const material = data?.GetMaterialById;
+
+  const handleRepair = () => {};
 
   return (
     <div>
@@ -87,14 +89,20 @@ function MaterialDetailPage() {
             <Button
               onClick={handleRepair}
               className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+              disabled={!user}
             >
               報修
             </Button>
             <Button
-              onClick={handleBorrow}
               className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+              disabled={!user}
             >
-              借用
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
+                target="_blank"
+              >
+                借用
+              </a>
             </Button>
           </div>
         </div>

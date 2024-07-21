@@ -485,6 +485,16 @@ const Query = {
     return orderedSearchUserByName;
   },
 
+  GetUserByStudentID: async (_parents, args: { studentID: string }, context) => {
+    const studentID = args.studentID;
+    const user = await prisma.user.findUnique({
+      where: {
+        studentID: studentID,
+      },
+    });
+    return user;
+  },
+
   AllUserMaterials: async () => {
     const UserMaterials = await prisma.userMaterial.findMany({
       orderBy: [

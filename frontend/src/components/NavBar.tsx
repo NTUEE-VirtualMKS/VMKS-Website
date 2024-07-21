@@ -7,11 +7,12 @@ import {
   Info,
 } from "lucide-react";
 import NavButton from "./NavButton";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/UserContext";
+import { Button } from "./ui/button";
 
 function NavBar() {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   return (
     <nav className="flex-1 m-3 flex flex-row justify-between bg-black">
@@ -84,6 +85,25 @@ function NavBar() {
           >
             <Info className="text-white" />
           </button>
+        </div>
+        <div className="mt-0.5">
+          {!user ? (
+            <Button
+              onClick={() => navigate("/Login")}
+              size="lg"
+              className=" text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
+            >
+              Log in
+            </Button>
+          ) : (
+            <Button
+              onClick={logout}
+              size="lg"
+              className=" text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
+            >
+              Log out
+            </Button>
+          )}
         </div>
       </div>
     </nav>

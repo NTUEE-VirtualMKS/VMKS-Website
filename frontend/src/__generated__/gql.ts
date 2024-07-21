@@ -68,6 +68,7 @@ const documents = {
     "\n  query SearchToolsByPosition($position: String!) {\n    SearchToolsByPosition(position: $position) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.SearchToolsByPositionDocument,
     "\n  query AllUser {\n    AllUser {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n": types.AllUserDocument,
     "\n  query SearchUserByName($name: String!) {\n    SearchUserByName(name: $name) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n": types.SearchUserByNameDocument,
+    "\n  query GetUserByStudentID($studentID: String!) {\n    GetUserByStudentID(studentID: $studentID) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n": types.GetUserByStudentIdDocument,
     "\n  query AllUserMaterials {\n    AllUserMaterials {\n      id\n      name\n      partName\n      borrowerId\n      borrowNum\n      borrowDate\n      returnDate\n      status\n    }\n  }\n": types.AllUserMaterialsDocument,
     "\n  query GetAuthorizedCode {\n    GetAuthorizedCode {\n      id\n      codeList\n      updatedAt\n    }\n  }\n": types.GetAuthorizedCodeDocument,
     "\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n": types.CurrentIntroductionDocument,
@@ -309,6 +310,10 @@ export function gql(source: "\n  query AllUser {\n    AllUser {\n      id\n     
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query SearchUserByName($name: String!) {\n    SearchUserByName(name: $name) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n"): (typeof documents)["\n  query SearchUserByName($name: String!) {\n    SearchUserByName(name: $name) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetUserByStudentID($studentID: String!) {\n    GetUserByStudentID(studentID: $studentID) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n"): (typeof documents)["\n  query GetUserByStudentID($studentID: String!) {\n    GetUserByStudentID(studentID: $studentID) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      borrowHistoryId\n      articlesId\n      isAdmin\n      isMinister\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
