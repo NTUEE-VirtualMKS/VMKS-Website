@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { handleBorrow } from "./Handle";
 import { MaterialType } from "@/shared/type";
 import { DELETE_MATERIAL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "@/components/ui/use-toast";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/UserContext";
 
 function MaterialCard({ material }: { material: MaterialType }) {
   const { toast } = useToast();
@@ -68,10 +67,15 @@ function MaterialCard({ material }: { material: MaterialType }) {
             </Button>
           )}
           <Button
-            onClick={handleBorrow}
             className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            disabled={!user}
           >
-            借用
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
+              target="_blank"
+            >
+              借用
+            </a>
           </Button>
         </div>
       </div>

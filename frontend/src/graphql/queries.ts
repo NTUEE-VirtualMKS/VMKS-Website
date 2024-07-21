@@ -414,6 +414,24 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
   }
 `);
 
+const GET_USER_BY_STUDENT_ID_QUERY = gql(`
+  query GetUserByStudentID($studentID: String!) {
+    GetUserByStudentID(studentID: $studentID) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      threeDPId
+      laserCutAvailable
+      borrowHistoryId
+      articlesId
+      isAdmin
+      isMinister
+    }
+  }
+`);
+
 const ALL_USER_MATERIAL_QUERY = gql(`
   query AllUserMaterials {
     AllUserMaterials {
@@ -475,5 +493,6 @@ export {
   SEARCH_TOOL_BY_NAME_QUERY,
   SEARCH_TOOL_BY_POSITION_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
+  GET_USER_BY_STUDENT_ID_QUERY,
   CURRENT_INTRODUCTION_QUERY,
 };

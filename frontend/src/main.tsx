@@ -9,7 +9,7 @@ import { split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
-import { UserProvider } from "./context/userContext";
+import { UserProvider } from "./context/UserContext";
 import { Toaster } from "@/components/ui/toaster";
 
 const httpLink = new HttpLink({

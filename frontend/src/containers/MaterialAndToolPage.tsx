@@ -22,7 +22,7 @@ import type { MaterialInput } from "@/shared/type";
 import ImportButton from "@/components/ImportButton";
 import { useToast } from "@/components/ui/use-toast";
 import Searchbar from "@/components/Searchbar";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/UserContext";
 
 function MaterialAndToolPage() {
   const { toast } = useToast();

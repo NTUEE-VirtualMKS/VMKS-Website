@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ALL_ANNOUNCEMENT_QUERY, ADD_ANNOUNCEMENT_MUTATION } from "@/graphql";
 import type { AnnouncementInput } from "../../../backend/src/types/types";
-import Announcement from "@/components/AnnouncementList";
+import AnnouncementList from "@/components/AnnouncementList";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/UserContext";
 import { useToast } from "@/components/ui/use-toast";
 
 function AnnouncementPage() {
@@ -56,7 +56,7 @@ function AnnouncementPage() {
 
   return (
     <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
-      <h1 className="text-white">所有公告 All AnnouncementList</h1>
+      <h1 className="text-white">所有公告 All Announcements</h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>
           {user?.isAdmin && (
@@ -119,7 +119,7 @@ function AnnouncementPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <Announcement />
+      <AnnouncementList />
     </div>
   );
 }

@@ -10,7 +10,7 @@ function SideBar() {
       <div className="w-20 h-full left-0 top-0 fixed bg-slate-900 rounded-r-2xl border border-zinc-600 flex flex-col">
         <button onClick={() => navigate("/")}>
           <img
-            className="w-full h-28 object-cover"
+            className="w-20 my-1.5 object-cover"
             src="/logo.png"
             alt="logo"
           />

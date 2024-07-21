@@ -341,6 +341,7 @@ const typeDefs = `#graphql
     SearchMachinesByPosition(position: String!): [Machine]
     AllUser: [User]
     SearchUserByName(name: String!): [User]
+    GetUserByStudentID(studentID: String!): User
     AllUserMaterials: [UserMaterial]
     AllThreeDP: [ThreeDP]
     SearchThreeDPByCategory(category: String!): [ThreeDP]
