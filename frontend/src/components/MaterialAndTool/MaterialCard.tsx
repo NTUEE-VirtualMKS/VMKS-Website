@@ -35,6 +35,17 @@ function MaterialCard({ material }: { material: MaterialType }) {
     }
   };
 
+  const handleBorrow = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!user) {
+      e.preventDefault();
+      toast({
+        title: "Login required",
+        description: "Please login to borrow materials",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div
       className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
@@ -66,13 +77,11 @@ function MaterialCard({ material }: { material: MaterialType }) {
               刪除
             </Button>
           )}
-          <Button
-            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-            disabled={!user}
-          >
+          <Button className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
               target="_blank"
+              onClick={handleBorrow}
             >
               借用
             </a>

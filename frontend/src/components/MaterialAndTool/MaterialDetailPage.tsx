@@ -8,9 +8,11 @@ import LoaderSpinner from "../LoaderSpinner.tsx";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label.tsx";
 import { useUser } from "@/context/UserContext.tsx";
+import { useToast } from "../ui/use-toast.ts";
 
 function MaterialDetailPage() {
   const { id } = useParams();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useUser();
   const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
@@ -22,7 +24,27 @@ function MaterialDetailPage() {
 
   const material = data?.GetMaterialById;
 
-  const handleRepair = () => {};
+  const handleRepair = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!user) {
+      e.preventDefault();
+      toast({
+        title: "Login required",
+        description: "Please login to report repair",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleBorrow = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!user) {
+      e.preventDefault();
+      toast({
+        title: "Login required",
+        description: "Please login to borrow materials",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div>
@@ -86,20 +108,14 @@ function MaterialDetailPage() {
             )}
           </div>
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <Button
-              onClick={handleRepair}
-              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-              disabled={!user}
-            >
-              報修
+            <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200">
+              <a onClick={handleRepair}>報修</a>
             </Button>
-            <Button
-              className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-              disabled={!user}
-            >
+            <Button className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
                 target="_blank"
+                onClick={handleBorrow}
               >
                 借用
               </a>

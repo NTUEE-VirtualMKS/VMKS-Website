@@ -9,10 +9,8 @@ function Timetable() {
             <span className="font-bold">Time</span>
           </th>
           {week.map((day: string) => (
-            <th className="tg-aw21">
-              <span className="font-bold" key={day}>
-                {day}
-              </span>
+            <th className="tg-aw21" key={day}>
+              <span className="font-bold">{day}</span>
             </th>
           ))}
         </tr>

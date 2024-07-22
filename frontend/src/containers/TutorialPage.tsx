@@ -6,6 +6,8 @@ import {
   interaction3,
   list,
 } from "@/constants/index";
+import { Anchor } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 function TutorialPage() {
   const sessionA = useRef(null);
@@ -36,21 +38,24 @@ function TutorialPage() {
 
   return (
     <>
-      <div className="w-1/12 h-24 fixed ml-3 mt-8">
+      <div className="w-10 h-24 fixed ml-3 mt-8">
         <ul className="list-none text-lg">
           <li
+            key="sessionA"
             onClick={() => scrollToSection(sessionA, "sessionA")}
             className={textColor("sessionA")}
           >
             <a href="#interaction">互動</a>
           </li>
           <li
+            key="sessionB"
             onClick={() => scrollToSection(sessionB, "sessionB")}
             className={textColor("sessionB")}
           >
             <a href="#overview">一覽</a>
           </li>
           <li
+            key="sessionC"
             onClick={() => scrollToSection(sessionC, "sessionC")}
             className={textColor("sessionC")}
           >
@@ -60,35 +65,60 @@ function TutorialPage() {
       </div>
       <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
         <h1 ref={sessionA}>教學 Tutorial</h1>
-        <a
-          href="#interaction"
-          onClick={() => scrollToSection(sessionA, "sessionA")}
-        >
-          <h2 className="mt-5">互動</h2>
-        </a>
+        <h2 className="mt-5 flex items-center">
+          <span>
+            <a
+              href="#interaction"
+              onClick={() => scrollToSection(sessionA, "sessionA")}
+            >
+              <Anchor
+                className={cn("mr-1.5", textColor("sessionA"))}
+                size={23}
+              />
+            </a>
+          </span>
+          互動
+        </h2>
         <div className="p-1">
           <p className="indent-first-letter">{interaction1}</p>
           <p className="indent-first-letter">{interaction2}</p>
           <p className="indent-first-letter">{interaction3}</p>
         </div>
-        <a
-          href="#overview"
-          onClick={() => scrollToSection(sessionB, "sessionB")}
-        >
-          <h2 ref={sessionB} className="mt-5">
-            一覽
-          </h2>
-        </a>
+        <div className="mb-6" ref={sessionB} />
+        <br />
+        <h2 className="mt-5 flex items-center">
+          <span>
+            <a
+              href="#overview"
+              onClick={() => scrollToSection(sessionB, "sessionB")}
+            >
+              <Anchor
+                className={cn("mr-1.5", textColor("sessionB"))}
+                size={23}
+              />
+            </a>
+          </span>
+          一覽
+        </h2>
         <ul className="p-2 ml-3 list-disc">
           {list.map((item: string) => (
-            <li>{item}</li>
+            <li key={item}>{item}</li>
           ))}
         </ul>
-        <a href="#videos" onClick={() => scrollToSection(sessionC, "sessionC")}>
-          <h2 ref={sessionC} className="mt-5">
-            教學影片
-          </h2>
-        </a>
+        <h2 ref={sessionC} className="mt-5 flex items-center">
+          <span>
+            <a
+              href="#videos"
+              onClick={() => scrollToSection(sessionC, "sessionC")}
+            >
+              <Anchor
+                className={cn("mr-1.5", textColor("sessionC"))}
+                size={23}
+              />
+            </a>
+          </span>
+          教學影片
+        </h2>
         <center>
           <iframe
             src="https://www.youtube.com/embed/u10oLI85Ip0"
