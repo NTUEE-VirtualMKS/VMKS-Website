@@ -1,5 +1,5 @@
 // TODO: jwt token
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   ALL_USER_QUERY,
@@ -30,8 +30,20 @@ type UserProviderProps = {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserType | null>(null);
   const { toast } = useToast();
+  const [user, setUser] = useState<UserType | null>(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
   const [createUser, { loading: createUserLoading, error: createUserError }] =
     useMutation(ADD_USER_MUTATION, {
       refetchQueries: [{ query: ALL_USER_QUERY }],

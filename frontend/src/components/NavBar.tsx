@@ -5,106 +5,90 @@ import {
   ChevronRightIcon,
   ShoppingCart,
   Info,
+  Globe,
+  NotebookPen,
+  KeyRound,
 } from "lucide-react";
-import NavButton from "./NavButton";
+import IconButton from "./IconButton";
 import { useUser } from "@/context/UserContext";
-import { Button } from "./ui/button";
 
 function NavBar() {
   const navigate = useNavigate();
   const { user, logout } = useUser();
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <nav className="flex-1 m-3 flex flex-row justify-between bg-black">
       <div className="flex items-start gap-4">
-        <NavButton
+        <IconButton
           onClick={() => navigate(-1)}
           Icon={ChevronLeftIcon}
           ariaLabel="Go Back"
         />
-        <NavButton
+        <IconButton
           onClick={() => navigate(1)}
           Icon={ChevronRightIcon}
-          ariaLabel="Go Fprward"
+          ariaLabel="Go Forward"
         />
       </div>
-      <div className="flex items-start gap-[15px]">
+      <div className="flex items-start gap-3">
         {user?.isMinister && (
-          <div className="w-28 h-12 relative">
-            <button className="flex flex-col justify-center items-center w-28 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
-              <div
-                className="flex flex-col justify-center items-center w-9 h-6 top-3 absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide "
-                onClick={() => navigate("/AuthorizedCodePage")}
-              >
-                Authorized Code
-              </div>
-            </button>
-          </div>
+          <IconButton
+            onClick={() => navigate("/AuthorizedCodePage")}
+            Icon={KeyRound}
+            ariaLabel="Authorized Code"
+          />
         )}
-        {/* TODO: optimize the following code just like the above one */}
-        <div className="w-28 h-12 relative">
-          <button className="flex flex-col justify-center items-center w-28 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
-            <div
-              className="flex flex-col justify-center items-center w-9 h-6 left-9 top-3 absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide "
-              onClick={() => navigate("/MapPage")}
-            >
-              Map
-            </div>
-          </button>
-        </div>
-        <div className="w-28 h-12 relative">
-          <button className=" flex flex-col justify-center items-center w-28 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-[40px] border border-white transform active:scale-90 transition-transform duration-200">
-            <div
-              className="flex flex-col justify-center items-center w-9 h-6 left-9 top-3 absolute text-white text-sm font-medium font-['Inter'] uppercase leading-[16.96px] tracking-wide"
-              onClick={() => navigate("/advanced/forum")}
-            >
-              Forum
-            </div>
-          </button>
-        </div>
-        <div className="w-12 h-12 relative">
-          <button
-            className="flex flex-col justify-center items-center w-12 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
-            onClick={() => navigate("/ShoppingList")}
-          >
-            <ShoppingCart className="text-white" />
-          </button>
-        </div>
-        <div className="w-12 h-12 relative">
-          <button
-            className=" flex flex-col justify-center items-center  w-12 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
-            onClick={() => navigate("/UserProfilePage")}
-          >
-            <UserRound className="text-white" />
-          </button>
-        </div>
-        <div className="w-12 h-12 relative">
-          <button
-            className="flex flex-col justify-center items-center  w-12 h-12 left-0 top-0 absolute bg-zinc-300 bg-opacity-20 rounded-full border border-white transform active:scale-90 transition-transform duration-200"
-            onClick={() => navigate("/TutorialPage")}
-          >
-            <Info className="text-white" />
-          </button>
-        </div>
-        <div className="mt-0.5">
+        <IconButton
+          onClick={() => navigate("/MapPage")}
+          Icon={Globe}
+          ariaLabel="Map"
+        />
+        <IconButton
+          onClick={() => navigate("/advanced/forum")}
+          Icon={NotebookPen}
+          ariaLabel="Forum"
+        />
+        <IconButton
+          onClick={() => navigate("/TutorialPage")}
+          Icon={Info}
+          ariaLabel="Info"
+        />
+        {user && (
+          <>
+            <IconButton
+              onClick={() => navigate("/ShoppingList")}
+              Icon={ShoppingCart}
+              ariaLabel="Shopping List"
+            />
+            <IconButton
+              onClick={() => navigate("/UserProfilePage")}
+              Icon={UserRound}
+              ariaLabel="User Profile"
+            />
+          </>
+        )}
+        <>
           {!user ? (
-            <Button
+            <button
               onClick={() => navigate("/Login")}
-              size="lg"
-              className=" text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
+              className="w-20 h-12 text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
             >
               Log in
-            </Button>
+            </button>
           ) : (
-            <Button
-              onClick={logout}
-              size="lg"
-              className=" text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
+            <button
+              onClick={handleLogout}
+              className="w-20 h-12 text-md bg-zinc-300 bg-opacity-20 rounded-3xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
             >
               Log out
-            </Button>
+            </button>
           )}
-        </div>
+        </>
       </div>
     </nav>
   );

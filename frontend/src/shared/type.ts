@@ -85,3 +85,13 @@ export type LoginProps = {
   studentID: string;
   password: string;
 };
+
+export type ProfileCardProps = {
+  name: string;
+  studenetID: string;
+  password: string;
+  photoLink?: string;
+  laserCutAvailable: boolean;
+  isAdmin: boolean;
+  isMinister: boolean;
+};
