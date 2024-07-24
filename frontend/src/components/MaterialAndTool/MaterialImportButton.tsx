@@ -1,12 +1,14 @@
 import { MaterialInput } from "@/shared/type";
 import { read, utils } from "xlsx";
-import { Input } from "./ui/input";
-import { useToast } from "./ui/use-toast";
+import { Input } from "../ui/input";
+import { useToast } from "../ui/use-toast";
 
-function ImportButton({
+function MaterialImportButton({
   setMaterials,
+  setLength,
 }: {
   setMaterials: (materials: MaterialInput[]) => void;
+  setLength: (length: number) => void;
 }) {
   const { toast } = useToast();
   const handleImport = (e: any) => {
@@ -15,9 +17,12 @@ function ImportButton({
       const file = files[0];
       if (file.type !== "text/csv") {
         toast({
-          title: "Invalid file type",
+          title: "Invalid file extension",
+          description: "CSV file only",
           variant: "destructive",
         });
+        setMaterials([]);
+        setLength(0);
       } else {
         const reader = new FileReader();
         reader.onload = (event: any) => {
@@ -42,6 +47,7 @@ function ImportButton({
               };
             });
             setMaterials(rowMaterials);
+            setLength(rowMaterials.length);
           }
         };
         reader.readAsArrayBuffer(file);
@@ -58,4 +64,4 @@ function ImportButton({
   );
 }
 
-export default ImportButton;
+export default MaterialImportButton;

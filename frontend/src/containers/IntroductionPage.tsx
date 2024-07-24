@@ -34,7 +34,7 @@ function IntroductionPage() {
 
   return (
     <>
-      <div className="w-20 h-24 fixed ml-3 mt-8">
+      <div className="w-20 h-24 fixed ml-12 mt-8">
         <ul className="list-none text-lg w-6/12">
           <li
             onClick={() => scrollToSection(sessionA, "sessionA")}
@@ -56,9 +56,11 @@ function IntroductionPage() {
           </li>
         </ul>
       </div>
-      <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
+      <div className="w-9/12 mx-auto mt-24 mb-8 text-white flex flex-col">
         <div>
-          <h1 ref={sessionA}>MKS介紹 Introduction</h1>
+          <h1 ref={sessionA} className="p-1">
+            MKS介紹 Introduction
+          </h1>
           <h2 className="mt-5 flex items-center">
             <span>
               <a

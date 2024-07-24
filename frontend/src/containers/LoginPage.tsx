@@ -42,7 +42,7 @@ function LoginPage() {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-6/12 mx-auto mt-20  border border-white rounded-lg"
+      className="w-6/12 mx-auto mt-24  border border-white rounded-lg"
     >
       <Card className="w-sm border-none bg-black">
         <Tabs

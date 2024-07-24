@@ -4,7 +4,7 @@ import ProfileCard from "@/components/ProfileCard";
 function UserProfilePage() {
   const { user } = useUser();
   return (
-    <section className="flex flex-col w-11/12 mx-auto justify-start mt-20">
+    <section className="flex flex-col w-10/12 mx-auto justify-start mt-24">
       <h1 className="font-bold p-1 text-white">User Profile</h1>
       <div className="flex flex-row gap-x-5">
         <ProfileCard

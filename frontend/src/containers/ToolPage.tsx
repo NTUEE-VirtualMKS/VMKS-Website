@@ -1,7 +1,6 @@
 // TODO: implement searching
-import { useState } from "react";
-import MaterialList from "@/components/MaterialAndTool/MaterialList";
-import { ALL_MATERIAL_QUERY, ADD_MATERIAL_MUTATION } from "@/graphql";
+import { useEffect, useRef, useState } from "react";
+import { ALL_TOOL_QUERY, ADD_TOOL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
   Dialog,
@@ -16,15 +15,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import type { MaterialInput } from "@/shared/type";
-import ImportButton from "@/components/ImportButton";
+import type { ToolInput } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import Searchbar from "@/components/Searchbar";
 import { useUser } from "@/context/UserContext";
+import ToolList from "@/components/MaterialAndTool/ToolList";
+import ToolImportButton from "@/components/MaterialAndTool/ToolImportButton";
 
-function MaterialAndToolPage() {
+function ToolPage() {
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const { toast } = useToast();
   const { user } = useUser();
   const [visible, setVisible] = useState(false);
@@ -32,44 +32,39 @@ function MaterialAndToolPage() {
   const [description, setDescription] = useState("");
   const [photoLink, setPhotoLink] = useState("");
   const [category, setCategory] = useState("");
-  const [valuable, setValuable] = useState(false);
   const [position, setPosition] = useState("");
   const [usage, setUsage] = useState("0");
   const [remain, setRemain] = useState("0");
-  const [fee, setFee] = useState("0");
   const [tutorialLink, setTutorialLink] = useState("");
   const [partName, setPartName] = useState("");
-  const [materials, setMaterials] = useState<MaterialInput[]>([]);
+  const [length, setLength] = useState(0);
+  const [tools, setTools] = useState<ToolInput[]>([]);
 
-  const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
-    refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
+  const [addTool, { loading, error }] = useMutation(ADD_TOOL_MUTATION, {
+    refetchQueries: [{ query: ALL_TOOL_QUERY }],
   });
 
-  const handleAddMaterial = ({
+  const handleAddTool = ({
     name,
     description,
     photoLink,
     category,
-    valuable,
     position,
     usage,
     remain,
-    fee,
     tutorialLink,
     partName,
-  }: MaterialInput) => {
-    addMaterial({
+  }: ToolInput) => {
+    addTool({
       variables: {
-        materialInput: {
+        toolInput: {
           name,
           description,
           photoLink,
           category,
-          valuable,
           position,
           usage: parseInt(`${usage}`),
           remain: parseInt(`${remain}`),
-          fee: parseInt(`${fee}`),
           tutorialLink,
           partName,
         },
@@ -83,11 +78,9 @@ function MaterialAndToolPage() {
       setDescription("");
       setPhotoLink("");
       setCategory("");
-      setValuable(false);
       setPosition("");
       setUsage("0");
       setRemain("0");
-      setFee("0");
       setTutorialLink("");
       setPartName("");
       setVisible(false);
@@ -95,21 +88,19 @@ function MaterialAndToolPage() {
     }
   };
 
-  const handleAddMaterials = (materials: MaterialInput[]) => {
-    materials.map((material) => {
-      addMaterial({
+  const handleAddTools = (tools: ToolInput[]) => {
+    tools.map((material) => {
+      addTool({
         variables: {
-          materialInput: {
+          toolInput: {
             name: material.name,
             partName: material.partName,
             category: material.category,
-            valuable: material.valuable,
             position: material.position,
             description: material.description,
             photoLink: material.photoLink,
             usage: parseInt(`${material.usage}`),
             tutorialLink: material.tutorialLink,
-            fee: parseInt(`${material.fee}`),
             remain: parseInt(`${material.remain}`),
           },
         },
@@ -119,19 +110,25 @@ function MaterialAndToolPage() {
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
-      setMaterials([]);
-      toast({ title: "Materials added successfully!" });
+      setTools([]);
+      setLength(0);
+      toast({ title: "Tools added successfully!" });
     }
   };
 
+  useEffect(() => {
+    titleRef.current?.focus(); // Focus on the title when the component mounts
+  }, []);
+
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
-        <h1 className="text-white">資源一覽 All Materials</h1>
+      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
+        <h1 className="text-white p-1" ref={titleRef} tabIndex={-2}>
+          工具一覽 All Tools
+        </h1>
         <div className="my-1">
           <Searchbar />
         </div>
-
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
             <>
@@ -145,20 +142,20 @@ function MaterialAndToolPage() {
                       className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                       onClick={() => setVisible(true)}
                     >
-                      新增材料
+                      新增工具
                     </Button>
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] text-white bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
-                      新增材料 New Material
+                      新增工具 New Tool
                     </DialogTitle>
                     <DialogDescription className="text-sm">
                       請填寫以下資訊:
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="grid gap-1">
+                  <div className="grid gap-1.5">
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="name" className="text-right">
                         名稱
@@ -209,19 +206,6 @@ function MaterialAndToolPage() {
                       />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="valuable" className="text-right">
-                        要錢
-                      </Label>
-                      <Checkbox
-                        id="valuable"
-                        className="checkbox-class"
-                        checked={valuable}
-                        onCheckedChange={(checked: boolean) =>
-                          setValuable(checked)
-                        }
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="position" className="text-right">
                         擺放位置
                       </Label>
@@ -260,19 +244,6 @@ function MaterialAndToolPage() {
                       />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="fee" className="text-right">
-                        價錢
-                      </Label>
-                      <Input
-                        id="fee"
-                        type="number"
-                        placeholder="fee"
-                        className="col-span-3 input-class"
-                        value={fee}
-                        onChange={(e) => setFee(e.target.value)}
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="tutorialLink" className="text-right">
                         教學連結
                       </Label>
@@ -306,16 +277,14 @@ function MaterialAndToolPage() {
                     </Button>
                     <Button
                       onClick={() =>
-                        handleAddMaterial({
+                        handleAddTool({
                           name,
                           description,
                           photoLink,
                           category,
-                          valuable,
                           position,
                           usage,
                           remain,
-                          fee,
                           tutorialLink,
                           partName,
                         })
@@ -328,11 +297,11 @@ function MaterialAndToolPage() {
                 </DialogContent>
               </Dialog>
               <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                <ImportButton setMaterials={setMaterials} />
+                <ToolImportButton setTools={setTools} setLength={setLength} />
               </div>
-              {materials.length !== 0 && (
+              {length !== 0 && (
                 <Button
-                  onClick={() => handleAddMaterials(materials)}
+                  onClick={() => handleAddTools(tools)}
                   className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 >
                   Upload
@@ -342,11 +311,11 @@ function MaterialAndToolPage() {
           )}
         </div>
         <div className="mt-2">
-          <MaterialList />
+          <ToolList />
         </div>
       </div>
     </>
   );
 }
 
-export default MaterialAndToolPage;
+export default ToolPage;

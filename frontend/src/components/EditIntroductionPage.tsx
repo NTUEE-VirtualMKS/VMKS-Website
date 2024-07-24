@@ -85,7 +85,7 @@ function EditIntroductionPage() {
           </li>
         </ul>
       </div>
-      <div className="w-9/12 mx-auto mt-20 mb-8 text-white">
+      <div className="w-9/12 mx-auto mt-24 mb-8 text-white">
         <h1 className="my-0 mx-auto">MKS介紹 Introduction</h1>
         <p className="text-white" ref={sessionA}>
           {content}

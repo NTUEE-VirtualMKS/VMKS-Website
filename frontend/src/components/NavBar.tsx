@@ -22,8 +22,20 @@ function NavBar() {
   };
 
   return (
-    <nav className="flex-1 m-3 flex flex-row justify-between bg-black">
-      <div className="flex items-start gap-4">
+    <nav className="flex-1 px-5 py-1 flex flex-row justify-between bg-[#0f0f0f] border-b border-[#444444]">
+      <div className="flex items-center gap-4">
+        <img
+          src="/logo-2.png"
+          className="w-12 object-cover mb-1 cursor-pointer"
+          alt="logo"
+          onClick={() => navigate("/")}
+        />
+        <p
+          className="text-5xl text-white font-bold cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          VMKS
+        </p>
         <IconButton
           onClick={() => navigate(-1)}
           Icon={ChevronLeftIcon}
@@ -35,7 +47,7 @@ function NavBar() {
           ariaLabel="Go Forward"
         />
       </div>
-      <div className="flex items-start gap-3">
+      <div className="flex items-center gap-3">
         {user?.isMinister && (
           <IconButton
             onClick={() => navigate("/AuthorizedCodePage")}

@@ -26,6 +26,7 @@ export type UserType = {
 };
 
 export type MaterialType = {
+  __typename?: "Material";
   id: number;
   name: string;
   partName?: string | null;
@@ -37,6 +38,20 @@ export type MaterialType = {
   usage: number;
   tutorialLink?: string | null;
   fee: number;
+  remain: number;
+};
+
+export type ToolType = {
+  __typename?: "Tool";
+  id: number;
+  name: string;
+  partName?: string | null;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  usage: number;
+  tutorialLink: string;
   remain: number;
 };
 
@@ -58,6 +73,18 @@ export type MaterialInput = {
   usage: number | string;
   tutorialLink: string | null;
   fee: number | string;
+  remain: number | string;
+};
+
+export type ToolInput = {
+  name: string;
+  partName: string | null;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  usage: number | string;
+  tutorialLink: string;
   remain: number | string;
 };
 

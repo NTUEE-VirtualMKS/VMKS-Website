@@ -101,3 +101,21 @@ export const images = [
     alt: "404 Not Found",
   },
 ];
+
+export const icons = [
+  {
+    href: "https://www.facebook.com/ntuee.makerspace/?locale=zh_TW",
+    src: "/facebook.png",
+    alt: "facebook link",
+  },
+  {
+    href: "https://www.instagram.com/ntu.taiwan/",
+    src: "/instagram.png",
+    alt: "instagram link",
+  },
+  {
+    href: "https://github.com/NTUEE-VirtualMKS",
+    src: "/github.png",
+    alt: "github link",
+  },
+];

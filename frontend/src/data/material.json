@@ -3,7 +3,7 @@
     {
       "name": "HC-SR04",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "ultra sonic, precise up to 4 meters",
@@ -16,7 +16,7 @@
     {
       "name": "RC-522",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "RFID module",
@@ -29,7 +29,7 @@
     {
       "name": "HC-05",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialAndToolPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "Bluetooth module",
@@ -42,7 +42,7 @@
     {
       "name": "200 OK",
       "partName": "http cat",
-      "category": "MaterialAndToolPage",
+      "category": "MaterialPage",
       "valuable": 0,
       "position": "拍拍手",
       "description": "200 OK",
@@ -55,7 +55,7 @@
     {
       "name": "404 Not Found",
       "partName": "http cat",
-      "category": "MaterialAndToolPage",
+      "category": "MaterialPage",
       "valuable": 0,
       "position": "拍拍手",
       "description": "404 Not Found",

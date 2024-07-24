@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_MATERIAL_BY_ID_QUERY, EDIT_MATERIAL_MUTATION } from "@/graphql";
+import { GET_TOOL_BY_ID_QUERY, EDIT_TOOL_MUTATION } from "@/graphql";
 import { Button } from "@/components/ui/button";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
-import { MaterialInput } from "@/shared/type";
+import { ToolInput } from "@/shared/type";
 import {
   Dialog,
   DialogContent,
@@ -17,10 +17,9 @@ import {
 } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 
-function MaterialEditPage() {
+function ToolEditPage() {
   const { toast } = useToast();
   const { id } = useParams();
   if (!id) {
@@ -31,7 +30,7 @@ function MaterialEditPage() {
     data,
     loading: queryLoading,
     error: queryError,
-  } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
+  } = useQuery(GET_TOOL_BY_ID_QUERY, {
     variables: { id: parseInt(id as string) },
   });
 
@@ -40,29 +39,27 @@ function MaterialEditPage() {
     toast({ title: `${queryError.message}`, variant: "destructive" });
   }
 
-  const material = data?.GetMaterialById;
+  const tool = data?.GetToolById;
 
   const [visible, setVisible] = useState(true);
-  const [name, setName] = useState(material!.name);
-  const [description, setDescription] = useState(material!.description);
-  const [photoLink, setPhotoLink] = useState(material!.photoLink);
-  const [category, setCategory] = useState(material!.category);
-  const [valuable, setValuable] = useState(material!.valuable);
-  const [position, setPosition] = useState(material!.position);
-  const [usage, setUsage] = useState(`${material!.usage}`);
-  const [remain, setRemain] = useState(`${material!.remain}`);
-  const [fee, setFee] = useState(`${material!.fee}`);
-  const [tutorialLink, setTutorialLink] = useState(`${material!.tutorialLink}`);
-  const [partName, setPartName] = useState(`${material!.partName}`);
+  const [name, setName] = useState(tool!.name);
+  const [description, setDescription] = useState(tool!.description);
+  const [photoLink, setPhotoLink] = useState(tool!.photoLink);
+  const [category, setCategory] = useState(tool!.category);
+  const [position, setPosition] = useState(tool!.position);
+  const [usage, setUsage] = useState(`${tool!.usage}`);
+  const [remain, setRemain] = useState(`${tool!.remain}`);
+  const [tutorialLink, setTutorialLink] = useState(`${tool!.tutorialLink}`);
+  const [partName, setPartName] = useState(`${tool!.partName}`);
 
   const handleClose = () => {
     setVisible(false);
-    navigate(`/MaterialPage/Material/${id}/`);
+    navigate(`/ToolPage/Tool/${id}/`);
   };
 
-  const [updateMaterial, { loading: updateLoading, error: updateError }] =
-    useMutation(EDIT_MATERIAL_MUTATION, {
-      refetchQueries: [{ query: GET_MATERIAL_BY_ID_QUERY }],
+  const [updateTool, { loading: updateLoading, error: updateError }] =
+    useMutation(EDIT_TOOL_MUTATION, {
+      refetchQueries: [{ query: GET_TOOL_BY_ID_QUERY }],
     });
 
   const handleUpdate = async ({
@@ -70,34 +67,30 @@ function MaterialEditPage() {
     description,
     photoLink,
     category,
-    valuable,
     position,
     usage,
     remain,
-    fee,
     tutorialLink,
     partName,
-  }: MaterialInput) => {
+  }: ToolInput) => {
     if (!id) {
       toast({ title: "id is undefined", variant: "destructive" });
     }
-    if (!material) {
-      toast({ title: "Material is undefined", variant: "destructive" });
+    if (!tool) {
+      toast({ title: "Tool is undefined", variant: "destructive" });
     }
 
-    const updatedMaterial = await updateMaterial({
+    const updatedTool = await updateTool({
       variables: {
-        editMaterialId: parseInt(id),
-        materialInput: {
+        editToolId: parseInt(id),
+        toolInput: {
           name,
           description,
           photoLink,
           category,
-          valuable,
           position,
           usage: parseInt(`${usage}`),
           remain: parseInt(`${remain}`),
-          fee: parseInt(`${fee}`),
           tutorialLink,
           partName,
         },
@@ -107,9 +100,7 @@ function MaterialEditPage() {
     if (updateError) {
       toast({ title: `${updateError.message}`, variant: "destructive" });
     } else {
-      navigate(
-        `/MaterialPage/Material/${updatedMaterial.data?.EditMaterial?.id}`
-      );
+      navigate(`/ToolPage/Tool/${updatedTool.data?.EditTool?.id}`);
     }
   };
 
@@ -122,13 +113,13 @@ function MaterialEditPage() {
               className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
               onClick={() => setVisible(true)}
             >
-              編輯材料
+              編輯工具
             </Button>
           </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] text-white bg-black">
           <DialogHeader>
-            <DialogTitle className="text-2xl">編輯材料</DialogTitle>
+            <DialogTitle className="text-2xl">編輯工具</DialogTitle>
             <DialogDescription className="text-sm">
               請填寫以下資訊:
             </DialogDescription>
@@ -184,17 +175,6 @@ function MaterialEditPage() {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="valuable" className="text-right">
-                要錢
-              </Label>
-              <Checkbox
-                id="valuable"
-                className="checkbox-class"
-                checked={valuable}
-                onCheckedChange={(checked: boolean) => setValuable(checked)}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="position" className="text-right">
                 擺放位置
               </Label>
@@ -230,19 +210,6 @@ function MaterialEditPage() {
                 className="col-span-3 input-class"
                 value={usage}
                 onChange={(e) => setUsage(e.target.value)}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fee" className="text-right">
-                價錢
-              </Label>
-              <Input
-                id="fee"
-                type="number"
-                placeholder="fee"
-                className="col-span-3 input-class"
-                value={fee}
-                onChange={(e) => setFee(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -284,11 +251,9 @@ function MaterialEditPage() {
                   description,
                   photoLink,
                   category,
-                  valuable,
                   position,
                   usage,
                   remain,
-                  fee,
                   tutorialLink,
                   partName,
                 })
@@ -304,4 +269,4 @@ function MaterialEditPage() {
   );
 }
 
-export default MaterialEditPage as React.FC;
+export default ToolEditPage as React.FC;

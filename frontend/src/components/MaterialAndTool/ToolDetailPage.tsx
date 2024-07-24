@@ -1,28 +1,26 @@
-// TODO: handle rborrow and repair buttons
+// TODO: handle borrow and repair buttons
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import RouteBar from "./RouteBar";
+import RouteBar from "./RouteBar.tsx";
 import { useQuery } from "@apollo/client";
-import { GET_MATERIAL_BY_ID_QUERY } from "@/graphql/queries";
+import { GET_TOOL_BY_ID_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner.tsx";
-import { Input } from "@/components/ui/input";
-import { Label } from "../ui/label.tsx";
 import { useUser } from "@/context/UserContext.tsx";
 import { useToast } from "../ui/use-toast.ts";
 
-function MaterialDetailPage() {
+function ToolDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useUser();
-  const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
+  const { data, loading, error } = useQuery(GET_TOOL_BY_ID_QUERY, {
     variables: { id: parseInt(id as string) },
   });
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const material = data?.GetMaterialById;
+  const tool = data?.GetToolById;
 
   const handleRepair = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!user) {
@@ -40,7 +38,7 @@ function MaterialDetailPage() {
       e.preventDefault();
       toast({
         title: "Login required",
-        description: "Please login to borrow materials",
+        description: "Please login to borrow tools",
         variant: "destructive",
       });
     }
@@ -48,43 +46,30 @@ function MaterialDetailPage() {
 
   return (
     <div>
-      {material && (
+      {tool && (
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <RouteBar route={material?.category} />
+            <RouteBar route={tool?.category} />
           </div>
           <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
             <div className="flex flex-row my-4 mx-2">
               <img
-                src={material?.photoLink}
-                alt={material?.name}
+                src={tool?.photoLink}
+                alt={tool?.name}
                 className="w-6/12 mt-3 ml-1 bg-white"
               />
               <div className="w-8/12 flex flex-col ml-5">
-                <h1 className="text-white text-5xl">{material?.name}</h1>
-                <p className="text-white">描述: {material?.description}</p>
-                {material?.partName && (
-                  <p className="text-white">型號: {material?.partName}</p>
+                <h1 className="text-white text-5xl">{tool?.name}</h1>
+                <p className="text-white">描述: {tool?.description}</p>
+                {tool?.partName && (
+                  <p className="text-white">型號: {tool?.partName}</p>
                 )}
-                <p className="text-white">位置: {material?.position}</p>
-                <div className="flex flex-row gap-2">
-                  <Label htmlFor="valuable" className="text-white text-lg">
-                    要錢:{" "}
-                  </Label>
-                  <Input
-                    id="valuable"
-                    type="checkbox"
-                    checked={material?.valuable}
-                    className="size-4 mt-1.5 bg-[#15171C] text-white"
-                    onChange={() => {}}
-                  />
-                </div>
-                <p className="text-white">剩餘數量: {material?.remain}（個）</p>
-                <p className="text-white">使用量: {material?.usage}（個）</p>
-                <p className="text-white">價錢: NT${material?.fee}</p>
-                {material?.tutorialLink && (
+                <p className="text-white">位置: {tool?.position}</p>
+                <p className="text-white">剩餘數量: {tool?.remain}（個）</p>
+                <p className="text-white">使用量: {tool?.usage}（個）</p>
+                {tool?.tutorialLink && (
                   <a
-                    href={material?.tutorialLink}
+                    href={tool?.tutorialLink}
                     target="_blank"
                     rel="noreferrer"
                     className="text-sky-300 cursor-pointer hover:underline text-lg w-3/12 active:scale-95 transition-transform duration-200 focus:text-blue-600"
@@ -97,7 +82,7 @@ function MaterialDetailPage() {
             {user?.isAdmin && (
               <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                 <Button
-                  onClick={() => navigate(`/MaterialPage/Material/${id}/edit`)}
+                  onClick={() => navigate(`/ToolPage/Tool/${id}/edit`)}
                   className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 >
                   編輯
@@ -125,4 +110,4 @@ function MaterialDetailPage() {
   );
 }
 
-export default MaterialDetailPage;
+export default ToolDetailPage;

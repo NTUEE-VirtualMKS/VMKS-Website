@@ -1,13 +1,34 @@
 // TODO: implement the sidebar component
 import { useNavigate } from "react-router-dom";
-import { CirclePlus, Heart } from "lucide-react";
 import { images } from "@/constants/index";
+import { useEffect, useState } from "react";
 
 function SideBar() {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (event: { clientX: number }) => {
+      if (event.clientX < 50) {
+        setIsVisible(true);
+      } else if (event.clientX > 200) {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   return (
     <>
-      <div className="w-20 h-full left-0 top-0 fixed bg-slate-900 rounded-r-2xl border border-zinc-600 flex flex-col">
+      <div
+        className={`w-20 fixed top-0 left-0 h-full transform transition-transform duration-300 bg-slate-900 rounded-r-lg ${
+          isVisible ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <button onClick={() => navigate("/")}>
           <img
             className="w-20 my-1.5 object-cover"
@@ -17,8 +38,7 @@ function SideBar() {
         </button>
         <div className="h-px bg-zinc-600" />
         <div className="w-full flex flex-col justify-center items-center p-2">
-          <Heart className="w-5 h-5 text-white" />
-          <div className="flex-wrap px-1 text-white text-xs font-medium font-inter uppercase tracking-wide">
+          <div className="flex-wrap px-1 text-white text-base font-medium font-inter uppercase tracking-wide">
             LIKE
           </div>
         </div>
@@ -32,12 +52,6 @@ function SideBar() {
             </button>
           ))}
         </div>
-        <button className="w-full flex flex-col justify-center items-center p-2 transform active:scale-90 transition-transform duration-200">
-          <CirclePlus className="w-5 h-5 text-white" />
-          <div className="flex-wrap px-1 text-white text-xs font-medium font-inter uppercase tracking-wide">
-            ADD
-          </div>
-        </button>
       </div>
     </>
   );
