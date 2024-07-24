@@ -63,6 +63,7 @@ const documents = {
     "\n  query SearchThreeDPByCategory($category: String!) {\n    SearchThreeDPByCategory(category: $category) {\n      id\n      name\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      waitingId\n      broken\n    }\n  }\n": types.SearchThreeDpByCategoryDocument,
     "\n  query SearchThreeDPByPosition($position: String!) {\n    SearchThreeDPByPosition(position: $position) {\n      id\n      name\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      waitingId\n      broken\n    }\n  }\n": types.SearchThreeDpByPositionDocument,
     "\n  query AllTools {\n    AllTools {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.AllToolsDocument,
+    "\n  query GetToolById($id: Int!) {\n    GetToolById(id: $id) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n\n  ": types.GetToolByIdDocument,
     "\n  query SearchToolsByCategory($category: String!) {\n    SearchToolsByCategory(category: $category) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.SearchToolsByCategoryDocument,
     "\n  query SearchToolsByName($name: String!) {\n    SearchToolsByName(name: $name) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.SearchToolsByNameDocument,
     "\n  query SearchToolsByPosition($position: String!) {\n    SearchToolsByPosition(position: $position) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n": types.SearchToolsByPositionDocument,
@@ -290,6 +291,10 @@ export function gql(source: "\n  query SearchThreeDPByPosition($position: String
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query AllTools {\n    AllTools {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n"): (typeof documents)["\n  query AllTools {\n    AllTools {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetToolById($id: Int!) {\n    GetToolById(id: $id) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n\n  "): (typeof documents)["\n  query GetToolById($id: Int!) {\n    GetToolById(id: $id) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n    }\n  }\n\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,10 +1,10 @@
 // TODO: make this alive
 import { useNavigate } from "react-router-dom";
-import "../images/interior2D.jpg";
+import "/interior2D.jpg";
 import { colors } from "../Color.ts";
 import Icon from "@mdi/react";
 import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
-import ImageURL from "../images/interior2D.jpg";
+import ImageURL from "/interior2D.jpg";
 
 const MapPage = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const MapPage = () => {
       {/* <div>Map Page</div>
       <p>應該要有2D地圖，並連結3D地圖</p> */}
       <div
-        style={{ display: "flex", alignItems: "center", paddingTop: "15px" }}
+        style={{ display: "flex", alignItems: "center", paddingTop: "10px" }}
       >
         <button
           onClick={() => navigate(-1)}
@@ -30,22 +30,11 @@ const MapPage = () => {
             color={colors.DarkSlateGray}
           /> */}
         </button>
-        <h1 className="mx-auto text-white mt-2">地圖導覽</h1>
+        <h1 className="text-white mt-4 w-11/12 mx-auto">地圖導覽</h1>
       </div>
-      <div
-        style={{
-          border: "#7C7C7C solid 2px",
-          borderRadius: "20px",
-          padding: "20px",
-          margin: "20px",
-          width: "95%",
-          height: "max-content",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="border-2 border-gray-600 rounded-2xl p-5 m-5 w-11/12  mx-auto h-max flex justify-center">
         <img
-          src={ImageURL}
+          src="/interior2D.jpg"
           alt="Interior2D"
           useMap="#interior2d"
           style={{ maxWidth: "100%" }}

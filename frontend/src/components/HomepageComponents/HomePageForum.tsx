@@ -7,7 +7,7 @@ function HomePageForum() {
     <div className="flex flex-col h-full py-5 px-4 w-full border-2 border-blue-600 border-solid rounded-[30px] max-md:pr-5">
       <div className="text-2xl font-semibold text-white">論壇 💬</div>
       <div className="flex gap-5 justify-between mt-6 text-sm font-semibold max-md:mr-2">
-        <div className="pr-3.5 pb-2 text-white whitespace-nowrap border border-black border-solid select-none">
+        <div className="pr-3.5 pb-2 text-white whitespace-nowrap select-none">
           Recently Added 🌟
         </div>
         <button

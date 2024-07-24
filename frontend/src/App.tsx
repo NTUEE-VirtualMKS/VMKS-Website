@@ -1,12 +1,13 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route /*, useMatch */ } from "react-router-dom";
-// import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import NotFound from "@/containers/NotFound";
 import HomePage from "@/containers/HomePage";
 import MaterialDetailPage from "@/components/MaterialAndTool/MaterialDetailPage";
 import MaterialEditPage from "@/components/MaterialAndTool/MaterialEditPage";
+import ToolDetailPage from "./components/MaterialAndTool/ToolDetailPage";
+import ToolEditPage from "./components/MaterialAndTool/ToolEditPage";
 import Advanced from "@/Advanced";
 import LoaderSpinner from "@/components/LoaderSpinner";
 
@@ -21,34 +22,24 @@ const UserProfilePage = lazy(() => import("@/containers/UserProfilePage"));
 const AuthorizedCodePage = lazy(
   () => import("@/containers/AuthorizedCodePage")
 );
-const MaterialAndToolPage = lazy(
-  () => import("@/containers/MaterialAndToolPage")
-);
+const MaterialPage = lazy(() => import("@/containers/MaterialPage"));
+const ToolPage = lazy(() => import("@/containers/ToolPage"));
 const ShoppingList = lazy(() => import("@/containers/ShoppingList"));
 const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
 const EditAnnouncement = lazy(() => import("@/components/EditAnnouncement"));
 const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
-const Tool = lazy(() => import("@/components/MaterialAndTool/Tool"));
 
 function App() {
-  // const match = useMatch("@/advanced/*");
-  // const [isMain, setIsMain] = useState(true);
-
-  // useEffect(() => {
-  //   setIsMain(!match); // match will be non-null if the route matches
-  // }, [match]);
-
-  // check if the page is mainPage or advancedPage
   return (
     <div className="flex flex-row">
-      <div className="flex-none z-10">
+      <div className="flex-none z-20">
         <SideBar />
       </div>
-      <div className="flex-1 flex-col h-screen ml-20">
-        <div className="fixed top-0 bg-black w-full pr-20 z-10">
+      <div className="flex-1 flex-col h-screen">
+        <div className="fixed top-0 bg-black w-full z-10">
           <NavBar />
         </div>
-        <div className="flex-1 m-4 mt-12">
+        <div className="flex-1 mx-3 mt-20">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route
@@ -92,10 +83,50 @@ function App() {
               }
             />
             <Route
-              path="/MaterialAndToolPage"
+              path="/MaterialPage"
               element={
                 <Suspense fallback={<LoaderSpinner />}>
-                  <MaterialAndToolPage />
+                  <MaterialPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/MaterialPage/Material/:id"
+              element={
+                <Suspense fallback={<LoaderSpinner />}>
+                  <MaterialDetailPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/MaterialPage/Material/:id/edit"
+              element={
+                <Suspense fallback={<LoaderSpinner />}>
+                  <MaterialEditPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/ToolPage"
+              element={
+                <Suspense fallback={<LoaderSpinner />}>
+                  <ToolPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/ToolPage/Tool/:id"
+              element={
+                <Suspense fallback={<LoaderSpinner />}>
+                  <ToolDetailPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/ToolPage/Tool/:id/edit"
+              element={
+                <Suspense fallback={<LoaderSpinner />}>
+                  <ToolEditPage />
                 </Suspense>
               }
             />
@@ -140,30 +171,6 @@ function App() {
                 </Suspense>
               }
             />
-            <Route
-              path="/MaterialAndToolPage/Material/:id"
-              element={
-                <Suspense fallback={<LoaderSpinner />}>
-                  <MaterialDetailPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/MaterialAndToolPage/Material/:id/edit"
-              element={
-                <Suspense fallback={<LoaderSpinner />}>
-                  <MaterialEditPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/MaterialAndToolPage/Tool/:id"
-              element={
-                <Suspense fallback={<LoaderSpinner />}>
-                  <Tool />
-                </Suspense>
-              }
-            />
             <Route path="/advanced/*" element={<Advanced />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -171,11 +178,6 @@ function App() {
       </div>
     </div>
   );
-  // ) : (
-  //   <Routes>
-  //     <Route path="/advanced/*" element={<Advanced />} />
-  //   </Routes>
-  // );
 }
 
 export default App;

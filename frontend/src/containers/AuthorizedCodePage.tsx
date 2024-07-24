@@ -101,7 +101,7 @@ function AuthorizedCodePage() {
 
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
+      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
         <h1 className="text-white">生成加簽碼</h1>
         <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
           <DialogTrigger asChild>

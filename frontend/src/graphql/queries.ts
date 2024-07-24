@@ -327,6 +327,24 @@ const ALL_TOOL_QUERY = gql(`
   }
 `);
 
+const GET_TOOL_BY_ID_QUERY = gql(`
+  query GetToolById($id: Int!) {
+    GetToolById(id: $id) {
+      id
+      name
+      partName
+      category
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      remain
+    }
+  }
+
+  `);
+
 const SEARCH_TOOL_BY_CATEGORY_QUERY = gql(`
   query SearchToolsByCategory($category: String!) {
     SearchToolsByCategory(category: $category) {
@@ -492,6 +510,7 @@ export {
   SEARCH_TOOL_BY_CATEGORY_QUERY,
   SEARCH_TOOL_BY_NAME_QUERY,
   SEARCH_TOOL_BY_POSITION_QUERY,
+  GET_TOOL_BY_ID_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
   GET_USER_BY_STUDENT_ID_QUERY,
   CURRENT_INTRODUCTION_QUERY,

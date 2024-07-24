@@ -11,7 +11,7 @@ function MaterialList() {
 
   const allMaterials = data?.AllMaterials;
   const materials = allMaterials?.map((material) => {
-    return {
+    const filteredMaterial = {
       id: material!.id,
       name: material!.name,
       description: material!.description,
@@ -25,6 +25,7 @@ function MaterialList() {
       tutorialLink: material!.tutorialLink,
       partName: material!.partName,
     };
+    return filteredMaterial;
   });
 
   return (

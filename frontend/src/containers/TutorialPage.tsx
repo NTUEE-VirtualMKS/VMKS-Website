@@ -38,7 +38,7 @@ function TutorialPage() {
 
   return (
     <>
-      <div className="w-10 h-24 fixed ml-3 mt-8">
+      <div className="w-10 h-24 fixed ml-12 mt-8">
         <ul className="list-none text-lg">
           <li
             key="sessionA"
@@ -63,8 +63,10 @@ function TutorialPage() {
           </li>
         </ul>
       </div>
-      <div className="w-10/12 mx-auto mt-20 mb-8 text-white">
-        <h1 ref={sessionA}>教學 Tutorial</h1>
+      <div className="flex flex-col w-9/12 mx-auto mt-24 mb-8 text-white">
+        <h1 ref={sessionA} className="p-1">
+          教學 Tutorial
+        </h1>
         <h2 className="mt-5 flex items-center">
           <span>
             <a

@@ -72,6 +72,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw new Error(createUserError.message);
       }
       toast({ title: "Sign up successfully!" });
+      navigate("/Login");
     } catch (error) {
       toast({ title: "Sign up failed", variant: "destructive" });
       throw new Error("Sign up failed");

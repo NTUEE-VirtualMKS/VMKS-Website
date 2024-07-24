@@ -55,7 +55,7 @@ function AnnouncementPage() {
   };
 
   return (
-    <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
+    <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8">
       <h1 className="text-white">所有公告 All Announcements</h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>

@@ -12,9 +12,9 @@ function Searchbar() {
 
   useEffect(() => {
     if (debounceValue) {
-      navigate(`/MaterialAndToolPage?search=${debounceValue}`);
-    } else if (!debounceValue && pathname === "/MaterialAndToolPage") {
-      navigate("/MaterialAndToolPage");
+      navigate(`/MaterialPage?search=${debounceValue}`);
+    } else if (!debounceValue && pathname === "/MaterialPage") {
+      navigate("/MaterialPage");
     }
   }, [navigate, pathname, debounceValue]);
 
