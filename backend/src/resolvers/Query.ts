@@ -24,6 +24,16 @@ const Query = {
     return tools;
   },
 
+  GetToolById: async (_parents, args: { id: number }, context) => {
+    const id = args.id;
+    const tool = await prisma.tool.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return tool;
+  },
+
   SearchToolsByCategory: async (
     _parents,
     args: { category: string },

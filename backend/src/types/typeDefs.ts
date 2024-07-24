@@ -333,6 +333,7 @@ const typeDefs = `#graphql
     SearchMaterialsByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]
     AllTools: [Tool]
+    GetToolById(id: Int!): Tool
     SearchToolsByCategory(category: String!): [Tool]
     SearchToolsByPosition(position: String!): [Tool]
     SearchToolsByName(name: String!): [Tool]
