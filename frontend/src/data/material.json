@@ -3,7 +3,7 @@
     {
       "name": "HC-SR04",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "ultra sonic, precise up to 4 meters",
@@ -16,7 +16,7 @@
     {
       "name": "RC-522",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "RFID module",
@@ -29,7 +29,7 @@
     {
       "name": "HC-05",
       "partName": null,
-      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingList,LoginPage",
+      "category": "IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,LoginPage",
       "valuable": 0,
       "position": "Tree-De",
       "description": "Bluetooth module",

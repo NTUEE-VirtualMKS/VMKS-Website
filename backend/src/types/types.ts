@@ -152,6 +152,11 @@ interface AuthorizedCodeInput {
   codeList: string[];
 }
 
+interface ToolLikeInput {
+  userId: number;
+  toolId: number;
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -172,4 +177,5 @@ export type {
   AuthorizedCodeInput,
   SignUpInput,
   LogInInput,
+  ToolLikeInput,
 };

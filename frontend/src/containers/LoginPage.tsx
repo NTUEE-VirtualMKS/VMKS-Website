@@ -19,7 +19,7 @@ function LoginPage() {
   const { login, signup } = useUser();
   const [signupMode, setSignupMode] = useState(false);
   const [username, setUsername] = useState("");
-  const [studentID, setStudentID] = useState("");
+  const [studentId, setStudentID] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
@@ -27,14 +27,14 @@ function LoginPage() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!signupMode) {
-      await login({ studentID, password });
+      await login({ studentId, password });
     } else {
       if (confirmPassword !== password) {
         toast({
           description: "Passwords do not match",
         });
       } else {
-        await signup({ name: username, studentID, password });
+        await signup({ name: username, studentId, password });
       }
     }
   };
@@ -106,17 +106,17 @@ function LoginPage() {
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="studentID" className="text-white">
+              <Label htmlFor="studentId" className="text-white">
                 Student ID
               </Label>
               <Input
-                id="studentID"
+                id="studentId"
                 className="input-class"
                 type="text"
-                name="studentID"
+                name="studentId"
                 placeholder="Enter Student ID"
                 required
-                value={studentID}
+                value={studentId}
                 onChange={(e) => setStudentID(e.target.value)}
               />
             </div>

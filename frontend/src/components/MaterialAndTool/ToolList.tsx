@@ -22,6 +22,7 @@ function ToolList() {
       remain: tool!.remain,
       tutorialLink: tool!.tutorialLink,
       partName: tool!.partName,
+      toolLikeIds: tool!.toolLikeIds,
     };
     return filteredTool;
   });

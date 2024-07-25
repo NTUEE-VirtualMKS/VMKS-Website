@@ -23,6 +23,7 @@ export type UserType = {
   articlesId?: Array<number | null> | null;
   isAdmin: boolean;
   isMinister: boolean;
+  toolLikeIds?: Array<number | null> | null;
 };
 
 export type MaterialType = {
@@ -53,6 +54,7 @@ export type ToolType = {
   usage: number;
   tutorialLink: string;
   remain: number;
+  toolLikeIds?: Array<number | null> | null;
 };
 
 export type AuthorizedCodeType = {
@@ -104,12 +106,12 @@ export type RouteBarProps = {
 
 export type SignupProps = {
   name: string;
-  studentID: string;
+  studentId: string;
   password: string;
 };
 
 export type LoginProps = {
-  studentID: string;
+  studentId: string;
   password: string;
 };
 

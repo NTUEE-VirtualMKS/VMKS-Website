@@ -214,6 +214,7 @@ const typeDefs = `#graphql
     usage: Int!
     tutorialLink: String!
     remain: Int!
+    toolLikeIds: [Int]
   }
 
   type Machine {
@@ -264,6 +265,7 @@ const typeDefs = `#graphql
     articlesId: [Int]
     isAdmin: Boolean!
     isMinister: Boolean!
+    toolLikeIds: [Int]
   }
 
   type signUpRet {
@@ -318,6 +320,16 @@ const typeDefs = `#graphql
     codeList: [String],
   }
 
+  type ToolLike {
+    id: Int!,
+    userId: Int!,
+    toolId: Int!,
+  }
+
+  input toolLikeInput {
+    userId: Int!,
+    toolId: Int!,
+  }
 
   ### Define Resolvers ###
 
@@ -352,6 +364,9 @@ const typeDefs = `#graphql
     CurrentIntroduction: Introduction
     GetAuthorizedCode: AuthorizedCode
     LogIn(logInInput: logInInput!): logInRet
+    GetToolLikes: [ToolLike]
+    GetToolLikeById(id: Int!): ToolLike
+    GetLikedToolsByUserId(userId: Int!): [Tool]
   }
 
   type Mutation {
@@ -387,6 +402,8 @@ const typeDefs = `#graphql
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: signUpInput!): signUpRet
+    AddToolLike(toolLikeInput: toolLikeInput!): ToolLike
+    DeleteToolLike(toolLikeInput: toolLikeInput!): ToolLike
   }
 
   type Subscription {

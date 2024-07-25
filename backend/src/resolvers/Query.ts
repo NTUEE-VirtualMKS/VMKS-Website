@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import { env } from "../../utils/env.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
 const Query = {
-  AllAnnouncements: async (_parents, args, context) => {
+  AllAnnouncements: async (_parents, _args, _context) => {
     const announcements = await prisma.announcement.findMany({
       orderBy: {
         id: "desc",
@@ -15,7 +15,7 @@ const Query = {
     return announcements;
   },
 
-  AllTools: async (_parents, args, context) => {
+  AllTools: async (_parents, _args, _context) => {
     const tools = await prisma.tool.findMany({
       orderBy: {
         usage: "desc",
@@ -24,7 +24,7 @@ const Query = {
     return tools;
   },
 
-  GetToolById: async (_parents, args: { id: number }, context) => {
+  GetToolById: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const tool = await prisma.tool.findUnique({
       where: {
@@ -37,7 +37,7 @@ const Query = {
   SearchToolsByCategory: async (
     _parents,
     args: { category: string },
-    context,
+    _context,
   ) => {
     const category = args.category;
     const searchToolsByCategory = await prisma.tool.findMany({
@@ -57,7 +57,7 @@ const Query = {
   SearchToolsByPosition: async (
     _parents,
     args: { position: string },
-    context,
+    _context,
   ) => {
     const position = args.position;
     const searchToolsByPosition = await prisma.tool.findMany({
@@ -72,7 +72,7 @@ const Query = {
     return searchToolsByPosition;
   },
 
-  SearchToolsByName: async (_parents, args: { name: string }, context) => {
+  SearchToolsByName: async (_parents, args: { name: string }, _context) => {
     const input = args.name;
     const inputLen = input.length;
     const searchToolByName = await prisma.tool.findMany({
@@ -114,7 +114,7 @@ const Query = {
     return orderedTool;
   },
 
-  AllDisposableMaterials: async (_parents, args, context) => {
+  AllDisposableMaterials: async (_parents, _args, _context) => {
     const materials = await prisma.disposableMaterial.findMany({
       orderBy: {
         usage: "desc",
@@ -124,9 +124,9 @@ const Query = {
   },
 
   SearchDisposableMaterialsByCategory: async (
-    parent,
+    _parent,
     args: { category: string },
-    context,
+    _context,
   ) => {
     const category = args.category;
     const searchDisposableMaterialsByCategory =
@@ -144,9 +144,9 @@ const Query = {
   },
 
   SearchDisposableMaterialsByPosition: async (
-    parent,
+    _parent,
     args: { position: string },
-    context,
+    _context,
   ) => {
     const position = args.position;
     const searchDisposableMaterialsByPosition =
@@ -164,9 +164,9 @@ const Query = {
   },
 
   SearchDisposableMaterialsByName: async (
-    parent,
+    _parent,
     args: { name: string },
-    context,
+    _context,
   ) => {
     const _name = args.name;
     const searchDisposableMaterialsByName =
@@ -233,7 +233,7 @@ const Query = {
     return orderedSearchDisposableMaterialsByName;
   },
 
-  AllMachines: async (_parents, args, context) => {
+  AllMachines: async (_parents, _args, _context) => {
     const machines = await prisma.machine.findMany({
       orderBy: {
         usage: "desc",
@@ -245,7 +245,7 @@ const Query = {
   SearchMachinesByCategory: async (
     _parents,
     args: { category: string },
-    context,
+    _context,
   ) => {
     const category = args.category;
     const searchMachinesByCategory = await prisma.machine.findMany({
@@ -264,7 +264,7 @@ const Query = {
   SearchMachinesByPosition: async (
     _parents,
     args: { position: string },
-    context,
+    _context,
   ) => {
     const position = args.position;
     const searchMachinesByPosition = await prisma.machine.findMany({
@@ -278,7 +278,7 @@ const Query = {
     return searchMachinesByPosition;
   },
 
-  AllMaterials: async (_parents, args, context) => {
+  AllMaterials: async (_parents, _args, _context) => {
     const materials = await prisma.material.findMany({
       orderBy: {
         usage: "desc",
@@ -287,7 +287,7 @@ const Query = {
     return materials;
   },
 
-  GetMaterialById: async (_parents, args: { id: number }, context) => {
+  GetMaterialById: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const material = await prisma.material.findUnique({
       where: {
@@ -300,7 +300,7 @@ const Query = {
   SearchMaterialsByCategory: async (
     _parents,
     args: { category: string },
-    context,
+    _context,
   ) => {
     const category = args.category;
     const searchMaterialsByCategory = await prisma.material.findMany({
@@ -320,7 +320,7 @@ const Query = {
   SearchMaterialsByPosition: async (
     _parents,
     args: { position: string },
-    context,
+    _context,
   ) => {
     const position = args.position;
     const searchMaterialsByPosition = await prisma.material.findMany({
@@ -335,7 +335,7 @@ const Query = {
     return searchMaterialsByPosition;
   },
 
-  SearchMaterialByName: async (_parents, args: { name: string }, context) => {
+  SearchMaterialByName: async (_parents, args: { name: string }, _context) => {
     const input = args.name;
     const inputLen = input.length;
     const searchMaterialByName = await prisma.material.findMany({
@@ -393,7 +393,7 @@ const Query = {
   SearchThreeDPByCategory: async (
     _parents,
     args: { category: string },
-    context,
+    _context,
   ) => {
     const category = args.category;
     const FindThreeDPByCategory = await prisma.threeDP.findMany({
@@ -412,7 +412,7 @@ const Query = {
   SearchThreeDPByPosition: async (
     _parents,
     args: { position: string },
-    context,
+    _context,
   ) => {
     const position = args.position;
     const searchThreeDPByPosition = await prisma.threeDP.findMany({
@@ -432,7 +432,7 @@ const Query = {
     return users;
   },
 
-  SearchUserByName: async (parent, args: { name: string }, context) => {
+  SearchUserByName: async (_parent, args: { name: string }, _context) => {
     const _name = args.name;
     const searchUserByName = await prisma.user.findMany({
       where: {
@@ -495,7 +495,11 @@ const Query = {
     return orderedSearchUserByName;
   },
 
-  GetUserByStudentID: async (_parents, args: { studentID: string }, context) => {
+  GetUserByStudentID: async (
+    _parents,
+    args: { studentID: string },
+    _context,
+  ) => {
     const studentID = args.studentID;
     const user = await prisma.user.findUnique({
       where: {
@@ -519,7 +523,7 @@ const Query = {
     return UserMaterials;
   },
 
-  AllArticles: async (_parents, args, context) => {
+  AllArticles: async () => {
     const articles = await prisma.article.findMany({
       orderBy: {
         id: "desc",
@@ -528,7 +532,7 @@ const Query = {
     return articles;
   },
 
-  SearchMachineByName: async (_parents, args: { input: string }, context) => {
+  SearchMachineByName: async (_parents, args: { input: string }, _context) => {
     const input = args.input;
     const inputLength = args.input.length;
 
@@ -577,7 +581,7 @@ const Query = {
     else return authorizedCode;
   },
 
-  LogIn: async (_parents, args: { logInInput: LogInInput }) => {
+  LogIn: async (_parents, args: { logInInput: LogInInput }, _context) => {
     const { studentID, password } = args.logInInput;
     const user = await prisma.user.findUnique({
       where: {
@@ -585,9 +589,9 @@ const Query = {
       },
     });
     if (!user) throw new Error("StudentID not found");
-    
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    
+
     if (!isPasswordValid) throw new Error("Invalid password");
     else {
       const token = jwt.sign(
@@ -610,6 +614,60 @@ const Query = {
       pubsub.publish("USER_LOGGEDIN", { UserLoggedIn: user });
       return { user: user, token: token };
     }
+  },
+
+  GetToolLikes: async () => {
+    const toolLikes = await prisma.toolLike.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return toolLikes;
+  },
+
+  GetToolLikeById: async (_parents, args: { id: number }, _context) => {
+    const id = args.id;
+    const toolLike = await prisma.toolLike.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return toolLike;
+  },
+
+  GetLikedToolsByUserId: async (
+    _parents,
+    args: { userId: number },
+    _context,
+  ) => {
+    const userId = args.userId;
+
+    // Find the user by ID
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      // Include tool likes if it's a relation field
+      include: {
+        toolLikes: true,
+      },
+    });
+
+    // Throw an error if the user is not found
+    if (!user) throw new Error("User not found");
+
+
+    const toolLikes = user.toolLikes;
+
+    const likedTools = toolLikes.map(async (toolLike) => {
+      return await prisma.tool.findUnique({
+        where: {
+          id: toolLike.toolId,
+        },
+      });
+    });
+
+    return likedTools;
   },
 };
 

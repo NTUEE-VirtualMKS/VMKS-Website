@@ -24,7 +24,7 @@ const AuthorizedCodePage = lazy(
 );
 const MaterialPage = lazy(() => import("@/containers/MaterialPage"));
 const ToolPage = lazy(() => import("@/containers/ToolPage"));
-const ShoppingList = lazy(() => import("@/containers/ShoppingList"));
+const ShoppingCartPage = lazy(() => import("@/containers/ShoppingCartPage"));
 const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
 const EditAnnouncement = lazy(() => import("@/components/EditAnnouncement"));
 const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
@@ -139,10 +139,10 @@ function App() {
               }
             />
             <Route
-              path="/ShoppingList"
+              path="/ShoppingCartPage"
               element={
                 <Suspense fallback={<LoaderSpinner />}>
-                  <ShoppingList />
+                  <ShoppingCartPage />
                 </Suspense>
               }
             />

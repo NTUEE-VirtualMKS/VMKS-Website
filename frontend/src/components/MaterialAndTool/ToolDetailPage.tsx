@@ -14,7 +14,7 @@ function ToolDetailPage() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { data, loading, error } = useQuery(GET_TOOL_BY_ID_QUERY, {
-    variables: { id: parseInt(id as string) },
+    variables: { getToolByIdId: parseInt(id as string) },
   });
 
   if (loading) return <LoaderSpinner />;
@@ -51,7 +51,7 @@ function ToolDetailPage() {
           <div className="flex flex-row">
             <RouteBar route={tool?.category} />
           </div>
-          <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
+          <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-white">
             <div className="flex flex-row my-4 mx-2">
               <img
                 src={tool?.photoLink}
