@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 export type UserContextType = {
   user: UserType | null;
-  login: ({ studentID, password }: LoginProps) => Promise<void>;
-  signup: ({ name, studentID, password }: SignupProps) => Promise<void>;
+  login: ({ studentId, password }: LoginProps) => Promise<void>;
+  signup: ({ name, studentId, password }: SignupProps) => Promise<void>;
   logout: () => void;
 };
 
@@ -49,13 +49,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       refetchQueries: [{ query: ALL_USER_QUERY }],
     });
 
-  const signup = async ({ name, studentID, password }: SignupProps) => {
+  const signup = async ({ name, studentId, password }: SignupProps) => {
     try {
       await createUser({
         variables: {
           userInput: {
             name,
-            studentID,
+            studentID: studentId,
             password,
             photoLink: "https://http.cat/200",
             isAdmin: false,
@@ -81,10 +81,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const [
     getUserByStudentId,
-    { loading: getUserByStudentIdLoading, error: getUserByStudentIdError },
+    { loading: getUserByStudentIdLoading, error: getUserByStudentIdError, refetch },
   ] = useLazyQuery(GET_USER_BY_STUDENT_ID_QUERY);
 
-  const login = async ({ studentID, password }: LoginProps) => {
+  const login = async ({ studentId, password }: LoginProps) => {
     if (getUserByStudentIdLoading) {
       toast({ title: "Loading..." });
     }
@@ -97,7 +97,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     try {
-      const response = await getUserByStudentId({ variables: { studentID } });
+      const response = await getUserByStudentId({ variables: { studentId } });
       const user = response?.data?.GetUserByStudentID;
       if (!user) {
         toast({ title: "User not found", variant: "destructive" });
@@ -118,6 +118,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           articlesId: user?.articlesId,
           isAdmin: user.isAdmin,
           isMinister: user.isMinister,
+          toolLikeIds: user?.toolLikeIds,
         });
         toast({
           title: user.isAdmin
@@ -125,6 +126,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             : "User login successfully!",
         });
         navigate("/");
+        refetch();
       }
     } catch (error) {
       toast({ title: `${error}`, variant: "destructive" });

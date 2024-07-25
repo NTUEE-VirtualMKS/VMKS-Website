@@ -27,7 +27,7 @@ function MaterialCard({ material }: { material: MaterialType }) {
   const { user } = useUser();
   const [scope, animate] = useAnimate();
   const [hover, setHover] = useState(false);
-  const [like, setLike] = useState(false); // TODO: connect to backend
+  const [star, setStar] = useState(false); // TODO: connect to backend
   const [deleteMaterial, { loading, error }] = useMutation(
     DELETE_MATERIAL_MUTATION,
     {
@@ -103,7 +103,7 @@ function MaterialCard({ material }: { material: MaterialType }) {
   };
 
   const handleLike = () => {
-    if (!like) {
+    if (!star) {
       animate([
         ...sparklesReset,
         [".letter", { y: 0 }, { duration: 0.2, delay: stagger(0.05) }],
@@ -113,11 +113,11 @@ function MaterialCard({ material }: { material: MaterialType }) {
         [".letter", { y: 0 }, { duration: 0.000001 }],
         ...sparklesFadeOut,
       ]);
-      toast({ title: "Added to side bar.", variant: "like" });
+      toast({ title: "Added to side bar.", variant: "star" });
     } else {
-      toast({ title: "Removed from side bar.", variant: "like" });
+      toast({ title: "Removed from side bar.", variant: "star" });
     }
-    setLike(!like);
+    setStar(!star);
   };
 
   const handleShare = () => {
@@ -142,24 +142,26 @@ function MaterialCard({ material }: { material: MaterialType }) {
         className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
         key={material.id}
       >
-        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-[#444444]">
+        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-white">
           <Link to={`/MaterialPage/Material/${material.id}`}>
             <img
               src={material.photoLink}
               alt={material.name}
               className="w-10/12 mx-auto mt-2 bg-white"
             />
-            <h2 className="text-white text-24">{material.name}</h2>
-            <p className="text-white text-16">
-              型號: {material?.partName ? `${material?.partName}` : "無"}
-            </p>
-            <p className="text-white text-16">位置: {material.position}</p>
-            <p className="text-white text-16">
-              剩餘數量: {material?.remain}（個）
-            </p>
-            <p className="text-white text-16">
-              使用量: {material?.usage}（個）
-            </p>
+            <div className="ml-1.5 mt-1">
+              <h2 className="text-white text-24">{material.name}</h2>
+              <p className="text-white text-16">
+                型號: {material?.partName ? `${material?.partName}` : "無"}
+              </p>
+              <p className="text-white text-16">位置: {material.position}</p>
+              <p className="text-white text-16">
+                剩餘數量: {material?.remain}（個）
+              </p>
+              <p className="text-white text-16">
+                使用量: {material?.usage}（個）
+              </p>
+            </div>
           </Link>
           <div className="flex flex-row mt-1 justify-center gap-2">
             {user?.isAdmin && (
@@ -183,9 +185,9 @@ function MaterialCard({ material }: { material: MaterialType }) {
               <div className="rounded-full hover:bg-yellow-300 hover:bg-opacity-20">
                 <div ref={scope} className="w-[35px] h-[35px]">
                   <TooltipTrigger onClick={handleLike}>
-                  <Star
-                      fill={like ? "yellow" : "none"}
-                      color={like || hover ? "yellow" : "white"}
+                    <Star
+                      fill={star ? "yellow" : "none"}
+                      color={star || hover ? "yellow" : "white"}
                       className="p-1.5"
                       size={35}
                       onMouseEnter={() => setHover(true)}
@@ -212,7 +214,9 @@ function MaterialCard({ material }: { material: MaterialType }) {
                     </span>
                   </TooltipTrigger>
                   <TooltipContent className="bg-black bg-opacity-80">
-                    <p className="text-white text-xs">like</p>
+                    <p className="text-white text-xs">
+                      {star ? "unstar" : "star"}
+                    </p>
                   </TooltipContent>
                 </div>
               </div>

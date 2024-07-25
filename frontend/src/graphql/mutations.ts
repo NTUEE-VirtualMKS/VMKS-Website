@@ -279,6 +279,7 @@ const ADD_TOOL_MUTATION = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
@@ -296,6 +297,7 @@ const DELETE_TOOL_MUTATION = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
@@ -313,6 +315,7 @@ const EDIT_TOOL_MUTATION = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
@@ -332,6 +335,7 @@ const ADD_USER_MUTATION = gql(`
       articlesId
       isAdmin
       isMinister
+      toolLikeIds
     }
   }
 `);
@@ -350,6 +354,7 @@ const DELETE_USER_MUTATION = gql(`
       articlesId
       isAdmin
       isMinister
+      toolLikeIds
     }
   }
 `);
@@ -368,6 +373,7 @@ const EDIT_USER_MUTATION = gql(`
       articlesId
       isAdmin
       isMinister
+      toolLikeIds
     }
   }
 `);
@@ -471,6 +477,7 @@ const TOOL_USAGE_UPDATE_MUTATION = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
@@ -514,6 +521,27 @@ const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
   }
 `);
 
+// tool like
+const ADD_TOOL_LIKE_MUTATION = gql(`
+mutation AddToolLike($toolLikeInput: toolLikeInput!) {
+  AddToolLike(toolLikeInput: $toolLikeInput) {
+    id
+    userId
+    toolId
+  }
+}
+`);
+
+const DELETE_TOOL_LIKE_MUTATION = gql(`
+mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {
+  DeleteToolLike(toolLikeInput: $toolLikeInput) {
+    id
+    userId
+    toolId
+  }
+}
+`);
+
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -546,4 +574,6 @@ export {
   USER_MACHINE_USAGE_UPDATE_MUTATION,
   INTRODUCTION_UPDATE_MUTATION,
   AUTHORIZED_CODE_UPDATE_MUTATION,
+  ADD_TOOL_LIKE_MUTATION,
+  DELETE_TOOL_LIKE_MUTATION,
 };

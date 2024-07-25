@@ -199,8 +199,7 @@ const GET_MATERIAL_BY_ID_QUERY = gql(`
       remain
     }
   }
-
-  `);
+`);
 
 const SEARCH_MATERIAL_BY_NAME_QUERY = gql(`
   query SearchMaterialByName($name: String!) {
@@ -312,54 +311,56 @@ const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
 
 const ALL_TOOL_QUERY = gql(`
   query AllTools {
-    AllTools {
-      id
-      name
-      partName
-      category
-      position
-      description
-      photoLink
-      usage
-      tutorialLink
-      remain
-    }
+  AllTools {
+    id
+    name
+    partName
+    category
+    position
+    description
+    photoLink
+    usage
+    tutorialLink
+    remain
+    toolLikeIds
   }
+}
 `);
 
 const GET_TOOL_BY_ID_QUERY = gql(`
-  query GetToolById($id: Int!) {
-    GetToolById(id: $id) {
-      id
-      name
-      partName
-      category
-      position
-      description
-      photoLink
-      usage
-      tutorialLink
-      remain
-    }
+query GetToolById($getToolByIdId: Int!) {
+  GetToolById(id: $getToolByIdId) {
+    id
+    name
+    partName
+    category
+    position
+    description
+    photoLink
+    usage
+    tutorialLink
+    remain
+    toolLikeIds
   }
-
-  `);
+}  
+`);
 
 const SEARCH_TOOL_BY_CATEGORY_QUERY = gql(`
   query SearchToolsByCategory($category: String!) {
-    SearchToolsByCategory(category: $category) {
-      id
-      name
-      partName
-      category
-      position
-      description
-      photoLink
-      usage
-      tutorialLink
-      remain
-    }
+  SearchToolsByCategory(category: $category) {
+    id
+    name
+    partName
+    category
+    position
+    description
+    photoLink
+    usage
+    tutorialLink
+    remain
+    toolLikeIds
   }
+}
 `);
 
 const SEARCH_TOOL_BY_NAME_QUERY = gql(`
@@ -375,6 +376,7 @@ const SEARCH_TOOL_BY_NAME_QUERY = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
@@ -392,26 +394,28 @@ const SEARCH_TOOL_BY_POSITION_QUERY = gql(`
       usage
       tutorialLink
       remain
+      toolLikeIds
     }
   }
 `);
 
 const ALL_USER_QUERY = gql(`
   query AllUser {
-    AllUser {
-      id
-      name
-      studentID
-      password
-      photoLink
-      threeDPId
-      laserCutAvailable
-      borrowHistoryId
-      articlesId
-      isAdmin
-      isMinister
-    }
+  AllUser {
+    id
+    name
+    studentID
+    password
+    photoLink
+    threeDPId
+    laserCutAvailable
+    borrowHistoryId
+    articlesId
+    isAdmin
+    isMinister
+    toolLikeIds
   }
+}
 `);
 
 const SEARCH_USER_BY_NAME_QUERY = gql(`
@@ -428,26 +432,28 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       articlesId
       isAdmin
       isMinister
+      toolLikeIds
     }
   }
 `);
 
 const GET_USER_BY_STUDENT_ID_QUERY = gql(`
-  query GetUserByStudentID($studentID: String!) {
-    GetUserByStudentID(studentID: $studentID) {
-      id
-      name
-      studentID
-      password
-      photoLink
-      threeDPId
-      laserCutAvailable
-      borrowHistoryId
-      articlesId
-      isAdmin
-      isMinister
-    }
+  query GetUserByStudentID($studentId: String!) {
+  GetUserByStudentID(studentID: $studentId) {
+    id
+    name
+    studentID
+    password
+    photoLink
+    threeDPId
+    laserCutAvailable
+    borrowHistoryId
+    articlesId
+    isAdmin
+    isMinister
+    toolLikeIds
   }
+}
 `);
 
 const ALL_USER_MATERIAL_QUERY = gql(`
@@ -484,6 +490,44 @@ const CURRENT_INTRODUCTION_QUERY = gql(`
   }
 `);
 
+const GET_TOOL_LIKES_QUERY = gql(`
+  query GetToolLikes {
+  GetToolLikes {
+    id
+    userId
+    toolId
+  }
+}
+`);
+
+const GET_TOOL_LIKE_BY_ID_QUERY = gql(`
+  query GetToolLikeById($getToolLikeByIdId: Int!) {
+  GetToolLikeById(id: $getToolLikeByIdId) {
+    id
+    userId
+    toolId
+  }
+}
+`);
+
+const GET_LIKED_TOOLS_BY_USER_ID_QUERY = gql(`
+  query GetLikedToolsByUserId($userId: Int!) {
+  GetLikedToolsByUserId(userId: $userId) {
+    id
+    name
+    partName
+    category
+    position
+    description
+    photoLink
+    usage
+    tutorialLink
+    remain
+    toolLikeIds
+  }
+}
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -514,4 +558,7 @@ export {
   SEARCH_USER_BY_NAME_QUERY,
   GET_USER_BY_STUDENT_ID_QUERY,
   CURRENT_INTRODUCTION_QUERY,
+  GET_TOOL_LIKES_QUERY,
+  GET_TOOL_LIKE_BY_ID_QUERY,
+  GET_LIKED_TOOLS_BY_USER_ID_QUERY,
 };

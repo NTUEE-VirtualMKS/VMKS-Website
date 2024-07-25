@@ -23,13 +23,13 @@ function HomePageMaterialBox() {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap bg-gray-900 rounded-[30px] mt-9 border-2 border-blue-600 ">
+      <div className="flex flex-wrap rounded-[30px] mt-9 border-2 border-blue-600 ">
         <div className="w-1/2 h-40">
           <button
             className="w-full h-full"
             onClick={() => navigate("/DisposableMaterialPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-tl-[30px] h-full border-r border-b border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-gray-900 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tl-[30px] h-full border-r border-b border-white text-3xl font-semibold">
               Disposable Material
             </div>
           </button>
@@ -39,7 +39,7 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/MaterialPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-tr-[30px] h-full border-l border-b border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tr-[30px] h-full border-l border-b border-white text-3xl font-semibold">
               Material
             </div>
           </button>
@@ -49,7 +49,7 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/ToolPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-bl-[30px] h-full border-t border-r border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-bl-[30px] h-full border-t border-r border-white text-3xl font-semibold">
               Tool
             </div>
           </button>
@@ -59,7 +59,7 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/MachinePage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-br-[30px] h-full border-l border-t border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-br-[30px] h-full border-l border-t border-white text-3xl font-semibold">
               Machine
             </div>
           </button>

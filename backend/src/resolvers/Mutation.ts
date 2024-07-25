@@ -23,13 +23,14 @@ import {
   IntroductionInput,
   AuthorizedCodeInput,
   SignUpInput,
+  ToolLikeInput,
 } from "../types/types.ts";
 
 const Mutation = {
   AddAnnouncement: async (
     _parents,
     args: { announcementInput: AnnouncementInput },
-    context,
+    _context,
   ) => {
     const { title, content } = args.announcementInput;
     const date = new Date().toLocaleString();
@@ -46,7 +47,7 @@ const Mutation = {
     return newAnnouncement;
   },
 
-  DeleteAnnouncement: async (_parents, args: { id: number }, context) => {
+  DeleteAnnouncement: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findAnnouncement = await prisma.announcement.findFirst({
       where: {
@@ -71,7 +72,7 @@ const Mutation = {
   EditAnnouncement: async (
     _parents,
     args: { id: number; announcementInput: AnnouncementInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const { title, content } = args.announcementInput;
@@ -99,7 +100,7 @@ const Mutation = {
     return editAnnouncement;
   },
 
-  AddTool: async (_parents, args: { toolInput: ToolInput }, context) => {
+  AddTool: async (_parents, args: { toolInput: ToolInput }, _context) => {
     const {
       name,
       partName,
@@ -122,13 +123,14 @@ const Mutation = {
         usage: usage,
         tutorialLink: tutorialLink,
         remain: remain,
+        toolLikeIds: [],
       },
     });
     pubsub.publish("TOOL_CREATED", { ToolCreated: newTool });
     return newTool;
   },
 
-  DeleteTool: async (_parents, args: { id: number }, context) => {
+  DeleteTool: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findTool = await prisma.tool.findFirst({
       where: {
@@ -152,7 +154,7 @@ const Mutation = {
   EditTool: async (
     _parents,
     args: { id: number; toolInput: ToolInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -199,7 +201,7 @@ const Mutation = {
   ToolUsageUpdate: async (
     _parents,
     args: { id: number; toolUsageUpdateInput: ToolUsageUpdateInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const { usage, remain } = args.toolUsageUpdateInput;
@@ -229,7 +231,7 @@ const Mutation = {
   AddDisposableMaterial: async (
     _parents,
     args: { disposableMaterialInput: DisposableMaterialInput },
-    context,
+    _context,
   ) => {
     const {
       name,
@@ -263,7 +265,7 @@ const Mutation = {
     return newDisposableMaterial;
   },
 
-  DeleteDisposableMaterial: async (parent, args: { id: number }, context) => {
+  DeleteDisposableMaterial: async (parent, args: { id: number }, _context) => {
     const id = args.id;
     const findDisposableMaterial = await prisma.disposableMaterial.findFirst({
       where: {
@@ -398,7 +400,7 @@ const Mutation = {
     return newMachine;
   },
 
-  DeleteMachine: async (_parents, args: { id: number }, context) => {
+  DeleteMachine: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findMachine = await prisma.machine.findFirst({
       where: {
@@ -420,7 +422,7 @@ const Mutation = {
   EditMachine: async (
     _parents,
     args: { id: number; machineInput: MachineInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -463,7 +465,7 @@ const Mutation = {
   AddMaterial: async (
     _parents,
     args: { materialInput: MaterialInput },
-    context,
+    _context,
   ) => {
     const {
       name,
@@ -497,7 +499,7 @@ const Mutation = {
     return newMaterial;
   },
 
-  DeleteMaterial: async (_parents, args: { id: number }, context) => {
+  DeleteMaterial: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findMaterial = await prisma.material.findFirst({
       where: {
@@ -520,7 +522,7 @@ const Mutation = {
   EditMaterial: async (
     _parents,
     args: { id: number; materialInput: MaterialInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -570,7 +572,7 @@ const Mutation = {
   MaterialUsageUpdate: async (
     _parents,
     args: { id: number; materialUsageUpdateInput: MaterialUsageUpdateInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const { usage, remain } = args.materialUsageUpdateInput;
@@ -601,7 +603,7 @@ const Mutation = {
   AddThreeDP: async (
     _parents,
     args: { threeDPInput: ThreeDPInput },
-    context,
+    _context,
   ) => {
     const {
       name,
@@ -630,7 +632,7 @@ const Mutation = {
     return newThreeDP;
   },
 
-  DeleteThreeDP: async (_parents, args: { id: number }, context) => {
+  DeleteThreeDP: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findThreeDP = await prisma.threeDP.findFirst({
       where: {
@@ -665,7 +667,7 @@ const Mutation = {
   EditThreeDP: async (
     _parents,
     args: { id: number; threeDPInput: ThreeDPInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -709,7 +711,7 @@ const Mutation = {
   AddUserMaterial: async (
     _parents,
     args: { userMaterialInput: UserMaterialInput },
-    context,
+    _context,
   ) => {
     const { name, partName, borrowerId, borrowNum, status } =
       args.userMaterialInput;
@@ -750,7 +752,7 @@ const Mutation = {
   },
 
   // maybe useless
-  DeleteUserMaterial: async (_parents, args: { id: number }, context) => {
+  DeleteUserMaterial: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findUserMaterial = await prisma.userMaterial.findFirst({
       where: {
@@ -794,7 +796,7 @@ const Mutation = {
   EditUserMaterial: async (
     _parents,
     args: { id: number; userMaterialEditInput: UserMaterialEditInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -886,7 +888,7 @@ const Mutation = {
     return updateUserMaterial;
   },
 
-  AddUser: async (_parents, args: { userInput: UserInput }, context) => {
+  AddUser: async (_parents, args: { userInput: UserInput }, _context) => {
     const {
       name,
       studentID,
@@ -920,6 +922,7 @@ const Mutation = {
         borrowHistoryId: [],
         isAdmin: isAdmin,
         isMinister: isMinister,
+        toolLikeIds: [],
       },
     });
 
@@ -937,7 +940,7 @@ const Mutation = {
     return newUser;
   },
 
-  DeleteUser: async (_parents, args: { id: number }, context) => {
+  DeleteUser: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findUser = await prisma.user.findFirst({
       where: {
@@ -991,7 +994,7 @@ const Mutation = {
   EditUser: async (
     _parents,
     args: { id: number; userEditInput: UserEditInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const { name, studentID, password, photoLink, isAdmin, isMinister } =
@@ -1025,7 +1028,7 @@ const Mutation = {
   UserMachineUsageUpdate: async (
     _parents,
     args: { id: number; userMachineUpdateInput: UserMachineUpdateInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
     const { threeDPId, laserCutAvailable } = args.userMachineUpdateInput;
@@ -1107,7 +1110,7 @@ const Mutation = {
   AddArticle: async (
     _parents: any,
     args: { articleInput: ArticleInput },
-    context: any,
+    _context: any,
   ) => {
     const {
       writerId,
@@ -1156,7 +1159,7 @@ const Mutation = {
   UpdateIntroduction: async (
     _parents,
     args: { introductionInput: IntroductionInput },
-    context,
+    _context,
   ) => {
     const existence = await prisma.introduction.findMany({
       orderBy: {
@@ -1199,7 +1202,7 @@ const Mutation = {
   UpdateAuthorizedCode: async (
     _parents,
     args: { authorizedCodeInput: AuthorizedCodeInput },
-    context,
+    _context,
   ) => {
     console.log(args.authorizedCodeInput);
     const existence = await prisma.authorizedCode.findFirst({});
@@ -1273,8 +1276,118 @@ const Mutation = {
       );
       pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
       return { user: newUser, token: token };
-      // return newUser
     }
+  },
+
+  AddToolLike: async (
+    _parents,
+    args: { toolLikeInput: ToolLikeInput },
+    _context,
+  ) => {
+    const { userId, toolId } = args.toolLikeInput;
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    if (!findUser) {
+      throw new Error("User Not Found");
+    }
+
+    const findTool = await prisma.tool.findFirst({
+      where: {
+        id: toolId,
+      },
+    });
+
+    if (!findTool) {
+      throw new Error("Tool Not Found");
+    }
+
+    const newToolLike = await prisma.toolLike.create({
+      data: {
+        userId: userId,
+        toolId: toolId,
+      },
+    });
+
+    // update tool
+    await prisma.tool.update({
+      where: {
+        id: toolId,
+      },
+      data: {
+        toolLikeIds: [...findTool.toolLikeIds, newToolLike.id],
+      },
+    });
+
+    // update user
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        toolLikeIds: [...findUser.toolLikeIds, newToolLike.id],
+      },
+    });
+
+    return newToolLike;
+  },
+
+  DeleteToolLike: async (
+    _parents,
+    args: { toolLikeInput: ToolLikeInput },
+    _context,
+  ) => {
+    const { userId, toolId } = args.toolLikeInput;
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    if (!findUser) {
+      throw new Error("User Not Found");
+    }
+
+    const findTool = await prisma.tool.findFirst({
+      where: {
+        id: toolId,
+      },
+    });
+
+    if (!findTool) {
+      throw new Error("Tool Not Found");
+    }
+
+    // Find the intersection of user.toolLikeIds and tool.toolLikedIds
+    const toolLikeId = findUser.toolLikeIds.find((id) =>
+      findTool.toolLikeIds.includes(id),
+    );
+
+    const deleteToolLike = await prisma.toolLike.delete({
+      where: { id: toolLikeId },
+    });
+
+    // Update user.toolLikeIds and tool.toolLikeIds
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        toolLikeIds: {
+          set: findUser.toolLikeIds.filter((id) => id !== toolLikeId),
+        },
+      },
+    });
+
+    await prisma.tool.update({
+      where: { id: toolId },
+      data: {
+        toolLikeIds: {
+          set: findTool.toolLikeIds.filter((id) => id !== toolLikeId),
+        },
+      },
+    });
+
+    return deleteToolLike;
   },
 };
 

@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import { ToolType } from "@/shared/type";
 import { DELETE_TOOL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
-import { ALL_TOOL_QUERY } from "@/graphql/queries";
+import {
+  ALL_TOOL_QUERY,
+  ADD_TOOL_LIKE_MUTATION,
+  DELETE_TOOL_LIKE_MUTATION,
+  ALL_USER_QUERY,
+  GET_TOOL_LIKES_QUERY,
+} from "@/graphql";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
@@ -27,10 +33,18 @@ function ToolCard({ tool }: { tool: ToolType }) {
   const { user } = useUser();
   const [scope, animate] = useAnimate();
   const [hover, setHover] = useState(false);
-  const [like, setLike] = useState(false); // TODO: connect to backend
-  const [deleteTool, { loading, error }] = useMutation(DELETE_TOOL_MUTATION, {
-    refetchQueries: [{ query: ALL_TOOL_QUERY }],
+  const [star, setStar] = useState(() => {
+    if (user?.toolLikeIds?.some((id) => tool?.toolLikeIds?.includes(id))) {
+      return true;
+    } else {
+      return false;
+    }
   });
+
+  const [deleteTool, { loading: DeleteToolLoading, error: DeleteToolError }] =
+    useMutation(DELETE_TOOL_MUTATION, {
+      refetchQueries: [{ query: ALL_TOOL_QUERY }],
+    });
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this tool?")) {
@@ -39,25 +53,15 @@ function ToolCard({ tool }: { tool: ToolType }) {
           deleteToolId: tool.id,
         },
       });
-      if (loading) return <LoaderSpinner />;
-      if (error) {
-        toast({ title: `${error.message}`, variant: "destructive" });
+      if (DeleteToolLoading) return <LoaderSpinner />;
+      if (DeleteToolError) {
+        toast({ title: `${DeleteToolError.message}`, variant: "destructive" });
       } else {
         toast({ title: "Tool deleted successfully!" });
       }
     }
   };
 
-  // const handleBorrow = (e: React.MouseEvent<HTMLAnchorElement>) => {
-  //   if (!user) {
-  //     e.preventDefault();
-  //     toast({
-  //       title: "Login required",
-  //       description: "Please login to borrow tools",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
   const handleBorrow = () => {
     toast({ title: "Added to shopping cart." });
   };
@@ -98,8 +102,30 @@ function ToolCard({ tool }: { tool: ToolType }) {
     },
   ]);
 
+  const [
+    addToolLike,
+    { loading: AddToolLikeLoading, error: AddToolLikeError },
+  ] = useMutation(ADD_TOOL_LIKE_MUTATION, {
+    refetchQueries: [
+      { query: ALL_USER_QUERY },
+      { query: GET_TOOL_LIKES_QUERY },
+      { query: ALL_TOOL_QUERY },
+    ],
+  });
+
+  const [
+    deleteToolLike,
+    { loading: DeleteToolLikeLoading, error: DeleteToolLikeError },
+  ] = useMutation(DELETE_TOOL_LIKE_MUTATION, {
+    refetchQueries: [
+      { query: ALL_USER_QUERY },
+      { query: GET_TOOL_LIKES_QUERY },
+      { query: ALL_TOOL_QUERY },
+    ],
+  });
+
   const handleLike = () => {
-    if (!like) {
+    if (!star) {
       animate([
         ...sparklesReset,
         [".letter", { y: 0 }, { duration: 0.2, delay: stagger(0.05) }],
@@ -109,11 +135,40 @@ function ToolCard({ tool }: { tool: ToolType }) {
         [".letter", { y: 0 }, { duration: 0.000001 }],
         ...sparklesFadeOut,
       ]);
-      toast({ title: "Added to side bar.", variant: "like" });
+      addToolLike({
+        variables: {
+          toolLikeInput: {
+            userId: user?.id!,
+            toolId: tool.id,
+          },
+        },
+      });
+      if (AddToolLikeLoading) return <LoaderSpinner />;
+      if (AddToolLikeError) {
+        toast({ title: `${AddToolLikeError.message}`, variant: "destructive" });
+      } else {
+        toast({ title: "Added to side bar.", variant: "star" });
+      }
     } else {
-      toast({ title: "Removed from side bar.", variant: "like" });
+      deleteToolLike({
+        variables: {
+          toolLikeInput: {
+            userId: user?.id!,
+            toolId: tool.id,
+          },
+        },
+      });
+      if (DeleteToolLikeLoading) return <LoaderSpinner />;
+      if (DeleteToolLikeError) {
+        toast({
+          title: `${DeleteToolLikeError.message}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "Removed from side bar.", variant: "star" });
+      }
     }
-    setLike(!like);
+    setStar(!star);
   };
 
   const handleShare = () => {
@@ -138,20 +193,24 @@ function ToolCard({ tool }: { tool: ToolType }) {
         className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
         key={tool.id}
       >
-        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-[#444444]">
+        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-white">
           <Link to={`/ToolPage/Tool/${tool.id}`}>
             <img
               src={tool.photoLink}
               alt={tool.name}
               className="w-10/12 mx-auto mt-2 bg-white"
             />
-            <h2 className="text-white text-24">{tool.name}</h2>
-            <p className="text-white text-16">
-              型號: {tool?.partName ? `${tool?.partName}` : "無"}
-            </p>
-            <p className="text-white text-16">位置: {tool.position}</p>
-            <p className="text-white text-16">剩餘數量: {tool?.remain}（個）</p>
-            <p className="text-white text-16">使用量: {tool?.usage}（個）</p>
+            <div className="ml-1.5 mt-1">
+              <h2 className="text-white text-24">{tool.name}</h2>
+              <p className="text-white text-16">
+                型號: {tool?.partName ? `${tool?.partName}` : "無"}
+              </p>
+              <p className="text-white text-16">位置: {tool.position}</p>
+              <p className="text-white text-16">
+                剩餘數量: {tool?.remain}（個）
+              </p>
+              <p className="text-white text-16">使用量: {tool?.usage}（個）</p>
+            </div>
           </Link>
           <div className="flex flex-row mt-1 justify-center gap-2">
             {user?.isAdmin && (
@@ -176,8 +235,8 @@ function ToolCard({ tool }: { tool: ToolType }) {
                 <div ref={scope} className="w-[35px] h-[35px]">
                   <TooltipTrigger onClick={handleLike}>
                     <Star
-                      fill={like ? "yellow" : "none"}
-                      color={like || hover ? "yellow" : "white"}
+                      fill={star ? "yellow" : "none"}
+                      color={star || hover ? "yellow" : "white"}
                       className="p-1.5"
                       size={35}
                       onMouseEnter={() => setHover(true)}
@@ -204,7 +263,9 @@ function ToolCard({ tool }: { tool: ToolType }) {
                     </span>
                   </TooltipTrigger>
                   <TooltipContent className="bg-black bg-opacity-80">
-                    <p className="text-white text-xs">like</p>
+                    <p className="text-white text-xs">
+                      {star ? "unstar" : "star"}
+                    </p>
                   </TooltipContent>
                 </div>
               </div>
