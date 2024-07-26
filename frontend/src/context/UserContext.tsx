@@ -81,7 +81,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const [
     getUserByStudentId,
-    { loading: getUserByStudentIdLoading, error: getUserByStudentIdError, refetch },
+    {
+      loading: getUserByStudentIdLoading,
+      error: getUserByStudentIdError,
+      refetch,
+    },
   ] = useLazyQuery(GET_USER_BY_STUDENT_ID_QUERY);
 
   const login = async ({ studentId, password }: LoginProps) => {

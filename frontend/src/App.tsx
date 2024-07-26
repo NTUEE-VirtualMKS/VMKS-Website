@@ -32,12 +32,12 @@ const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
 function App() {
   return (
     <div className="flex flex-row">
-      <div className="flex-none z-20">
-        <SideBar />
-      </div>
       <div className="flex-1 flex-col h-screen">
         <div className="fixed top-0 bg-black w-full z-10">
           <NavBar />
+          <div className="flex-none z-20">
+            <SideBar />
+          </div>
         </div>
         <div className="flex-1 mx-3 mt-20">
           <Routes>
