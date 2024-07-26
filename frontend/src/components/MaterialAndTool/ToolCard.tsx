@@ -13,7 +13,7 @@ import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
 import { Share, ShoppingCart, Star, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stagger, useAnimate, animate } from "framer-motion";
 import {
   Tooltip,
@@ -109,7 +109,6 @@ function ToolCard({ tool }: { tool: ToolType }) {
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
-      { query: ALL_TOOL_QUERY },
     ],
   });
 
@@ -120,16 +119,29 @@ function ToolCard({ tool }: { tool: ToolType }) {
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
-      { query: ALL_TOOL_QUERY },
     ],
   });
+
+  // Load the star state from local storage
+  useEffect(() => {
+    const storedState = localStorage.getItem(`starred-${tool.id}`);
+    if (storedState) {
+      setStar(JSON.parse(storedState));
+    }
+  }, [tool.id]);
+
+  const handleStarClick = () => {
+    const newState = !star;
+    setStar(newState);
+    localStorage.setItem(`starred-${tool.id}`, JSON.stringify(newState));
+  };
 
   const handleLike = () => {
     if (!star) {
       animate([
         ...sparklesReset,
         [".letter", { y: 0 }, { duration: 0.2, delay: stagger(0.05) }],
-        ["button", { scale: 0.1 }, { duration: 0.1, at: "<" }],
+        ["button", { scale: 0.5 }, { duration: 0.1, at: "<" }],
         ["button", { scale: 1 }, { duration: 0.1 }],
         ...sparklesAnimation,
         [".letter", { y: 0 }, { duration: 0.000001 }],
@@ -169,6 +181,7 @@ function ToolCard({ tool }: { tool: ToolType }) {
       }
     }
     setStar(!star);
+    handleStarClick();
   };
 
   const handleShare = () => {

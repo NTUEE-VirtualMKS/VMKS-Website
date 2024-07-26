@@ -81,11 +81,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const [
     getUserByStudentId,
-    {
-      loading: getUserByStudentIdLoading,
-      error: getUserByStudentIdError,
-      refetch,
-    },
+    { loading: getUserByStudentIdLoading, error: getUserByStudentIdError },
   ] = useLazyQuery(GET_USER_BY_STUDENT_ID_QUERY);
 
   const login = async ({ studentId, password }: LoginProps) => {
@@ -130,7 +126,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             : "User login successfully!",
         });
         navigate("/");
-        refetch();
       }
     } catch (error) {
       toast({ title: `${error}`, variant: "destructive" });
