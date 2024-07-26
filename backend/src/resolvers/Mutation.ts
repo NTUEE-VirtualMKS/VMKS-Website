@@ -1285,22 +1285,22 @@ const Mutation = {
     _context,
   ) => {
     const { userId, toolId } = args.toolLikeInput;
-    const findUser = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
-    if (!findUser) {
+    if (!user) {
       throw new Error("User Not Found");
     }
 
-    const findTool = await prisma.tool.findFirst({
+    const tool = await prisma.tool.findUnique({
       where: {
         id: toolId,
       },
     });
 
-    if (!findTool) {
+    if (!tool) {
       throw new Error("Tool Not Found");
     }
 
@@ -1317,7 +1317,7 @@ const Mutation = {
         id: toolId,
       },
       data: {
-        toolLikeIds: [...findTool.toolLikeIds, newToolLike.id],
+        toolLikeIds: [...tool.toolLikeIds, newToolLike.id],
       },
     });
 
@@ -1327,7 +1327,7 @@ const Mutation = {
         id: userId,
       },
       data: {
-        toolLikeIds: [...findUser.toolLikeIds, newToolLike.id],
+        toolLikeIds: [...user.toolLikeIds, newToolLike.id],
       },
     });
 
@@ -1340,28 +1340,28 @@ const Mutation = {
     _context,
   ) => {
     const { userId, toolId } = args.toolLikeInput;
-    const findUser = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
-    if (!findUser) {
+    if (!user) {
       throw new Error("User Not Found");
     }
 
-    const findTool = await prisma.tool.findFirst({
+    const tool = await prisma.tool.findUnique({
       where: {
         id: toolId,
       },
     });
 
-    if (!findTool) {
+    if (!tool) {
       throw new Error("Tool Not Found");
     }
 
     // Find the intersection of user.toolLikeIds and tool.toolLikedIds
-    const toolLikeId = findUser.toolLikeIds.find((id) =>
-      findTool.toolLikeIds.includes(id),
+    const toolLikeId = user.toolLikeIds.find((id) =>
+      tool.toolLikeIds.includes(id),
     );
 
     const deleteToolLike = await prisma.toolLike.delete({
@@ -1373,7 +1373,7 @@ const Mutation = {
       where: { id: userId },
       data: {
         toolLikeIds: {
-          set: findUser.toolLikeIds.filter((id) => id !== toolLikeId),
+          set: user.toolLikeIds.filter((id) => id !== toolLikeId),
         },
       },
     });
@@ -1382,7 +1382,7 @@ const Mutation = {
       where: { id: toolId },
       data: {
         toolLikeIds: {
-          set: findTool.toolLikeIds.filter((id) => id !== toolLikeId),
+          set: tool.toolLikeIds.filter((id) => id !== toolLikeId),
         },
       },
     });

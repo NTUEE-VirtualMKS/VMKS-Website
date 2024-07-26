@@ -656,7 +656,6 @@ const Query = {
     // Throw an error if the user is not found
     if (!user) throw new Error("User not found");
 
-
     const toolLikes = user.toolLikes;
 
     const likedTools = toolLikes.map(async (toolLike) => {
