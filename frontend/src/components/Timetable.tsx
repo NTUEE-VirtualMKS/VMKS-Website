@@ -1,3 +1,4 @@
+// TODO: RWD
 import { adminTimetable, week } from "@/constants";
 
 function Timetable() {

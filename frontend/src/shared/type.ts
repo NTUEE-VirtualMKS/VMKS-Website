@@ -116,11 +116,21 @@ export type LoginProps = {
 };
 
 export type ProfileCardProps = {
+  id: number;
   name: string;
   studenetID: string;
   password: string;
   photoLink?: string;
   laserCutAvailable: boolean;
+  isAdmin: boolean;
+  isMinister: boolean;
+};
+
+export type UserEditInput = {
+  name: string;
+  studentID: string;
+  password: string;
+  photoLink: string;
   isAdmin: boolean;
   isMinister: boolean;
 };

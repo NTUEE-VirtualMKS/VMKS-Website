@@ -34,8 +34,9 @@ function IntroductionPage() {
 
   return (
     <>
-      <div className="w-20 h-24 fixed ml-12 mt-8">
-        <ul className="list-none text-lg w-6/12">
+      <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
+        <ul className="list-none text-lg hidden flex-col items-center sm:hidden md:flex lg:flex xl:flex">
+          <h1 className="text-white text-xl">目錄</h1>
           <li
             onClick={() => scrollToSection(sessionA, "sessionA")}
             className={textColor("sessionA")}
@@ -78,7 +79,7 @@ function IntroductionPage() {
           <div className="p-1">
             <p className="indent-first-letter">{introduction}</p>
           </div>
-          <div className="mb-6" ref={sessionB}></div>
+          <div className="mb-10" ref={sessionB}></div>
           <br />
           <h2 className="mt-5 flex items-center">
             <span>
@@ -94,7 +95,7 @@ function IntroductionPage() {
             </span>
             班表
           </h2>
-          <center className="mt-8">
+          <center className="mt-8 w-11/12 mx-auto">
             <Timetable />
           </center>
           <h2 className="mt-5 flex items-center" ref={sessionC}>

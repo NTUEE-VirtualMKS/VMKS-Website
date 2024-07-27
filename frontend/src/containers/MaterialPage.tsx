@@ -1,7 +1,10 @@
-// TODO: implement searching
 import { useEffect, useRef, useState } from "react";
 import MaterialList from "@/components/MaterialAndTool/MaterialList";
-import { ALL_MATERIAL_QUERY, ADD_MATERIAL_MUTATION } from "@/graphql";
+import {
+  ALL_MATERIAL_QUERY,
+  ADD_MATERIAL_MUTATION,
+  SEARCH_MATERIAL_BY_NAME_QUERY,
+} from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
   Dialog,
@@ -23,11 +26,14 @@ import MaterialImportButton from "@/components/MaterialAndTool/MaterialImportBut
 import { useToast } from "@/components/ui/use-toast";
 import Searchbar from "@/components/Searchbar";
 import { useUser } from "@/context/UserContext";
+import { useSearchParams } from "react-router-dom";
 
 function MaterialPage() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { toast } = useToast();
   const { user } = useUser();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -40,13 +46,17 @@ function MaterialPage() {
   const [fee, setFee] = useState("0");
   const [tutorialLink, setTutorialLink] = useState("");
   const [partName, setPartName] = useState("");
-  const [materials, setMaterials] = useState<MaterialInput[]>([]);
   const [length, setLength] = useState(0);
+  const [materials, setMaterials] = useState<MaterialInput[]>([]);
+
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
-    refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
+    refetchQueries: [
+      { query: ALL_MATERIAL_QUERY },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
+    ],
   });
 
-  const handleAddMaterial = ({
+  const handleAddMaterial = async ({
     name,
     description,
     photoLink,
@@ -59,7 +69,7 @@ function MaterialPage() {
     tutorialLink,
     partName,
   }: MaterialInput) => {
-    addMaterial({
+    await addMaterial({
       variables: {
         materialInput: {
           name,
@@ -96,9 +106,9 @@ function MaterialPage() {
     }
   };
 
-  const handleAddMaterials = (materials: MaterialInput[]) => {
-    materials.map((material) => {
-      addMaterial({
+  const handleAddMaterials = async (materials: MaterialInput[]) => {
+    materials.map(async (material) => {
+      await addMaterial({
         variables: {
           materialInput: {
             name: material.name,
@@ -127,7 +137,7 @@ function MaterialPage() {
   };
 
   useEffect(() => {
-    titleRef.current?.focus(); // Focus on the title when the component mounts
+    titleRef.current?.focus();
   }, []);
 
   return (
@@ -137,9 +147,8 @@ function MaterialPage() {
           資源一覽 All Materials
         </h1>
         <div className="my-1">
-          <Searchbar />
+          <Searchbar route="MaterialPage" placeholder="Search materials" />
         </div>
-
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
             <>
@@ -353,7 +362,7 @@ function MaterialPage() {
           )}
         </div>
         <div className="mt-2">
-          <MaterialList />
+          <MaterialList search={search} />
         </div>
       </div>
     </>

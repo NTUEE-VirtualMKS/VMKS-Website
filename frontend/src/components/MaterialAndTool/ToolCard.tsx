@@ -21,6 +21,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -46,19 +57,17 @@ function ToolCard({ tool }: { tool: ToolType }) {
       refetchQueries: [{ query: ALL_TOOL_QUERY }],
     });
 
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this tool?")) {
-      deleteTool({
-        variables: {
-          deleteToolId: tool.id,
-        },
-      });
-      if (DeleteToolLoading) return <LoaderSpinner />;
-      if (DeleteToolError) {
-        toast({ title: `${DeleteToolError.message}`, variant: "destructive" });
-      } else {
-        toast({ title: "Tool deleted successfully!" });
-      }
+  const handleDelete = async () => {
+    await deleteTool({
+      variables: {
+        deleteToolId: tool.id,
+      },
+    });
+    if (DeleteToolLoading) return <LoaderSpinner />;
+    if (DeleteToolError) {
+      toast({ title: `${DeleteToolError.message}`, variant: "destructive" });
+    } else {
+      toast({ title: "Tool deleted successfully!" });
     }
   };
 
@@ -230,15 +239,41 @@ function ToolCard({ tool }: { tool: ToolType }) {
               <Tooltip>
                 <div className="rounded-full hover:bg-red-400 hover:bg-opacity-20">
                   <div className="w-[35px] h-[35px]">
-                    <TooltipTrigger
-                      className="rounded-full transform active:scale-90 transition-transform duration-200"
-                      onClick={handleDelete}
-                    >
-                      <Trash2 className="p-1.5 hover:text-red-400" size={35} />
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-black bg-opacity-80">
-                      <p className="text-white text-xs">delete</p>
-                    </TooltipContent>
+                    <AlertDialog>
+                      <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
+                        <AlertDialogTrigger asChild>
+                          <Trash2
+                            className="p-1.5 hover:text-red-400"
+                            size={35}
+                          />
+                        </AlertDialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-black bg-opacity-80">
+                        <p className="text-white text-xs">delete</p>
+                      </TooltipContent>
+                      <AlertDialogContent className="text-white bg-black">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete the tool.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90 hover:text-sky-300">
+                            cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90"
+                            onClick={handleDelete}
+                          >
+                            continue
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </div>
               </Tooltip>

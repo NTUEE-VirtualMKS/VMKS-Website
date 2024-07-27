@@ -38,8 +38,9 @@ function TutorialPage() {
 
   return (
     <>
-      <div className="w-10 h-24 fixed ml-12 mt-8">
-        <ul className="list-none text-lg">
+      <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
+        <ul className="list-none text-lg hidden flex-col items-center sm:hidden md:flex lg:flex xl:flex">
+          <h1 className="text-white text-xl">目錄</h1>
           <li
             key="sessionA"
             onClick={() => scrollToSection(sessionA, "sessionA")}
@@ -86,7 +87,7 @@ function TutorialPage() {
           <p className="indent-first-letter">{interaction2}</p>
           <p className="indent-first-letter">{interaction3}</p>
         </div>
-        <div className="mb-6" ref={sessionB} />
+        <div className="mb-14" ref={sessionB} />
         <br />
         <h2 className="mt-5 flex items-center">
           <span>

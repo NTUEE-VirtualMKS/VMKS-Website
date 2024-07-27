@@ -8,6 +8,7 @@ function UserProfilePage() {
       <h1 className="font-bold p-1 text-white">User Profile</h1>
       <div className="flex flex-row gap-x-5">
         <ProfileCard
+          id={user?.id!}
           name={user?.name!}
           studenetID={user?.studentID!}
           password={user?.password!}
