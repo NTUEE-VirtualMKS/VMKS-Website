@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import LoaderSpinner from "@/components/LoaderSpinner";
 import type { ToolInput } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
@@ -27,6 +26,8 @@ import ToolList from "@/components/MaterialAndTool/ToolList";
 import ToolImportButton from "@/components/MaterialAndTool/ToolImportButton";
 import Searchbar from "@/components/Searchbar";
 import { useSearchParams } from "react-router-dom";
+import { useDebounce } from "@/lib/useDebounce";
+import SkeletonList from "@/components/SkeletonList";
 
 function ToolPage() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -34,6 +35,7 @@ function ToolPage() {
   const { user } = useUser();
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
+  const debounceValue = useDebounce(search, 500);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -50,7 +52,7 @@ function ToolPage() {
   const [addTool, { loading, error }] = useMutation(ADD_TOOL_MUTATION, {
     refetchQueries: [
       { query: ALL_TOOL_QUERY },
-      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
       {
         query: GET_LIKED_TOOLS_BY_USER_ID_QUERY,
         variables: { userId: user?.id! },
@@ -84,7 +86,7 @@ function ToolPage() {
         },
       },
     });
-    if (loading) return <LoaderSpinner />;
+    if (loading) return <SkeletonList />;
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
@@ -103,24 +105,26 @@ function ToolPage() {
   };
 
   const handleAddTools = async (tools: ToolInput[]) => {
-    tools.map(async (material) => {
-      await addTool({
-        variables: {
-          toolInput: {
-            name: material.name,
-            partName: material.partName,
-            category: material.category,
-            position: material.position,
-            description: material.description,
-            photoLink: material.photoLink,
-            usage: parseInt(`${material.usage}`),
-            tutorialLink: material.tutorialLink,
-            remain: parseInt(`${material.remain}`),
+    Promise.all(
+      tools.map(async (material) => {
+        await addTool({
+          variables: {
+            toolInput: {
+              name: material.name,
+              partName: material.partName,
+              category: material.category,
+              position: material.position,
+              description: material.description,
+              photoLink: material.photoLink,
+              usage: parseInt(`${material.usage}`),
+              tutorialLink: material.tutorialLink,
+              remain: parseInt(`${material.remain}`),
+            },
           },
-        },
-      });
-    });
-    if (loading) return <LoaderSpinner />;
+        });
+      })
+    );
+    if (loading) return <SkeletonList />;
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
@@ -325,7 +329,7 @@ function ToolPage() {
           )}
         </div>
         <div className="mt-2">
-          <ToolList search={search} />
+          <ToolList search={debounceValue} />
         </div>
       </div>
     </>

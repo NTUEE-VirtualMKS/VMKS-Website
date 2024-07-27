@@ -355,6 +355,9 @@ const Query = {
           mode: 'insensitive',
         },
       },
+      orderBy: {
+        usage: "desc",
+      },
     });
 
     // const len = searchMaterialByName.length;

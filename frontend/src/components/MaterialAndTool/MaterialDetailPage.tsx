@@ -54,21 +54,32 @@ function MaterialDetailPage() {
             <RouteBar route={material?.category} />
           </div>
           <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-white">
-            <div className="flex flex-row my-4 mx-2">
+            <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
               <img
                 src={material?.photoLink}
                 alt={material?.name}
-                className="w-6/12 mt-3 ml-1 bg-white"
+                className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
               />
-              <div className="w-8/12 flex flex-col ml-5">
-                <h1 className="text-white text-5xl">{material?.name}</h1>
-                <p className="text-white">描述: {material?.description}</p>
+              <div className="w-9/12 flex flex-col ml-5">
+                <h1 className="text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
+                  {material?.name}
+                </h1>
+                <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  描述: {material?.description}
+                </p>
                 {material?.partName && (
-                  <p className="text-white">型號: {material?.partName}</p>
+                  <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                    型號: {material?.partName}
+                  </p>
                 )}
-                <p className="text-white">位置: {material?.position}</p>
+                <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  位置: {material?.position}
+                </p>
                 <div className="flex flex-row gap-2">
-                  <Label htmlFor="valuable" className="text-white text-lg">
+                  <Label
+                    htmlFor="valuable"
+                    className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg"
+                  >
                     要錢:{" "}
                   </Label>
                   <Input
@@ -79,15 +90,21 @@ function MaterialDetailPage() {
                     onChange={() => {}}
                   />
                 </div>
-                <p className="text-white">剩餘數量: {material?.remain}（個）</p>
-                <p className="text-white">使用量: {material?.usage}（個）</p>
-                <p className="text-white">價錢: NT${material?.fee}</p>
+                <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  剩餘數量: {material?.remain}（個）
+                </p>
+                <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  使用量: {material?.usage}（個）
+                </p>
+                <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  價錢: NT${material?.fee}
+                </p>
                 {material?.tutorialLink && (
                   <a
                     href={material?.tutorialLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sky-300 cursor-pointer hover:underline text-lg w-3/12 active:scale-95 transition-transform duration-200 focus:text-blue-600"
+                    className="mt-1 text-sky-300 cursor-pointer hover:underline w-5/12 active:scale-95 transition-transform duration-200 focus:text-blue-600 text-base sm:text-base md:text-lg lg:text-lg xl:text-lg"
                   >
                     使用教學
                   </a>
@@ -95,7 +112,7 @@ function MaterialDetailPage() {
               </div>
             </div>
             {user?.isAdmin && (
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+              <div className="flex flex-row-reverse">
                 <Button
                   onClick={() => navigate(`/MaterialPage/Material/${id}/edit`)}
                   className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
@@ -105,10 +122,7 @@ function MaterialDetailPage() {
               </div>
             )}
           </div>
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200">
-              <a onClick={handleRepair}>報修</a>
-            </Button>
+          <div className="flex flex-row-reverse gap-2">
             <Button className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
@@ -117,6 +131,9 @@ function MaterialDetailPage() {
               >
                 借用
               </a>
+            </Button>
+            <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200">
+              <a onClick={handleRepair}>報修</a>
             </Button>
           </div>
         </div>

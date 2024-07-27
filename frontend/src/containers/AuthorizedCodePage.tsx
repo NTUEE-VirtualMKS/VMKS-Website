@@ -50,7 +50,13 @@ function AuthorizedCodePage() {
   const handleGenerate = async () => {
     const numberInt = parseInt(number);
     const lengthInt = parseInt(length);
-
+    if (numberInt < 1 || numberInt > 20) {
+      toast({
+        title: "The number must be between 1 and 20",
+        variant: "destructive",
+      });
+      return;
+    }
     const characters =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const randomCode = ["The generated authorized codes are:"];
@@ -68,6 +74,7 @@ function AuthorizedCodePage() {
 
     const userResponse = confirm(alertMessage);
     if (userResponse) {
+      setVisible(false);
       await formSubmit({ codeList: randomCode.slice(1) });
       const { data } = await getAuthorizedCode();
       const authorizedCode = data?.GetAuthorizedCode;
@@ -92,17 +99,38 @@ function AuthorizedCodePage() {
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
-      setVisible(false);
       toast({ title: "Authorized code generated successfully" });
     }
   };
 
-  useEffect(() => {}, []);
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        toast({ title: "Text copied to clipboard!", variant: "share" });
+      },
+      (err) => {
+        toast({
+          title: "Failed to copy text to clipboard!",
+          variant: "destructive",
+        });
+        console.log(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getAuthorizedCode().then(({ data }) => {
+      const authorizedCode = data?.GetAuthorizedCode;
+      if (authorizedCode) {
+        setCodeList([authorizedCode]);
+      }
+    });
+  }, []);
 
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
-        <h1 className="text-white">生成加簽碼</h1>
+      <div className="w-9/12 flex flex-col mx-auto mt-24 mb-8 text-white">
+        <h1 className="text-white p-1">生成加簽碼</h1>
         <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
           <DialogTrigger asChild>
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
@@ -134,7 +162,7 @@ function AuthorizedCodePage() {
                 onChange={(e) => setNumber(e.target.value)}
               />
             </div>
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <div className="flex flex-row gap-2 ml-20 xs:ml-20 sm:ml-20 md:ml-12 lg:ml-12 xl:ml-12">
               <Label htmlFor="code length" className="text-right mt-3">
                 length
               </Label>
@@ -172,7 +200,7 @@ function AuthorizedCodePage() {
                 </SelectContent>
               </Select>
             </div>
-            <DialogFooter>
+            <DialogFooter className="flex flex-row-reverse ">
               <Button
                 onClick={() => setVisible(false)}
                 className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
@@ -188,13 +216,21 @@ function AuthorizedCodePage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <div className="flex flex-row justify-start gap-3">
+        <div className="flex flex-row justify-start gap-4 w-11/12 mx-auto">
           {codeList.map((code, index) => (
             <div key={index} className="text-white flex flex-col text-20">
-              <p className="text-white">Update At: {code.updatedAt}</p>
+              <p className="text-white font-semibold text-2xl">
+                Generate At: {code.updatedAt.split(",")[0]}
+              </p>
               {code.codeList?.map((code, index) => (
-                <div key={index} className="text-white">
-                  {code}
+                <div className="flex flex-row">
+                  <p
+                    key={index}
+                    className="text-white text-lg cursor-pointer transform active:scale-95 transition-transform duration-200"
+                    onClick={() => copyToClipboard(code!)}
+                  >
+                    {index < 9 ? `0${index + 1}` : index + 1}. {code}
+                  </p>
                 </div>
               ))}
             </div>
