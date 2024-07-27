@@ -1,6 +1,10 @@
-// TODO: implement searching
 import { useEffect, useRef, useState } from "react";
-import { ALL_TOOL_QUERY, ADD_TOOL_MUTATION } from "@/graphql";
+import {
+  ALL_TOOL_QUERY,
+  ADD_TOOL_MUTATION,
+  SEARCH_TOOL_BY_NAME_QUERY,
+  GET_LIKED_TOOLS_BY_USER_ID_QUERY,
+} from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
   Dialog,
@@ -18,15 +22,18 @@ import { Button } from "@/components/ui/button";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import type { ToolInput } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
-import Searchbar from "@/components/Searchbar";
 import { useUser } from "@/context/UserContext";
 import ToolList from "@/components/MaterialAndTool/ToolList";
 import ToolImportButton from "@/components/MaterialAndTool/ToolImportButton";
+import Searchbar from "@/components/Searchbar";
+import { useSearchParams } from "react-router-dom";
 
 function ToolPage() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { toast } = useToast();
   const { user } = useUser();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -41,10 +48,17 @@ function ToolPage() {
   const [tools, setTools] = useState<ToolInput[]>([]);
 
   const [addTool, { loading, error }] = useMutation(ADD_TOOL_MUTATION, {
-    refetchQueries: [{ query: ALL_TOOL_QUERY }],
+    refetchQueries: [
+      { query: ALL_TOOL_QUERY },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
+      {
+        query: GET_LIKED_TOOLS_BY_USER_ID_QUERY,
+        variables: { userId: user?.id! },
+      },
+    ],
   });
 
-  const handleAddTool = ({
+  const handleAddTool = async ({
     name,
     description,
     photoLink,
@@ -55,7 +69,7 @@ function ToolPage() {
     tutorialLink,
     partName,
   }: ToolInput) => {
-    addTool({
+    await addTool({
       variables: {
         toolInput: {
           name,
@@ -88,9 +102,9 @@ function ToolPage() {
     }
   };
 
-  const handleAddTools = (tools: ToolInput[]) => {
-    tools.map((material) => {
-      addTool({
+  const handleAddTools = async (tools: ToolInput[]) => {
+    tools.map(async (material) => {
+      await addTool({
         variables: {
           toolInput: {
             name: material.name,
@@ -117,7 +131,7 @@ function ToolPage() {
   };
 
   useEffect(() => {
-    titleRef.current?.focus(); // Focus on the title when the component mounts
+    titleRef.current?.focus();
   }, []);
 
   return (
@@ -127,7 +141,7 @@ function ToolPage() {
           工具一覽 All Tools
         </h1>
         <div className="my-1">
-          <Searchbar />
+          <Searchbar route="ToolPage" placeholder="Search tools" />
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
@@ -311,7 +325,7 @@ function ToolPage() {
           )}
         </div>
         <div className="mt-2">
-          <ToolList />
+          <ToolList search={search} />
         </div>
       </div>
     </>

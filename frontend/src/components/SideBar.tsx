@@ -39,7 +39,7 @@ function SideBar() {
     <TooltipProvider>
       <div className="flex flex-row">
         <div
-          className={`w-24 fixed inset-y-0 left-0 h-full transform transition-transform duration-200 bg-slate-900 rounded-r-lg ${
+          className={`w-24 fixed inset-y-0 left-0 transform transition-transform duration-200 bg-slate-900 rounded-r-lg ${
             isVisible ? "translate-x-0" : "-translate-x-[6.4rem]"
           }`}
         >
@@ -72,33 +72,39 @@ function SideBar() {
               </TooltipContent>
             </Tooltip>
           ) : (
-            <div className="flex flex-col gap-2 flex-1 overflow-y-auto">
-              {likedTools.length !== 0 &&
-                likedTools.map((tool) => (
-                  <Tooltip key={tool?.id}>
-                    <TooltipTrigger className="w-10/12 mx-auto p-1">
-                      <img
-                        className="bg-white object-cover transform active:scale-90 transition-transform duration-200"
-                        src={tool?.photoLink}
-                        alt={tool?.name}
-                        onClick={() => navigate(`/ToolPage/Tool/${tool?.id}`)}
-                      />
-                      <TooltipContent
-                        className="bg-black bg-opacity-80 text-white"
-                        side="right"
-                      >
-                        {tool?.name}
-                      </TooltipContent>
-                    </TooltipTrigger>
-                  </Tooltip>
-                ))}
+            <>
+              <div className="flex flex-col gap-0.5 overflow-y-auto h-[72%]">
+                <div className="flex flex-col gap-2">
+                  {likedTools.length !== 0 &&
+                    likedTools.map((tool) => (
+                      <Tooltip key={tool?.id}>
+                        <TooltipTrigger className="w-10/12 mx-auto p-1">
+                          <img
+                            className="bg-white object-cover transform active:scale-90 transition-transform duration-200"
+                            src={tool?.photoLink}
+                            alt={tool?.name}
+                            onClick={() =>
+                              navigate(`/ToolPage/Tool/${tool?.id}`)
+                            }
+                          />
+                          <TooltipContent
+                            className="bg-black bg-opacity-80 text-white"
+                            side="right"
+                          >
+                            {tool?.name}
+                          </TooltipContent>
+                        </TooltipTrigger>
+                      </Tooltip>
+                    ))}
+                </div>
+              </div>
               <button
-                className="w-6/12 mx-auto p-1 text-xs bg-zinc-300 bg-opacity-15 hover:bg-opacity-30 rounded-xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
+                className="w-6/12 ml-6 mt-2.5 p-1 text-xs bg-zinc-300 bg-opacity-15 hover:bg-opacity-30 rounded-xl font-bold text-white border border-white transform active:scale-95 transition-transform duration-200"
                 onClick={() => setIsVisible(!isVisible)}
               >
                 hide
               </button>
-            </div>
+            </>
           )}
         </div>
       </div>

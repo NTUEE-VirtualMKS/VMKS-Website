@@ -644,6 +644,7 @@ export type User = {
 
 export type UserEditInput = {
   isAdmin: Scalars['Boolean']['input'];
+  isMinister: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
   photoLink: Scalars['String']['input'];

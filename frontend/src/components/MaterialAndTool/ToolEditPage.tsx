@@ -31,7 +31,7 @@ function ToolEditPage() {
     loading: queryLoading,
     error: queryError,
   } = useQuery(GET_TOOL_BY_ID_QUERY, {
-    variables: { id: parseInt(id as string) },
+    variables: { getToolByIdId: parseInt(id as string) },
   });
 
   if (queryLoading) return <LoaderSpinner />;

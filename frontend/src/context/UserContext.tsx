@@ -136,6 +136,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = () => {
     setUser(null);
     toast({ title: "Log out successfully!" });
+    localStorage.clear();
   };
 
   return (

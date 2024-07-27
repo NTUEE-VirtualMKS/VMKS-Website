@@ -1,4 +1,3 @@
-// TODO: link to the detailed page of the announcement
 import { useNavigate } from "react-router-dom";
 import { ALL_ANNOUNCEMENT_QUERY } from "../../graphql";
 import { useQuery } from "@apollo/client";
@@ -31,7 +30,7 @@ function HomePageAnnounce() {
         </div>
         <div className="flex flex-col gap-3 justify-between mt-3 w-full text-xs text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full">
           {
-            // TODO: link each announcement to its detailed page
+            // TODO: link each announcement to its detailed page (optional)
             announcements
               .filter((announcement) => announcement !== null)
               .sort((a, b) => (b?.id || 0) - (a?.id || 0))
@@ -41,7 +40,7 @@ function HomePageAnnounce() {
                   announcement && (
                     <div
                       key={announcement.id}
-                      className="flex flex-col gap-3 w-full rounded-lg border p-3 text-xs text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full transform active:scale-95 transition-transform duration-200 cursor-pointer select-none"
+                      className="flex flex-col gap-3 w-full rounded-lg border p-3 text-xs text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full cursor-pointer select-none"
                     >
                       <div className="flex flex-col justify-between">
                         <div className="self-start text-white text-lg">
@@ -50,7 +49,7 @@ function HomePageAnnounce() {
                         <div className="self-start">{announcement.date}</div>
                       </div>
                       <div className="flex justify-between items-start text-sm text-slate-200">
-                        <div>{announcement.content.slice(0, 55) + " ..."}</div>
+                        <div>{announcement.content.slice(0, 70) + " ..."}</div>
                       </div>
                     </div>
                   )

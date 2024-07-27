@@ -7,13 +7,13 @@ function HomePageMaterialBox() {
   return (
     <div className="flex flex-col pr-14 pl-5 mt-5 max-md:pr-5 max-md:max-w-full">
       <div className="flex gap-1 justify-between items-center max-md:flex-wrap max-md:max-w-full">
-        <div className="flex-auto self-stretch text-5xl font-semibold leading-[60px] max-md:max-w-full max-md:text-4xl max-md:leading-[53px] bg-gradient-to-r from-[#e6ecee] via-[#00c3ffe8] to-[#0055ff] text-transparent bg-clip-text ">
+        <div className="flex-auto self-stretch text-5xl font-semibold leading-[60px] max-md:max-w-full max-md:text-4xl max-md:leading-[53px] text-white">
           Borrow with Ease
           <br />
           Return with Joy !
         </div>
         <div className="flex flex-row gap-3">
-          <Searchbar />
+          <Searchbar route="MaterialPage" placeholder="Search materials" />
           <button className="transform active:scale-90 transition-transform duration-200">
             <img
               loading="lazy"
@@ -30,7 +30,7 @@ function HomePageMaterialBox() {
             onClick={() => navigate("/DisposableMaterialPage")}
           >
             <div className="flex items-center justify-center p-4 bg-gray-900 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tl-[30px] h-full border-r border-b border-white text-3xl font-semibold">
-              Disposable Material
+              耗材
             </div>
           </button>
         </div>
@@ -40,7 +40,7 @@ function HomePageMaterialBox() {
             onClick={() => navigate("/MaterialPage")}
           >
             <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tr-[30px] h-full border-l border-b border-white text-3xl font-semibold">
-              Material
+              零件
             </div>
           </button>
         </div>
@@ -50,7 +50,7 @@ function HomePageMaterialBox() {
             onClick={() => navigate("/ToolPage")}
           >
             <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-bl-[30px] h-full border-t border-r border-white text-3xl font-semibold">
-              Tool
+              工具
             </div>
           </button>
         </div>
@@ -60,7 +60,7 @@ function HomePageMaterialBox() {
             onClick={() => navigate("/MachinePage")}
           >
             <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-br-[30px] h-full border-l border-t border-white text-3xl font-semibold">
-              Machine
+              機台
             </div>
           </button>
         </div>

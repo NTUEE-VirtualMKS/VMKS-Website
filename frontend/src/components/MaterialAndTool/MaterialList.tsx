@@ -1,15 +1,18 @@
 import { useQuery } from "@apollo/client";
-import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
+import { SEARCH_MATERIAL_BY_NAME_QUERY } from "@/graphql/queries";
 import type { MaterialType } from "@/shared/type.ts";
 import LoaderSpinner from "../LoaderSpinner";
 import MaterialCard from "./MaterialCard";
+import Suggestion from "../Suggestion";
 
-function MaterialList() {
-  const { data, loading, error } = useQuery(ALL_MATERIAL_QUERY);
+function MaterialList({ search }: { search: string }) {
+  const { data, loading, error } = useQuery(SEARCH_MATERIAL_BY_NAME_QUERY, {
+    variables: { name: search },
+  });
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const allMaterials = data?.AllMaterials;
+  const allMaterials = data?.SearchMaterialByName;
   const materials = allMaterials?.map((material) => {
     const filteredMaterial = {
       id: material!.id,
@@ -30,9 +33,13 @@ function MaterialList() {
 
   return (
     <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
-      {materials?.map((material: MaterialType) => {
-        return <MaterialCard key={material.id} material={material} />;
-      })}
+      {materials?.length !== 0 ? (
+        materials?.map((material: MaterialType) => {
+          return <MaterialCard key={material.id} material={material} />;
+        })
+      ) : (
+        <Suggestion search={search} name="Material" />
+      )}
     </div>
   );
 }

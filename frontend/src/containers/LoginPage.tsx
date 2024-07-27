@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
 import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/PasswordInput";
 
 function LoginPage() {
   const { login, signup } = useUser();
@@ -31,7 +32,8 @@ function LoginPage() {
     } else {
       if (confirmPassword !== password) {
         toast({
-          description: "Passwords do not match",
+          title: "Passwords do not match",
+          variant: "destructive",
         });
       } else {
         await signup({ name: username, studentId, password });
@@ -42,7 +44,7 @@ function LoginPage() {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-6/12 mx-auto mt-24  border border-white rounded-lg"
+      className="w-4/12 mx-auto mt-28 border border-white rounded-lg"
     >
       <Card className="w-sm border-none bg-black">
         <Tabs
@@ -89,7 +91,7 @@ function LoginPage() {
         <CardContent>
           <div className="grid w-full items-center space-y-4">
             {signupMode && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <Label htmlFor="username" className="text-white">
                   Username
                 </Label>
@@ -105,7 +107,7 @@ function LoginPage() {
                 />
               </div>
             )}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <Label htmlFor="studentId" className="text-white">
                 Student ID
               </Label>
@@ -120,14 +122,13 @@ function LoginPage() {
                 onChange={(e) => setStudentID(e.target.value)}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <Label htmlFor="password" className="text-white">
                 Password
               </Label>
-              <Input
+              <PasswordInput
                 id="password"
                 className="input-class"
-                type="password"
                 name="password"
                 placeholder="Enter Password"
                 required
@@ -136,13 +137,12 @@ function LoginPage() {
               />
             </div>
             {signupMode && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <Label htmlFor="confirm-password" className="text-white">
                   Confirm Password
                 </Label>
-                <Input
+                <PasswordInput
                   id="confirm-password"
-                  type="password"
                   className="input-class"
                   name="confirm-password"
                   placeholder="Confirm Password"

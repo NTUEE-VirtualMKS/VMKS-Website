@@ -132,6 +132,7 @@ const typeDefs = `#graphql
     password: String!
     photoLink: String!
     isAdmin: Boolean!
+    isMinister: Boolean!
   }
 
   input UserMachineUpdateInput {
