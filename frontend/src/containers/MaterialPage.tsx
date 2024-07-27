@@ -20,13 +20,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import LoaderSpinner from "@/components/LoaderSpinner";
 import type { MaterialInput } from "@/shared/type";
 import MaterialImportButton from "@/components/MaterialAndTool/MaterialImportButton";
 import { useToast } from "@/components/ui/use-toast";
 import Searchbar from "@/components/Searchbar";
 import { useUser } from "@/context/UserContext";
 import { useSearchParams } from "react-router-dom";
+import { useDebounce } from "@/lib/useDebounce";
+import SkeletonList from "@/components/SkeletonList";
 
 function MaterialPage() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -34,6 +35,7 @@ function MaterialPage() {
   const { user } = useUser();
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
+  const debounceValue = useDebounce(search, 500);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -52,7 +54,7 @@ function MaterialPage() {
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
     refetchQueries: [
       { query: ALL_MATERIAL_QUERY },
-      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
     ],
   });
 
@@ -86,7 +88,7 @@ function MaterialPage() {
         },
       },
     });
-    if (loading) return <LoaderSpinner />;
+    if (loading) return <SkeletonList />;
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
@@ -126,7 +128,7 @@ function MaterialPage() {
         },
       });
     });
-    if (loading) return <LoaderSpinner />;
+    if (loading) return <SkeletonList />;
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
@@ -144,9 +146,9 @@ function MaterialPage() {
     <>
       <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
         <h1 className="text-white p-1" ref={titleRef} tabIndex={-1}>
-          資源一覽 All Materials
+          零件一覽 All Materials
         </h1>
-        <div className="my-1">
+        <div className="my-1 w-11/12 mx-auto">
           <Searchbar route="MaterialPage" placeholder="Search materials" />
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
@@ -362,7 +364,7 @@ function MaterialPage() {
           )}
         </div>
         <div className="mt-2">
-          <MaterialList search={search} />
+          <MaterialList search={debounceValue} />
         </div>
       </div>
     </>

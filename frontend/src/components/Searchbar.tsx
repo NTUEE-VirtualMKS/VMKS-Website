@@ -1,6 +1,6 @@
 import { Input } from "./ui/input";
 import { useEffect } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useDebounce } from "@/lib/useDebounce";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -36,6 +36,14 @@ function Searchbar({
         onLoad={() => setSearchParams({ search: "" })}
       />
       <Search size={20} className="absolute left-4 top-3.5 text-white" />
+      {search && (
+        <X
+          size={50}
+          strokeWidth={1}
+          className="absolute right-2 top-0 text-white hover:bg-zinc-500 hover:bg-opacity-50 cursor-pointer rounded-full p-1.5"
+          onClick={() => setSearchParams({ search: "" })}
+        />
+      )}
     </div>
   );
 }

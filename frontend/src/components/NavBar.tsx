@@ -12,10 +12,23 @@ import {
 import IconButton from "./IconButton";
 import { useUser } from "@/context/UserContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useEffect, useState } from "react";
 
 function NavBar() {
   const navigate = useNavigate();
   const { user, logout } = useUser();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -23,7 +36,11 @@ function NavBar() {
   };
 
   return (
-    <nav className="flex-1 px-5 py-1 flex flex-row justify-between bg-slate-900 border-b border-[#444444]">
+    <nav
+      className={`flex-1 px-5 ${
+        windowWidth > 630 ? "py-1" : "py-3.5"
+      } flex flex-row justify-between bg-slate-900 border-b border-[#444444]`}
+    >
       <TooltipProvider>
         <div className="flex items-center gap-4">
           <img
@@ -32,27 +49,32 @@ function NavBar() {
             alt="logo"
             onClick={() => navigate("/")}
           />
-          <p
-            className="text-5xl text-white font-bold cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            VMKS
-          </p>
 
-          <IconButton
-            onClick={() => navigate(-1)}
-            Icon={ChevronLeftIcon}
-            ariaLabel="Go Back"
-          />
-
-          <IconButton
-            onClick={() => navigate(1)}
-            Icon={ChevronRightIcon}
-            ariaLabel="Go Forward"
-          />
+          {windowWidth > 630 && (
+            <p
+              className="text-5xl text-white font-bold cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              VMKS
+            </p>
+          )}
+          {windowWidth > 820 && (
+            <>
+              <IconButton
+                onClick={() => navigate(-1)}
+                Icon={ChevronLeftIcon}
+                ariaLabel="Go Back"
+              />
+              <IconButton
+                onClick={() => navigate(1)}
+                Icon={ChevronRightIcon}
+                ariaLabel="Go Forward"
+              />
+            </>
+          )}
         </div>
         <div className="flex items-center gap-3">
-          {user?.isMinister && (
+          {user?.isMinister && windowWidth > 820 && (
             <IconButton
               onClick={() => navigate("/AuthorizedCodePage")}
               Icon={KeyRound}

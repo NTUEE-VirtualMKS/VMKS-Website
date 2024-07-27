@@ -8,8 +8,8 @@ import {
   DELETE_TOOL_LIKE_MUTATION,
   ALL_USER_QUERY,
   GET_TOOL_LIKES_QUERY,
+  SEARCH_TOOL_BY_NAME_QUERY,
 } from "@/graphql";
-import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
 import { Share, ShoppingCart, Star, Trash2 } from "lucide-react";
@@ -32,6 +32,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import SkeletonList from "../SkeletonList";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -39,7 +40,7 @@ const randomNumberBetween = (min: number, max: number) => {
 
 type AnimationSequence = Parameters<typeof animate>[0];
 
-function ToolCard({ tool }: { tool: ToolType }) {
+function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const { toast } = useToast();
   const { user } = useUser();
   const [scope, animate] = useAnimate();
@@ -54,7 +55,10 @@ function ToolCard({ tool }: { tool: ToolType }) {
 
   const [deleteTool, { loading: DeleteToolLoading, error: DeleteToolError }] =
     useMutation(DELETE_TOOL_MUTATION, {
-      refetchQueries: [{ query: ALL_TOOL_QUERY }],
+      refetchQueries: [
+        { query: ALL_TOOL_QUERY },
+        { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
+      ],
     });
 
   const handleDelete = async () => {
@@ -63,7 +67,7 @@ function ToolCard({ tool }: { tool: ToolType }) {
         deleteToolId: tool.id,
       },
     });
-    if (DeleteToolLoading) return <LoaderSpinner />;
+    if (DeleteToolLoading) return <SkeletonList />;
     if (DeleteToolError) {
       toast({ title: `${DeleteToolError.message}`, variant: "destructive" });
     } else {
@@ -145,18 +149,18 @@ function ToolCard({ tool }: { tool: ToolType }) {
     localStorage.setItem(`starred-${tool.id}`, JSON.stringify(newState));
   };
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (!star) {
       animate([
         ...sparklesReset,
         [".letter", { y: 0 }, { duration: 0.2, delay: stagger(0.05) }],
-        ["button", { scale: 0.5 }, { duration: 0.1, at: "<" }],
+        ["button", { scale: 0.5 }, { duration: 0.05, at: "<" }],
         ["button", { scale: 1 }, { duration: 0.1 }],
         ...sparklesAnimation,
         [".letter", { y: 0 }, { duration: 0.000001 }],
         ...sparklesFadeOut,
       ]);
-      addToolLike({
+      await addToolLike({
         variables: {
           toolLikeInput: {
             userId: user?.id!,
@@ -164,14 +168,14 @@ function ToolCard({ tool }: { tool: ToolType }) {
           },
         },
       });
-      if (AddToolLikeLoading) return <LoaderSpinner />;
+      if (AddToolLikeLoading) return <SkeletonList />;
       if (AddToolLikeError) {
         toast({ title: `${AddToolLikeError.message}`, variant: "destructive" });
       } else {
         toast({ title: "Added to side bar.", variant: "star" });
       }
     } else {
-      deleteToolLike({
+      await deleteToolLike({
         variables: {
           toolLikeInput: {
             userId: user?.id!,
@@ -179,7 +183,7 @@ function ToolCard({ tool }: { tool: ToolType }) {
           },
         },
       });
-      if (DeleteToolLikeLoading) return <LoaderSpinner />;
+      if (DeleteToolLikeLoading) return <SkeletonList />;
       if (DeleteToolLikeError) {
         toast({
           title: `${DeleteToolLikeError.message}`,

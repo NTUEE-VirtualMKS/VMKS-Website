@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import { MaterialType } from "@/shared/type";
 import { DELETE_MATERIAL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
-import { ALL_MATERIAL_QUERY } from "@/graphql/queries";
-import LoaderSpinner from "../LoaderSpinner";
+import { ALL_MATERIAL_QUERY, SEARCH_MATERIAL_BY_NAME_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
 import { ShoppingCart, Trash2, Star, Share } from "lucide-react";
@@ -26,6 +25,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import SkeletonList from "../SkeletonList";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -33,7 +33,13 @@ const randomNumberBetween = (min: number, max: number) => {
 
 type AnimationSequence = Parameters<typeof animate>[0];
 
-function MaterialCard({ material }: { material: MaterialType }) {
+function MaterialCard({
+  material,
+  search,
+}: {
+  material: MaterialType;
+  search: string;
+}) {
   const { toast } = useToast();
   const { user } = useUser();
   const [scope, animate] = useAnimate();
@@ -42,7 +48,10 @@ function MaterialCard({ material }: { material: MaterialType }) {
   const [deleteMaterial, { loading, error }] = useMutation(
     DELETE_MATERIAL_MUTATION,
     {
-      refetchQueries: [{ query: ALL_MATERIAL_QUERY }],
+      refetchQueries: [
+        { query: ALL_MATERIAL_QUERY },
+        { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
+      ],
     }
   );
 
@@ -52,7 +61,7 @@ function MaterialCard({ material }: { material: MaterialType }) {
         deleteMaterialId: material.id,
       },
     });
-    if (loading) return <LoaderSpinner />;
+    if (loading) return <SkeletonList />;
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
@@ -116,7 +125,7 @@ function MaterialCard({ material }: { material: MaterialType }) {
       animate([
         ...sparklesReset,
         [".letter", { y: 0 }, { duration: 0.2, delay: stagger(0.05) }],
-        ["button", { scale: 0.1 }, { duration: 0.1, at: "<" }],
+        ["button", { scale: 0.5 }, { duration: 0.05, at: "<" }],
         ["button", { scale: 1 }, { duration: 0.1 }],
         ...sparklesAnimation,
         [".letter", { y: 0 }, { duration: 0.000001 }],
