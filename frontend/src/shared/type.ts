@@ -134,3 +134,16 @@ export type UserEditInput = {
   isAdmin: boolean;
   isMinister: boolean;
 };
+
+export type BorrowType = {
+  id: number;
+  star: boolean;
+  figure: string;
+  name: string;
+  partName: string;
+  remain: number;
+  position: string;
+  quantity: number;
+  status: "尚未申請" | "審核中" | "可領取" | "失敗" | "尚未歸還" | "已歸還";
+  // text-none | text-orange-400 | text-green-400 | text-red-500 | text-zinc-400 | text-none
+};

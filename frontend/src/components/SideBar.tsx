@@ -11,6 +11,7 @@ import {
   TooltipProvider,
 } from "./ui/tooltip";
 import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 function SideBar() {
   const navigate = useNavigate();
@@ -39,9 +40,10 @@ function SideBar() {
     <TooltipProvider>
       <div className="flex flex-row">
         <div
-          className={`w-24 fixed inset-y-0 left-0 transform transition-transform duration-200 bg-slate-900 rounded-r-lg ${
+          className={cn(
+            "w-24 fixed inset-y-0 left-0 transform transition-transform duration-200 bg-slate-900 rounded-r-lg",
             isVisible ? "translate-x-0" : "-translate-x-[6.4rem]"
-          }`}
+          )}
         >
           <button onClick={() => navigate("/")}>
             <img

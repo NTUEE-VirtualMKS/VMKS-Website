@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   ALL_TOOL_QUERY,
   ADD_TOOL_MUTATION,
@@ -28,9 +28,9 @@ import Searchbar from "@/components/Searchbar";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "@/lib/useDebounce";
 import SkeletonList from "@/components/SkeletonList";
+import { Hammer } from "lucide-react";
 
 function ToolPage() {
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const { toast } = useToast();
   const { user } = useUser();
   const [searchParams] = useSearchParams();
@@ -134,18 +134,15 @@ function ToolPage() {
     }
   };
 
-  useEffect(() => {
-    titleRef.current?.focus();
-  }, []);
-
   return (
     <>
       <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
-        <h1 className="text-white p-1" ref={titleRef} tabIndex={-2}>
-          工具一覽 All Tools
+        <h1 className="text-white p-1 flex flex-row gap-2 items-center">
+          <Hammer className="text-white" size={35} />
+          工具一覽
         </h1>
         <div className="my-1">
-          <Searchbar route="ToolPage" placeholder="Search tools" />
+          <Searchbar route="ToolPage" placeholder="搜尋工具" />
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
@@ -155,7 +152,7 @@ function ToolPage() {
                 onOpenChange={(visible) => setVisible(visible)}
               >
                 <DialogTrigger asChild>
-                  <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                  <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                     <Button
                       className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                       onClick={() => setVisible(true)}
@@ -314,7 +311,7 @@ function ToolPage() {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+              <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                 <ToolImportButton setTools={setTools} setLength={setLength} />
               </div>
               {length !== 0 && (

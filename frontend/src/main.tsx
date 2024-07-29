@@ -10,6 +10,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { UserProvider } from "./context/UserContext";
+import { WindowProvider } from "./context/WindowContext";
 import { Toaster } from "@/components/ui/toaster";
 
 const httpLink = new HttpLink({
@@ -44,10 +45,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <UserProvider>
-          <Toaster />
-          <App />
-        </UserProvider>
+        <WindowProvider>
+          <UserProvider>
+            <Toaster />
+            <App />
+          </UserProvider>
+        </WindowProvider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>

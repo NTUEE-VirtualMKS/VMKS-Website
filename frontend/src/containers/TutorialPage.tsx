@@ -66,7 +66,7 @@ function TutorialPage() {
       </div>
       <div className="flex flex-col w-9/12 mx-auto mt-24 mb-8 text-white">
         <h1 ref={sessionA} className="p-1">
-          教學 Tutorial
+          教學
         </h1>
         <h2 className="mt-5 flex items-center">
           <span>

@@ -31,10 +31,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 function AuthorizedCodePage() {
   const { toast } = useToast();
   const [visible, setVisible] = useState(false);
+  const [clickedCodes, setClickedCodes] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [number, setNumber] = useState("10");
   const [length, setLength] = useState("6");
   const [codeList, setCodeList] = useState<AuthorizedCodeType[]>([]);
@@ -103,6 +107,14 @@ function AuthorizedCodePage() {
     }
   };
 
+  useEffect(() => {
+    // Load clicked codes from localStorage on component mount
+    const storedClickedCodes = localStorage.getItem("clickedCodes");
+    if (storedClickedCodes) {
+      setClickedCodes(JSON.parse(storedClickedCodes));
+    }
+  }, []);
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(
       () => {
@@ -116,6 +128,10 @@ function AuthorizedCodePage() {
         console.log(err);
       }
     );
+    const updatedClickedCodes = { ...clickedCodes, [text]: true };
+    setClickedCodes(updatedClickedCodes);
+    // Save updated clicked codes to localStorage
+    localStorage.setItem("clickedCodes", JSON.stringify(updatedClickedCodes));
   };
 
   useEffect(() => {
@@ -226,7 +242,10 @@ function AuthorizedCodePage() {
                 <div className="flex flex-row">
                   <p
                     key={index}
-                    className="text-white text-lg cursor-pointer transform active:scale-95 transition-transform duration-200"
+                    className={cn(
+                      "text-white text-lg font-semibold cursor-pointer transform active:scale-95 transition-transform duration-200",
+                      clickedCodes[code!] ? "text-blue-600" : "text-white"
+                    )}
                     onClick={() => copyToClipboard(code!)}
                   >
                     {index < 9 ? `0${index + 1}` : index + 1}. {code}

@@ -37,41 +37,39 @@ function LoginPage() {
         });
       } else {
         await signup({ name: username, studentId, password });
+        setSignupMode(false);
       }
     }
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="w-4/12 mx-auto mt-28 border border-white rounded-lg"
-    >
-      <Card className="w-sm border-none bg-black">
-        <Tabs
-          value={signupMode ? "signup" : "login"}
-          className="text-white bg-black rounded-t-lg"
-        >
-          <TabsList className="grid grid-cols-2 rounded-t-md">
-            <TabsTrigger
-              asChild
-              key="Login"
-              value="login"
-              className="bg-black border-t-0 border-white cursor-pointer rounded-tl-lg font-bold"
-              onClick={() => setSignupMode(false)}
-            >
-              <div>Log In</div>
-            </TabsTrigger>
-            <TabsTrigger
-              asChild
-              key="Sign Up"
-              value="signup"
-              className="bg-black border-t-0 border-white cursor-pointer rounded-tr-lg font-bold"
-              onClick={() => setSignupMode(true)}
-            >
-              <div>Sign Up</div>
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+    <form onSubmit={onSubmit} className="w-4/12 mx-auto mt-28 rounded-lg">
+      <Tabs
+        value={signupMode ? "signup" : "login"}
+        className="text-white bg-black rounded-lg"
+      >
+        <TabsList className="grid grid-cols-2 rounded-t-md p-1 ">
+          <TabsTrigger
+            asChild
+            key="Login"
+            value="login"
+            className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tl-lg font-semibold text-base"
+            onClick={() => setSignupMode(false)}
+          >
+            <div>登入</div>
+          </TabsTrigger>
+          <TabsTrigger
+            asChild
+            key="Sign Up"
+            value="signup"
+            className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tr-lg font-semibold text-base"
+            onClick={() => setSignupMode(true)}
+          >
+            <div>註冊</div>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+      <Card className="w-sm bg-black border border-[#444444] mt-2">
         <CardHeader>
           <CardTitle className="flex flex-row items-center text-white justify-start gap-2 ml-1">
             <img
@@ -83,9 +81,7 @@ function LoginPage() {
             <p className="text-5xl">VMKS</p>
           </CardTitle>
           <CardDescription className="ml-2">
-            {!signupMode
-              ? "Login to Borrow Materials and Tools"
-              : "Sign up to Borrow Materials and Tools"}
+            {!signupMode ? "登入以借用元件與工具" : "註冊帳號以借用元件與工具"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,14 +89,14 @@ function LoginPage() {
             {signupMode && (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="username" className="text-white">
-                  Username
+                  姓名
                 </Label>
                 <Input
                   id="username"
                   className="input-class"
                   type="text"
                   name="username"
-                  placeholder="Enter Username"
+                  placeholder="Username"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -109,14 +105,14 @@ function LoginPage() {
             )}
             <div className="flex flex-col gap-1">
               <Label htmlFor="studentId" className="text-white">
-                Student ID
+                學號
               </Label>
               <Input
                 id="studentId"
                 className="input-class"
                 type="text"
                 name="studentId"
-                placeholder="Enter Student ID"
+                placeholder="Student ID"
                 required
                 value={studentId}
                 onChange={(e) => setStudentID(e.target.value)}
@@ -124,13 +120,13 @@ function LoginPage() {
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor="password" className="text-white">
-                Password
+                密碼
               </Label>
               <PasswordInput
                 id="password"
                 className="input-class"
                 name="password"
-                placeholder="Enter Password"
+                placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -139,7 +135,7 @@ function LoginPage() {
             {signupMode && (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="confirm-password" className="text-white">
-                  Confirm Password
+                  確認密碼
                 </Label>
                 <PasswordInput
                   id="confirm-password"
@@ -164,15 +160,13 @@ function LoginPage() {
                 className="px-0 text-[#71788B] cursor-pointer"
                 type="button"
               >
-                <div onClick={() => setSignupMode(false)}>
-                  Already have an account?
-                </div>
+                <div onClick={() => setSignupMode(false)}>已有帳號?</div>
               </Button>
               <Button
                 size="sm"
                 className="text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
-                Sign Up
+                註冊
               </Button>
             </>
           ) : (
@@ -184,15 +178,13 @@ function LoginPage() {
                 className="px-0 text-[#71788B] cursor-pointer"
                 type="button"
               >
-                <div onClick={() => setSignupMode(true)}>
-                  Don't have an account?
-                </div>
+                <div onClick={() => setSignupMode(true)}>尚未註冊帳號?</div>
               </Button>
               <Button
                 size="sm"
                 className="text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
-                Log In
+                登入
               </Button>
             </>
           )}

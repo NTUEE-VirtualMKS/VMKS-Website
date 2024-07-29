@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function HomePageForum() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col h-full py-5 px-4 w-full border-2 border-blue-600 border-solid rounded-[30px] max-md:pr-5">
+    <div className="flex flex-col h-full py-5 px-4 w-full bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:pr-5">
       <div className="text-2xl font-semibold text-white">論壇 💬</div>
       <div className="flex gap-5 justify-between mt-6 text-sm font-semibold max-md:mr-2">
         <div className="pr-3.5 pb-2 text-white whitespace-nowrap select-none">
@@ -19,8 +19,8 @@ function HomePageForum() {
       </div>
       {
         // TODO: create a new component for each forum post and replace with map function.
-        <div className="flex flex-col py-0.5 mt-5 mb-96 w-full text-white border border-black border-solid max-md:mb-10 transform active:scale-95 transition-transform duration-200 cursor-pointer">
-          <div className="flex gap-5 justify-between w-full font-semibold">
+        <div className="flex flex-col py-0.5 px-2 mt-5 mb-96 w-full text-white border border-[#444444] rounded-lg max-md:mb-10 transform active:scale-95 transition-transform duration-200 cursor-pointer bg-[#303030] bg-opacity-50 hover:bg-opacity-70">
+          <div className="flex gap-5 justify-between w-full font-semibold p-1">
             <div className="flex gap-1 justify-between ">
               <img
                 loading="lazy"

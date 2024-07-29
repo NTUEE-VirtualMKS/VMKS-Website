@@ -219,14 +219,14 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
         className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
         key={tool.id}
       >
-        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-white">
+        <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-[#444444]">
           <Link to={`/ToolPage/Tool/${tool.id}`}>
             <img
               src={tool.photoLink}
               alt={tool.name}
               className="w-10/12 mx-auto mt-2 bg-white"
             />
-            <div className="ml-1.5 mt-1">
+            <div className="ml-3 mt-2">
               <h2 className="text-white text-24">{tool.name}</h2>
               <p className="text-white text-16">
                 型號: {tool?.partName ? `${tool?.partName}` : "無"}
@@ -238,7 +238,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
               <p className="text-white text-16">使用量: {tool?.usage}（個）</p>
             </div>
           </Link>
-          <div className="flex flex-row mt-1 justify-center gap-2">
+          <div className="flex flex-row mt-1 justify-evenly sm:justify-evenly md:justify-evenly lg:justify-center xl:justify-center gap-2">
             {user?.isAdmin && (
               <Tooltip>
                 <div className="rounded-full hover:bg-red-400 hover:bg-opacity-20">
