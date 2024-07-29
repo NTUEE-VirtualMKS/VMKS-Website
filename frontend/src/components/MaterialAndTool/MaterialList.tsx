@@ -36,12 +36,12 @@ function MaterialList({ search }: { search: string }) {
 
   if (search === "") {
     refetch()
-    .then(() => {
-      console.log("Refetching!");
-    })
-    .catch((error) => {
-      console.log("Error! ", error.message);
-    });
+      .then(() => {
+        console.log("Refetching!");
+      })
+      .catch((error) => {
+        console.log("Error! ", error.message);
+      });
   }
 
   return (

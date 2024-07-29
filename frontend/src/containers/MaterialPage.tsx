@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import MaterialList from "@/components/MaterialAndTool/MaterialList";
 import {
   ALL_MATERIAL_QUERY,
@@ -28,9 +28,9 @@ import { useUser } from "@/context/UserContext";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "@/lib/useDebounce";
 import SkeletonList from "@/components/SkeletonList";
+import { Cpu } from "lucide-react";
 
 function MaterialPage() {
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const { toast } = useToast();
   const { user } = useUser();
   const [searchParams] = useSearchParams();
@@ -138,18 +138,15 @@ function MaterialPage() {
     }
   };
 
-  useEffect(() => {
-    titleRef.current?.focus();
-  }, []);
-
   return (
     <>
       <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
-        <h1 className="text-white p-1" ref={titleRef} tabIndex={-1}>
-          零件一覽 All Materials
+        <h1 className="text-white p-1 flex flex-row gap-2 items-center">
+          <Cpu className="text-white" size={35} />
+          元件一覽
         </h1>
-        <div className="my-1 w-11/12 mx-auto">
-          <Searchbar route="MaterialPage" placeholder="Search materials" />
+        <div className="my-1">
+          <Searchbar route="MaterialPage" placeholder="搜尋元件" />
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
@@ -159,20 +156,18 @@ function MaterialPage() {
                 onOpenChange={(visible) => setVisible(visible)}
               >
                 <DialogTrigger asChild>
-                  <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                  <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                     <Button
                       className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                       onClick={() => setVisible(true)}
                     >
-                      新增材料
+                      新增元件
                     </Button>
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] text-white bg-black">
                   <DialogHeader>
-                    <DialogTitle className="text-2xl">
-                      新增材料 New Material
-                    </DialogTitle>
+                    <DialogTitle className="text-2xl">新增元件</DialogTitle>
                     <DialogDescription className="text-sm">
                       請填寫以下資訊:
                     </DialogDescription>
@@ -346,7 +341,7 @@ function MaterialPage() {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+              <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                 <MaterialImportButton
                   setMaterials={setMaterials}
                   setLength={setLength}

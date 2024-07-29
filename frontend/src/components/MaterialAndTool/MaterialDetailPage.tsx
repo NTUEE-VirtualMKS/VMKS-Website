@@ -53,7 +53,7 @@ function MaterialDetailPage() {
           <div className="flex flex-row">
             <RouteBar route={material?.category} />
           </div>
-          <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-white">
+          <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
             <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
               <img
                 src={material?.photoLink}

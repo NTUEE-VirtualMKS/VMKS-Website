@@ -1,6 +1,7 @@
 // TODO: link to material and tool page separately
 import { useNavigate } from "react-router-dom";
 import Searchbar from "@/components/Searchbar";
+import { Atom, Bot, Cpu, Hammer } from "lucide-react";
 
 function HomePageMaterialBox() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function HomePageMaterialBox() {
           Return with Joy !
         </div>
         <div className="flex flex-row gap-3">
-          <Searchbar route="MaterialPage" placeholder="Search materials" />
+          <Searchbar route="MaterialPage" placeholder="搜尋元件" />
           <button className="transform active:scale-90 transition-transform duration-200">
             <img
               loading="lazy"
@@ -23,13 +24,14 @@ function HomePageMaterialBox() {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap rounded-[30px] mt-9 border-2 border-blue-600 ">
+      <div className="flex flex-wrap rounded-[30px] mt-9 border-2 border-[#444444] bg-[#202020]">
         <div className="w-1/2 h-40">
           <button
             className="w-full h-full"
             onClick={() => navigate("/DisposableMaterialPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-900 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tl-[30px] h-full border-r border-b border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-tl-[30px] h-full border-r border-b border-[#444444] text-3xl font-semibold gap-2">
+              <Atom className="text-white" size={28} />
               耗材
             </div>
           </button>
@@ -39,8 +41,9 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/MaterialPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-tr-[30px] h-full border-l border-b border-white text-3xl font-semibold">
-              零件
+            <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-tr-[30px] h-full border-l border-b border-[#444444] text-3xl font-semibold gap-2">
+              <Cpu className="text-white" size={28} />
+              元件
             </div>
           </button>
         </div>
@@ -49,7 +52,8 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/ToolPage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-bl-[30px] h-full border-t border-r border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-bl-[30px] h-full border-t border-r border-[#444444] text-3xl font-semibold gap-2">
+              <Hammer className="text-white" size={28} />
               工具
             </div>
           </button>
@@ -59,7 +63,8 @@ function HomePageMaterialBox() {
             className="w-full h-full"
             onClick={() => navigate("/MachinePage")}
           >
-            <div className="flex items-center justify-center p-4 bg-gray-800 bg-opacity-15 hover:bg-opacity-80 text-white rounded-br-[30px] h-full border-l border-t border-white text-3xl font-semibold">
+            <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-br-[30px] h-full border-l border-t border-[#444444] text-3xl font-semibold gap-2">
+              <Bot className="text-white" size={28} />
               機台
             </div>
           </button>

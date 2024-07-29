@@ -1,15 +1,17 @@
 // TODO: implement ShoppingCartPage
-import { useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
-import { useUser } from "@/context/UserContext";
+import { ScrollText } from "lucide-react";
+import ShoppingList from "@/components/ShoppingList";
 
 function ShoppingCartPage() {
-  const navigate = useNavigate();
-  const { user } = useUser();
-
   return (
-    <div className="flex flex-col w-9/12 mx-auto mt-24">
-      <h1 className="text-white p-1">購物車 Shopping Cart</h1>
+    <div className="flex flex-col w-10/12 mx-auto mt-24">
+      <h1 className="text-white p-1 flex flex-row items-center gap-2">
+        <ScrollText className="text-white" size={35} />
+        預借清單
+      </h1>
+      <div className="w-full">
+        <ShoppingList />
+      </div>
     </div>
   );
 }

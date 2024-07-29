@@ -50,6 +50,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
 
   const signup = async ({ name, studentId, password }: SignupProps) => {
+    const defaultPhotoLink =
+      "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
     try {
       await createUser({
         variables: {
@@ -57,7 +59,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             name,
             studentID: studentId,
             password,
-            photoLink: "https://http.cat/200",
+            photoLink: defaultPhotoLink,
             isAdmin: false,
             isMinister: false,
             laserCutAvailable: false,
@@ -121,9 +123,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           toolLikeIds: user?.toolLikeIds,
         });
         toast({
-          title: user.isAdmin
-            ? "Admin login successfully!"
-            : "User login successfully!",
+          title:
+            (user.isMinister ? "Minister" : user.isAdmin ? "Admin" : "User") +
+            " login successfully!",
         });
         navigate("/");
       }

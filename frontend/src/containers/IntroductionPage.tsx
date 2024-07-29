@@ -60,7 +60,7 @@ function IntroductionPage() {
       <div className="w-9/12 mx-auto mt-24 mb-8 text-white flex flex-col">
         <div>
           <h1 ref={sessionA} className="p-1">
-            MKS介紹 Introduction
+            MKS介紹
           </h1>
           <h2 className="mt-5 flex items-center">
             <span>

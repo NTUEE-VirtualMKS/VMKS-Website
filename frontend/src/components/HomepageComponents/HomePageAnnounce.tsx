@@ -13,7 +13,7 @@ function HomePageAnnounce() {
 
   return (
     <>
-      <div className="flex flex-col grow px-6 pt-5 pb-5 w-full font-semibold border-2 border-blue-600 border-solid bg-black bg-opacity-50 rounded-[30px] max-md:px-5 max-md:mt-6 max-md:max-w-full">
+      <div className="flex flex-col grow px-6 pt-5 pb-5 w-full font-semibold bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:px-5 max-md:mt-6 max-md:max-w-full">
         <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
           <div className="flex flex-col">
             <div className="text-2xl text-white">公告 🔥</div>
@@ -40,11 +40,11 @@ function HomePageAnnounce() {
                   announcement && (
                     <div
                       key={announcement.id}
-                      className="flex flex-col gap-3 w-full rounded-lg border p-3 text-xs text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full cursor-pointer select-none"
+                      className="flex flex-col gap-3 w-full rounded-lg border border-[#444444] p-4 text-xs text-white text-opacity-50 hover:bg-opacity-70 max-md:flex-wrap max-md:max-w-full transform active:scale-95 transition-transform duration-200 cursor-pointer select-none bg-[#303030] bg-opacity-50"
                     >
                       <div className="flex flex-col justify-between">
                         <div className="self-start text-white text-lg">
-                          <b>{announcement.title}</b>
+                          <b>{announcement.title.slice(0, 25) + " ..."}</b>
                         </div>
                         <div className="self-start">{announcement.date}</div>
                       </div>
