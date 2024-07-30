@@ -85,68 +85,66 @@ const EditAnnouncement = () => {
   }
 
   return (
-    <>
-      <Dialog open={visible} onOpenChange={handleClose}>
-        <DialogTrigger asChild>
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <Button
-              className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-              onClick={() => setVisible(true)}
-            >
-              編輯公告
-            </Button>
+    <Dialog open={visible} onOpenChange={handleClose}>
+      <DialogTrigger asChild>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+          <Button
+            className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            onClick={() => setVisible(true)}
+          >
+            編輯公告
+          </Button>
+        </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]  text-white bg-black">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">編輯公告</DialogTitle>
+          <DialogDescription className="text-sm">
+            請填寫以下資訊:
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="title" className="text-right">
+              標題
+            </Label>
+            <Input
+              id="title"
+              placeholder="title"
+              className="col-span-3 input-class"
+              value={title}
+              onChange={(e) => setEditTitleNow(e.target.value)}
+            />
           </div>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]  text-white bg-black">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">編輯公告</DialogTitle>
-            <DialogDescription className="text-sm">
-              請填寫以下資訊:
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
-                標題
-              </Label>
-              <Input
-                id="title"
-                placeholder="title"
-                className="col-span-3 input-class"
-                value={title}
-                onChange={(e) => setEditTitleNow(e.target.value)}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="content" className="text-right">
-                內文
-              </Label>
-              <Textarea
-                id="content"
-                placeholder="content"
-                className="col-span-3 input-class"
-                value={content}
-                onChange={(e) => setEditContentNow(e.target.value)}
-              />
-            </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="content" className="text-right">
+              內文
+            </Label>
+            <Textarea
+              id="content"
+              placeholder="content"
+              className="col-span-3 input-class"
+              value={content}
+              onChange={(e) => setEditContentNow(e.target.value)}
+            />
           </div>
-          <DialogFooter>
-            <Button
-              onClick={handleClose}
-              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-            >
-              取消
-            </Button>
-            <Button
-              onClick={() => handleSubmit({ title, content })}
-              className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-            >
-              提交
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+        </div>
+        <DialogFooter>
+          <Button
+            onClick={handleClose}
+            className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+          >
+            取消
+          </Button>
+          <Button
+            onClick={() => handleSubmit({ title, content })}
+            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+          >
+            提交
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 export default EditAnnouncement as React.FC;

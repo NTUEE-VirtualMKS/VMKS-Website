@@ -329,6 +329,7 @@ const ADD_USER_MUTATION = gql(`
       studentID
       password
       photoLink
+      language
       threeDPId
       laserCutAvailable
       borrowHistoryId
@@ -348,6 +349,7 @@ const DELETE_USER_MUTATION = gql(`
       studentID
       password
       photoLink
+      language
       threeDPId
       laserCutAvailable
       borrowHistoryId
@@ -367,6 +369,7 @@ const EDIT_USER_MUTATION = gql(`
       studentID
       password
       photoLink
+      language
       threeDPId
       laserCutAvailable
       borrowHistoryId
@@ -542,6 +545,26 @@ mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {
 }
 `);
 
+const EDIT_USER_LANGUAGE_MUTATION = gql(`
+  mutation EditUserLanguage($editUserLanguageId: Int!, $language: String!) {
+  EditUserLanguage(id: $editUserLanguageId, language: $language) {
+    id
+    name
+    studentID
+    password
+    photoLink
+    language
+    threeDPId
+    laserCutAvailable
+    borrowHistoryId
+    articlesId
+    isAdmin
+    isMinister
+    toolLikeIds
+  }
+}
+`);
+
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -576,4 +599,5 @@ export {
   AUTHORIZED_CODE_UPDATE_MUTATION,
   ADD_TOOL_LIKE_MUTATION,
   DELETE_TOOL_LIKE_MUTATION,
+  EDIT_USER_LANGUAGE_MUTATION,
 };

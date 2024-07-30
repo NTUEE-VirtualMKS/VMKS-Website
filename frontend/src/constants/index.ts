@@ -132,7 +132,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 5,
     position: "A1",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 2,
@@ -143,7 +143,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 2,
     position: "B2",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 3,
@@ -154,7 +154,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 3,
     position: "C3",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 4,
@@ -165,7 +165,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 4,
     position: "D4",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 5,
@@ -176,7 +176,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 5,
     position: "A1",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 6,
@@ -187,7 +187,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 2,
     position: "B2",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 7,
@@ -198,7 +198,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 3,
     position: "C3",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
   {
     id: 8,
@@ -209,7 +209,7 @@ export const unborrowedData: BorrowType[] = [
     remain: 4,
     position: "D4",
     quantity: 1,
-    status: "尚未申請",
+    status: "尚未借用",
   },
 ];
 

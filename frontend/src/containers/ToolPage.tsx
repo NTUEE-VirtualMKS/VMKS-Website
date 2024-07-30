@@ -29,10 +29,12 @@ import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "@/lib/useDebounce";
 import SkeletonList from "@/components/SkeletonList";
 import { Hammer } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function ToolPage() {
   const { toast } = useToast();
   const { user } = useUser();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const debounceValue = useDebounce(search, 500);
@@ -139,10 +141,10 @@ function ToolPage() {
       <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
         <h1 className="text-white p-1 flex flex-row gap-2 items-center">
           <Hammer className="text-white" size={35} />
-          工具一覽
+          {t("allTools")}
         </h1>
         <div className="my-1">
-          <Searchbar route="ToolPage" placeholder="搜尋工具" />
+          <Searchbar route="ToolPage" placeholder={t("searchTool")} />
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           {user?.isAdmin && (
@@ -157,23 +159,23 @@ function ToolPage() {
                       className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                       onClick={() => setVisible(true)}
                     >
-                      新增工具
+                      {t("newTool")}
                     </Button>
                   </div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] text-white bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
-                      新增工具 New Tool
+                      {t("newTool")}
                     </DialogTitle>
                     <DialogDescription className="text-sm">
-                      請填寫以下資訊:
+                      {t("pleaseFillInAllFields")}:
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-1.5">
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="name" className="text-right">
-                        名稱
+                        {t("name")}
                       </Label>
                       <Input
                         id="name"
@@ -185,7 +187,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="description" className="text-right">
-                        描述
+                        {t("description")}
                       </Label>
                       <Textarea
                         id="description"
@@ -197,7 +199,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="photoLink" className="text-right">
-                        圖片連結
+                        {t("photoLink")}
                       </Label>
                       <Input
                         id="photoLink"
@@ -210,7 +212,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="category" className="text-right">
-                        類別
+                        {t("category")}
                       </Label>
                       <Input
                         id="category"
@@ -222,7 +224,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="position" className="text-right">
-                        擺放位置
+                        {t("position")}
                       </Label>
                       <Input
                         id="position"
@@ -234,7 +236,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="remain" className="text-right">
-                        剩餘數量
+                        {t("remain")}
                       </Label>
                       <Input
                         id="remain"
@@ -247,7 +249,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="usage" className="text-right">
-                        使用量
+                        {t("usage")}
                       </Label>
                       <Input
                         id="usage"
@@ -260,7 +262,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="tutorialLink" className="text-right">
-                        教學連結
+                        {t("tutorialLink")}
                       </Label>
                       <Input
                         id="tutorialLink"
@@ -272,7 +274,7 @@ function ToolPage() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="partName" className="text-right">
-                        型號
+                        {t("partName")}
                       </Label>
                       <Input
                         id="partName"
@@ -288,7 +290,7 @@ function ToolPage() {
                       onClick={() => setVisible(false)}
                       className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
                     >
-                      取消
+                      {t("cancel")}
                     </Button>
                     <Button
                       onClick={() =>
@@ -306,7 +308,7 @@ function ToolPage() {
                       }
                       className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                     >
-                      提交
+                      {t("submit")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -319,7 +321,7 @@ function ToolPage() {
                   onClick={() => handleAddTools(tools)}
                   className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 >
-                  Upload
+                  {t("upload")}
                 </Button>
               )}
             </>

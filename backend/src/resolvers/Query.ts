@@ -88,7 +88,7 @@ const Query = {
       where: {
         name: {
           contains: input,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
     });
@@ -352,7 +352,7 @@ const Query = {
       where: {
         name: {
           contains: input,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
       orderBy: {

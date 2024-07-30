@@ -21,6 +21,7 @@ import type { BorrowType } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const determineTextColor = (status: string) => {
   switch (status) {
@@ -141,6 +142,7 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
+      const { t } = useTranslation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -153,14 +155,14 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
             align="end"
             className="bg-black bg-opacity-90 border border-white text-white"
           >
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="hover:text-yellow-300"
               onClick={() => setStar(!star)}
             >
               <Star className="p-1.5" size={31} />
-              {!star ? "star" : "unstar"}
+              {t(`${!star ? "star" : "unstar"}`)}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -168,12 +170,12 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
               className="hover:text-green-400"
             >
               <Share className="p-1.5" size={31} />
-              share
+              {t("share")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-red-400">
               <Trash2 className="p-1.5" size={31} />
-              delete
+              {t("delete")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -265,6 +267,8 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
+      const { t } = useTranslation();
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -281,7 +285,7 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-yellow-300">
               <Star className="p-1.5" size={31} />
-              star
+              {t("star")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -289,12 +293,12 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
               className="hover:text-green-400"
             >
               <Share className="p-1.5" size={31} />
-              share
+              {t("share")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-red-400">
               <Trash2 className="p-1.5" size={31} />
-              delete
+              {t("delete")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -372,6 +376,7 @@ export const borrowedColumns: ColumnDef<BorrowType>[] = [
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
+      const { t } = useTranslation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -388,7 +393,7 @@ export const borrowedColumns: ColumnDef<BorrowType>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-yellow-300">
               <Star className="p-1.5" size={31} />
-              star
+              {t("star")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -396,17 +401,17 @@ export const borrowedColumns: ColumnDef<BorrowType>[] = [
               className="hover:text-green-400"
             >
               <Share className="p-1.5" size={31} />
-              share
+              {t("share")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-sky-300">
               <ShoppingCart className="p-1.5" size={31} />
-              borrow again
+              {t("borrowAgain")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="hover:text-red-400">
               <Trash2 className="p-1.5" size={31} />
-              delete history
+              {t("deleteHistory")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

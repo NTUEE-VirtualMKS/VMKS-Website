@@ -894,6 +894,7 @@ const Mutation = {
       studentID,
       password,
       photoLink,
+      language,
       threeDPId,
       laserCutAvailable,
       isAdmin,
@@ -917,6 +918,7 @@ const Mutation = {
         studentID: studentID,
         password: password,
         photoLink: photoLink,
+        language: language,
         threeDPId: threeDPId,
         laserCutAvailable: laserCutAvailable,
         borrowHistoryId: [],
@@ -997,8 +999,15 @@ const Mutation = {
     _context,
   ) => {
     const id = args.id;
-    const { name, studentID, password, photoLink, isAdmin, isMinister } =
-      args.userEditInput;
+    const {
+      name,
+      studentID,
+      password,
+      photoLink,
+      language,
+      isAdmin,
+      isMinister,
+    } = args.userEditInput;
     const findUser = await prisma.user.findFirst({
       where: {
         id: id,
@@ -1017,8 +1026,9 @@ const Mutation = {
         studentID: studentID,
         password: password,
         photoLink: photoLink,
+        language: language,
         isAdmin: isAdmin,
-        isMinister,
+        isMinister: isMinister,
       },
     });
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
@@ -1263,11 +1273,13 @@ const Mutation = {
           name: newUser.name,
           studentID: newUser.studentID,
           photoLink: newUser.photoLink,
+          language: newUser.language,
           threeDPId: newUser.threeDPId,
           laserCutAvailable: newUser.laserCutAvailable,
           borrowHistoryId: newUser.borrowHistoryId,
           isAdmin: newUser.isAdmin,
           isMinister: newUser.isMinister,
+          toolLikeIds: newUser.toolLikeIds,
         },
         env.JWT_SECRET,
         {
@@ -1388,6 +1400,31 @@ const Mutation = {
     });
 
     return deleteToolLike;
+  },
+
+  EditUserLanguage: async (
+    _parents,
+    args: { id: number; language: string },
+    _context,
+  ) => {
+    const { id, language } = args;
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!findUser) {
+      throw new Error("User Not Found");
+    }
+    const updateUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        language: language,
+      },
+    });
+    return updateUser;
   },
 };
 

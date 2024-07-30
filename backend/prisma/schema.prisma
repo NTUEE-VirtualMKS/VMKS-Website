@@ -96,6 +96,7 @@ model User {
   studentID         String         @unique
   password          String
   photoLink         String?
+  language          String         @default("en")
   threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   threeDPId         Int?
   laserCutAvailable Boolean        @default(false)

@@ -4,8 +4,10 @@ import { introduction, toolRules, userRules } from "@/constants/index";
 import Timetable from "@/components/Timetable";
 import { Anchor } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 function IntroductionPage() {
+  const { t } = useTranslation();
   const sessionA = useRef(null);
   const sessionB = useRef(null);
   const sessionC = useRef(null);
@@ -36,31 +38,31 @@ function IntroductionPage() {
     <>
       <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
         <ul className="list-none text-lg hidden flex-col items-center sm:hidden md:flex lg:flex xl:flex">
-          <h1 className="text-white text-xl">目錄</h1>
+          <h1 className="text-white text-xl">{t("tableOfContents")}</h1>
           <li
             onClick={() => scrollToSection(sessionA, "sessionA")}
             className={textColor("sessionA")}
           >
-            <a href="#introduction">簡介</a>
+            <a href="#introduction">{t("introduction")}</a>
           </li>
           <li
             onClick={() => scrollToSection(sessionB, "sessionB")}
             className={textColor("sessionB")}
           >
-            <a href="#timetable">班表</a>
+            <a href="#timetable">{t("schedule")}</a>
           </li>
           <li
             onClick={() => scrollToSection(sessionC, "sessionC")}
             className={textColor("sessionC")}
           >
-            <a href="#rules">規範</a>
+            <a href="#rules">{t("rules")}</a>
           </li>
         </ul>
       </div>
       <div className="w-9/12 mx-auto mt-24 mb-8 text-white flex flex-col">
         <div>
           <h1 ref={sessionA} className="p-1">
-            MKS介紹
+            MKS {t("introduction")}
           </h1>
           <h2 className="mt-5 flex items-center">
             <span>
@@ -74,7 +76,7 @@ function IntroductionPage() {
                 />
               </a>
             </span>
-            簡介
+            {t("briefIntroduction")}
           </h2>
           <div className="p-1">
             <p className="indent-first-letter">{introduction}</p>
@@ -93,7 +95,7 @@ function IntroductionPage() {
                 />
               </a>
             </span>
-            班表
+            {t("schedule")}
           </h2>
           <center className="mt-8 w-11/12 mx-auto">
             <Timetable />
@@ -110,7 +112,7 @@ function IntroductionPage() {
                 />
               </a>
             </span>
-            規範
+            {t("rules")}
           </h2>
           <h3>網站使用者注意事項</h3>
           <ul className="p-2 ml-3 list-disc">

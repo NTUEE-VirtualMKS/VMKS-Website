@@ -114,6 +114,7 @@ interface UserInput {
   studentID: string;
   password: string;
   photoLink: string;
+  language: string;
   threeDPId: number;
   laserCutAvailable: boolean;
   isAdmin: boolean;
@@ -125,6 +126,7 @@ interface UserEditInput {
   studentID: string;
   password: string;
   photoLink: string;
+  language: string;
   isAdmin: boolean;
   isMinister: boolean;
 }

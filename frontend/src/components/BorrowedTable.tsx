@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import { borrowedData } from "@/constants";
 import { borrowedColumns } from "@/constants/tableConst";
+import { useTranslation } from "react-i18next";
 
 function BorrowedTable({
   tableName,
@@ -32,7 +33,7 @@ function BorrowedTable({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-
+  const { t } = useTranslation();
   const borrowingTable = useReactTable({
     data: borrowedData,
     columns: borrowedColumns,

@@ -14,7 +14,7 @@ const useNetworkStatus = () => {
       }, 3000); // Show "You are online" for 3 seconds
     }
     setIsOnline(navigator.onLine);
-    if (isOnline) {
+    if (isOnline && showOnlineMessage) {
       toast({ title: "Your internet connection was restored." });
     }
   };

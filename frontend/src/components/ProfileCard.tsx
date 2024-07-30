@@ -21,6 +21,7 @@ import { PasswordInput } from "@/components/PasswordInput";
 import { EyeIcon, EyeOffIcon, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWindow } from "@/context/WindowContext";
+import { useTranslation } from "react-i18next";
 
 function ProfileCard({
   id,
@@ -28,20 +29,22 @@ function ProfileCard({
   studenetID,
   password,
   photoLink,
+  language,
   laserCutAvailable,
   isAdmin,
   isMinister,
 }: ProfileCardProps) {
   const { toast } = useToast();
+  const { t } = useTranslation();
   if (!photoLink) return <LoaderSpinner />;
   const { windowWidth } = useWindow();
-
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState(name);
   const [studenetId, _setStudentId] = useState(studenetID);
   const [pwd, setPassword] = useState(password);
   const [confirmPassword, setConfirmPassword] = useState(password);
   const [imgUrl, setImgUrl] = useState(photoLink);
+  const [userLanguage, _setUserLanguage] = useState(language);
   const [canUseLaser, _setCanUseLaser] = useState(laserCutAvailable);
   const [admin, _setAdmin] = useState(isAdmin);
   const [minister, _setMinister] = useState(isMinister);
@@ -56,6 +59,7 @@ function ProfileCard({
     studentID,
     password,
     photoLink,
+    language,
     isAdmin,
     isMinister,
   }: UserEditInput) => {
@@ -74,6 +78,7 @@ function ProfileCard({
               studentID,
               password,
               photoLink,
+              language,
               isAdmin,
               isMinister,
             },
@@ -105,11 +110,13 @@ function ProfileCard({
     const storedPassword = localStorage.getItem("password");
     const storedConfirmPassword = localStorage.getItem("confirmPassword");
     const storedImgUrl = localStorage.getItem("imgUrl");
+    const storedUserLanguage = localStorage.getItem("language");
     if (
       storedUsername &&
       storedPassword &&
       storedConfirmPassword &&
-      storedImgUrl
+      storedImgUrl &&
+      storedUserLanguage
     ) {
       setUsername(JSON.parse(storedUsername));
       setPassword(JSON.parse(storedPassword));
@@ -123,11 +130,13 @@ function ProfileCard({
     const storedPassword = localStorage.getItem("password");
     const storedConfirmPassword = localStorage.getItem("confirmPassword");
     const storedImgUrl = localStorage.getItem("imgUrl");
+    const storedUserLanguage = localStorage.getItem("language");
     if (
       storedUsername &&
       storedPassword &&
       storedConfirmPassword &&
-      storedImgUrl
+      storedImgUrl &&
+      storedUserLanguage
     ) {
       setUsername(JSON.parse(storedUsername));
       setPassword(JSON.parse(storedPassword));
@@ -151,7 +160,8 @@ function ProfileCard({
             <figure className="flex gap-2 max-md:justify-center">
               <img src="/verified.svg" width={25} height={25} alt="verified" />
               <p className="text-18 font-medium text-white sm:text-18 md:text-18 bg:text-20 xl:text-20">
-                Verified {minister ? "Minister" : admin ? "Admin" : "User"}
+                {t("verified")}{" "}
+                {minister ? t("minister") : admin ? t("admin") : t("user")}
               </p>
             </figure>
             <Dialog
@@ -159,25 +169,26 @@ function ProfileCard({
               onOpenChange={(visible) => setVisible(visible)}
             >
               <DialogTrigger asChild>
-                <Button
-                  className="text-sky-300 bg-transparent rounded-full transform active:scale-90 transition-transform duration-200"
+                <button
+                  className="aspect-square text-white hover:text-sky-300 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center"
                   onClick={() => setVisible(true)}
-                  size="icon"
                 >
-                  <Pencil size={20} />
-                </Button>
+                  <Pencil className="p-1.5" size={33} />
+                </button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px] text-white bg-black">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl">編輯使用者資訊</DialogTitle>
+                  <DialogTitle className="text-2xl">
+                    {t("editProfile")}
+                  </DialogTitle>
                   <DialogDescription className="text-sm">
-                    請填寫以下資訊:
+                    {t("pleaseFillInAllFields")}:
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-2.5">
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">
-                      名稱
+                      {t("name")}
                     </Label>
                     <Input
                       id="name"
@@ -190,7 +201,7 @@ function ProfileCard({
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="photoLink" className="text-right">
-                      圖片連結
+                      {t("photoLink")}
                     </Label>
                     <Input
                       id="photoLink"
@@ -204,7 +215,7 @@ function ProfileCard({
                   </div>
                   <div className="flex flex-row items-center gap-4">
                     <Label htmlFor="password" className="text-right ml-12">
-                      密碼
+                      {t("password")}
                     </Label>
                     <PasswordInput
                       id="password"
@@ -220,7 +231,7 @@ function ProfileCard({
                       htmlFor="confirm-password"
                       className="text-right ml-4"
                     >
-                      確認密碼
+                      {t("confirmPassword")}
                     </Label>
                     <PasswordInput
                       id="confirm-password"
@@ -238,7 +249,7 @@ function ProfileCard({
                     onClick={handleCancel}
                     className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
                   >
-                    取消
+                    {t("cancel")}
                   </Button>
                   <Button
                     onClick={() =>
@@ -246,6 +257,7 @@ function ProfileCard({
                         name: username,
                         studentID: studenetId,
                         photoLink: imgUrl,
+                        language: userLanguage,
                         password: pwd,
                         isAdmin: admin,
                         isMinister: minister,
@@ -253,7 +265,7 @@ function ProfileCard({
                     }
                     className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                   >
-                    提交
+                    {t("submit")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -262,10 +274,12 @@ function ProfileCard({
           <p className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold tracking-[-0.32px] text-white">
             {username}
           </p>
-          <p className="text-lg text-white uppercase">學號：{studenetId}</p>
+          <p className="text-lg text-white">
+            {t("studentId")}: {studenetId}
+          </p>
           <div className="flex flex-row">
             <p className="text-lg text-white">
-              密碼：{showPassword ? pwd : "＊＊＊＊＊＊"}
+              {t("password")}: {showPassword ? pwd : "＊＊＊＊＊＊"}
             </p>
             <button
               className="text-white ml-2 transform active:scale-90 transition-transform duration-200"
@@ -279,7 +293,7 @@ function ProfileCard({
             </button>
           </div>
           <p className="text-lg text-white">
-            可獨自使用雷切機：
+            {t("laserCutAvailable") + ": "}
             <span
               className={cn(
                 "font-bold",
@@ -292,8 +306,11 @@ function ProfileCard({
           <div className="flex flex-row mt-2 items-center">
             {windowWidth > 630 &&
               !(windowWidth > 767 && windowWidth < 1031) && (
-                <Label htmlFor="authorized-code" className="text-white text-lg">
-                  加簽碼：
+                <Label
+                  htmlFor="authorized-code"
+                  className="text-white text-lg mr-1"
+                >
+                  {t("authorizedCode") + ": "}
                 </Label>
               )}
             <PasswordInput
@@ -306,7 +323,7 @@ function ProfileCard({
               onChange={(e) => setAuthorizedCode(e.target.value)}
             />
             <Button className="ml-2 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
-              送出
+              {t("submit")}
             </Button>
           </div>
         </div>

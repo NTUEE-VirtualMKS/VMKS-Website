@@ -22,6 +22,7 @@ import {
 import { useState } from "react";
 import { borrowingData, unborrowedData } from "@/constants";
 import { unborrowedColumns, borrowingColumns } from "@/constants/tableConst";
+import { useTranslation } from "react-i18next";
 
 function UserDataTable({
   tableName,
@@ -30,6 +31,7 @@ function UserDataTable({
   tableName: string;
   Icon: React.ElementType;
 }) {
+  const { t } = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -88,13 +90,13 @@ function UserDataTable({
               value="unborrowed"
               className="text-zinc-500 bg-[#303030] bg-opacity-30 text-lg font-semibold"
             >
-              尚未借用
+              {t("unborrowed")}
             </TabsTrigger>
             <TabsTrigger
               value="borrowing"
               className="text-zinc-500 bg-[#303030] bg-opacity-30 text-lg font-semibold"
             >
-              借用中
+              {t("borrowing")}
             </TabsTrigger>
           </TabsList>
         </div>
@@ -142,7 +144,7 @@ function UserDataTable({
                       colSpan={unborrowedColumns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("noResults")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -153,7 +155,7 @@ function UserDataTable({
             <div className="flex-1 text-sm text-muted-foreground">
               {unborrowedTable.getFilteredSelectedRowModel().rows.length} of{" "}
               {unborrowedTable.getFilteredRowModel().rows.length} row(s)
-              selected.
+              {" " + t("selected")}
             </div>
             <div className="space-x-2">
               <Button
@@ -162,7 +164,7 @@ function UserDataTable({
                 onClick={() => unborrowedTable.previousPage()}
                 disabled={!unborrowedTable.getCanPreviousPage()}
               >
-                Previous
+                {t("previous")}
               </Button>
               <Button
                 className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200"
@@ -170,7 +172,7 @@ function UserDataTable({
                 onClick={() => unborrowedTable.nextPage()}
                 disabled={!unborrowedTable.getCanNextPage()}
               >
-                Next
+                {t("next")}
               </Button>
             </div>
           </div>
@@ -219,7 +221,7 @@ function UserDataTable({
                       colSpan={borrowingColumns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("noResults")}
                     </TableCell>
                   </TableRow>
                 )}

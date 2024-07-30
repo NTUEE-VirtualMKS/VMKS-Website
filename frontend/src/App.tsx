@@ -4,16 +4,16 @@ import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import HomePage from "@/containers/HomePage";
 import MaterialDetailPage from "@/components/MaterialAndTool/MaterialDetailPage";
-import MaterialEditPage from "@/components/MaterialAndTool/MaterialEditPage";
 import ToolDetailPage from "./components/MaterialAndTool/ToolDetailPage";
-import ToolEditPage from "./components/MaterialAndTool/ToolEditPage";
 import Advanced from "@/Advanced";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import NetworkStatus from "./components/NetworkStatus";
 import useNetworkStatus from "./hooks/useNetworkStatus";
 import UnconnectedPage from "./components/UnconnectedPage";
 import { useUser } from "./context/UserContext";
+import useUserLanguage from "@/hooks/useUserLanguage";
 
+const FakeHome = lazy(() => import("@/containers/FakeHome"));
 const LoginPage = lazy(() => import("@/containers/LoginPage"));
 const IntroductionPage = lazy(() => import("@/containers/IntroductionPage"));
 const EditIntroductionPage = lazy(
@@ -39,8 +39,9 @@ const NotFound = lazy(() => import("@/containers/NotFound"));
 
 function App() {
   const { isOnline } = useNetworkStatus();
-  const { user } = useUser();
-  return (
+  const { user, pushToLoginPage } = useUser();
+  useUserLanguage();
+  return !pushToLoginPage ? (
     <div className="flex flex-row">
       <div className="flex-1 flex-col h-screen">
         <div className="fixed top-0 bg-black w-full z-10">
@@ -112,14 +113,6 @@ function App() {
                 }
               />
               <Route
-                path="/MaterialPage/Material/:id/edit"
-                element={
-                  <Suspense fallback={<LoaderSpinner />}>
-                    <MaterialEditPage />
-                  </Suspense>
-                }
-              />
-              <Route
                 path="/ToolPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
@@ -132,14 +125,6 @@ function App() {
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     <ToolDetailPage />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/ToolPage/Tool/:id/edit"
-                element={
-                  <Suspense fallback={<LoaderSpinner />}>
-                    <ToolEditPage />
                   </Suspense>
                 }
               />
@@ -175,14 +160,14 @@ function App() {
                   </Suspense>
                 }
               />
-              <Route
+              {/* <Route
                 path="/Login"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     <LoginPage />
                   </Suspense>
                 }
-              />
+              /> */}
               <Route
                 path="/AnnouncementPage"
                 element={
@@ -216,6 +201,27 @@ function App() {
         )}
       </div>
       <NetworkStatus />
+    </div>
+  ) : (
+    <div className="flex flex-center">
+      <Routes>
+        <Route
+          path="/Login"
+          element={
+            <Suspense fallback={<LoaderSpinner />}>
+              <LoginPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<LoaderSpinner />}>
+              <FakeHome />
+            </Suspense>
+          }
+        />
+      </Routes>
     </div>
   );
 }
