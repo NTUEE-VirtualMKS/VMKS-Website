@@ -5,7 +5,6 @@ import {
 } from "@/graphql";
 import { useQuery, useMutation } from "@apollo/client";
 import LoaderSpinner from "./LoaderSpinner";
-import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 import { useToast } from "./ui/use-toast";
 import {
@@ -19,11 +18,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useTranslation } from "react-i18next";
+import { Pencil, Trash2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 function AnnouncementList() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
   const [deleteAnnouncement, { loading: deleteLoading, error: deleteError }] =
     useMutation(DELETE_ANNOUNCEMENT_MUTATION, {
@@ -53,13 +56,13 @@ function AnnouncementList() {
   return (
     <>
       {announcements.length !== 0 ? (
-        <div className="flex flex-col mx-3 border-2 border-blue-600 rounded-xl max-h-[500px] overflow-y-auto">
+        <div className="flex flex-col mx-3">
           {announcements.map(
             (announcement) =>
               announcement !== null && (
                 <div
                   key={announcement.id}
-                  className="border border-gray-300 my-2.5 mx-3 p-2.5 rounded-xl cursor-pointer"
+                  className="text-white border border-[#444444] my-2.5 mx-3 p-4 rounded-xl cursor-pointer bg-[#303030] bg-opacity-50 text-opacity-50 hover:bg-opacity-70"
                 >
                   <h2 className="text-white px-2">{announcement.title}</h2>
                   <p className="text-gray-400 text-base px-2">
@@ -67,48 +70,64 @@ function AnnouncementList() {
                   </p>
                   <p className="text-white text-lg px-2">
                     {announcement.content.length > 350
-                      ? announcement.content.slice(0, 350) + "..."
+                      ? announcement.content.slice(0, 280) + "..."
                       : announcement.content}
                   </p>
                   {user?.isAdmin && (
-                    <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200">
-                            delete
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent className="text-white bg-black">
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Are you absolutely sure?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              This action cannot be undone. This will
-                              permanently delete the announcement.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90 hover:text-sky-300">
-                              cancel
-                            </AlertDialogCancel>
-                            <AlertDialogAction
-                              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90"
-                              onClick={() => handleDelete(announcement.id)}
-                            >
-                              continue
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                      <Button
-                        onClick={() =>
-                          navigate(`/EditAnnouncement/${announcement.id}`)
-                        }
-                        className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-                      >
-                        edit
-                      </Button>
+                    <div className="flex flex-row-reverse gap-2">
+                      <Tooltip>
+                        <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
+                          <button
+                            onClick={() =>
+                              navigate(`/EditAnnouncement/${announcement.id}`)
+                            }
+                            className="aspect-square text-white hover:text-sky-300 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center"
+                          >
+                            <Pencil className="p-1.5" size={33} />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-black bg-opacity-80">
+                          <p className="text-white text-xs">{t("edit")}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <AlertDialog>
+                          <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
+                            <AlertDialogTrigger asChild>
+                              <button className="aspect-square text-white hover:text-red-400 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-red-400 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center">
+                                <Trash2 className="p-1.5" size={35} />
+                              </button>
+                            </AlertDialogTrigger>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-black bg-opacity-80">
+                            <p className="text-white text-xs">{t("delete")}</p>
+                          </TooltipContent>
+                          <AlertDialogContent className="text-white bg-black">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                {t("alertDialogTitle")}
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                {t("alertDialogDescription")}{" "}
+                                <span className="lowercase">
+                                  {" " + t("announcement")}
+                                </span>
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90 hover:text-sky-300">
+                                {t("cancel")}
+                              </AlertDialogCancel>
+                              <AlertDialogAction
+                                className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90"
+                                onClick={() => handleDelete(announcement.id)}
+                              >
+                                {t("continue")}
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </Tooltip>
                     </div>
                   )}
                 </div>

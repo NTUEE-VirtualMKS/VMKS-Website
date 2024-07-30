@@ -32,9 +32,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+import { KeyRound } from "lucide-react";
 
 function AuthorizedCodePage() {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [clickedCodes, setClickedCodes] = useState<{ [key: string]: boolean }>(
     {}
@@ -145,29 +148,34 @@ function AuthorizedCodePage() {
 
   return (
     <>
-      <div className="w-9/12 flex flex-col mx-auto mt-24 mb-8 text-white">
-        <h1 className="text-white p-1">生成加簽碼</h1>
+      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
+        <h1 className="text-white p-1 flex flex-row items-center gap-2">
+          <KeyRound className="text-white" size={35} />
+          {t("generateCode")}
+        </h1>
         <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
           <DialogTrigger asChild>
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <div className="flex flex-row">
               <Button
                 className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 onClick={() => setVisible(true)}
               >
-                生成加簽碼
+                {t("generateCode")}
               </Button>
             </div>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px] text-white bg-black">
             <DialogHeader>
-              <DialogTitle className="text-2xl">生成加簽碼</DialogTitle>
+              <DialogTitle className="text-2xl">
+                {t("generateCode")}
+              </DialogTitle>
               <DialogDescription className="text-sm">
-                請填寫以下資訊:
+                {t("pleaseFillInAllFields")}:
               </DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="number" className="text-right">
-                number
+              <Label htmlFor="number" className="text-right lowercase">
+                {t("quantity")}
               </Label>
               <Input
                 id="number"
@@ -179,15 +187,18 @@ function AuthorizedCodePage() {
               />
             </div>
             <div className="flex flex-row gap-2 ml-20 xs:ml-20 sm:ml-20 md:ml-12 lg:ml-12 xl:ml-12">
-              <Label htmlFor="code length" className="text-right mt-3">
-                length
+              <Label
+                htmlFor="code length"
+                className="text-right mt-3 w-10 mr-2"
+              >
+                {t("length")}
               </Label>
               <Select
                 value={length}
                 onValueChange={(length) => setLength(length)}
               >
                 <SelectTrigger
-                  className="bg-[#15171C] w-9/12 border-0 focus:ring focus:ring-sky-300 text-16 text-base"
+                  className="bg-[#15171C] w-11/12 border-0 focus:ring focus:ring-sky-300 text-16 text-base"
                   id="code length"
                 >
                   <SelectValue placeholder="code length" />
@@ -195,7 +206,7 @@ function AuthorizedCodePage() {
                 <SelectContent className="bg-black">
                   <SelectGroup>
                     <SelectLabel className="text-white text-base">
-                      length
+                      {t("length")}
                     </SelectLabel>
                     <SelectItem value="5" className="text-white text-base">
                       5
@@ -221,22 +232,22 @@ function AuthorizedCodePage() {
                 onClick={() => setVisible(false)}
                 className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
               >
-                取消
+                {t("cancel")}
               </Button>
               <Button
                 onClick={handleGenerate}
                 className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
               >
-                提交
+                {t("submit")}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <div className="flex flex-row justify-start gap-4 w-11/12 mx-auto">
+        <div className="flex flex-row justify-start gap-4">
           {codeList.map((code, index) => (
             <div key={index} className="text-white flex flex-col text-20">
-              <p className="text-white font-semibold text-2xl">
-                Generate At: {code.updatedAt.split(",")[0]}
+              <p className="text-white font-semibold text-xl">
+                {t("lastChange")}: {code.updatedAt.split(",")[0]}
               </p>
               {code.codeList?.map((code, index) => (
                 <div className="flex flex-row">

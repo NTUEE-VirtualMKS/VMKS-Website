@@ -1,27 +1,38 @@
-// TODO: jwt token
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useToast } from "@/components/ui/use-toast";
 import {
   ALL_USER_QUERY,
-  ADD_USER_MUTATION,
   GET_USER_BY_STUDENT_ID_QUERY,
-} from "@/graphql";
+} from "@/graphql/queries";
+import {
+  ADD_USER_MUTATION,
+  EDIT_USER_LANGUAGE_MUTATION,
+} from "@/graphql/mutations";
 import type { UserType, SignupProps, LoginProps } from "@/shared/type.ts";
-import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 export type UserContextType = {
   user: UserType | null;
+  pushToLoginPage: boolean;
+  setUser: (value: UserType | null) => void;
+  setPushToLoginPage: (value: boolean) => void;
   login: ({ studentId, password }: LoginProps) => Promise<void>;
   signup: ({ name, studentId, password }: SignupProps) => Promise<void>;
   logout: () => void;
+  handleEditLanguage: ({ language }: { language: string }) => Promise<void>;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
+  pushToLoginPage: false,
+  setUser: () => {},
+  setPushToLoginPage: () => {},
   login: async () => {},
   signup: async () => {},
   logout: () => {},
+  handleEditLanguage: async () => {},
 });
 
 type UserProviderProps = {
@@ -31,6 +42,8 @@ type UserProviderProps = {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { i18n } = useTranslation();
+  const [pushToLoginPage, setPushToLoginPage] = useState(false);
   const [user, setUser] = useState<UserType | null>(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -39,10 +52,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
+      if (user.language) {
+        i18n.changeLanguage(user.language);
+        localStorage.setItem("language", user.language);
+      }
     } else {
       localStorage.removeItem("user");
+      localStorage.removeItem("language");
     }
-  }, [user]);
+  }, [user, i18n]);
 
   const [createUser, { loading: createUserLoading, error: createUserError }] =
     useMutation(ADD_USER_MUTATION, {
@@ -60,6 +78,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             studentID: studentId,
             password,
             photoLink: defaultPhotoLink,
+            language: "en",
             isAdmin: false,
             isMinister: false,
             laserCutAvailable: false,
@@ -114,6 +133,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           studentID: user.studentID,
           password: user.password,
           photoLink: user?.photoLink,
+          language: user.language,
           threeDPId: user?.threeDPId,
           laserCutAvailable: user.laserCutAvailable,
           borrowHistoryId: user?.borrowHistoryId,
@@ -122,11 +142,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           isMinister: user.isMinister,
           toolLikeIds: user?.toolLikeIds,
         });
+        i18n.changeLanguage(user.language);
         toast({
           title:
             (user.isMinister ? "Minister" : user.isAdmin ? "Admin" : "User") +
             " login successfully!",
         });
+        setPushToLoginPage(false);
         navigate("/");
       }
     } catch (error) {
@@ -141,8 +163,58 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.clear();
   };
 
+  const [
+    editLanguage,
+    { loading: EditLanguageLoading, error: EditLanguageError },
+  ] = useMutation(EDIT_USER_LANGUAGE_MUTATION, {
+    refetchQueries: [{ query: ALL_USER_QUERY }],
+  });
+
+  const handleEditLanguage = async ({ language }: { language: string }) => {
+    try {
+      if (!user) {
+        toast({ title: "User not found", variant: "destructive" });
+        throw new Error("User not found");
+      }
+      const response = await editLanguage({
+        variables: {
+          editUserLanguageId: user?.id,
+          language,
+        },
+      });
+      if (EditLanguageLoading) {
+        toast({ title: "Loading..." });
+      }
+      if (EditLanguageError) {
+        toast({
+          title: `${EditLanguageError.message}`,
+          variant: "destructive",
+        });
+        throw new Error(EditLanguageError.message);
+      }
+      const updatedUser = response?.data?.EditUserLanguage;
+      setUser(updatedUser!);
+      i18n.changeLanguage(language);
+      toast({ title: "Language changed successfully!" });
+    } catch (error) {
+      toast({ title: "Language changed failed", variant: "destructive" });
+      throw new Error("Language changed failed");
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, login, logout, signup }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        signup,
+        pushToLoginPage,
+        setPushToLoginPage,
+        handleEditLanguage,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

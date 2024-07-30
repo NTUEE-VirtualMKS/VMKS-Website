@@ -407,6 +407,7 @@ const ALL_USER_QUERY = gql(`
     studentID
     password
     photoLink
+    language
     threeDPId
     laserCutAvailable
     borrowHistoryId
@@ -426,6 +427,7 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       studentID
       password
       photoLink
+      language
       threeDPId
       laserCutAvailable
       borrowHistoryId
@@ -445,6 +447,7 @@ const GET_USER_BY_STUDENT_ID_QUERY = gql(`
     studentID
     password
     photoLink
+    language
     threeDPId
     laserCutAvailable
     borrowHistoryId

@@ -5,32 +5,19 @@ import { colors } from "../Color.ts";
 import Icon from "@mdi/react";
 import { mdiArrowLeftDropCircleOutline } from "@mdi/js";
 import ImageURL from "/interior2D.jpg";
+import { useTranslation } from "react-i18next";
+import { Globe } from "lucide-react";
 
 const MapPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <>
-      {/* <div>Map Page</div>
-      <p>應該要有2D地圖，並連結3D地圖</p> */}
-      <div
-        style={{ display: "flex", alignItems: "center", paddingTop: "10px" }}
-      >
-        <button
-          onClick={() => navigate(-1)}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            marginLeft: "10px",
-            cursor: "pointer",
-          }}
-        >
-          {/* <Icon
-            path={mdiArrowLeftDropCircleOutline}
-            size={3}
-            color={colors.DarkSlateGray}
-          /> */}
-        </button>
-        <h1 className="text-white mt-4 w-11/12 mx-auto">地圖導覽</h1>
+      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8">
+        <h1 className="text-white p-1 flex flex-row items-center gap-2">
+          <Globe className="text-white" size={35} />
+          {t("map")}
+        </h1>
       </div>
       <div className="border-2 border-gray-600 rounded-2xl p-5 m-5 w-11/12  mx-auto h-max flex justify-center">
         <img

@@ -19,9 +19,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@/context/UserContext";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslation } from "react-i18next";
+import { Volume2 } from "lucide-react";
 
 function AnnouncementPage() {
   const { user } = useUser();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
@@ -56,7 +59,10 @@ function AnnouncementPage() {
 
   return (
     <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8">
-      <h1 className="text-white">所有公告 All Announcements</h1>
+      <h1 className="text-white p-1 flex flex-row items-center gap-2">
+        <Volume2 className="text-white" size={35} />
+        {t("allAnnouncements")}
+      </h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>
           {user?.isAdmin && (
@@ -65,22 +71,24 @@ function AnnouncementPage() {
                 className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
                 onClick={() => setVisible(true)}
               >
-                新增公告
+                {t("newAnnouncement")}
               </Button>
             </div>
           )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]  text-white bg-black">
           <DialogHeader>
-            <DialogTitle className="text-2xl">新增公告</DialogTitle>
+            <DialogTitle className="text-2xl">
+              {t("newAnnouncement")}
+            </DialogTitle>
             <DialogDescription className="text-sm">
-              請填寫以下資訊:
+              {t("pleaseFillInAllFields")}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                標題
+                {t("title")}
               </Label>
               <Input
                 id="title"
@@ -92,7 +100,7 @@ function AnnouncementPage() {
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
-                內文
+                {t("content")}
               </Label>
               <Textarea
                 id="content"
@@ -108,13 +116,13 @@ function AnnouncementPage() {
               onClick={() => setVisible(false)}
               className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
             >
-              取消
+              {t("cancel")}
             </Button>
             <Button
               onClick={() => handleSubmit({ title, content })}
               className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
             >
-              提交
+              {t("submit")}
             </Button>
           </DialogFooter>
         </DialogContent>

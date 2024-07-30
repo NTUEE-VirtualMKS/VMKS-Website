@@ -2,9 +2,11 @@
 import { useNavigate } from "react-router-dom";
 import Searchbar from "@/components/Searchbar";
 import { Atom, Bot, Cpu, Hammer } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function HomePageMaterialBox() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col pr-14 pl-5 mt-5 max-md:pr-5 max-md:max-w-full">
       <div className="flex gap-1 justify-between items-center max-md:flex-wrap max-md:max-w-full">
@@ -14,7 +16,7 @@ function HomePageMaterialBox() {
           Return with Joy !
         </div>
         <div className="flex flex-row gap-3">
-          <Searchbar route="MaterialPage" placeholder="搜尋元件" />
+          <Searchbar route="MaterialPage" placeholder={t("searchMaterial")} />
           <button className="transform active:scale-90 transition-transform duration-200">
             <img
               loading="lazy"
@@ -32,7 +34,7 @@ function HomePageMaterialBox() {
           >
             <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-tl-[30px] h-full border-r border-b border-[#444444] text-3xl font-semibold gap-2">
               <Atom className="text-white" size={28} />
-              耗材
+              {t("disposableMaterial")}
             </div>
           </button>
         </div>
@@ -43,7 +45,7 @@ function HomePageMaterialBox() {
           >
             <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-tr-[30px] h-full border-l border-b border-[#444444] text-3xl font-semibold gap-2">
               <Cpu className="text-white" size={28} />
-              元件
+              {t("material")}
             </div>
           </button>
         </div>
@@ -54,7 +56,7 @@ function HomePageMaterialBox() {
           >
             <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-bl-[30px] h-full border-t border-r border-[#444444] text-3xl font-semibold gap-2">
               <Hammer className="text-white" size={28} />
-              工具
+              {t("tool")}
             </div>
           </button>
         </div>
@@ -65,7 +67,7 @@ function HomePageMaterialBox() {
           >
             <div className="flex items-center justify-center p-4 bg-[#303030] bg-opacity-15 hover:bg-opacity-80 text-white rounded-br-[30px] h-full border-l border-t border-[#444444] text-3xl font-semibold gap-2">
               <Bot className="text-white" size={28} />
-              機台
+              {t("machine")}
             </div>
           </button>
         </div>

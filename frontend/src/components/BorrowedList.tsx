@@ -1,8 +1,10 @@
 import BorrowedTable from "./BorrowedTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Cpu, Hammer } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function BorrowedList() {
+  const { t } = useTranslation();
   return (
     <Tabs defaultValue="material">
       <div className="flex flex-row-reverse">
@@ -12,22 +14,22 @@ function BorrowedList() {
               value="material"
               className="text-zinc-500 bg-[#303030] bg-opacity-30 text-base font-semibold"
             >
-              元件
+              {t("material")}
             </TabsTrigger>
             <TabsTrigger
               value="tool"
               className="text-zinc-500 bg-[#303030] bg-opacity-30 text-base font-semibold"
             >
-              工具
+              {t("tool")}
             </TabsTrigger>
           </TabsList>
         </div>
       </div>
       <TabsContent value="material" className="w-full">
-        <BorrowedTable tableName="元件" Icon={Cpu} />
+        <BorrowedTable tableName={t("material")} Icon={Cpu} />
       </TabsContent>
       <TabsContent value="tool">
-        <BorrowedTable tableName="工具" Icon={Hammer} />
+        <BorrowedTable tableName={t("tool")} Icon={Hammer} />
       </TabsContent>
     </Tabs>
   );

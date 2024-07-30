@@ -17,6 +17,7 @@ export type UserType = {
   studentID: string;
   password: string;
   photoLink?: string | null;
+  language: string;
   threeDPId?: number | null;
   laserCutAvailable: boolean;
   borrowHistoryId?: Array<number | null> | null;
@@ -121,6 +122,7 @@ export type ProfileCardProps = {
   studenetID: string;
   password: string;
   photoLink?: string;
+  language: string;
   laserCutAvailable: boolean;
   isAdmin: boolean;
   isMinister: boolean;
@@ -131,6 +133,7 @@ export type UserEditInput = {
   studentID: string;
   password: string;
   photoLink: string;
+  language: string;
   isAdmin: boolean;
   isMinister: boolean;
 };
@@ -144,6 +147,34 @@ export type BorrowType = {
   remain: number;
   position: string;
   quantity: number;
-  status: "尚未申請" | "審核中" | "可領取" | "失敗" | "尚未歸還" | "已歸還";
+  status: "尚未借用" | "審核中" | "可領取" | "失敗" | "尚未歸還" | "已歸還";
   // text-none | text-orange-400 | text-green-400 | text-red-500 | text-zinc-400 | text-none
+};
+
+export type ToolDetailCardProps = {
+  id: string;
+  photoLink: string;
+  name: string;
+  description: string;
+  partName?: string;
+  position: string;
+  remain: number;
+  usage: number;
+  tutorialLink?: string;
+  category: string;
+};
+
+export type MaterialDetailCardProps = {
+  id: string;
+  photoLink: string;
+  name: string;
+  description: string;
+  partName?: string;
+  position: string;
+  remain: number;
+  usage: number;
+  tutorialLink?: string;
+  category: string;
+  fee: number;
+  valuable: boolean;
 };

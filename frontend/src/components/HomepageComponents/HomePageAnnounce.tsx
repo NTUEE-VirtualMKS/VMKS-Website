@@ -2,9 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { ALL_ANNOUNCEMENT_QUERY } from "../../graphql";
 import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
+import { useTranslation } from "react-i18next";
+import { Volume2 } from "lucide-react";
 
 function HomePageAnnounce() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
@@ -16,16 +19,22 @@ function HomePageAnnounce() {
       <div className="flex flex-col grow px-6 pt-5 pb-5 w-full font-semibold bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:px-5 max-md:mt-6 max-md:max-w-full">
         <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
           <div className="flex flex-col">
-            <div className="text-2xl text-white">公告 🔥</div>
-            <div className="mt-2 text-base whitespace-nowrap text-white text-opacity-50">
-              Trending now
+            <div className="text-2xl text-white flex flex-row gap-2 items-center font-semibold">
+              <Volume2 size={28} />
+              {t("announcements")}
+            </div>
+            <div className="flex flex-row items-center gap-1">
+              <div className="mt-2">🔥</div>
+              <div className="mt-2 text-base whitespace-nowrap text-white text-opacity-50 font-semibold">
+                {t("trendingNow")}
+              </div>
             </div>
           </div>
           <button
-            className="self-end mt-9 text-sm text-right text-white text-opacity-50 transform active:scale-90 transition-transform duration-200"
+            className="self-end mt-9 text-sm text-right text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
             onClick={() => navigate("AnnouncementPage")}
           >
-            See all
+            {t("seeAll")}
           </button>
         </div>
         <div className="flex flex-col gap-3 justify-between mt-3 w-full text-xs text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full">

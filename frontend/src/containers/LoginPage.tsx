@@ -15,9 +15,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/UserContext";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/PasswordInput";
+import { useTranslation } from "react-i18next";
 
 function LoginPage() {
   const { login, signup } = useUser();
+  const { t } = useTranslation();
   const [signupMode, setSignupMode] = useState(false);
   const [username, setUsername] = useState("");
   const [studentId, setStudentID] = useState("");
@@ -43,7 +45,7 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="w-4/12 mx-auto mt-28 rounded-lg">
+    <form onSubmit={onSubmit} className="w-4/12 mx-auto mt-16 rounded-lg">
       <Tabs
         value={signupMode ? "signup" : "login"}
         className="text-white bg-black rounded-lg"
@@ -56,7 +58,7 @@ function LoginPage() {
             className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tl-lg font-semibold text-base"
             onClick={() => setSignupMode(false)}
           >
-            <div>登入</div>
+            <div>{t("login")}</div>
           </TabsTrigger>
           <TabsTrigger
             asChild
@@ -65,7 +67,7 @@ function LoginPage() {
             className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tr-lg font-semibold text-base"
             onClick={() => setSignupMode(true)}
           >
-            <div>註冊</div>
+            <div>{t("signup")}</div>
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -81,7 +83,9 @@ function LoginPage() {
             <p className="text-5xl">VMKS</p>
           </CardTitle>
           <CardDescription className="ml-2">
-            {!signupMode ? "登入以借用元件與工具" : "註冊帳號以借用元件與工具"}
+            {!signupMode
+              ? t("loginToBorrowMaterialsOrTools")
+              : t("signUpToBorrowMaterialsOrTools")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -89,14 +93,14 @@ function LoginPage() {
             {signupMode && (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="username" className="text-white">
-                  姓名
+                  {t("username")}
                 </Label>
                 <Input
                   id="username"
                   className="input-class"
                   type="text"
                   name="username"
-                  placeholder="Username"
+                  placeholder={t("username")}
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -105,14 +109,14 @@ function LoginPage() {
             )}
             <div className="flex flex-col gap-1">
               <Label htmlFor="studentId" className="text-white">
-                學號
+                {t("studentId")}
               </Label>
               <Input
                 id="studentId"
                 className="input-class"
                 type="text"
                 name="studentId"
-                placeholder="Student ID"
+                placeholder={t("studentId")}
                 required
                 value={studentId}
                 onChange={(e) => setStudentID(e.target.value)}
@@ -120,13 +124,13 @@ function LoginPage() {
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor="password" className="text-white">
-                密碼
+                {t("password")}
               </Label>
               <PasswordInput
                 id="password"
                 className="input-class"
                 name="password"
-                placeholder="Password"
+                placeholder={t("password")}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -135,13 +139,13 @@ function LoginPage() {
             {signupMode && (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="confirm-password" className="text-white">
-                  確認密碼
+                  {t("confirmPassword")}
                 </Label>
                 <PasswordInput
                   id="confirm-password"
                   className="input-class"
                   name="confirm-password"
-                  placeholder="Confirm Password"
+                  placeholder={t("confirmPassword")}
                   required={signupMode}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -160,13 +164,15 @@ function LoginPage() {
                 className="px-0 text-[#71788B] cursor-pointer"
                 type="button"
               >
-                <div onClick={() => setSignupMode(false)}>已有帳號?</div>
+                <div onClick={() => setSignupMode(false)}>
+                  {t("haveAccount")}
+                </div>
               </Button>
               <Button
                 size="sm"
                 className="text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
-                註冊
+                {t("signup")}
               </Button>
             </>
           ) : (
@@ -178,13 +184,15 @@ function LoginPage() {
                 className="px-0 text-[#71788B] cursor-pointer"
                 type="button"
               >
-                <div onClick={() => setSignupMode(true)}>尚未註冊帳號?</div>
+                <div onClick={() => setSignupMode(true)}>
+                  {t("dontHaveAnAccount")}
+                </div>
               </Button>
               <Button
                 size="sm"
                 className="text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
-                登入
+                {t("login")}
               </Button>
             </>
           )}

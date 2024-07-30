@@ -120,6 +120,7 @@ const typeDefs = `#graphql
     studentID: String!
     password: String!
     photoLink: String!
+    language: String!
     threeDPId: Int
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
@@ -131,6 +132,7 @@ const typeDefs = `#graphql
     studentID: String!
     password: String!
     photoLink: String!
+    language: String!
     isAdmin: Boolean!
     isMinister: Boolean!
   }
@@ -260,6 +262,7 @@ const typeDefs = `#graphql
     studentID: String!
     password: String!
     photoLink: String
+    language: String!
     threeDPId: Int
     laserCutAvailable: Boolean!
     borrowHistoryId: [Int]
@@ -405,6 +408,7 @@ const typeDefs = `#graphql
     SignUp(signUpInput: signUpInput!): signUpRet
     AddToolLike(toolLikeInput: toolLikeInput!): ToolLike
     DeleteToolLike(toolLikeInput: toolLikeInput!): ToolLike
+    EditUserLanguage(id: Int!, language: String!): User
   }
 
   type Subscription {
