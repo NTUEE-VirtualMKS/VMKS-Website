@@ -178,3 +178,10 @@ export type MaterialDetailCardProps = {
   fee: number;
   valuable: boolean;
 };
+
+export type AnnouncementCardProps = {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+};

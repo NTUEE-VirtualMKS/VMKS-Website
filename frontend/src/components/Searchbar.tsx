@@ -27,7 +27,7 @@ function Searchbar({
   }, [navigate, pathname, debounceValue]);
 
   return (
-    <div className="relative block">
+    <div className="relative block w-full">
       <Input
         className="input-class py-6 pl-12 focus-visible:ring-offset-sky-300"
         placeholder={placeholder}

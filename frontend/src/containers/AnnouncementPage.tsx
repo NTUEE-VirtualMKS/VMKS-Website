@@ -14,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@/context/UserContext";
@@ -76,7 +75,7 @@ function AnnouncementPage() {
             </div>
           )}
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]  text-white bg-black">
+        <DialogContent className="sm:max-w-[425px] rounded-lg text-white bg-black">
           <DialogHeader>
             <DialogTitle className="text-2xl">
               {t("newAnnouncement")}
@@ -111,23 +110,25 @@ function AnnouncementPage() {
               />
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              onClick={() => setVisible(false)}
-              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-            >
-              {t("cancel")}
-            </Button>
+          <div className="flex flex-row-reverse gap-2">
             <Button
               onClick={() => handleSubmit({ title, content })}
               className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
             >
               {t("submit")}
             </Button>
-          </DialogFooter>
+            <Button
+              onClick={() => setVisible(false)}
+              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+            >
+              {t("cancel")}
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
-      <AnnouncementList />
+      <div>
+        <AnnouncementList />
+      </div>
     </div>
   );
 }

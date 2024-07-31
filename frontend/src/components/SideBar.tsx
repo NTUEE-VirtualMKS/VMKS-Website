@@ -56,7 +56,7 @@ function SideBar() {
         {!isVisible ? (
           <Tooltip>
             <TooltipTrigger
-              className="relative text-white ml-24 top-60 transition-transform duration-200 ease-in-out transform hover:scale-110"
+              className="relative text-white ml-24 top-40 transition-transform duration-200 ease-in-out transform hover:scale-110"
               onClick={handleShow}
             >
               <ChevronRight />

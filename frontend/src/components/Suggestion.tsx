@@ -17,7 +17,7 @@ function Suggestion({ search, name }: { search: string; name: string }) {
       ) : (
         <section className="flex flex-col size-full flex-center">
           <div className="flex-center w-full flex-col mt-40">
-            <p className="w-full text-5xl text-center font-bold text-white p-2">
+            <p className="w-full text-5xl text-center font-bold text-white p-2 text-opacity-50">
               {t(`no${name}`)}
             </p>
           </div>
