@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useTranslation } from "react-i18next";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 
 function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();

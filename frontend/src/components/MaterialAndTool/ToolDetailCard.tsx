@@ -1,4 +1,4 @@
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Pencil } from "lucide-react";
 import { useTranslation } from "react-i18next";

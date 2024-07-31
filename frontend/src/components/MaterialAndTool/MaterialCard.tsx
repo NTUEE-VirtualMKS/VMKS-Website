@@ -4,7 +4,7 @@ import { DELETE_MATERIAL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import { ALL_MATERIAL_QUERY, SEARCH_MATERIAL_BY_NAME_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { ShoppingCart, Trash2, Star, Share } from "lucide-react";
 import { useState } from "react";
 import { stagger, useAnimate, animate } from "framer-motion";

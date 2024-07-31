@@ -9,11 +9,11 @@ import {
   Database,
 } from "lucide-react";
 import IconButton from "./IconButton";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import UserAvatarDropdownMenu from "./UserAvatarDropdownMenu";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 import useNetworkStatus from "@/hooks/useNetworkStatus";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";

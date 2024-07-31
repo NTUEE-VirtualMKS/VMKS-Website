@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useLazyQuery } from "@apollo/client";
 import { GET_USER_BY_STUDENT_ID_QUERY } from "@/graphql/queries";
 

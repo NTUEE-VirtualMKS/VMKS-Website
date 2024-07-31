@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Searchbar from "@/components/Searchbar";
 import { Atom, Bot, Cpu, Hammer } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 
 function HomePageMaterialBox() {
   const navigate = useNavigate();

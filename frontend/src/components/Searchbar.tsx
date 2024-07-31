@@ -1,7 +1,7 @@
 import { Input } from "./ui/input";
 import { useEffect } from "react";
 import { Search, X } from "lucide-react";
-import { useDebounce } from "@/lib/useDebounce";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 

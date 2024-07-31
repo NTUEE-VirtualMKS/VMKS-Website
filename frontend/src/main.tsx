@@ -15,8 +15,8 @@ import {
 import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
-import { UserProvider } from "./context/UserContext";
-import { WindowProvider } from "./context/WindowContext";
+import { UserProvider } from "./contexts/UserContext";
+import { WindowProvider } from "./contexts/WindowContext";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 

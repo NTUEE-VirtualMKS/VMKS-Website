@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslation } from "react-i18next";
 import { Volume2 } from "lucide-react";

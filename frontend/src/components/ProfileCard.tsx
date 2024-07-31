@@ -19,7 +19,7 @@ import { Label } from "@radix-ui/react-label";
 import { PasswordInput } from "@/components/PasswordInput";
 import { EyeIcon, EyeOffIcon, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 import { useTranslation } from "react-i18next";
 import {
   Tooltip,

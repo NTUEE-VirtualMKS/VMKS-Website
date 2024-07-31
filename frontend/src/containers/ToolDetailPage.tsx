@@ -1,28 +1,28 @@
-// TODO: handle rborrow and repair buttons
+// TODO: handle borrow and repair buttons
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import RouteBar from "./RouteBar";
+import RouteBar from "@/components/MaterialAndTool/RouteBar.tsx";
 import { useQuery } from "@apollo/client";
-import { GET_MATERIAL_BY_ID_QUERY } from "@/graphql/queries";
-import LoaderSpinner from "../LoaderSpinner.tsx";
-import { useUser } from "@/context/UserContext.tsx";
-import { useToast } from "../ui/use-toast.ts";
+import { GET_TOOL_BY_ID_QUERY } from "@/graphql/queries";
+import LoaderSpinner from "@/components/LoaderSpinner.tsx";
+import { useUser } from "@/contexts/UserContext.tsx";
+import { useToast } from "@/components/ui/use-toast.ts";
 import { useTranslation } from "react-i18next";
-import MaterialDetailCard from "./MaterialDetailCard.tsx";
+import ToolDetailCard from "@/components/MaterialAndTool/ToolDetailCard.tsx";
 
-function MaterialDetailPage() {
+function ToolDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
   const { t } = useTranslation();
   const { user } = useUser();
-  const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
-    variables: { id: parseInt(id as string) },
+  const { data, loading, error } = useQuery(GET_TOOL_BY_ID_QUERY, {
+    variables: { getToolByIdId: parseInt(id as string) },
   });
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const material = data?.GetMaterialById;
+  const tool = data?.GetToolById;
 
   const handleRepair = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!user) {
@@ -40,7 +40,7 @@ function MaterialDetailPage() {
       e.preventDefault();
       toast({
         title: "Login required",
-        description: "Please login to borrow materials",
+        description: "Please login to borrow tools",
         variant: "destructive",
       });
     }
@@ -48,27 +48,25 @@ function MaterialDetailPage() {
 
   return (
     <div>
-      {material && (
+      {tool && (
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <RouteBar route={material?.category} />
+            <RouteBar route={tool?.category} />
           </div>
-          <MaterialDetailCard
+          <ToolDetailCard
             id={id!}
-            photoLink={material?.photoLink!}
-            name={material?.name!}
-            description={material?.description!}
-            partName={material?.partName!}
-            position={material?.position!}
-            remain={material?.remain!}
-            usage={material?.usage!}
-            tutorialLink={material?.tutorialLink!}
-            category={material?.category!}
-            fee={material?.fee!}
-            valuable={material?.valuable!}
+            photoLink={tool?.photoLink!}
+            name={tool?.name!}
+            description={tool?.description!}
+            partName={tool?.partName!}
+            position={tool?.position!}
+            remain={tool?.remain!}
+            usage={tool?.usage!}
+            tutorialLink={tool?.tutorialLink!}
+            category={tool?.category!}
           />
           <div className="flex flex-row-reverse gap-2">
-            <Button className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
+            <Button className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 hover:bg-primary/90 bg-transparent">
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
                 target="_blank"
@@ -77,7 +75,7 @@ function MaterialDetailPage() {
                 {t("borrow")}
               </a>
             </Button>
-            <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200">
+            <Button className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 hover:bg-primary/90 bg-transparent">
               <a onClick={handleRepair}>{t("repair")}</a>
             </Button>
           </div>
@@ -87,4 +85,4 @@ function MaterialDetailPage() {
   );
 }
 
-export default MaterialDetailPage;
+export default ToolDetailPage;
