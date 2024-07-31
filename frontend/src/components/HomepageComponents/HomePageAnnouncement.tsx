@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
 import { useTranslation } from "react-i18next";
 import { Volume2 } from "lucide-react";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 
 function HomePageAnnouncement() {
   const navigate = useNavigate();

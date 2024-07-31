@@ -2,7 +2,7 @@ import HomePageAnnouncement from "@/components/HomepageComponents/HomePageAnnoun
 import HomePageTimetable from "@/components/HomepageComponents/HomePageTimetable";
 import HomePageForum from "@/components/HomepageComponents/HomePageForum";
 import HomePageMaterialBox from "@/components/HomepageComponents/HomePageMaterialBox";
-import { useWindow } from "@/context/WindowContext";
+import { useWindow } from "@/contexts/WindowContext";
 import Searchbar from "@/components/Searchbar";
 import { useTranslation } from "react-i18next";
 

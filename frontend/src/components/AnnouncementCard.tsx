@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { useToast } from "./ui/use-toast";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useTranslation } from "react-i18next";
 import { Pencil, Trash2 } from "lucide-react";
 import { AnnouncementCardProps } from "@/shared/type";

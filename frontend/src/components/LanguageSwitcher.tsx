@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Languages } from "lucide-react";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { Tooltip, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { TooltipContent } from "./ui/tooltip";
 

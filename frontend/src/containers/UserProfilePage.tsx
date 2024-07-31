@@ -1,4 +1,4 @@
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import ProfileCard from "@/components/ProfileCard";
 import { useTranslation } from "react-i18next";
 import { UserRound } from "lucide-react";

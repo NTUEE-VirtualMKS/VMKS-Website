@@ -11,7 +11,7 @@ import {
   SEARCH_TOOL_BY_NAME_QUERY,
 } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { Share, ShoppingCart, Star, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { stagger, useAnimate, animate } from "framer-motion";

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { useQuery } from "@apollo/client";
 import { GET_LIKED_TOOLS_BY_USER_ID_QUERY } from "@/graphql";
 import LoaderSpinner from "./LoaderSpinner";

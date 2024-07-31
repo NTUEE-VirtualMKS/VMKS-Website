@@ -3,14 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import HomePage from "@/containers/HomePage";
-import MaterialDetailPage from "@/components/MaterialAndTool/MaterialDetailPage";
-import ToolDetailPage from "./components/MaterialAndTool/ToolDetailPage";
 import Advanced from "@/Advanced";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import NetworkStatus from "./components/NetworkStatus";
 import useNetworkStatus from "./hooks/useNetworkStatus";
 import UnconnectedPage from "./components/UnconnectedPage";
-import { useUser } from "./context/UserContext";
+import { useUser } from "./contexts/UserContext";
 import useUserLanguage from "@/hooks/useUserLanguage";
 
 const FakeHome = lazy(() => import("@/containers/FakeHome"));
@@ -23,7 +21,9 @@ const AuthorizedCodePage = lazy(
   () => import("@/containers/AuthorizedCodePage")
 );
 const MaterialPage = lazy(() => import("@/containers/MaterialPage"));
+const MaterialDetailPage = lazy(() => import("@/containers/MaterialDetailPage"));
 const ToolPage = lazy(() => import("@/containers/ToolPage"));
+const ToolDetailPage = lazy(() => import("./containers/ToolDetailPage"));
 const ShoppingCartPage = lazy(() => import("@/containers/ShoppingCartPage"));
 const BorrowHistoryPage = lazy(() => import("@/containers/BorrowHistoryPage"));
 const UsersBorrowingPage = lazy(
