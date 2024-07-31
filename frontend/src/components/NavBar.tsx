@@ -115,21 +115,21 @@ function NavBar() {
                 />
               ) : (
                 <Tooltip>
-                  <TooltipTrigger>
-                    <UserAvatarDropdownMenu>
-                      <div className="relative inline-block">
+                  <UserAvatarDropdownMenu>
+                    <div className="relative inline-block">
+                      <TooltipTrigger>
                         <img
                           src={imgUrl}
                           className="rounded-full w-11 h-11 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#444444]"
                           alt="avatar"
                         />
-                        <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
-                          <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
-                        </span>
-                      </div>
-                    </UserAvatarDropdownMenu>
-                  </TooltipTrigger>
+                      </TooltipTrigger>
+                      <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
+                        <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
+                      </span>
+                    </div>
+                  </UserAvatarDropdownMenu>
                   <TooltipContent className="bg-black bg-opacity-80">
                     <p className="text-white text-xs">{t("myAccount")}</p>
                   </TooltipContent>
