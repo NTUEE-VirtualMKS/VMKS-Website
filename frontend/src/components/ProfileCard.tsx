@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,6 +21,11 @@ import { EyeIcon, EyeOffIcon, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWindow } from "@/context/WindowContext";
 import { useTranslation } from "react-i18next";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function ProfileCard({
   id,
@@ -168,14 +172,22 @@ function ProfileCard({
               open={visible}
               onOpenChange={(visible) => setVisible(visible)}
             >
-              <DialogTrigger asChild>
-                <button
-                  className="aspect-square text-white hover:text-sky-300 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center"
-                  onClick={() => setVisible(true)}
-                >
-                  <Pencil className="p-1.5" size={33} />
-                </button>
-              </DialogTrigger>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="p-2 aspect-square text-white hover:text-sky-300 rounded-full  hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
+                    <DialogTrigger
+                      asChild
+                      onClick={() => setVisible(true)}
+                      className="transform active:scale-90 transition-transform duration-200"
+                    >
+                      <Pencil size={33} />
+                    </DialogTrigger>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="bg-black bg-opacity-80">
+                  <p className="text-white text-xs">{t("edit")}</p>
+                </TooltipContent>
+              </Tooltip>
               <DialogContent className="sm:max-w-[425px] text-white bg-black">
                 <DialogHeader>
                   <DialogTitle className="text-2xl">
@@ -244,13 +256,7 @@ function ProfileCard({
                     />
                   </div>
                 </div>
-                <DialogFooter>
-                  <Button
-                    onClick={handleCancel}
-                    className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-                  >
-                    {t("cancel")}
-                  </Button>
+                <div className="flex flex-row-reverse gap-2">
                   <Button
                     onClick={() =>
                       handleUpdate({
@@ -267,7 +273,13 @@ function ProfileCard({
                   >
                     {t("submit")}
                   </Button>
-                </DialogFooter>
+                  <Button
+                    onClick={handleCancel}
+                    className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                  >
+                    {t("cancel")}
+                  </Button>
+                </div>
               </DialogContent>
             </Dialog>
           </div>
