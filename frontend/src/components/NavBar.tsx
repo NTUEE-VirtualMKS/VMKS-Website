@@ -67,7 +67,7 @@ function NavBar() {
           )}
         </div>
         <div className="flex items-center gap-3">
-          {windowWidth > 600 && <LanguageSwitcher />}
+          {windowWidth > 446 && <LanguageSwitcher />}
           {user?.isMinister && windowWidth > 720 && (
             <IconButton
               onClick={() => navigate("/AuthorizedCodePage")}

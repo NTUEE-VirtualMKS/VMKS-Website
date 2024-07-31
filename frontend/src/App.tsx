@@ -16,9 +16,6 @@ import useUserLanguage from "@/hooks/useUserLanguage";
 const FakeHome = lazy(() => import("@/containers/FakeHome"));
 const LoginPage = lazy(() => import("@/containers/LoginPage"));
 const IntroductionPage = lazy(() => import("@/containers/IntroductionPage"));
-const EditIntroductionPage = lazy(
-  () => import("@/components/EditIntroductionPage")
-);
 const TutorialPage = lazy(() => import("@/containers/TutorialPage"));
 const MapPage = lazy(() => import("@/containers/MapPage"));
 const UserProfilePage = lazy(() => import("@/containers/UserProfilePage"));
@@ -33,8 +30,6 @@ const UsersBorrowingPage = lazy(
   () => import("@/containers/UsersBorrowingPage")
 );
 const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
-const EditAnnouncement = lazy(() => import("@/components/EditAnnouncement"));
-const AnnouncementCreated = lazy(() => import("@/components/Subscription"));
 const NotFound = lazy(() => import("@/containers/NotFound"));
 
 function App() {
@@ -53,7 +48,7 @@ function App() {
           )}
         </div>
         {isOnline ? (
-          <div className="flex-1 mx-3 mt-20">
+          <div className="flex-1 mx-2 mt-16 sm:mt-16 md:mt-20 lg:mt-20 xl:mt-20">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route
@@ -61,14 +56,6 @@ function App() {
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     <IntroductionPage />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/Introduction/edit"
-                element={
-                  <Suspense fallback={<LoaderSpinner />}>
-                    <EditIntroductionPage />
                   </Suspense>
                 }
               />
@@ -84,7 +71,7 @@ function App() {
                 path="/UserProfilePage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    <UserProfilePage />
+                    {user ? <UserProfilePage /> : <NotFound />}
                   </Suspense>
                 }
               />
@@ -92,7 +79,7 @@ function App() {
                 path="/AuthorizedCodePage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    <AuthorizedCodePage />
+                    {user?.isMinister ? <AuthorizedCodePage /> : <NotFound />}
                   </Suspense>
                 }
               />
@@ -140,7 +127,7 @@ function App() {
                 path="/ShoppingCartPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    <ShoppingCartPage />
+                    {user ? <ShoppingCartPage /> : <NotFound />}
                   </Suspense>
                 }
               />
@@ -148,7 +135,7 @@ function App() {
                 path="/BorrowHistoryPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    <BorrowHistoryPage />
+                    {user ? <BorrowHistoryPage /> : <NotFound />}
                   </Suspense>
                 }
               />
@@ -156,32 +143,15 @@ function App() {
                 path="/UsersBorrowingPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    <UsersBorrowingPage />
+                    {user?.isAdmin ? <UsersBorrowingPage /> : <NotFound />}
                   </Suspense>
                 }
               />
-              {/* <Route
-                path="/Login"
-                element={
-                  <Suspense fallback={<LoaderSpinner />}>
-                    <LoginPage />
-                  </Suspense>
-                }
-              /> */}
               <Route
                 path="/AnnouncementPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     <AnnouncementPage />
-                    <AnnouncementCreated />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/EditAnnouncement/:id"
-                element={
-                  <Suspense fallback={<LoaderSpinner />}>
-                    <EditAnnouncement />
                   </Suspense>
                 }
               />
