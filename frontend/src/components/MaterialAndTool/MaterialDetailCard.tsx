@@ -20,7 +20,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -59,10 +58,6 @@ function MaterialDetailCard({
   const [materialPartName, setMaterialPartName] = useState(partName!);
   const [materialCategory, setMaterialCategory] = useState(category);
   const [materialFee, setMaterialFee] = useState(`${fee}`);
-
-  const handleClose = () => {
-    setVisible(false);
-  };
 
   const [editMaterial, { loading: editLoading, error: editError }] =
     useMutation(EDIT_MATERIAL_MUTATION, {
@@ -169,28 +164,33 @@ function MaterialDetailCard({
           >
             <Tooltip>
               <TooltipTrigger>
-                <DialogTrigger
-                  onClick={() => setVisible(true)}
-                  className="text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent transform active:scale-90 transition-transform duration-200 w-10 h-10 rounded-full flex justify-center items-center"
-                >
-                  <Pencil className="p-1.5" size={33} />
-                </DialogTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
-                  <p className="text-white text-xs">{t("edit")}</p>
-                </TooltipContent>
+                <div className="w-10 h-10  rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
+                  <DialogTrigger
+                    asChild
+                    onClick={() => setVisible(true)}
+                    className="transform active:scale-90 transition-transform duration-200"
+                  >
+                    <Pencil size={33} />
+                  </DialogTrigger>
+                </div>
               </TooltipTrigger>
+              <TooltipContent className="bg-black bg-opacity-80">
+                <p className="text-white text-xs">{t("edit")}</p>
+              </TooltipContent>
             </Tooltip>
             <DialogContent className="sm:max-w-[425px] text-white bg-black">
               <DialogHeader>
-                <DialogTitle className="text-2xl">編輯材料</DialogTitle>
+                <DialogTitle className="text-2xl">
+                  {t("editMaterial")}
+                </DialogTitle>
                 <DialogDescription className="text-sm">
-                  請填寫以下資訊:
+                  {t("pleaseFillInAllFields")}:
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-1">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
-                    名稱
+                    {t("name")}
                   </Label>
                   <Input
                     id="name"
@@ -202,7 +202,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="description" className="text-right">
-                    描述
+                    {t("description")}
                   </Label>
                   <Textarea
                     id="description"
@@ -214,7 +214,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="photoLink" className="text-right">
-                    圖片連結
+                    {t("photoLink")}
                   </Label>
                   <Input
                     id="photoLink"
@@ -227,7 +227,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="category" className="text-right">
-                    類別
+                    {t("category")}
                   </Label>
                   <Input
                     id="category"
@@ -239,7 +239,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="valuable" className="text-right">
-                    要錢
+                    {t("valuable")}
                   </Label>
                   <Checkbox
                     id="valuable"
@@ -252,7 +252,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="position" className="text-right">
-                    擺放位置
+                    {t("position")}
                   </Label>
                   <Input
                     id="position"
@@ -264,7 +264,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="remain" className="text-right">
-                    剩餘數量
+                    {t("remain")}
                   </Label>
                   <Input
                     id="remain"
@@ -277,7 +277,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="usage" className="text-right">
-                    使用量
+                    {t("usage")}
                   </Label>
                   <Input
                     id="usage"
@@ -290,7 +290,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="fee" className="text-right">
-                    價錢
+                    {t("fee")}
                   </Label>
                   <Input
                     id="fee"
@@ -303,7 +303,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="tutorialLink" className="text-right">
-                    教學連結
+                    {t("tutorialLink")}
                   </Label>
                   <Input
                     id="tutorialLink"
@@ -315,7 +315,7 @@ function MaterialDetailCard({
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="partName" className="text-right">
-                    型號
+                    {t("partName")}
                   </Label>
                   <Input
                     id="partName"
@@ -326,13 +326,7 @@ function MaterialDetailCard({
                   />
                 </div>
               </div>
-              <DialogFooter>
-                <Button
-                  onClick={handleClose}
-                  className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-                >
-                  取消
-                </Button>
+              <div className="flex flex-row-reverse gap-2">
                 <Button
                   onClick={() =>
                     handleUpdate({
@@ -351,9 +345,15 @@ function MaterialDetailCard({
                   }
                   className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
                 >
-                  提交
+                  {t("submit")}
                 </Button>
-              </DialogFooter>
+                <Button
+                  onClick={() => setVisible(false)}
+                  className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                >
+                  {t("cancel")}
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </div>

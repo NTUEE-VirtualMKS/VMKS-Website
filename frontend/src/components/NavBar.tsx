@@ -17,6 +17,7 @@ import { useWindow } from "@/context/WindowContext";
 import useNetworkStatus from "@/hooks/useNetworkStatus";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -113,19 +114,26 @@ function NavBar() {
                   ariaLabel={t("login")}
                 />
               ) : (
-                <UserAvatarDropdownMenu>
-                  <div className="relative inline-block">
-                    <img
-                      src={imgUrl}
-                      className="rounded-full w-11 h-11 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#444444]"
-                      alt="avatar"
-                    />
-                    <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
-                      <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
-                    </span>
-                  </div>
-                </UserAvatarDropdownMenu>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <UserAvatarDropdownMenu>
+                      <div className="relative inline-block">
+                        <img
+                          src={imgUrl}
+                          className="rounded-full w-11 h-11 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#444444]"
+                          alt="avatar"
+                        />
+                        <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
+                          <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
+                        </span>
+                      </div>
+                    </UserAvatarDropdownMenu>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-black bg-opacity-80">
+                    <p className="text-white text-xs">{t("myAccount")}</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
             </>
           )}

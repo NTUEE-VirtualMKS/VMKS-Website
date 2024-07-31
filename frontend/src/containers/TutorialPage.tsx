@@ -1,17 +1,22 @@
 // TODO: connect to backend
 import { useRef, useEffect, useState } from "react";
 import {
-  interaction1,
-  interaction2,
-  interaction3,
-  list,
+  interaction1Zh,
+  interaction2Zh,
+  interaction3Zh,
+  listZh,
+  interaction1En,
+  interaction2En,
+  interaction3En,
+  listEn,
 } from "@/constants/index";
 import { Anchor, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
 function TutorialPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
   const sessionA = useRef(null);
   const sessionB = useRef(null);
   const sessionC = useRef(null);
@@ -89,9 +94,15 @@ function TutorialPage() {
           {t("interaction")}
         </h2>
         <div className="p-1">
-          <p className="indent-first-letter">{interaction1}</p>
-          <p className="indent-first-letter">{interaction2}</p>
-          <p className="indent-first-letter">{interaction3}</p>
+          <p className="indent-first-letter">
+            {language === "zh" ? interaction1Zh : interaction1En}
+          </p>
+          <p className="indent-first-letter">
+            {language === "zh" ? interaction2Zh : interaction2En}
+          </p>
+          <p className="indent-first-letter">
+            {language === "zh" ? interaction3Zh : interaction3En}
+          </p>
         </div>
         <div className="mb-14" ref={sessionB} />
         <br />
@@ -110,7 +121,7 @@ function TutorialPage() {
           {t("all")}
         </h2>
         <ul className="p-2 ml-3 list-disc">
-          {list.map((item: string) => (
+          {(language === "zh" ? listZh : listEn).map((item: string) => (
             <li key={item}>{item}</li>
           ))}
         </ul>

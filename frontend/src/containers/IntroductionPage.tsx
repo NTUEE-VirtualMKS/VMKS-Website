@@ -1,13 +1,27 @@
 // TODO: replace this with dialog and modify backend schema
 import { useEffect, useRef, useState } from "react";
-import { introduction, toolRules, userRules } from "@/constants/index";
+import {
+  introductionZh,
+  toolRulesZh,
+  userRulesZh,
+  introductionEn,
+  toolRulesEn,
+  userRulesEn,
+  additionalNoteZh,
+  websiteUserPrecautionsZh,
+  toolAndEquipmentPrecautionsZh,
+  additionalNoteEn,
+  websiteUserPrecautionsEn,
+  toolAndEquipmentPrecautionsEn,
+} from "@/constants/index";
 import Timetable from "@/components/Timetable";
 import { Anchor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
 function IntroductionPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
   const sessionA = useRef(null);
   const sessionB = useRef(null);
   const sessionC = useRef(null);
@@ -79,7 +93,9 @@ function IntroductionPage() {
             {t("briefIntroduction")}
           </h2>
           <div className="p-1">
-            <p className="indent-first-letter">{introduction}</p>
+            <p className="indent-first-letter">
+              {language === "zh" ? introductionZh : introductionEn}
+            </p>
           </div>
           <div className="mb-10" ref={sessionB}></div>
           <br />
@@ -114,20 +130,32 @@ function IntroductionPage() {
             </span>
             {t("rules")}
           </h2>
-          <h3>網站使用者注意事項</h3>
+          <h3>
+            {language === "zh"
+              ? websiteUserPrecautionsZh
+              : websiteUserPrecautionsEn}
+          </h3>
           <ul className="p-2 ml-3 list-disc">
-            {userRules.map((item: string) => (
-              <li key={item}>{item}</li>
-            ))}
+            {(language === "zh" ? userRulesZh : userRulesEn).map(
+              (item: string) => (
+                <li key={item}>{item}</li>
+              )
+            )}
           </ul>
-          <h3 className="mt-3">工具與借用器材注意事項</h3>
+          <h3 className="mt-3">
+            {language === "zh"
+              ? toolAndEquipmentPrecautionsZh
+              : toolAndEquipmentPrecautionsEn}
+          </h3>
           <ul className="p-2 ml-3 list-disc">
-            {toolRules.map((item: string) => (
-              <li key={item}>{item}</li>
-            ))}
+            {(language === "zh" ? toolRulesZh : toolRulesEn).map(
+              (item: string) => (
+                <li key={item}>{item}</li>
+              )
+            )}
           </ul>
           <p className="mb-5">
-            這些注意事項將有助於使用者在網站和使用工具、借用器材時保持安全，避免潛在的風險和問題。經過謹慎和負責任的使用，可以確保使用者和他人的安全和利益
+            {language === "zh" ? additionalNoteZh : additionalNoteEn}
           </p>
         </div>
       </div>

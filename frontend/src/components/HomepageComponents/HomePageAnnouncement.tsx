@@ -58,7 +58,8 @@ function HomePageAnnouncement() {
                   announcement && (
                     <div
                       key={announcement.id}
-                      className="flex flex-col gap-2 w-full rounded-lg border border-[#444444] p-4 text-xs text-white text-opacity-50 hover:bg-opacity-70 max-md:flex-wrap max-md:max-w-full bg-[#303030] bg-opacity-50"
+                      className="flex flex-col gap-2 w-full rounded-lg border border-[#444444] p-4 text-xs text-white text-opacity-50 hover:bg-opacity-70 max-md:flex-wrap max-md:max-w-full bg-[#303030] bg-opacity-50 transform active:scale-95 transition-transform duration-200 cursor-pointer"
+                      onClick={() => {}} // TODO: link to detailed page
                     >
                       <div className="flex flex-col justify-between">
                         <div className="self-start text-white text-lg">
@@ -76,13 +77,7 @@ function HomePageAnnouncement() {
                             ? announcement.content.slice(0, 65)
                             : announcement.content.slice(0, 40)}{" "}
                           <span>
-                            <button
-                              className="transform active:scale-90 transition-transform duration-200 cursor-pointer"
-                              onClick={() => {}} // TODO: link to detailed page
-                            >
-                              {" "}
-                              ...more
-                            </button>
+                            <span> ...{t("more")}</span>
                           </span>
                         </div>
                       </div>
