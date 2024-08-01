@@ -523,20 +523,6 @@ const Query = {
     return user;
   },
 
-  AllUserMaterials: async () => {
-    const UserMaterials = await prisma.userMaterial.findMany({
-      orderBy: [
-        {
-          borrowerId: "asc",
-        },
-        {
-          borrowNum: "desc",
-        },
-      ],
-    });
-    return UserMaterials;
-  },
-
   AllArticles: async () => {
     const articles = await prisma.article.findMany({
       orderBy: {
@@ -616,7 +602,6 @@ const Query = {
           photoLink: user.photoLink,
           threeDPId: user.threeDPId,
           laserCutAvailable: user.laserCutAvailable,
-          borrowHistoryId: user.borrowHistoryId,
           isAdmin: user.isAdmin,
           isMinister: user.isMinister,
         },

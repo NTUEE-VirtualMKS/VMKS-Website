@@ -16,7 +16,6 @@ const initUserDB = async () => {
           photoLink: initUserData[i].photoLink,
           threeDPId: initUserData[i].threeDPId,
           laserCutAvailable: initUserData[i].laserCutAvailable,
-          borrowHistoryId: initUserData[i].borrowHistoryID,
           articlesId: initUserData[i].articlesId,
           isAdmin: initUserData[i].isAdmin,
         },

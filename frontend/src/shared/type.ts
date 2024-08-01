@@ -20,7 +20,6 @@ export type UserType = {
   language: string;
   threeDPId?: number | null;
   laserCutAvailable: boolean;
-  borrowHistoryId?: Array<number | null> | null;
   articlesId?: Array<number | null> | null;
   isAdmin: boolean;
   isMinister: boolean;

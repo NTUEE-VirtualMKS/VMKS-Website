@@ -96,25 +96,6 @@ const typeDefs = `#graphql
     broken:       Boolean!
   }
 
-  input UserMaterialInput{
-    name:       String!
-    partName:   String
-    borrowerId: Int!
-    borrowNum:  Int!
-    returnDate: String
-    status:     String!
-  }
-
-  input UserMaterialEditInput {
-    name: String!
-    partName: String
-    borrowerId: Int!
-    borrowNum: Int!
-    borrowDate: String!
-    returnDate: String!
-    status: String!
-  }
-
   input UserInput {
     name: String!
     studentID: String!
@@ -245,17 +226,6 @@ const typeDefs = `#graphql
     broken:       Boolean!
   }
 
-  type UserMaterial {
-    id:         Int!
-    name:       String!
-    partName:   String
-    borrowerId: Int!
-    borrowNum:  Int!
-    borrowDate: String!
-    returnDate: String
-    status:     String!
-  }
-
   type User {
     id: Int!
     name: String!
@@ -265,7 +235,6 @@ const typeDefs = `#graphql
     language: String!
     threeDPId: Int
     laserCutAvailable: Boolean!
-    borrowHistoryId: [Int]
     articlesId: [Int]
     isAdmin: Boolean!
     isMinister: Boolean!
@@ -359,7 +328,6 @@ const typeDefs = `#graphql
     AllUser: [User]
     SearchUserByName(name: String!): [User]
     GetUserByStudentID(studentID: String!): User
-    AllUserMaterials: [UserMaterial]
     AllThreeDP: [ThreeDP]
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
@@ -392,9 +360,6 @@ const typeDefs = `#graphql
     DeleteMaterial(id: Int!): Material
     EditMaterial(id: Int!, materialInput: MaterialInput!): Material
     MaterialUsageUpdate(id: Int!, materialUsageUpdateInput: MaterialUsageUpdateInput!): Material
-    AddUserMaterial(userMaterialInput: UserMaterialInput!): UserMaterial
-    DeleteUserMaterial(id: Int!): UserMaterial
-    EditUserMaterial(id: Int!, userMaterialEditInput: UserMaterialEditInput!): UserMaterial
     AddThreeDP(threeDPInput: ThreeDPInput!): ThreeDP
     DeleteThreeDP(id: Int!): ThreeDP
     EditThreeDP(id: Int!, threeDPInput: ThreeDPInput!): ThreeDP
@@ -430,9 +395,6 @@ const typeDefs = `#graphql
     ThreeDPCreated: ThreeDP
     ThreeDPDeleted: ThreeDP
     ThreeDPUpdated: ThreeDP
-    UserMaterialCreated: UserMaterial
-    UserMaterialDeleted: UserMaterial
-    UserMaterialUpdated: UserMaterial
     UserCreated: User
     UserDeleted: User
     UserUpdated: User

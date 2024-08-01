@@ -69,24 +69,6 @@ interface MachineInput {
   tutorialLink: string;
 }
 
-interface UserMaterialInput {
-  name: string;
-  partName: string;
-  borrowerId: number;
-  borrowNum: number;
-  status: string;
-}
-
-interface UserMaterialEditInput {
-  name: string;
-  partName: string;
-  borrowerId: number;
-  borrowNum: number;
-  borrowDate: string;
-  returnDate: string;
-  status: string;
-}
-
 interface ThreeDPInput {
   name: string;
   category: string;
@@ -162,8 +144,6 @@ interface ToolLikeInput {
 export type {
   AnnouncementInput,
   ToolInput,
-  UserMaterialInput,
-  UserMaterialEditInput,
   ThreeDPInput,
   UserInput,
   UserEditInput,

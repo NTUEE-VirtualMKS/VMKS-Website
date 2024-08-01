@@ -13,8 +13,6 @@ import {
   MachineInput,
   MaterialInput,
   MaterialUsageUpdateInput,
-  UserMaterialInput,
-  UserMaterialEditInput,
   ThreeDPInput,
   UserInput,
   UserEditInput,
@@ -265,7 +263,11 @@ const Mutation = {
     return newDisposableMaterial;
   },
 
-  DeleteDisposableMaterial: async (_parents, args: { id: number }, _context) => {
+  DeleteDisposableMaterial: async (
+    _parents,
+    args: { id: number },
+    _context,
+  ) => {
     const id = args.id;
     const findDisposableMaterial = await prisma.disposableMaterial.findFirst({
       where: {
@@ -288,7 +290,8 @@ const Mutation = {
 
   EditDisposableMaterial: async (
     _parents,
-    args: { id: number; disposableMaterialInput: DisposableMaterialInput }, _context
+    args: { id: number; disposableMaterialInput: DisposableMaterialInput },
+    _context,
   ) => {
     const id = args.id;
     const {
@@ -708,186 +711,6 @@ const Mutation = {
     return updateThreeDP;
   },
 
-  AddUserMaterial: async (
-    _parents,
-    args: { userMaterialInput: UserMaterialInput },
-    _context,
-  ) => {
-    const { name, partName, borrowerId, borrowNum, status } =
-      args.userMaterialInput;
-    const findBorrower = await prisma.user.findFirst({
-      where: {
-        id: borrowerId,
-      },
-    });
-    if (!findBorrower) {
-      throw new Error("Borrower not found!");
-    }
-
-    const borrowDate = new Date().toLocaleString();
-    const newUserMaterial = await prisma.userMaterial.create({
-      data: {
-        name: name,
-        partName: partName,
-        borrowerId: borrowerId,
-        borrowNum: borrowNum,
-        borrowDate: borrowDate,
-        returnDate: null,
-        status: status,
-      },
-    });
-
-    const updateBorrowHistory = await prisma.user.update({
-      where: {
-        id: borrowerId,
-      },
-      data: {
-        borrowHistoryId: { push: newUserMaterial.id },
-      },
-    });
-    pubsub.publish("USERMATERIAL_CREATED", {
-      UserMaterialCreated: newUserMaterial,
-    });
-    return newUserMaterial;
-  },
-
-  // maybe useless
-  DeleteUserMaterial: async (_parents, args: { id: number }, _context) => {
-    const id = args.id;
-    const findUserMaterial = await prisma.userMaterial.findFirst({
-      where: {
-        id: id,
-      },
-    });
-    if (!findUserMaterial) {
-      throw new Error("User Material Not Found");
-    }
-
-    // delete UserMaterial in User.borrowHistoryId
-    const userId = findUserMaterial.borrowerId;
-    const borrower = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
-    const borrowHistoryID = borrower.borrowHistoryId;
-    const index = borrowHistoryID.indexOf(id);
-    borrowHistoryID.splice(index, 1);
-    const updateBorrower = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        borrowHistoryId: borrowHistoryID,
-      },
-    });
-
-    const DeleteUserMaterial = await prisma.userMaterial.delete({
-      where: {
-        id: id,
-      },
-    });
-    pubsub.publish("USERMATERIAL_DELETED", {
-      UserMaterialDeleted: DeleteUserMaterial,
-    });
-    return DeleteUserMaterial;
-  },
-
-  EditUserMaterial: async (
-    _parents,
-    args: { id: number; userMaterialEditInput: UserMaterialEditInput },
-    _context,
-  ) => {
-    const id = args.id;
-    const {
-      name,
-      partName,
-      borrowerId,
-      borrowNum,
-      borrowDate,
-      returnDate,
-      status,
-    } = args.userMaterialEditInput;
-    const findUserMaterial = await prisma.userMaterial.findFirst({
-      where: {
-        id: id,
-      },
-    });
-    if (!findUserMaterial) {
-      throw new Error("userMaterial not found!");
-    }
-
-    const oldBorrowerId = findUserMaterial.borrowerId;
-    if (!borrowerId || !oldBorrowerId) {
-      throw new Error("id not found!");
-    }
-    if (borrowerId !== oldBorrowerId) {
-      const oldUser = await prisma.user.findFirst({
-        where: {
-          id: oldBorrowerId,
-        },
-      });
-      if (!oldUser) {
-        throw new Error("old user not found!");
-      }
-      const borrowHistoryID = oldUser.borrowHistoryId;
-      const index = borrowHistoryID.indexOf(id);
-      borrowHistoryID.splice(index, 1);
-      const updateOldUser = await prisma.user.update({
-        where: {
-          id: oldBorrowerId,
-        },
-        data: {
-          borrowHistoryId: borrowHistoryID,
-        },
-      });
-      if (!updateOldUser) {
-        throw new Error("update old user failed!");
-      }
-
-      const newUser = await prisma.user.findFirst({
-        where: {
-          id: borrowerId,
-        },
-      });
-      if (!newUser) {
-        throw new Error("new user not found!");
-      }
-      const newBorrowHistoryID = newUser.borrowHistoryId;
-      newBorrowHistoryID.push(id);
-      const updateNewUser = await prisma.user.update({
-        where: {
-          id: borrowerId,
-        },
-        data: {
-          borrowHistoryId: newBorrowHistoryID,
-        },
-      });
-      if (!updateNewUser) {
-        throw new Error("update new user failed!");
-      }
-    }
-
-    const updateUserMaterial = await prisma.userMaterial.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: name,
-        partName: partName,
-        borrowerId: borrowerId,
-        borrowNum: borrowNum,
-        borrowDate: borrowDate,
-        returnDate: returnDate,
-        status: status,
-      },
-    });
-    pubsub.publish("USERMATERIAL_UPDATED", {
-      UserMaterialUpdated: updateUserMaterial,
-    });
-    return updateUserMaterial;
-  },
-
   AddUser: async (_parents, args: { userInput: UserInput }, _context) => {
     const {
       name,
@@ -928,7 +751,6 @@ const Mutation = {
         language: language,
         threeDPId: threeDPId,
         laserCutAvailable: laserCutAvailable,
-        borrowHistoryId: [],
         isAdmin: isAdmin,
         isMinister: isMinister,
         toolLikeIds: [],
@@ -958,17 +780,6 @@ const Mutation = {
     });
     if (!findUser) {
       throw new Error(`User With id: ${id} Not Found`);
-    }
-
-    // checks if any userMaterial is linked to this user instead of checking if the
-    // borrowHistory is empty is to minimize and simplify input variables
-    const findNotReturnedMaterials = await prisma.userMaterial.findMany({
-      where: {
-        borrowerId: id,
-      },
-    });
-    if (findNotReturnedMaterials.length !== 0) {
-      throw new Error("There are materials lent by this user");
     }
 
     if (findUser.threeDPId) {
@@ -1283,7 +1094,6 @@ const Mutation = {
           language: newUser.language,
           threeDPId: newUser.threeDPId,
           laserCutAvailable: newUser.laserCutAvailable,
-          borrowHistoryId: newUser.borrowHistoryId,
           isAdmin: newUser.isAdmin,
           isMinister: newUser.isMinister,
           toolLikeIds: newUser.toolLikeIds,

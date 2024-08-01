@@ -7,7 +7,6 @@
       "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
       "threeDPId": null,
       "laserCutAvailable": true,
-      "borrowHistoryId": [],
       "articlesId": [],
       "isAdmin": true
     },
@@ -18,7 +17,6 @@
       "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
       "threeDPId": null,
       "laserCutAvailable": false,
-      "borrowHistoryId": [],
       "articlesId": [],
       "isAdmin": false
     }
