@@ -265,7 +265,7 @@ const Mutation = {
     return newDisposableMaterial;
   },
 
-  DeleteDisposableMaterial: async (parent, args: { id: number }, _context) => {
+  DeleteDisposableMaterial: async (_parents, args: { id: number }, _context) => {
     const id = args.id;
     const findDisposableMaterial = await prisma.disposableMaterial.findFirst({
       where: {
@@ -287,8 +287,8 @@ const Mutation = {
   },
 
   EditDisposableMaterial: async (
-    parents,
-    args: { id: number; disposableMaterialInput: DisposableMaterialInput },
+    _parents,
+    args: { id: number; disposableMaterialInput: DisposableMaterialInput }, _context
   ) => {
     const id = args.id;
     const {
@@ -335,12 +335,12 @@ const Mutation = {
   },
 
   DisposableMaterialUsageUpdate: async (
-    parent,
+    _parents,
     args: {
       id: number;
       disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput;
     },
-    content,
+    _contexts,
   ) => {
     const id = args.id;
     const { usage, remain } = args.disposableMaterialUsageUpdateInput;
@@ -372,7 +372,7 @@ const Mutation = {
   AddMachine: async (
     _parents,
     args: { machineInput: MachineInput },
-    content,
+    _contexts,
   ) => {
     const {
       name,
@@ -900,18 +900,25 @@ const Mutation = {
       isAdmin,
       isMinister,
     } = args.userInput;
-    if (threeDPId) {
-      const findThreeDP = await prisma.threeDP.findFirst({
-        where: {
-          id: threeDPId,
-        },
-      });
+    // if (threeDPId) {
+    //   const findThreeDP = await prisma.threeDP.findFirst({
+    //     where: {
+    //       id: threeDPId,
+    //     },
+    //   });
 
-      if (!findThreeDP) {
-        throw new Error("threeDP ID not found!");
-      }
+    //   if (!findThreeDP) {
+    //     throw new Error("threeDP ID not found!");
+    //   }
+    // }
+    const findUser = await prisma.user.findFirst({
+      where: {
+        studentID: studentID,
+      },
+    });
+    if (findUser) {
+      throw new Error("This student id is already registered!");
     }
-
     const newUser = await prisma.user.create({
       data: {
         name: name,
@@ -928,16 +935,16 @@ const Mutation = {
       },
     });
 
-    if (threeDPId) {
-      const updateWaiting = await prisma.threeDP.update({
-        where: {
-          id: threeDPId,
-        },
-        data: {
-          waitingId: { push: newUser.id },
-        },
-      });
-    }
+    // if (threeDPId) {
+    //   const updateWaiting = await prisma.threeDP.update({
+    //     where: {
+    //       id: threeDPId,
+    //     },
+    //     data: {
+    //       waitingId: { push: newUser.id },
+    //     },
+    //   });
+    // }
     pubsub.publish("USER_CREATED", { UserCreated: newUser });
     return newUser;
   },
@@ -1118,9 +1125,9 @@ const Mutation = {
   },
 
   AddArticle: async (
-    _parents: any,
+    _parents,
     args: { articleInput: ArticleInput },
-    _context: any,
+    _context,
   ) => {
     const {
       writerId,
@@ -1245,7 +1252,7 @@ const Mutation = {
     return updateAuthorizedCode;
   },
 
-  SignUp: async (_parents, args: { signUpInput: SignUpInput }) => {
+  SignUp: async (_parents, args: { signUpInput: SignUpInput }, _context) => {
     const costFactor = 12;
     const { name, studentID, password } = args.signUpInput;
 
@@ -1256,7 +1263,7 @@ const Mutation = {
     });
 
     if (studentIDExisted !== null) {
-      throw new Error("This ID is already registered!");
+      throw new Error("This student id is already registered!");
     } else {
       const hashedpassword = await bcrypt.hash(password, costFactor);
       const newUser = await prisma.user.create({
@@ -1266,7 +1273,7 @@ const Mutation = {
           password: hashedpassword,
         },
       });
-      console.log(newUser);
+
       const token = jwt.sign(
         {
           id: newUser.id,
