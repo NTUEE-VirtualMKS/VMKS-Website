@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,30 @@ import {
   EDIT_USER_LANGUAGE_MUTATION,
 } from "@/graphql/mutations";
 import type { UserType, SignupProps, LoginProps } from "@/shared/type.ts";
+import { z } from "zod";
+import { validDepartmentCodes } from "@/constants/index";
+
+const studentIdSchema = z.string().refine((studentId) => {
+  return (
+    studentId.length === 9 &&
+    validDepartmentCodes.has(studentId[0].toUpperCase()) &&
+    /^\d{2}$/.test(studentId.substring(1, 3)) &&
+    /^\d$/.test(studentId[3]) &&
+    /^\d{2}$/.test(studentId.substring(4, 6)) &&
+    /^\d{3}$/.test(studentId.substring(6, 9))
+  );
+}, "Invalid student ID format");
+
+const loginSchema = z.object({
+  studentId: studentIdSchema,
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
+
+const signupSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  studentId: studentIdSchema,
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
 
 export type UserContextType = {
   user: UserType | null;
@@ -71,11 +95,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const defaultPhotoLink =
       "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
     try {
+      signupSchema.parse({ name, studentId, password });
       await createUser({
         variables: {
           userInput: {
             name,
-            studentID: studentId,
+            studentID: studentId.toUpperCase(),
             password,
             photoLink: defaultPhotoLink,
             language: "en",
@@ -95,8 +120,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       toast({ title: "Sign up successfully!" });
       navigate("/Login");
     } catch (error) {
-      toast({ title: "Sign up failed", variant: "destructive" });
-      throw new Error("Sign up failed");
+      if (error instanceof z.ZodError) {
+        // Extract and display error messages from Zod validation
+        const errorMessage = error.errors.map((e) => e.message).join(". ");
+        toast({
+          title: "Invalid input",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        throw new Error(errorMessage);
+      } else {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred",
+          variant: "destructive",
+        });
+        throw new Error(error as string);
+      }
     }
   };
 
@@ -118,7 +158,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     try {
-      const response = await getUserByStudentId({ variables: { studentId } });
+      loginSchema.parse({ studentId, password });
+      const response = await getUserByStudentId({
+        variables: { studentId: studentId.toUpperCase() },
+      });
       const user = response?.data?.GetUserByStudentID;
       if (!user) {
         toast({ title: "User not found", variant: "destructive" });
@@ -152,8 +195,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         navigate("/");
       }
     } catch (error) {
-      toast({ title: `${error}`, variant: "destructive" });
-      throw new Error(`${error}`);
+      if (error instanceof z.ZodError) {
+        // Extract and display error messages from Zod validation
+        const errorMessage = error.errors.map((e) => e.message).join(". ");
+        toast({
+          title: "Invalid input",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "User not found",
+          description: "Student id or password are wrong!",
+          variant: "destructive",
+        });
+        throw new Error(error as string);
+      }
     }
   };
 
@@ -202,21 +259,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const contextValue = useMemo(
+    () => ({
+      user,
+      setUser,
+      login,
+      logout,
+      signup,
+      pushToLoginPage,
+      setPushToLoginPage,
+      handleEditLanguage,
+    }),
+    [user, pushToLoginPage]
+  );
+
   return (
-    <UserContext.Provider
-      value={{
-        user,
-        setUser,
-        login,
-        logout,
-        signup,
-        pushToLoginPage,
-        setPushToLoginPage,
-        handleEditLanguage,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 
