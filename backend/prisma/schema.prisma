@@ -91,21 +91,19 @@ model ThreeDP {
 }
 
 model User {
-  id                Int            @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   name              String
-  studentID         String         @unique
+  studentID         String     @unique
   password          String
   photoLink         String?
-  language          String         @default("en")
-  threeDPUse        ThreeDP?       @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  language          String     @default("en")
+  threeDPUse        ThreeDP?   @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   threeDPId         Int?
-  laserCutAvailable Boolean        @default(false)
-  borrowHistory     UserMaterial[]
-  borrowHistoryId   Int[]
+  laserCutAvailable Boolean    @default(false)
   articles          Article[]
   articlesId        Int[]
-  isAdmin           Boolean        @default(false)
-  isMinister        Boolean        @default(false)
+  isAdmin           Boolean    @default(false)
+  isMinister        Boolean    @default(false)
   toolLikes         ToolLike[]
   toolLikeIds       Int[]
 }
@@ -114,18 +112,6 @@ model AuthorizedCode {
   id        Int      @id @default(autoincrement())
   codeList  String[]
   updatedAt String
-}
-
-model UserMaterial {
-  id         Int     @id @default(autoincrement())
-  name       String
-  partName   String?
-  borrower   User    @relation(fields: [borrowerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  borrowerId Int
-  borrowNum  Int
-  borrowDate String
-  returnDate String?
-  status     String
 }
 
 model Article {

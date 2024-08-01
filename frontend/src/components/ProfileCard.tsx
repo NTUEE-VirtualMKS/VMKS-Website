@@ -26,6 +26,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useUser } from "@/contexts/UserContext";
 
 function ProfileCard({
   id,
@@ -40,6 +41,7 @@ function ProfileCard({
 }: ProfileCardProps) {
   const { toast } = useToast();
   const { t } = useTranslation();
+  const { user } = useUser();
   if (!photoLink) return <LoaderSpinner />;
   const { windowWidth } = useWindow();
   const [showPassword, setShowPassword] = useState(false);
@@ -315,29 +317,31 @@ function ProfileCard({
               {canUseLaser ? "Yes" : "No"}
             </span>
           </p>
-          <div className="flex flex-row mt-2 items-center">
-            {windowWidth > 630 &&
-              !(windowWidth > 767 && windowWidth < 1031) && (
-                <Label
-                  htmlFor="authorized-code"
-                  className="text-white text-lg mr-1"
-                >
-                  {t("authorizedCode") + ": "}
-                </Label>
-              )}
-            <PasswordInput
-              id="authorized-code"
-              placeholder="Authorized Code"
-              name="authorized-code"
-              className="input-class"
-              autoComplete="new-password"
-              value={authorizedCode}
-              onChange={(e) => setAuthorizedCode(e.target.value)}
-            />
-            <Button className="ml-2 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
-              {t("submit")}
-            </Button>
-          </div>
+          {!user?.isAdmin && (
+            <div className="flex flex-row mt-2 items-center">
+              {windowWidth > 630 &&
+                !(windowWidth > 767 && windowWidth < 1031) && (
+                  <Label
+                    htmlFor="authorized-code"
+                    className="text-white text-lg mr-1"
+                  >
+                    {t("authorizedCode") + ": "}
+                  </Label>
+                )}
+              <PasswordInput
+                id="authorized-code"
+                placeholder="Authorized Code"
+                name="authorized-code"
+                className="input-class"
+                autoComplete="new-password"
+                value={authorizedCode}
+                onChange={(e) => setAuthorizedCode(e.target.value)}
+              />
+              <Button className="ml-2 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200">
+                {t("submit")}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

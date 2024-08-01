@@ -10,6 +10,7 @@ const ANNOUNCEMENT_CREATED_SUBSCRIPTION = gql(`
     }
   }
 `);
+
 const INTRODUCTION_UPDATED_SUBSCRIPTION = gql(`
   subscription IntroductionUpdated {
     IntroductionUpdated {

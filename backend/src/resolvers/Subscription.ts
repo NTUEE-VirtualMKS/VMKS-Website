@@ -55,15 +55,6 @@ const Subscription = {
   ThreeDPUpdated: {
     subscribe: () => pubsub.asyncIterator("THREEDP_UPDATED"),
   },
-  UserMaterialCreated: {
-    subscribe: () => pubsub.asyncIterator(["USERMATERIAL_CREATED"]),
-  },
-  UserMaterialDeleted: {
-    subscribe: () => pubsub.asyncIterator(["USERMATERIAL_DELETED"]),
-  },
-  UserMaterialUpdated: {
-    subscribe: () => pubsub.asyncIterator(["USERMATERIAL_UPDATED"]),
-  },
   UserCreated: {
     subscribe: () => pubsub.asyncIterator(["USER_CREATED"]),
   },

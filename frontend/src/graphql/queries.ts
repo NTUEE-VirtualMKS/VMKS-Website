@@ -410,7 +410,6 @@ const ALL_USER_QUERY = gql(`
     language
     threeDPId
     laserCutAvailable
-    borrowHistoryId
     articlesId
     isAdmin
     isMinister
@@ -430,7 +429,6 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       language
       threeDPId
       laserCutAvailable
-      borrowHistoryId
       articlesId
       isAdmin
       isMinister
@@ -450,28 +448,12 @@ const GET_USER_BY_STUDENT_ID_QUERY = gql(`
     language
     threeDPId
     laserCutAvailable
-    borrowHistoryId
     articlesId
     isAdmin
     isMinister
     toolLikeIds
   }
 }
-`);
-
-const ALL_USER_MATERIAL_QUERY = gql(`
-  query AllUserMaterials {
-    AllUserMaterials {
-      id
-      name
-      partName
-      borrowerId
-      borrowNum
-      borrowDate
-      returnDate
-      status
-    }
-  }
 `);
 
 const GET_AUTHORIZED_CODE_QUERY = gql(`
@@ -541,7 +523,6 @@ export {
   ALL_TOOL_QUERY,
   ALL_USER_QUERY,
   GET_AUTHORIZED_CODE_QUERY,
-  ALL_USER_MATERIAL_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_CATEGORY_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_NAME_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_POSITION_QUERY,

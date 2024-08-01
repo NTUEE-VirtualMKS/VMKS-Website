@@ -332,7 +332,6 @@ const ADD_USER_MUTATION = gql(`
       language
       threeDPId
       laserCutAvailable
-      borrowHistoryId
       articlesId
       isAdmin
       isMinister
@@ -352,7 +351,6 @@ const DELETE_USER_MUTATION = gql(`
       language
       threeDPId
       laserCutAvailable
-      borrowHistoryId
       articlesId
       isAdmin
       isMinister
@@ -372,57 +370,10 @@ const EDIT_USER_MUTATION = gql(`
       language
       threeDPId
       laserCutAvailable
-      borrowHistoryId
       articlesId
       isAdmin
       isMinister
       toolLikeIds
-    }
-  }
-`);
-
-// UserMaterial
-const ADD_USER_MATERIAL_MUTATION = gql(`
-  mutation AddUserMaterial($userMaterialInput: UserMaterialInput!) {
-    AddUserMaterial(userMaterialInput: $userMaterialInput) {
-      id
-      name
-      partName
-      borrowerId
-      borrowNum
-      borrowDate
-      returnDate
-      status
-    }
-  }
-`);
-
-const DELETE_USER_MATERIAL_MUTATION = gql(`
-  mutation DeleteUserMaterial($deleteUserMaterialId: Int!) {
-    DeleteUserMaterial(id: $deleteUserMaterialId) {
-      id
-      name
-      partName
-      borrowerId
-      borrowNum
-      borrowDate
-      returnDate
-      status
-    }
-  }
-`);
-
-const EDIT_USER_MATERIAL_MUTATION = gql(`
-  mutation EditUserMaterial($editUserMaterialId: Int!, $userMaterialEditInput: UserMaterialEditInput!) {
-    EditUserMaterial(id: $editUserMaterialId, userMaterialEditInput: $userMaterialEditInput) {
-      id
-      name
-      partName
-      borrowerId
-      borrowNum
-      borrowDate
-      returnDate
-      status
     }
   }
 `);
@@ -496,10 +447,10 @@ const USER_MACHINE_USAGE_UPDATE_MUTATION = gql(`
       photoLink
       threeDPId
       laserCutAvailable
-      borrowHistoryId
       articlesId
       isAdmin
       isMinister
+      language
     }
   }
 `);
@@ -556,7 +507,6 @@ const EDIT_USER_LANGUAGE_MUTATION = gql(`
     language
     threeDPId
     laserCutAvailable
-    borrowHistoryId
     articlesId
     isAdmin
     isMinister
@@ -588,9 +538,6 @@ export {
   ADD_USER_MUTATION,
   DELETE_USER_MUTATION,
   EDIT_USER_MUTATION,
-  ADD_USER_MATERIAL_MUTATION,
-  DELETE_USER_MATERIAL_MUTATION,
-  EDIT_USER_MATERIAL_MUTATION,
   DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION,
   MATERIAL_USAGE_UPDATE_MUTATION,
   TOOL_USAGE_UPDATE_MUTATION,

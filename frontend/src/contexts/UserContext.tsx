@@ -92,7 +92,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
 
   const signup = async ({ name, studentId, password }: SignupProps) => {
-    const defaultPhotoLink =
+    const defaultPhotoUrl =
       "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
     try {
       signupSchema.parse({ name, studentId, password });
@@ -102,7 +102,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             name,
             studentID: studentId.toUpperCase(),
             password,
-            photoLink: defaultPhotoLink,
+            photoLink: defaultPhotoUrl,
             language: "en",
             isAdmin: false,
             isMinister: false,
@@ -177,7 +177,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           language: user.language,
           threeDPId: user?.threeDPId,
           laserCutAvailable: user.laserCutAvailable,
-          borrowHistoryId: user?.borrowHistoryId,
           articlesId: user?.articlesId,
           isAdmin: user.isAdmin,
           isMinister: user.isMinister,
