@@ -121,7 +121,7 @@ i18n
             "Sign up to borrow materials or tools",
           dontHaveAnAccount: "Don't have an account?",
           confirmPassword: "Confirm Password",
-          haveAccount: "Had an account?",
+          haveAccount: "Already had an account?",
           introduction: "Introduction",
           tableOfContents: "Contents",
           briefIntroduction: "Breif Introduction",

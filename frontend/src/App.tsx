@@ -21,7 +21,9 @@ const AuthorizedCodePage = lazy(
   () => import("@/containers/AuthorizedCodePage")
 );
 const MaterialPage = lazy(() => import("@/containers/MaterialPage"));
-const MaterialDetailPage = lazy(() => import("@/containers/MaterialDetailPage"));
+const MaterialDetailPage = lazy(
+  () => import("@/containers/MaterialDetailPage")
+);
 const ToolPage = lazy(() => import("@/containers/ToolPage"));
 const ToolDetailPage = lazy(() => import("./containers/ToolDetailPage"));
 const ShoppingCartPage = lazy(() => import("@/containers/ShoppingCartPage"));
@@ -174,24 +176,29 @@ function App() {
     </div>
   ) : (
     <div className="flex flex-center">
-      <Routes>
-        <Route
-          path="/Login"
-          element={
-            <Suspense fallback={<LoaderSpinner />}>
-              <LoginPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <Suspense fallback={<LoaderSpinner />}>
-              <FakeHome />
-            </Suspense>
-          }
-        />
-      </Routes>
+      {isOnline ? (
+        <Routes>
+          <Route
+            path="/Login"
+            element={
+              <Suspense fallback={<LoaderSpinner />}>
+                <LoginPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<LoaderSpinner />}>
+                <FakeHome />
+              </Suspense>
+            }
+          />
+        </Routes>
+      ) : (
+        <UnconnectedPage />
+      )}
+      <NetworkStatus />
     </div>
   );
 }

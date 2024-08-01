@@ -190,20 +190,25 @@ export const websiteUserPrecautionsEn = "Website User Precautions";
 export const toolAndEquipmentPrecautionsEn =
   "Tool and Equipment Borrowing Precautions";
 
-export const images = [
-  {
-    url: "https://http.cat/200",
-    alt: "200 OK",
-  },
-  {
-    url: "https://http.cat/400",
-    alt: "400 Bad Request",
-  },
-  {
-    url: "https://http.cat/404",
-    alt: "404 Not Found",
-  },
-];
+export const validDepartmentCodes = new Set([
+  "B",
+  "R",
+  "D",
+  "E",
+  "T",
+  "A",
+  "C",
+  "S",
+  "Y",
+  "Z",
+  "P",
+  "J",
+  "F",
+  "Q",
+  "H",
+  "K",
+  "N",
+]);
 
 export const icons = [
   {
