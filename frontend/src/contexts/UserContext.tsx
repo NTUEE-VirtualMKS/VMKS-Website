@@ -128,14 +128,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           description: errorMessage,
           variant: "destructive",
         });
-        throw new Error(errorMessage);
       } else {
         toast({
           title: "Error",
-          description: "An unexpected error occurred",
+          description: `${error}`.split(":")[1],
           variant: "destructive",
         });
-        throw new Error(error as string);
       }
     }
   };
@@ -206,7 +204,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       } else {
         toast({
           title: "User not found",
-          description: "Student id or password are wrong!",
+          description: "Student id or password is wrong!",
           variant: "destructive",
         });
         throw new Error(error as string);
