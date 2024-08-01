@@ -12,6 +12,7 @@ import { useUser } from "./contexts/UserContext";
 import useUserLanguage from "@/hooks/useUserLanguage";
 
 const FakeHome = lazy(() => import("@/containers/FakeHome"));
+const FakeLoginPage = lazy(() => import("@/containers/FakeLoginPage"));
 const LoginPage = lazy(() => import("@/containers/LoginPage"));
 const IntroductionPage = lazy(() => import("@/containers/IntroductionPage"));
 const TutorialPage = lazy(() => import("@/containers/TutorialPage"));
@@ -53,6 +54,14 @@ function App() {
           <div className="flex-1 mx-2 mt-16 sm:mt-16 md:mt-20 lg:mt-20 xl:mt-20">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route
+                path="/Login"
+                element={
+                  <Suspense fallback={<LoaderSpinner />}>
+                    <FakeLoginPage />
+                  </Suspense>
+                }
+              />
               <Route
                 path="/IntroductionPage"
                 element={

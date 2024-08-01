@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@/contexts/UserContext";
 import { useTranslation } from "react-i18next";
 import { useWindow } from "@/contexts/WindowContext";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -34,8 +36,8 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
-        className="bg-black bg-opacity-90 border border-white text-white"
+        align="center"
+        className="bg-black bg-opacity-90 border border-white text-white mt-1.5"
       >
         <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -61,18 +63,18 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {windowWidth < 601 && (
-          <>
+          <RadioGroup defaultValue={i18n.language}>
             <DropdownMenuItem onClick={() => changeLanguage("en")}>
-              <span className="font-semibold text-base mr-2.5 ml-1">A</span>
-              <span>English</span>
+              <RadioGroupItem value="en" id="en" className="w-3 h-3 mr-2" />
+              <Label htmlFor="en">English</Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => changeLanguage("zh")}>
-              <span className="font-semibold text-sm mr-2 ml-0.5">文</span>
-              <span>中文 (繁體)</span>
+              <RadioGroupItem value="zh" id="zh" className="w-3 h-3 mr-2" />
+              <Label htmlFor="zh">中文 (繁體)</Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-          </>
+          </RadioGroup>
         )}
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
