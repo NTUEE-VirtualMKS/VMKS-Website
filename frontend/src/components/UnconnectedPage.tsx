@@ -12,7 +12,7 @@ function UnconnectedPage() {
           {t("connectToTheInternet")}
         </p>
         <p className="w-full text-lg text-center font-semibold text-white">
-          {"offlineMessage"}
+          {t("offlineMessage")}
         </p>
         <Button
           onClick={() => window.location.reload()}

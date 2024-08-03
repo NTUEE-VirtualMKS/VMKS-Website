@@ -70,7 +70,7 @@ function MaterialCard({
     }
   };
 
-  // const handleBorrow = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // const handleAddToShoppingCart = (e: React.MouseEvent<HTMLAnchorElement>) => {
   //   if (!user) {
   //     e.preventDefault();
   //     toast({
@@ -117,8 +117,8 @@ function MaterialCard({
     },
   ]);
 
-  const handleBorrow = () => {
-    toast({ title: "Added to shopping cart." });
+  const handleAddToShoppingCart = () => {
+    toast({ title: "Material added to shopping cart!" });
   };
 
   const handleLike = () => {
@@ -304,7 +304,7 @@ function MaterialCard({
                     <ShoppingCart
                       className="p-1.5 hover:text-sky-300"
                       size={35}
-                      onClick={handleBorrow}
+                      onClick={handleAddToShoppingCart}
                     />
                   ) : (
                     <ShoppingCart

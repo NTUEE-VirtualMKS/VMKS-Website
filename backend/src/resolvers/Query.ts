@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../../utils/env.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
+
 const Query = {
   AllAnnouncements: async (_parents, _args, _context) => {
     const announcements = await prisma.announcement.findMany({
@@ -666,6 +667,102 @@ const Query = {
     });
 
     return likedTools;
+  },
+
+  GetAllUserBorrowTools: async () => {
+    const allUserBorrowTools = await prisma.userBorrowTool.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return allUserBorrowTools;
+  },
+
+  GetAllUserBorrowToolsByStatus: async (
+    _parents,
+    args: { status: string[] },
+    _context,
+  ) => {
+    const { status } = args;
+    const allUserBorrowTools = await prisma.userBorrowTool.findMany({
+      where: {
+        status: {
+          in: status,
+        },
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return allUserBorrowTools;
+  },
+
+  GetUserBorrowToolById: async (_parents, args: { id: number }, _context) => {
+    const id = args.id;
+    const userBorrowTool = await prisma.userBorrowTool.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return userBorrowTool;
+  },
+
+  GetUserBorrowToolsByUserId: async (
+    _parents,
+    args: { userId: number },
+    _context,
+  ) => {
+    const userId = args.userId;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const userBorrowTools = await prisma.userBorrowTool.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return userBorrowTools;
+  },
+
+  GetUserBorrowToolsByStatusAndUserId: async (
+    _parents,
+    args: { userId: number; status: string[] },
+    _context,
+  ) => {
+    const { userId, status } = args;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const userBorrowTools = await prisma.userBorrowTool.findMany({
+      where: {
+        userId: userId,
+        status: {
+          in: status,
+        },
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return userBorrowTools;
   },
 };
 

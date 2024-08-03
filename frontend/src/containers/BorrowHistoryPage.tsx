@@ -1,4 +1,4 @@
-import BorrowedList from "@/components/BorrowedList";
+import BorrowHistoryList from "@/components/BorrowHistory/BorrowHistoryList";
 import { History } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +11,7 @@ function BorrowHistoryPage() {
         {t("borrowHistory")}
       </h1>
       <div className="w-full">
-        <BorrowedList />
+        <BorrowHistoryList />
       </div>
     </div>
   );

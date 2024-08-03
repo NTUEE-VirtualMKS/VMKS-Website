@@ -29,15 +29,14 @@ function ToolList({ search }: { search: string }) {
       tutorialLink: tool!.tutorialLink,
       partName: tool!.partName,
       toolLikeIds: tool!.toolLikeIds,
+      userBorrowToolIds: tool!.userBorrowToolIds,
     };
     return filteredTool;
   });
 
   if (search === "") {
     refetch()
-      .then(() => {
-        console.log("Refetching!");
-      })
+      .then(() => {})
       .catch((error) => {
         console.log("Error! ", error.message);
       });

@@ -18,25 +18,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { borrowedData } from "@/constants";
-import { borrowedColumns } from "@/constants/tableConst";
+import { borrowHistoryColumns } from "@/constants/tableConst";
 import { useTranslation } from "react-i18next";
+import { UserBorrowToolType } from "@/shared/type";
 
-function BorrowedTable({
+function BorrowHistoryTable({
   tableName,
   Icon,
+  borrowHistoryData,
 }: {
   tableName: string;
   Icon: React.ElementType;
+  borrowHistoryData: UserBorrowToolType[];
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const { t } = useTranslation();
-  const borrowingTable = useReactTable({
-    data: borrowedData,
-    columns: borrowedColumns,
+
+  const borrowHistoryTable = useReactTable({
+    data: borrowHistoryData,
+    columns: borrowHistoryColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -64,7 +67,7 @@ function BorrowedTable({
       <div className="rounded-md border-[#444444] border mb-4 mt-2">
         <Table>
           <TableHeader>
-            {borrowingTable.getHeaderGroups().map((headerGroup) => (
+            {borrowHistoryTable.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
@@ -82,8 +85,8 @@ function BorrowedTable({
             ))}
           </TableHeader>
           <TableBody>
-            {borrowingTable.getRowModel().rows?.length ? (
-              borrowingTable.getRowModel().rows.map((row) => (
+            {borrowHistoryTable.getRowModel().rows?.length ? (
+              borrowHistoryTable.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -101,10 +104,10 @@ function BorrowedTable({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={borrowedColumns.length}
+                  colSpan={borrowHistoryColumns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -115,4 +118,4 @@ function BorrowedTable({
   );
 }
 
-export default BorrowedTable;
+export default BorrowHistoryTable;

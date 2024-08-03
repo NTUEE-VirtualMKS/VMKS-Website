@@ -1,5 +1,5 @@
 // TODO: connect timetable with backend
-import { timetable } from "@/constants";
+import { timetable } from "@/constants/index";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Calendar } from "lucide-react";

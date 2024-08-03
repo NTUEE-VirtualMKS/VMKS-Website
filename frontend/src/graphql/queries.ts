@@ -323,6 +323,7 @@ const ALL_TOOL_QUERY = gql(`
     tutorialLink
     remain
     toolLikeIds
+    userBorrowToolIds
   }
 }
 `);
@@ -341,6 +342,7 @@ query GetToolById($getToolByIdId: Int!) {
     tutorialLink
     remain
     toolLikeIds
+    userBorrowToolIds
   }
 }  
 `);
@@ -359,6 +361,7 @@ const SEARCH_TOOL_BY_CATEGORY_QUERY = gql(`
     tutorialLink
     remain
     toolLikeIds
+    userBorrowToolIds
   }
 }
 `);
@@ -377,6 +380,7 @@ const SEARCH_TOOL_BY_NAME_QUERY = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -395,6 +399,7 @@ const SEARCH_TOOL_BY_POSITION_QUERY = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -414,6 +419,7 @@ const ALL_USER_QUERY = gql(`
     isAdmin
     isMinister
     toolLikeIds
+    userBorrowToolIds
   }
 }
 `);
@@ -433,6 +439,7 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       isAdmin
       isMinister
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -452,6 +459,7 @@ const GET_USER_BY_STUDENT_ID_QUERY = gql(`
     isAdmin
     isMinister
     toolLikeIds
+    userBorrowToolIds
   }
 }
 `);
@@ -477,40 +485,151 @@ const CURRENT_INTRODUCTION_QUERY = gql(`
 
 const GET_TOOL_LIKES_QUERY = gql(`
   query GetToolLikes {
-  GetToolLikes {
-    id
-    userId
-    toolId
+    GetToolLikes {
+      id
+      userId
+      toolId
+    }
   }
-}
 `);
 
 const GET_TOOL_LIKE_BY_ID_QUERY = gql(`
   query GetToolLikeById($getToolLikeByIdId: Int!) {
-  GetToolLikeById(id: $getToolLikeByIdId) {
-    id
-    userId
-    toolId
+    GetToolLikeById(id: $getToolLikeByIdId) {
+      id
+      userId
+      toolId
+    }
   }
-}
 `);
 
 const GET_LIKED_TOOLS_BY_USER_ID_QUERY = gql(`
   query GetLikedToolsByUserId($userId: Int!) {
-  GetLikedToolsByUserId(userId: $userId) {
-    id
-    name
-    partName
-    category
-    position
-    description
-    photoLink
-    usage
-    tutorialLink
-    remain
-    toolLikeIds
+    GetLikedToolsByUserId(userId: $userId) {
+      id
+      name
+      partName
+      category
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      remain
+      toolLikeIds
+      userBorrowToolIds
+    }
   }
-}
+`);
+
+const GET_ALL_USER_BORROW_TOOLS_QUERY = gql(`
+  query GetAllUserBorrowTools {
+    GetAllUserBorrowTools {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY = gql(`
+  query GetAllUserBorrowToolsByStatus($status: [String]!) {
+    GetAllUserBorrowToolsByStatus(status: $status) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_TOOL_BY_ID_QUERY = gql(`
+  query GetUserBorrowToolById($getUserBorrowToolByIdId: Int!) {
+    GetUserBorrowToolById(id: $getUserBorrowToolByIdId) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_TOOLS_BY_USER_ID_QUERY = gql(`
+  query GetUserBorrowToolsByUserId($userId: Int!) {
+    GetUserBorrowToolsByUserId(userId: $userId) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY = gql(`
+  query GetUserBorrowToolsByStatusAndUserId($userId: Int!, $status: [String]!) {
+    GetUserBorrowToolsByStatusAndUserId(userId: $userId, status: $status) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
 `);
 
 export {
@@ -545,4 +664,9 @@ export {
   GET_TOOL_LIKES_QUERY,
   GET_TOOL_LIKE_BY_ID_QUERY,
   GET_LIKED_TOOLS_BY_USER_ID_QUERY,
+  GET_ALL_USER_BORROW_TOOLS_QUERY,
+  GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+  GET_USER_BORROW_TOOL_BY_ID_QUERY,
+  GET_USER_BORROW_TOOLS_BY_USER_ID_QUERY,
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
 };

@@ -160,6 +160,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const response = await getUserByStudentId({
         variables: { studentId: studentId.toUpperCase() },
       });
+
       const user = response?.data?.GetUserByStudentID;
       if (!user) {
         toast({ title: "User not found", variant: "destructive" });
@@ -181,6 +182,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           isAdmin: user.isAdmin,
           isMinister: user.isMinister,
           toolLikeIds: user?.toolLikeIds,
+          userBorrowToolIds: user?.userBorrowToolIds,
         });
         i18n.changeLanguage(user.language);
         toast({

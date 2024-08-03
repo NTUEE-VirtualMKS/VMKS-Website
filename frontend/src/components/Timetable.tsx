@@ -1,5 +1,5 @@
 // TODO: RWD
-import { adminTimetable, week } from "@/constants";
+import { adminTimetable, week } from "@/constants/index";
 
 function Timetable() {
   return (
