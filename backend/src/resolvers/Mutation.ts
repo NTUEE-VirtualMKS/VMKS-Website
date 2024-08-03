@@ -22,6 +22,7 @@ import {
   AuthorizedCodeInput,
   SignUpInput,
   ToolLikeInput,
+  UserBorrowToolInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -175,7 +176,7 @@ const Mutation = {
       throw new Error("tool not found!");
     }
 
-    const editTool = await prisma.tool.update({
+    const editedTool = await prisma.tool.update({
       where: {
         id: id,
       },
@@ -192,8 +193,26 @@ const Mutation = {
       },
     });
 
-    pubsub.publish("TOOL_UPDATED", { ToolUpdated: editTool });
-    return editTool;
+    // update userBorrowTools
+    const userBorrowToolIds = editedTool.userBorrowToolIds;
+    await prisma.userBorrowTool.updateMany({
+      where: {
+        id: {
+          in: userBorrowToolIds,
+        },
+      },
+      data: {
+        name: editedTool.name,
+        partName: editedTool.partName,
+        category: editedTool.category,
+        position: editedTool.position,
+        figure: editedTool.photoLink,
+        remain: editedTool.remain,
+      },
+    });
+
+    pubsub.publish("TOOL_UPDATED", { ToolUpdated: editedTool });
+    return editedTool;
   },
 
   ToolUsageUpdate: async (
@@ -723,17 +742,7 @@ const Mutation = {
       isAdmin,
       isMinister,
     } = args.userInput;
-    // if (threeDPId) {
-    //   const findThreeDP = await prisma.threeDP.findFirst({
-    //     where: {
-    //       id: threeDPId,
-    //     },
-    //   });
 
-    //   if (!findThreeDP) {
-    //     throw new Error("threeDP ID not found!");
-    //   }
-    // }
     const findUser = await prisma.user.findFirst({
       where: {
         studentID: studentID,
@@ -757,16 +766,6 @@ const Mutation = {
       },
     });
 
-    // if (threeDPId) {
-    //   const updateWaiting = await prisma.threeDP.update({
-    //     where: {
-    //       id: threeDPId,
-    //     },
-    //     data: {
-    //       waitingId: { push: newUser.id },
-    //     },
-    //   });
-    // }
     pubsub.publish("USER_CREATED", { UserCreated: newUser });
     return newUser;
   },
@@ -792,7 +791,7 @@ const Mutation = {
       const waitingID = findThreeDP.waitingId;
       const index = waitingID.indexOf(id);
       waitingID.splice(index, 1);
-      const updateThreeDP = await prisma.threeDP.update({
+      await prisma.threeDP.update({
         where: {
           id: threeDPID,
         },
@@ -849,6 +848,21 @@ const Mutation = {
         isMinister: isMinister,
       },
     });
+
+    const userBorrowToolIds = findUser.userBorrowToolIds;
+    // update userBorrowTools
+    await prisma.userBorrowTool.updateMany({
+      where: {
+        id: {
+          in: userBorrowToolIds,
+        },
+      },
+      data: {
+        borrower: updateUser.name,
+        studentId: updateUser.studentID,
+      },
+    });
+
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
     return updateUser;
   },
@@ -1242,6 +1256,254 @@ const Mutation = {
       },
     });
     return updateUser;
+  },
+
+  AddUserBorrowTool: async (
+    _parents,
+    args: { userBorrowToolInput: UserBorrowToolInput },
+    _context,
+  ) => {
+    const { userId, toolId, quantity } = args.userBorrowToolInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error("User Not Found");
+    }
+
+    const tool = await prisma.tool.findUnique({
+      where: {
+        id: toolId,
+      },
+    });
+
+    if (!tool) {
+      throw new Error("Tool Not Found");
+    }
+
+    // update tool
+    const remain = tool.remain - quantity;
+    const usage = tool.usage + quantity;
+    await prisma.tool.update({
+      where: {
+        id: toolId,
+      },
+      data: {
+        remain,
+        usage,
+      },
+    });
+
+    const newUserBorrowTool = await prisma.userBorrowTool.create({
+      data: {
+        userId: userId,
+        toolId: toolId,
+        borrower: user.name,
+        studentId: user.studentID,
+        figure: tool.photoLink,
+        name: tool.name,
+        partName: tool.partName,
+        category: tool.category,
+        remain: remain,
+        position: tool.position,
+        quantity,
+      },
+    });
+
+    await prisma.tool.update({
+      where: {
+        id: toolId,
+      },
+      data: {
+        userBorrowToolIds: [...tool.userBorrowToolIds, newUserBorrowTool.id],
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        userBorrowToolIds: [...user.userBorrowToolIds, newUserBorrowTool.id],
+      },
+    });
+
+    return newUserBorrowTool;
+  },
+
+  DeleteUserBorrowTool: async (_parents, args: { id: number }, _context) => {
+    const id = args.id;
+    const userBorrowTool = await prisma.userBorrowTool.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowTool) {
+      throw new Error("User Borrow Tool Not Found");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userBorrowTool.userId,
+      },
+    });
+
+    const tool = await prisma.tool.findUnique({
+      where: {
+        id: userBorrowTool.toolId,
+      },
+    });
+
+    const remain = tool.remain + userBorrowTool.quantity;
+    await prisma.tool.update({
+      where: {
+        id: userBorrowTool.toolId,
+      },
+      data: {
+        remain,
+      },
+    });
+
+    const deleteUserBorrowTool = await prisma.userBorrowTool.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    await prisma.tool.update({
+      where: {
+        id: userBorrowTool.toolId,
+      },
+      data: {
+        userBorrowToolIds: {
+          set: tool.userBorrowToolIds.filter((id) => id !== userBorrowTool.id),
+        },
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: userBorrowTool.userId,
+      },
+      data: {
+        userBorrowToolIds: {
+          set: user.userBorrowToolIds.filter((id) => id !== userBorrowTool.id),
+        },
+      },
+    });
+
+    return deleteUserBorrowTool;
+  },
+
+  EditUserBorrowToolQuantity: async (
+    _parents,
+    args: { id: number; userBorrowToolInput: UserBorrowToolInput },
+    _context,
+  ) => {
+    const { id, userBorrowToolInput } = args;
+    const { toolId, quantity } = userBorrowToolInput;
+    // new quantity
+    const userBorrowTool = await prisma.userBorrowTool.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowTool) {
+      throw new Error("User Borrow Tool Not Found");
+    }
+
+    const tool = await prisma.tool.findUnique({
+      where: {
+        id: toolId,
+      },
+    });
+
+    const remain = tool.remain + userBorrowTool.quantity - quantity;
+    const usage = tool.usage + quantity - userBorrowTool.quantity;
+    await prisma.tool.update({
+      where: {
+        id: userBorrowTool.toolId,
+      },
+      data: {
+        remain,
+        usage,
+      },
+    });
+
+    const editUserBorrowTool = await prisma.userBorrowTool.update({
+      where: {
+        id: id,
+      },
+      data: {
+        quantity: quantity,
+        remain: remain,
+      },
+    });
+
+    return editUserBorrowTool;
+  },
+
+  EditUserBorrowToolStatus: async (
+    _parents,
+    args: { id: number; status: string },
+    _context,
+  ) => {
+    const { id, status } = args;
+    const userBorrowTool = await prisma.userBorrowTool.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowTool) {
+      throw new Error("User Borrow Tool Not Found");
+    }
+
+    const editUserBorrowTool = await prisma.userBorrowTool.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: status,
+      },
+    });
+
+    if (status === "Returned") {
+      await prisma.tool.update({
+        where: {
+          id: userBorrowTool.toolId,
+        },
+        data: {
+          remain: userBorrowTool.remain + userBorrowTool.quantity,
+        },
+      });
+    } else if (status === "Success") {
+      // update userBorrowTool's borrowDate
+      await prisma.userBorrowTool.update({
+        where: {
+          id: id,
+        },
+        data: {
+          borrowDate: new Date().toLocaleString(),
+        },
+      });
+    } else if (status === "Returned") {
+      // update userBorrowTool's returnDate
+      await prisma.userBorrowTool.update({
+        where: {
+          id: id,
+        },
+        data: {
+          returnDate: new Date().toLocaleString(),
+        },
+      });
+    }
+
+    return editUserBorrowTool;
   },
 };
 

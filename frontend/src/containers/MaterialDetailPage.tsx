@@ -1,4 +1,4 @@
-// TODO: handle rborrow and repair buttons
+// TODO: handle borrow and repair buttons
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import RouteBar from "@/components/MaterialAndTool/RouteBar.tsx";
@@ -35,7 +35,7 @@ function MaterialDetailPage() {
     }
   };
 
-  const handleBorrow = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToShoppingCart = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!user) {
       e.preventDefault();
       toast({
@@ -72,7 +72,7 @@ function MaterialDetailPage() {
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfXeqhK9OoII0DYkdMv8injfqSh0k3Y0exXxrEI0_GQvTn2LQ/viewform"
                 target="_blank"
-                onClick={handleBorrow}
+                onClick={handleAddToShoppingCart}
               >
                 {t("borrow")}
               </a>

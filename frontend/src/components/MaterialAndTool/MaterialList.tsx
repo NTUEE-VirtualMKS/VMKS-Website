@@ -36,9 +36,7 @@ function MaterialList({ search }: { search: string }) {
 
   if (search === "") {
     refetch()
-      .then(() => {
-        console.log("Refetching!");
-      })
+      .then(() => {})
       .catch((error) => {
         console.log("Error! ", error.message);
       });

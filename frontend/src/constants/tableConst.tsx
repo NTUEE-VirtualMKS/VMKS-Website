@@ -9,34 +9,48 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  MoreHorizontal,
-  Share,
-  Star,
-  Trash2,
-  ShoppingCart,
-} from "lucide-react";
+import { MoreHorizontal, Share, Trash2, ShoppingCart } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import type { BorrowType } from "@/shared/type";
+import type { UserBorrowToolType } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@apollo/client";
+import {
+  DELETE_USER_BORROW_TOOL_MUTATION,
+  EDIT_USER_BORROW_TOOL_STATUS_MUTATION,
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+  ADD_USER_BORROW_TOOL_MUTATION,
+  GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+} from "@/graphql";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import {
+  allUsersBorrowingStatus,
+  borrowingStatus,
+  returnedStatus,
+  toolBaseUrl,
+  unborrowedStatus,
+  unreturnedStatus,
+} from "@/constants/index";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 const determineTextColor = (status: string) => {
   switch (status) {
-    case "可領取":
-      return "text-green-400";
-    case "審核中":
-      return "text-orange-400";
-    case "失敗":
-      return "text-red-500";
-    case "尚未歸還":
-      return "text-zinc-400";
+    case "Success":
+      return "text-green-400 hover:text-green-400";
+    case "Processing":
+      return "text-orange-400 hover:text-orange-400";
+    case "Failed":
+      return "text-red-500 hover:text-red-500";
+    case "Not Returned Yet":
+      return "text-zinc-400 hover:text-zinc-400";
   }
 };
 
-export const unborrowedColumns: ColumnDef<BorrowType>[] = [
+// user
+export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -67,7 +81,7 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
     header: "Figure",
     cell: ({ row }) => (
       <img
-        className="w-24 mx-auto bg-white"
+        className="w-20 mx-auto bg-white"
         src={row.getValue("figure")}
         alt={row.getValue("figure")}
       />
@@ -116,6 +130,20 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
       const [quantity, setQuantity] = useState<string>(
         row.getValue("quantity")
       );
+      const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newQuantity = e.target.value;
+        setQuantity(newQuantity);
+
+        // Create a new object with the updated quantity
+        const updatedRow = {
+          ...row.original,
+          quantity: parseInt(newQuantity),
+        };
+
+        // Update the original row with the new object
+        row.original = updatedRow;
+      };
+
       return (
         <div className="text-white w-28 mx-auto">
           <Input
@@ -123,7 +151,7 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
             placeholder="Quantity"
             className="input-class"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={handleQuantityChange}
           />
         </div>
       );
@@ -134,15 +162,44 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const { toast } = useToast();
-      const tool = row.original;
-      const [star, setStar] = useState(tool.star);
+      const userBorrowTool = row.original;
       const handleShare = () => {
         navigator.clipboard.writeText(
-          `http://localhost:5173/ToolPage/Tool/${tool.id}` // TODO: change to deployed link
+          `${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
+
       const { t } = useTranslation();
+      const [deleteUserBorrowTool, { loading, error }] = useMutation(
+        DELETE_USER_BORROW_TOOL_MUTATION,
+        {
+          refetchQueries: [
+            {
+              query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+              variables: {
+                userId: userBorrowTool.userId,
+                status: unborrowedStatus,
+              },
+            },
+          ],
+        }
+      );
+
+      const handleDelete = async () => {
+        await deleteUserBorrowTool({
+          variables: {
+            deleteUserBorrowToolId: userBorrowTool.id,
+          },
+        });
+        if (loading) return <LoaderSpinner />;
+        if (error) {
+          toast({ title: `${error.message}`, variant: "destructive" });
+        } else {
+          toast({ title: "Deleted successfully!" });
+        }
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -152,18 +209,10 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            align="end"
+            align="center"
             className="bg-black bg-opacity-90 border border-white text-white"
           >
             <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="hover:text-yellow-300"
-              onClick={() => setStar(!star)}
-            >
-              <Star className="p-1.5" size={31} />
-              {t(`${!star ? "star" : "unstar"}`)}
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleShare}
@@ -173,7 +222,10 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
               {t("share")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-red-400">
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="hover:text-red-400"
+            >
               <Trash2 className="p-1.5" size={31} />
               {t("delete")}
             </DropdownMenuItem>
@@ -184,7 +236,7 @@ export const unborrowedColumns: ColumnDef<BorrowType>[] = [
   },
 ];
 
-export const borrowingColumns: ColumnDef<BorrowType>[] = [
+export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
   {
     accessorKey: "status",
     header: "Status",
@@ -204,7 +256,7 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
     header: "Figure",
     cell: ({ row }) => (
       <img
-        className="w-24 mx-auto bg-white"
+        className="w-20 mx-auto bg-white"
         src={row.getValue("figure")}
         alt={row.getValue("figure")}
       />
@@ -256,18 +308,62 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
     ),
   },
   {
+    accessorKey: "borrowDate",
+    header: "Borrow Date",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {(row.getValue("borrowDate") as string).split(",")[0]}
+      </div>
+    ),
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const tool = row.original;
+      const userBorrowTool = row.original;
       const { toast } = useToast();
       const handleShare = () => {
         navigator.clipboard.writeText(
-          `http://localhost:5173/ToolPage/Tool/${tool.id}` // TODO: change to deployed link
+          `${toolBaseUrl}/${userBorrowTool.id}` // TODO: change to deployed link
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
       const { t } = useTranslation();
+      const [deleteUserBorrowTool, { loading, error }] = useMutation(
+        DELETE_USER_BORROW_TOOL_MUTATION,
+        {
+          refetchQueries: [
+            {
+              query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+              variables: {
+                userId: userBorrowTool.userId,
+                status: borrowingStatus,
+              },
+            },
+            {
+              query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+              variables: { status: allUsersBorrowingStatus },
+            },
+          ],
+        }
+      );
+
+      const handleDelete = async () => {
+        await deleteUserBorrowTool({
+          variables: {
+            deleteUserBorrowToolId: userBorrowTool.id,
+          },
+        });
+        if (loading) return <LoaderSpinner />;
+        if (error) {
+          toast({
+            title: `${error.message}`,
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: "Deleted successfully!" });
+        }
+      };
 
       return (
         <DropdownMenu>
@@ -281,12 +377,188 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
             align="end"
             className="bg-black bg-opacity-90 border border-white text-white"
           >
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-yellow-300">
-              <Star className="p-1.5" size={31} />
-              {t("star")}
+            <DropdownMenuItem
+              onClick={handleShare}
+              className="hover:text-green-400"
+            >
+              <Share className="p-1.5" size={31} />
+              {t("share")}
             </DropdownMenuItem>
+            {userBorrowTool.status !== "Not Returned Yet" && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleDelete}
+                  className="hover:text-red-400"
+                >
+                  <Trash2 className="p-1.5" size={31} />
+                  {t("delete")}
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+];
+
+export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
+  {
+    accessorKey: "figure",
+    header: "Figure",
+    cell: ({ row }) => (
+      <img
+        className="w-20 mx-auto bg-white"
+        src={row.getValue("figure")}
+        alt={row.getValue("figure")}
+      />
+    ),
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("name")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "partName",
+    header: "Part Name",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("partName")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "position",
+    header: "Position",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("position")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("quantity")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "borrowDate",
+    header: "Borrow Date",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {(row.getValue("borrowDate") as string).split(",")[0]}
+      </div>
+    ),
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const userBorrowTool = row.original;
+      const { toast } = useToast();
+      const handleShare = () => {
+        navigator.clipboard.writeText(
+          `${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
+        );
+        toast({ title: "Link copied to clipboard!", variant: "share" });
+      };
+      const { t } = useTranslation();
+      const [
+        deleteUserBorrowTool,
+        {
+          loading: DeleteUserBorrowToolLoading,
+          error: DeleteUserBorrowToolError,
+        },
+      ] = useMutation(DELETE_USER_BORROW_TOOL_MUTATION, {
+        refetchQueries: [
+          {
+            query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+            variables: {
+              userId: userBorrowTool.userId,
+              status: returnedStatus,
+            },
+          },
+        ],
+      });
+
+      const handleDelete = async () => {
+        await deleteUserBorrowTool({
+          variables: {
+            deleteUserBorrowToolId: userBorrowTool.id,
+          },
+        });
+        if (DeleteUserBorrowToolLoading) return <LoaderSpinner />;
+        if (DeleteUserBorrowToolError) {
+          toast({
+            title: `${DeleteUserBorrowToolError.message}`,
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: "Deleted successfully!" });
+        }
+      };
+
+      const [
+        addUserBorrowTool,
+        { loading: addUserBorrowToolLoading, error: addUserBorrowToolError },
+      ] = useMutation(ADD_USER_BORROW_TOOL_MUTATION, {
+        refetchQueries: [
+          {
+            query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+            variables: {
+              userId: userBorrowTool.userId,
+              status: unborrowedStatus,
+            },
+          },
+        ],
+      });
+
+      const handleBorrowAgain = async () => {
+        await addUserBorrowTool({
+          variables: {
+            userBorrowToolInput: {
+              userId: userBorrowTool.userId,
+              toolId: userBorrowTool.toolId,
+              quantity: userBorrowTool.quantity,
+            },
+          },
+        });
+        if (addUserBorrowToolLoading) return <LoaderSpinner />;
+        if (addUserBorrowToolError) {
+          toast({
+            title: `${addUserBorrowToolError.message}`,
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: "Tool added to shopping cart!" });
+        }
+      };
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="bg-black bg-opacity-90 border border-white text-white"
+          >
+            <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleShare}
@@ -296,9 +568,20 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
               {t("share")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-red-400">
+            <DropdownMenuItem
+              onClick={handleBorrowAgain}
+              className="hover:text-sky-300"
+            >
+              <ShoppingCart className="p-1.5" size={31} />
+              {t("borrowAgain")}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="hover:text-red-400"
+            >
               <Trash2 className="p-1.5" size={31} />
-              {t("delete")}
+              {t("deleteHistory")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -307,13 +590,149 @@ export const borrowingColumns: ColumnDef<BorrowType>[] = [
   },
 ];
 
-export const borrowedColumns: ColumnDef<BorrowType>[] = [
+// admin
+export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <center>
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="border-white"
+        />
+      </center>
+    ),
+    cell: ({ row }) => (
+      <center>
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="border-white"
+        />
+      </center>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const { t } = useTranslation();
+      const { toast } = useToast();
+      const [status, setStatus] = useState<string>(row.getValue("status"));
+      const statusOptions = ["Processing", "Success", "Failed"];
+
+      const [
+        editUserBorrowToolStatus,
+        {
+          loading: editUserBorrowToolStatusLoading,
+          error: editUserBorrowToolStatusError,
+        },
+      ] = useMutation(EDIT_USER_BORROW_TOOL_STATUS_MUTATION, {
+        refetchQueries: [
+          {
+            query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+            variables: { status: allUsersBorrowingStatus },
+          },
+          {
+            query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+            variables: { status: unreturnedStatus },
+          },
+        ],
+      });
+
+      const handleStatusChange = async (status: string) => {
+        setStatus(status);
+        await editUserBorrowToolStatus({
+          variables: {
+            editUserBorrowToolStatusId: row.original.id,
+            status: status,
+          },
+        });
+        if (editUserBorrowToolStatusLoading) return <LoaderSpinner />;
+        if (editUserBorrowToolStatusError) {
+          toast({
+            title: `${editUserBorrowToolStatusError.message}`,
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: "Status updated successfully!" });
+        }
+      };
+
+      return (
+        <RadioGroup defaultValue={status}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div
+                className={cn(
+                  "text-center font-semibold",
+                  determineTextColor(status)
+                )}
+              >
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "text-center font-semibold",
+                    determineTextColor(status)
+                  )}
+                >
+                  {status}
+                </Button>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="center"
+              className="bg-black bg-opacity-90 border border-white text-white"
+            >
+              <DropdownMenuLabel>{t("status")}</DropdownMenuLabel>
+              {statusOptions.map((status) => (
+                <div key={status}>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => handleStatusChange(status)}>
+                    <RadioGroupItem
+                      value={status}
+                      id={status}
+                      className="w-3 h-3 mr-2"
+                    />
+                    <Label htmlFor={status}>{status}</Label>
+                  </DropdownMenuItem>
+                </div>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </RadioGroup>
+      );
+    },
+  },
+  {
+    accessorKey: "borrower",
+    header: "Borrower",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("borrower")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "studentId",
+    header: "Student ID",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold uppercase">
+        {row.getValue("studentId")}
+      </div>
+    ),
+  },
   {
     accessorKey: "figure",
     header: "Figure",
     cell: ({ row }) => (
       <img
-        className="w-24 mx-auto bg-white"
+        className="w-20 mx-auto bg-white"
         src={row.getValue("figure")}
         alt={row.getValue("figure")}
       />
@@ -364,58 +783,106 @@ export const borrowedColumns: ColumnDef<BorrowType>[] = [
       </div>
     ),
   },
+];
+
+export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
   {
-    id: "actions",
+    id: "select",
+    header: ({ table }) => (
+      <center>
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="border-white"
+        />
+      </center>
+    ),
+    cell: ({ row }) => (
+      <center>
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="border-white"
+        />
+      </center>
+    ),
+    enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => {
-      const tool = row.original;
-      const { toast } = useToast();
-      const handleShare = () => {
-        navigator.clipboard.writeText(
-          `http://localhost:5173/ToolPage/Tool/${tool.id}` // TODO: change to deployed link
-        );
-        toast({ title: "Link copied to clipboard!", variant: "share" });
-      };
-      const { t } = useTranslation();
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="bg-black bg-opacity-90 border border-white text-white"
-          >
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-yellow-300">
-              <Star className="p-1.5" size={31} />
-              {t("star")}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={handleShare}
-              className="hover:text-green-400"
-            >
-              <Share className="p-1.5" size={31} />
-              {t("share")}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-sky-300">
-              <ShoppingCart className="p-1.5" size={31} />
-              {t("borrowAgain")}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:text-red-400">
-              <Trash2 className="p-1.5" size={31} />
-              {t("deleteHistory")}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+  },
+  {
+    accessorKey: "borrower",
+    header: "Borrower",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("borrower")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "studentId",
+    header: "Student ID",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold uppercase">
+        {row.getValue("studentId")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "figure",
+    header: "Figure",
+    cell: ({ row }) => (
+      <img
+        className="w-20 mx-auto bg-white"
+        src={row.getValue("figure")}
+        alt={row.getValue("figure")}
+      />
+    ),
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("name")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "partName",
+    header: "Part Name",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("partName")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "remain",
+    header: "Remain",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("remain")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "position",
+    header: "Position",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("position")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {row.getValue("quantity")}
+      </div>
+    ),
   },
 ];

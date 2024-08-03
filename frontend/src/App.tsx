@@ -29,8 +29,8 @@ const ToolPage = lazy(() => import("@/containers/ToolPage"));
 const ToolDetailPage = lazy(() => import("./containers/ToolDetailPage"));
 const ShoppingCartPage = lazy(() => import("@/containers/ShoppingCartPage"));
 const BorrowHistoryPage = lazy(() => import("@/containers/BorrowHistoryPage"));
-const UsersBorrowingPage = lazy(
-  () => import("@/containers/UsersBorrowingPage")
+const AllUsersBorrowingDataPage = lazy(
+  () => import("@/containers/AllUsersBorrowingDataPage")
 );
 const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
 const NotFound = lazy(() => import("@/containers/NotFound"));
@@ -53,7 +53,14 @@ function App() {
         {isOnline ? (
           <div className="flex-1 mx-2 mt-16 sm:mt-16 md:mt-20 lg:mt-20 xl:mt-20">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<LoaderSpinner />}>
+                    <HomePage />
+                  </Suspense>
+                }
+              />
               <Route
                 path="/Login"
                 element={
@@ -151,10 +158,14 @@ function App() {
                 }
               />
               <Route
-                path="/UsersBorrowingPage"
+                path="/AllUsersBorrowingDataPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
-                    {user?.isAdmin ? <UsersBorrowingPage /> : <NotFound />}
+                    {user?.isAdmin ? (
+                      <AllUsersBorrowingDataPage />
+                    ) : (
+                      <NotFound />
+                    )}
                   </Suspense>
                 }
               />

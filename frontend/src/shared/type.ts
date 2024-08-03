@@ -24,6 +24,7 @@ export type UserType = {
   isAdmin: boolean;
   isMinister: boolean;
   toolLikeIds?: Array<number | null> | null;
+  userBorrowToolIds?: Array<number | null> | null;
 };
 
 export type MaterialType = {
@@ -55,6 +56,7 @@ export type ToolType = {
   tutorialLink: string;
   remain: number;
   toolLikeIds?: Array<number | null> | null;
+  userBorrowToolIds?: Array<number | null> | null;
 };
 
 export type AuthorizedCodeType = {
@@ -139,16 +141,18 @@ export type UserEditInput = {
 
 export type BorrowType = {
   id: number;
-  star: boolean;
+  borrower: string;
   figure: string;
   name: string;
   partName: string;
   remain: number;
   position: string;
   quantity: number;
-  status: "尚未借用" | "審核中" | "可領取" | "失敗" | "尚未歸還" | "已歸還";
-  // text-none | text-orange-400 | text-green-400 | text-red-500 | text-zinc-400 | text-none
+  status: string;
 };
+
+// status: "Unborrowed" | "Processing" | "Success" | "Failed" | "Not Returned Yet" | "Returned";
+// text-none | text-orange-400 | text-green-400 | text-red-500 | text-zinc-400 | text-none
 
 export type ToolDetailCardProps = {
   id: string;
@@ -183,4 +187,23 @@ export type AnnouncementCardProps = {
   title: string;
   content: string;
   date: string;
+};
+
+export type UserBorrowToolType = {
+  __typename?: "UserBorrowTool";
+  id: number;
+  userId: number;
+  toolId: number;
+  borrower: string;
+  studentId: string;
+  figure: string;
+  name: string;
+  partName?: string | null;
+  category: string;
+  remain: number;
+  position: string;
+  quantity: number;
+  status: string;
+  borrowDate: string;
+  returnDate: string;
 };

@@ -1,8 +1,9 @@
-import UserBorrowingList from "@/components/UserBorrowingList";
+// Admin only
+import AllUsersBorrowingList from "@/components/AllUsersBorrowingData/AllUsersBorrowingList";
 import { Database } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-function UsersBorrowingPage() {
+function AllUsersBorrowingDataPage() {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col w-10/12 mx-auto mt-24">
@@ -11,10 +12,10 @@ function UsersBorrowingPage() {
         {t("allUsersBorrowingData")}
       </h1>
       <div className="w-full">
-        <UserBorrowingList />
+        <AllUsersBorrowingList />
       </div>
     </div>
   );
 }
 
-export default UsersBorrowingPage;
+export default AllUsersBorrowingDataPage;

@@ -77,8 +77,9 @@ function NavBar() {
             />
           )}
           {user?.isAdmin && windowWidth > 720 && (
+            // GetAllUserBorrowTools and GetAllUserBorrowMaterials
             <IconButton
-              onClick={() => navigate("/UsersBorrowingPage")}
+              onClick={() => navigate("/AllUsersBorrowingDataPage")} // many user"s"
               Icon={Database}
               ariaLabel={t("usersBorrowingData")}
             />
@@ -116,11 +117,11 @@ function NavBar() {
               ) : (
                 <Tooltip>
                   <UserAvatarDropdownMenu>
-                    <div className="relative inline-block">
+                    <div className="relative inline-block mt-1.5">
                       <TooltipTrigger>
                         <img
                           src={imgUrl}
-                          className="rounded-full w-11 h-11 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#444444]"
+                          className="rounded-full w-12 h-12 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#444444]"
                           alt="avatar"
                         />
                       </TooltipTrigger>

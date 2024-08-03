@@ -280,6 +280,7 @@ const ADD_TOOL_MUTATION = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -298,6 +299,7 @@ const DELETE_TOOL_MUTATION = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -316,6 +318,7 @@ const EDIT_TOOL_MUTATION = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -336,6 +339,7 @@ const ADD_USER_MUTATION = gql(`
       isAdmin
       isMinister
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -355,6 +359,7 @@ const DELETE_USER_MUTATION = gql(`
       isAdmin
       isMinister
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -374,6 +379,7 @@ const EDIT_USER_MUTATION = gql(`
       isAdmin
       isMinister
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -432,6 +438,7 @@ const TOOL_USAGE_UPDATE_MUTATION = gql(`
       tutorialLink
       remain
       toolLikeIds
+      userBorrowToolIds
     }
   }
 `);
@@ -477,42 +484,131 @@ const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
 
 // tool like
 const ADD_TOOL_LIKE_MUTATION = gql(`
-mutation AddToolLike($toolLikeInput: toolLikeInput!) {
-  AddToolLike(toolLikeInput: $toolLikeInput) {
-    id
-    userId
-    toolId
+  mutation AddToolLike($toolLikeInput: toolLikeInput!) {
+    AddToolLike(toolLikeInput: $toolLikeInput) {
+      id
+      userId
+      toolId
+    }
   }
-}
 `);
 
 const DELETE_TOOL_LIKE_MUTATION = gql(`
-mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {
-  DeleteToolLike(toolLikeInput: $toolLikeInput) {
-    id
-    userId
-    toolId
+  mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {
+    DeleteToolLike(toolLikeInput: $toolLikeInput) {
+      id
+      userId
+      toolId
+    }
   }
-}
 `);
 
 const EDIT_USER_LANGUAGE_MUTATION = gql(`
   mutation EditUserLanguage($editUserLanguageId: Int!, $language: String!) {
-  EditUserLanguage(id: $editUserLanguageId, language: $language) {
-    id
-    name
-    studentID
-    password
-    photoLink
-    language
-    threeDPId
-    laserCutAvailable
-    articlesId
-    isAdmin
-    isMinister
-    toolLikeIds
+    EditUserLanguage(id: $editUserLanguageId, language: $language) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+    }
   }
-}
+`);
+
+const ADD_USER_BORROW_TOOL_MUTATION = gql(`
+  mutation AddUserBorrowTool($userBorrowToolInput: userBorrowToolInput!) {
+    AddUserBorrowTool(userBorrowToolInput: $userBorrowToolInput) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const DELETE_USER_BORROW_TOOL_MUTATION = gql(`
+  mutation DeleteUserBorrowTool($deleteUserBorrowToolId: Int!) {
+    DeleteUserBorrowTool(id: $deleteUserBorrowToolId) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION = gql(`
+  mutation EditUserBorrowToolQuantity($editUserBorrowToolQuantityId: Int!, $userBorrowToolInput: userBorrowToolInput!) {
+    EditUserBorrowToolQuantity(id: $editUserBorrowToolQuantityId, userBorrowToolInput: $userBorrowToolInput) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const EDIT_USER_BORROW_TOOL_STATUS_MUTATION = gql(`
+  mutation EditUserBorrowToolStatus($editUserBorrowToolStatusId: Int!, $status: String!) {
+    EditUserBorrowToolStatus(id: $editUserBorrowToolStatusId, status: $status) {
+      id
+      userId
+      toolId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
 `);
 
 export {
@@ -547,4 +643,8 @@ export {
   ADD_TOOL_LIKE_MUTATION,
   DELETE_TOOL_LIKE_MUTATION,
   EDIT_USER_LANGUAGE_MUTATION,
+  ADD_USER_BORROW_TOOL_MUTATION,
+  DELETE_USER_BORROW_TOOL_MUTATION,
+  EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION,
+  EDIT_USER_BORROW_TOOL_STATUS_MUTATION,
 };

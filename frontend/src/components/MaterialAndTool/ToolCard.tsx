@@ -3,13 +3,17 @@ import { ToolType } from "@/shared/type";
 import { DELETE_TOOL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
-  ALL_TOOL_QUERY,
-  ADD_TOOL_LIKE_MUTATION,
-  DELETE_TOOL_LIKE_MUTATION,
   ALL_USER_QUERY,
   GET_TOOL_LIKES_QUERY,
   SEARCH_TOOL_BY_NAME_QUERY,
-} from "@/graphql";
+  GET_ALL_USER_BORROW_TOOLS_QUERY,
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+} from "@/graphql/queries";
+import {
+  ADD_TOOL_LIKE_MUTATION,
+  DELETE_TOOL_LIKE_MUTATION,
+  ADD_USER_BORROW_TOOL_MUTATION,
+} from "@/graphql/mutations";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { Share, ShoppingCart, Star, Trash2 } from "lucide-react";
@@ -34,6 +38,8 @@ import {
 import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import LoaderSpinner from "../LoaderSpinner";
+import { borrowingStatus } from "@/constants/index";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -58,8 +64,19 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const [deleteTool, { loading: DeleteToolLoading, error: DeleteToolError }] =
     useMutation(DELETE_TOOL_MUTATION, {
       refetchQueries: [
-        { query: ALL_TOOL_QUERY },
         { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
+        { query: GET_ALL_USER_BORROW_TOOLS_QUERY },
+        {
+          query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+          variables: { userId: user?.id!, status: ["Unborrowed"] },
+        },
+        {
+          query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+          variables: {
+            userId: user?.id!,
+            status: borrowingStatus,
+          },
+        },
       ],
     });
 
@@ -77,8 +94,38 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
     }
   };
 
-  const handleBorrow = () => {
-    toast({ title: "Added to shopping cart." });
+  const [
+    addUserBorrowTool,
+    { loading: AddUserBorrowToolLoading, error: AddUserBorrowToolError },
+  ] = useMutation(ADD_USER_BORROW_TOOL_MUTATION, {
+    refetchQueries: [
+      { query: GET_ALL_USER_BORROW_TOOLS_QUERY },
+      {
+        query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+        variables: { userId: user?.id!, status: ["Unborrowed"] },
+      },
+    ],
+  });
+
+  const handleAddToShoppingCart = async () => {
+    await addUserBorrowTool({
+      variables: {
+        userBorrowToolInput: {
+          userId: user?.id!,
+          toolId: tool.id,
+          quantity: 0,
+        },
+      },
+    });
+    if (AddUserBorrowToolLoading) return <LoaderSpinner />;
+    if (AddUserBorrowToolError) {
+      toast({
+        title: `${AddUserBorrowToolError.message}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({ title: "Tool added to shopping cart!" });
+    }
   };
 
   const sparkles = Array.from({ length: 12 });
@@ -362,7 +409,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
                     <ShoppingCart
                       className="p-1.5 hover:text-sky-300"
                       size={35}
-                      onClick={handleBorrow}
+                      onClick={handleAddToShoppingCart}
                     />
                   ) : (
                     <ShoppingCart

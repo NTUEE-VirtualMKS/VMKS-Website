@@ -141,6 +141,12 @@ interface ToolLikeInput {
   toolId: number;
 }
 
+interface UserBorrowToolInput {
+  userId: number;
+  toolId: number;
+  quantity: number;
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -160,4 +166,5 @@ export type {
   SignUpInput,
   LogInInput,
   ToolLikeInput,
+  UserBorrowToolInput,
 };

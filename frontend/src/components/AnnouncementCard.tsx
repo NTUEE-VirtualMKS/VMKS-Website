@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -84,7 +83,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
     if (!id) {
       return toast({ title: "id is undefined", variant: "destructive" });
     }
-    console.log(title);
+
     await editAnnouncement({
       variables: {
         editAnnouncementId: announcementId,

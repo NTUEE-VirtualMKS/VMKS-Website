@@ -1,6 +1,5 @@
-// TODO: implement ShoppingCartPage
 import { ScrollText } from "lucide-react";
-import ShoppingList from "@/components/ShoppingList";
+import ShoppingList from "@/components/ShoppingCart/ShoppingList";
 import { useTranslation } from "react-i18next";
 
 function ShoppingCartPage() {

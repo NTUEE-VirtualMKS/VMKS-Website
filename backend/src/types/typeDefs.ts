@@ -199,6 +199,7 @@ const typeDefs = `#graphql
     tutorialLink: String!
     remain: Int!
     toolLikeIds: [Int]
+    userBorrowToolIds: [Int]
   }
 
   type Machine {
@@ -239,6 +240,7 @@ const typeDefs = `#graphql
     isAdmin: Boolean!
     isMinister: Boolean!
     toolLikeIds: [Int]
+    userBorrowToolIds: [Int]
   }
 
   type signUpRet {
@@ -304,6 +306,30 @@ const typeDefs = `#graphql
     toolId: Int!,
   }
 
+  type UserBorrowTool {
+    id: Int!,
+    userId: Int!,
+    toolId: Int!,
+    borrower: String!,
+    studentId: String!,
+    figure: String!,
+    name: String!,
+    partName: String,
+    category: String!,
+    remain: Int!,
+    position: String!,
+    quantity: Int!,
+    status: String!,
+    borrowDate: String!,
+    returnDate: String!,
+  }
+
+  input userBorrowToolInput {
+    userId: Int!,
+    toolId: Int!,
+    quantity: Int!,
+  }
+
   ### Define Resolvers ###
 
   type Query {
@@ -339,6 +365,11 @@ const typeDefs = `#graphql
     GetToolLikes: [ToolLike]
     GetToolLikeById(id: Int!): ToolLike
     GetLikedToolsByUserId(userId: Int!): [Tool]
+    GetAllUserBorrowTools: [UserBorrowTool]
+    GetAllUserBorrowToolsByStatus(status: [String]!): [UserBorrowTool]
+    GetUserBorrowToolById(id: Int!): UserBorrowTool
+    GetUserBorrowToolsByUserId(userId: Int!): [UserBorrowTool]
+    GetUserBorrowToolsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowTool]
   }
 
   type Mutation {
@@ -374,6 +405,10 @@ const typeDefs = `#graphql
     AddToolLike(toolLikeInput: toolLikeInput!): ToolLike
     DeleteToolLike(toolLikeInput: toolLikeInput!): ToolLike
     EditUserLanguage(id: Int!, language: String!): User
+    AddUserBorrowTool(userBorrowToolInput: userBorrowToolInput!): UserBorrowTool
+    DeleteUserBorrowTool(id: Int!): UserBorrowTool
+    EditUserBorrowToolQuantity(id: Int!, userBorrowToolInput: userBorrowToolInput!): UserBorrowTool
+    EditUserBorrowToolStatus(id: Int!, status: String!): UserBorrowTool
   }
 
   type Subscription {
