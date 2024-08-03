@@ -57,46 +57,51 @@ function UserDataTable({
   const { t } = useTranslation();
   const { user } = useUser();
   const { toast } = useToast();
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
+  const [sortingUnborrowed, setSortingUnborrowed] = useState<SortingState>([]);
+  const [columnFiltersUnborrowed, setColumnFiltersUnborrowed] = useState<ColumnFiltersState>([]);
+  const [columnVisibilityUnborrowed, setColumnVisibilityUnborrowed] = useState<VisibilityState>({});
+  const [rowSelectionUnborrowed, setRowSelectionUnborrowed] = useState({});
 
   const unborrowedTable = useReactTable({
     data: unborrowedData,
     columns: unborrowedColumns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSortingUnborrowed,
+    onColumnFiltersChange: setColumnFiltersUnborrowed,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibilityUnborrowed,
+    onRowSelectionChange: setRowSelectionUnborrowed,
     state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
+      sorting: sortingUnborrowed,
+      columnFilters: columnFiltersUnborrowed,
+      columnVisibility: columnVisibilityUnborrowed,
+      rowSelection: rowSelectionUnborrowed,
     },
   });
+
+  const [sortingBorrowing, setSortingBorrowing] = useState<SortingState>([]);
+  const [columnFiltersBorrowing, setColumnFiltersBorrowing] = useState<ColumnFiltersState>([]);
+  const [columnVisibilityBorrowing, setColumnVisibilityBorrowing] = useState<VisibilityState>({});
+  const [rowSelectionBorrowing, setRowSelectionBorrowing] = useState({});
 
   const borrowingTable = useReactTable({
     data: borrowingData,
     columns: borrowingColumns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSortingBorrowing,
+    onColumnFiltersChange: setColumnFiltersBorrowing,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibilityBorrowing,
+    onRowSelectionChange: setRowSelectionBorrowing,
     state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
+      sorting: sortingBorrowing,
+      columnFilters: columnFiltersBorrowing,
+      columnVisibility: columnVisibilityBorrowing,
+      rowSelection: rowSelectionBorrowing,
     },
   });
 
