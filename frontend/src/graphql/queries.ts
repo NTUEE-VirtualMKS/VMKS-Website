@@ -178,6 +178,7 @@ const ALL_MATERIAL_QUERY = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -197,6 +198,7 @@ const GET_MATERIAL_BY_ID_QUERY = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -216,6 +218,7 @@ const SEARCH_MATERIAL_BY_NAME_QUERY = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -235,6 +238,7 @@ const SEARCH_MATERIAL_BY_CATEGORY_QUERY = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -254,6 +258,7 @@ const SEARCH_MATERIAL_BY_POSITION_QUERY = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -420,6 +425,7 @@ const ALL_USER_QUERY = gql(`
     isMinister
     toolLikeIds
     userBorrowToolIds
+    materialLikeIds
   }
 }
 `);
@@ -440,6 +446,7 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       isMinister
       toolLikeIds
       userBorrowToolIds
+      materialLikeIds
     }
   }
 `);
@@ -460,6 +467,7 @@ const GET_USER_BY_STUDENT_ID_QUERY = gql(`
     isMinister
     toolLikeIds
     userBorrowToolIds
+    materialLikeIds
   }
 }
 `);
@@ -632,6 +640,46 @@ const GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY = gql(`
   }
 `);
 
+const GET_MATERIAL_LIKES_QUERY = gql(`
+  query GetMaterialLikes {
+    GetMaterialLikes {
+      id
+      userId
+      materialId
+    }
+  }
+`);
+
+const GET_MATERIAL_LIKE_BY_ID_QUERY = gql(`
+  query GetMaterialLikeById($getMaterialLikeByIdId: Int!) {
+    GetMaterialLikeById(id: $getMaterialLikeByIdId) {
+      id
+      userId
+      materialId
+    }
+  }
+`);
+
+const GET_LIKED_MATERIALS_BY_USER_ID_QUERY = gql(`
+  query GetLikedMaterialsByUserId($userId: Int!) {
+    GetLikedMaterialsByUserId(userId: $userId) {
+      id
+      name
+      partName
+      category
+      valuable
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      fee
+      remain
+      materialLikeIds
+    }
+  }
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -669,4 +717,7 @@ export {
   GET_USER_BORROW_TOOL_BY_ID_QUERY,
   GET_USER_BORROW_TOOLS_BY_USER_ID_QUERY,
   GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+  GET_MATERIAL_LIKES_QUERY,
+  GET_MATERIAL_LIKE_BY_ID_QUERY,
+  GET_LIKED_MATERIALS_BY_USER_ID_QUERY,
 };

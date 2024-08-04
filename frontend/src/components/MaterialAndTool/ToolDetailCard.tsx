@@ -97,7 +97,6 @@ function ToolDetailCard({
         toast({ title: `${e}`, variant: "destructive" });
       }
       setVisible(false);
-      window.location.reload();
     }
   };
 
@@ -105,34 +104,34 @@ function ToolDetailCard({
     <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
       <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
         <img
-          src={photoLink}
-          alt={name}
-          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
+          src={toolPhotoLink}
+          alt={toolName}
+          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-5/12"
         />
         <div className="w-9/12 flex flex-col ml-5">
           <h1 className="text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
-            {name}
+            {toolName}
           </h1>
           <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("description")}: {description}
+            {t("description")}: {toolDescription}
           </p>
-          {partName && (
+          {toolPartName && (
             <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-              {t("partName")}: {partName}
+              {t("partName")}: {toolPartName}
             </p>
           )}
           <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("position")}: {position}
+            {t("position")}: {toolPosition}
           </p>
           <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("remain")}: {remain} {t("piece")}
+            {t("remain")}: {toolRemain} {t("piece")}
           </p>
           <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("usage")}: {usage} {t("piece")}
+            {t("usage")}: {toolUsage} {t("piece")}
           </p>
-          {tutorialLink && (
+          {toolTutorialLink && (
             <a
-              href={tutorialLink}
+              href={toolTutorialLink}
               target="_blank"
               rel="noreferrer"
               className="mt-1 text-sky-300 cursor-pointer hover:underline w-5/12 active:scale-95 transition-transform duration-200 focus:text-blue-600 text-base sm:text-base md:text-lg lg:text-lg xl:text-lg"

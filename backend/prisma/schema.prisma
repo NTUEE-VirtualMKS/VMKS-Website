@@ -35,18 +35,20 @@ model DisposableMaterial {
 }
 
 model Material {
-  id           Int     @id @default(autoincrement())
-  name         String
-  partName     String?
-  category     String
-  valuable     Boolean
-  position     String
-  description  String
-  photoLink    String
-  usage        Int
-  tutorialLink String?
-  fee          Int
-  remain       Int
+  id              Int            @id @default(autoincrement())
+  name            String
+  partName        String?
+  category        String
+  valuable        Boolean
+  position        String
+  description     String
+  photoLink       String
+  usage           Int
+  tutorialLink    String?
+  fee             Int
+  remain          Int
+  materialLikes   MaterialLike[]
+  materialLikeIds Int[]
 }
 
 model Tool {
@@ -110,6 +112,8 @@ model User {
   toolLikeIds       Int[]
   userBorrowTools   UserBorrowTool[]
   userBorrowToolIds Int[]
+  materialLikes     MaterialLike[]
+  materialLikeIds   Int[]
 }
 
 model AuthorizedCode {
@@ -157,4 +161,12 @@ model UserBorrowTool {
   status     String  @default("Unborrowed")
   borrowDate String  @default("")
   returnDate String  @default("")
+}
+
+model MaterialLike {
+  id         Int      @id @default(autoincrement())
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  materialId Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
 }

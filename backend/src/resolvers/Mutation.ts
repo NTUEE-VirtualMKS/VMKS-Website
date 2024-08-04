@@ -23,6 +23,7 @@ import {
   SignUpInput,
   ToolLikeInput,
   UserBorrowToolInput,
+  MaterialLikeInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -515,6 +516,7 @@ const Mutation = {
         tutorialLink: tutorialLink,
         fee: fee,
         remain: remain,
+        materialLikeIds: [],
       },
     });
     pubsub.publish("MATERIAL_CREATED", { MaterialCreated: newMaterial });
@@ -763,6 +765,7 @@ const Mutation = {
         isAdmin: isAdmin,
         isMinister: isMinister,
         toolLikeIds: [],
+        materialLikeIds: [],
       },
     });
 
@@ -1111,6 +1114,7 @@ const Mutation = {
           isAdmin: newUser.isAdmin,
           isMinister: newUser.isMinister,
           toolLikeIds: newUser.toolLikeIds,
+          materialLikeIds: newUser.materialLikeIds,
         },
         env.JWT_SECRET,
         {
@@ -1122,6 +1126,7 @@ const Mutation = {
     }
   },
 
+  // ToolLike
   AddToolLike: async (
     _parents,
     args: { toolLikeInput: ToolLikeInput },
@@ -1258,6 +1263,7 @@ const Mutation = {
     return updateUser;
   },
 
+  // UserBorrowTool
   AddUserBorrowTool: async (
     _parents,
     args: { userBorrowToolInput: UserBorrowToolInput },
@@ -1481,6 +1487,15 @@ const Mutation = {
           remain: userBorrowTool.remain + userBorrowTool.quantity,
         },
       });
+      // update userBorrowTool's returnDate
+      await prisma.userBorrowTool.update({
+        where: {
+          id: id,
+        },
+        data: {
+          returnDate: new Date().toLocaleString(),
+        },
+      });
     } else if (status === "Success") {
       // update userBorrowTool's borrowDate
       await prisma.userBorrowTool.update({
@@ -1491,19 +1506,121 @@ const Mutation = {
           borrowDate: new Date().toLocaleString(),
         },
       });
-    } else if (status === "Returned") {
-      // update userBorrowTool's returnDate
-      await prisma.userBorrowTool.update({
-        where: {
-          id: id,
-        },
-        data: {
-          returnDate: new Date().toLocaleString(),
-        },
-      });
     }
 
     return editUserBorrowTool;
+  },
+
+  // MaterialLike
+  AddMaterialLike: async (
+    _parents,
+    args: { materialLikeInput: MaterialLikeInput },
+    _context,
+  ) => {
+    const { userId, materialId } = args.materialLikeInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error("User Not Found");
+    }
+
+    const material = await prisma.material.findUnique({
+      where: {
+        id: materialId,
+      },
+    });
+
+    if (!material) {
+      throw new Error("Material Not Found");
+    }
+
+    const newMaterialLike = await prisma.materialLike.create({
+      data: {
+        userId: userId,
+        materialId: materialId,
+      },
+    });
+
+    // update material
+    await prisma.material.update({
+      where: {
+        id: materialId,
+      },
+      data: {
+        materialLikeIds: [...material.materialLikeIds, newMaterialLike.id],
+      },
+    });
+
+    // update user
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        materialLikeIds: [...user.materialLikeIds, newMaterialLike.id],
+      },
+    });
+
+    return newMaterialLike;
+  },
+
+  DeleteMaterialLike: async (
+    _parents,
+    args: { materialLikeInput: MaterialLikeInput },
+    _context,
+  ) => {
+    const { userId, materialId } = args.materialLikeInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error("User Not Found");
+    }
+
+    const material = await prisma.material.findUnique({
+      where: {
+        id: materialId,
+      },
+    });
+
+    if (!material) {
+      throw new Error("Material Not Found");
+    }
+
+    // Find the intersection of user.materialLikeIds and material.materialLikedIds
+    const materialLikeId = user.materialLikeIds.find((id) =>
+      material.materialLikeIds.includes(id),
+    );
+
+    const deleteMaterialLike = await prisma.materialLike.delete({
+      where: { id: materialLikeId },
+    });
+
+    // Update user.materialLikeIds and material.materialLikeIds
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        materialLikeIds: {
+          set: user.materialLikeIds.filter((id) => id !== materialLikeId),
+        },
+      },
+    });
+
+    await prisma.material.update({
+      where: { id: materialId },
+      data: {
+        materialLikeIds: {
+          set: material.materialLikeIds.filter((id) => id !== materialLikeId),
+        },
+      },
+    });
+
+    return deleteMaterialLike;
   },
 };
 

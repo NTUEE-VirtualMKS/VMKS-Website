@@ -39,7 +39,7 @@ import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import LoaderSpinner from "../LoaderSpinner";
-import { borrowingStatus } from "@/constants/index";
+import { borrowingStatus, unborrowedStatus } from "@/constants/index";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -55,6 +55,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const [hover, setHover] = useState(false);
   const [star, setStar] = useState(() => {
     if (user?.toolLikeIds?.some((id) => tool?.toolLikeIds?.includes(id))) {
+      console.log(user);
       return true;
     } else {
       return false;
@@ -68,7 +69,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
         { query: GET_ALL_USER_BORROW_TOOLS_QUERY },
         {
           query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
-          variables: { userId: user?.id!, status: ["Unborrowed"] },
+          variables: { userId: user?.id!, status: unborrowedStatus },
         },
         {
           query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
@@ -186,7 +187,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
 
   // Load the star state from local storage
   useEffect(() => {
-    const storedState = localStorage.getItem(`starred-${tool.id}`);
+    const storedState = localStorage.getItem(`starred-tool-${tool.id}`);
     if (storedState) {
       setStar(JSON.parse(storedState));
     }
@@ -195,7 +196,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const handleStarClick = () => {
     const newState = !star;
     setStar(newState);
-    localStorage.setItem(`starred-${tool.id}`, JSON.stringify(newState));
+    localStorage.setItem(`starred-tool-${tool.id}`, JSON.stringify(newState));
   };
 
   const handleLike = async () => {

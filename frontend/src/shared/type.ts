@@ -25,6 +25,7 @@ export type UserType = {
   isMinister: boolean;
   toolLikeIds?: Array<number | null> | null;
   userBorrowToolIds?: Array<number | null> | null;
+  materialLikeIds?: Array<number | null> | null;
 };
 
 export type MaterialType = {
@@ -41,6 +42,7 @@ export type MaterialType = {
   tutorialLink?: string | null;
   fee: number;
   remain: number;
+  materialLikeIds?: Array<number | null> | null;
 };
 
 export type ToolType = {

@@ -67,7 +67,7 @@ function AnnouncementPage() {
           {user?.isAdmin && (
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
               <Button
-                className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer"
+                className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer lowercase"
                 onClick={() => setVisible(true)}
               >
                 {t("newAnnouncement")}

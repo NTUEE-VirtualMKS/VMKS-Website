@@ -156,7 +156,7 @@ function ToolPage() {
                 <DialogTrigger asChild>
                   <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                     <Button
-                      className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                      className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 lowercase"
                       onClick={() => setVisible(true)}
                     >
                       {t("newTool")}

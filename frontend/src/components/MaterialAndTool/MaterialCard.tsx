@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import { MaterialType } from "@/shared/type";
-import { DELETE_MATERIAL_MUTATION } from "@/graphql";
+import {
+  ADD_MATERIAL_LIKE_MUTATION,
+  ALL_USER_QUERY,
+  DELETE_MATERIAL_LIKE_MUTATION,
+  DELETE_MATERIAL_MUTATION,
+  GET_MATERIAL_LIKES_QUERY,
+} from "@/graphql";
 import { useMutation } from "@apollo/client";
 import { ALL_MATERIAL_QUERY, SEARCH_MATERIAL_BY_NAME_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { ShoppingCart, Trash2, Star, Share } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stagger, useAnimate, animate } from "framer-motion";
 import {
   Tooltip,
@@ -27,6 +33,7 @@ import {
 import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -45,13 +52,24 @@ function MaterialCard({
   const { t } = useTranslation();
   const [scope, animate] = useAnimate();
   const [hover, setHover] = useState(false);
-  const [star, setStar] = useState(false); // TODO: connect to backend
+  const [star, setStar] = useState(() => {
+    if (
+      user?.materialLikeIds?.some((id) =>
+        material?.materialLikeIds?.includes(id)
+      )
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
   const [deleteMaterial, { loading, error }] = useMutation(
     DELETE_MATERIAL_MUTATION,
     {
       refetchQueries: [
-        { query: ALL_MATERIAL_QUERY },
         { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
+        { query: ALL_MATERIAL_QUERY },
       ],
     }
   );
@@ -70,16 +88,27 @@ function MaterialCard({
     }
   };
 
-  // const handleAddToShoppingCart = (e: React.MouseEvent<HTMLAnchorElement>) => {
-  //   if (!user) {
-  //     e.preventDefault();
-  //     toast({
-  //       title: "Login required",
-  //       description: "Please login to borrow materials",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
+  // TODO: implement handleAddToShoppingCart
+  const handleAddToShoppingCart = async () => {
+    // await addUserBorrowTool({
+    //   variables: {
+    //     userBorrowToolInput: {
+    //       userId: user?.id!,
+    //       toolId: tool.id,
+    //       quantity: 0,
+    //     },
+    //   },
+    // });
+    // if (AddUserBorrowToolLoading) return <LoaderSpinner />;
+    // if (AddUserBorrowToolError) {
+    //   toast({
+    //     title: `${AddUserBorrowToolError.message}`,
+    //     variant: "destructive",
+    //   });
+    // } else {
+    //   toast({ title: "Tool added to shopping cart!" });
+    // }
+  };
 
   const sparkles = Array.from({ length: 12 });
   const sparklesAnimation: AnimationSequence = sparkles.map((_, index) => [
@@ -117,11 +146,44 @@ function MaterialCard({
     },
   ]);
 
-  const handleAddToShoppingCart = () => {
-    toast({ title: "Material added to shopping cart!" });
+  const [
+    addMaterialLike,
+    { loading: AddMaterialLikeLoading, error: AddMaterialLikeError },
+  ] = useMutation(ADD_MATERIAL_LIKE_MUTATION, {
+    refetchQueries: [
+      { query: ALL_USER_QUERY },
+      { query: GET_MATERIAL_LIKES_QUERY },
+    ],
+  });
+
+  const [
+    deleteMaterialLike,
+    { loading: DeleteMaterialLikeLoading, error: DeleteMaterialLikeError },
+  ] = useMutation(DELETE_MATERIAL_LIKE_MUTATION, {
+    refetchQueries: [
+      { query: ALL_USER_QUERY },
+      { query: GET_MATERIAL_LIKES_QUERY },
+    ],
+  });
+
+  // Load the star state from local storage
+  useEffect(() => {
+    const storedState = localStorage.getItem(`starred-material-${material.id}`);
+    if (storedState) {
+      setStar(JSON.parse(storedState));
+    }
+  }, [material.id]);
+
+  const handleStarClick = () => {
+    const newState = !star;
+    setStar(newState);
+    localStorage.setItem(
+      `starred-material-${material.id}`,
+      JSON.stringify(newState)
+    );
   };
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (!star) {
       animate([
         ...sparklesReset,
@@ -132,15 +194,48 @@ function MaterialCard({
         [".letter", { y: 0 }, { duration: 0.000001 }],
         ...sparklesFadeOut,
       ]);
-      toast({ title: "Added to side bar.", variant: "star" });
+      await addMaterialLike({
+        variables: {
+          materialLikeInput: {
+            userId: user?.id!,
+            materialId: material.id,
+          },
+        },
+      });
+      if (AddMaterialLikeLoading) return <SkeletonList />;
+      if (AddMaterialLikeError) {
+        toast({
+          title: `${AddMaterialLikeError.message}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "Added to side bar.", variant: "star" });
+      }
     } else {
-      toast({ title: "Removed from side bar.", variant: "star" });
+      await deleteMaterialLike({
+        variables: {
+          materialLikeInput: {
+            userId: user?.id!,
+            materialId: material.id,
+          },
+        },
+      });
+      if (DeleteMaterialLikeLoading) return <SkeletonList />;
+      if (DeleteMaterialLikeError) {
+        toast({
+          title: `${DeleteMaterialLikeError.message}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "Removed from side bar.", variant: "star" });
+      }
     }
     setStar(!star);
+    handleStarClick();
   };
 
   const handleShare = () => {
-    const shareableLink = `${window.location.origin}/ToolPage/Tool/${material.id}`;
+    const shareableLink = `${window.location.origin}/MaterialPage/Material/${material.id}`;
     navigator.clipboard
       .writeText(shareableLink)
       .then(() => {

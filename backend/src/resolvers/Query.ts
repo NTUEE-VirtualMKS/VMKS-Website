@@ -616,6 +616,7 @@ const Query = {
     }
   },
 
+  // ToolLike
   GetToolLikes: async () => {
     const toolLikes = await prisma.toolLike.findMany({
       orderBy: {
@@ -669,6 +670,7 @@ const Query = {
     return likedTools;
   },
 
+  // UserBorrowTool
   GetAllUserBorrowTools: async () => {
     const allUserBorrowTools = await prisma.userBorrowTool.findMany({
       orderBy: {
@@ -763,6 +765,60 @@ const Query = {
     });
 
     return userBorrowTools;
+  },
+
+  // Material Like
+  GetMaterialLikes: async () => {
+    const materialLikes = await prisma.materialLike.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return materialLikes;
+  },
+
+  GetMaterialLikeById: async (_parents, args: { id: number }, _context) => {
+    const id = args.id;
+    const materialLike = await prisma.materialLike.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return materialLike;
+  },
+
+  GetLikedMaterialsByUserId: async (
+    _parents,
+    args: { userId: number },
+    _context,
+  ) => {
+    const userId = args.userId;
+
+    // Find the user by ID
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      // Include material likes if it's a relation field
+      include: {
+        materialLikes: true,
+      },
+    });
+
+    // Throw an error if the user is not found
+    if (!user) throw new Error("User not found");
+
+    const materialLikes = user.materialLikes;
+
+    const likedMaterials = materialLikes.map(async (materialLike) => {
+      return await prisma.material.findUnique({
+        where: {
+          id: materialLike.materialId,
+        },
+      });
+    });
+
+    return likedMaterials;
   },
 };
 

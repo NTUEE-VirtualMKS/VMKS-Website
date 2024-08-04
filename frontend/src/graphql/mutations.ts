@@ -171,6 +171,7 @@ const ADD_MATERIAL_MUTATION = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -190,6 +191,7 @@ const DELETE_MATERIAL_MUTATION = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -209,6 +211,7 @@ const EDIT_MATERIAL_MUTATION = gql(`
       tutorialLink
       fee
       remain
+      materialLikeIds
     }
   }
 `);
@@ -340,6 +343,7 @@ const ADD_USER_MUTATION = gql(`
       isMinister
       toolLikeIds
       userBorrowToolIds
+      materialLikeIds
     }
   }
 `);
@@ -360,6 +364,7 @@ const DELETE_USER_MUTATION = gql(`
       isMinister
       toolLikeIds
       userBorrowToolIds
+      materialLikeIds
     }
   }
 `);
@@ -380,6 +385,7 @@ const EDIT_USER_MUTATION = gql(`
       isMinister
       toolLikeIds
       userBorrowToolIds
+      materialLikeIds
     }
   }
 `);
@@ -503,6 +509,7 @@ const DELETE_TOOL_LIKE_MUTATION = gql(`
   }
 `);
 
+// language
 const EDIT_USER_LANGUAGE_MUTATION = gql(`
   mutation EditUserLanguage($editUserLanguageId: Int!, $language: String!) {
     EditUserLanguage(id: $editUserLanguageId, language: $language) {
@@ -519,10 +526,12 @@ const EDIT_USER_LANGUAGE_MUTATION = gql(`
       isMinister
       toolLikeIds
       userBorrowToolIds
+      materialLikeIds
     }
   }
 `);
 
+// user borrow tool
 const ADD_USER_BORROW_TOOL_MUTATION = gql(`
   mutation AddUserBorrowTool($userBorrowToolInput: userBorrowToolInput!) {
     AddUserBorrowTool(userBorrowToolInput: $userBorrowToolInput) {
@@ -611,6 +620,27 @@ const EDIT_USER_BORROW_TOOL_STATUS_MUTATION = gql(`
   }
 `);
 
+// material like
+const ADD_MATERIAL_LIKE_MUTATION = gql(`
+  mutation AddMaterialLike($materialLikeInput: materialLikeInput!) {
+    AddMaterialLike(materialLikeInput: $materialLikeInput) {
+      id
+      userId
+      materialId
+    }
+  }
+`);
+
+const DELETE_MATERIAL_LIKE_MUTATION = gql(`
+  mutation DeleteMaterialLike($materialLikeInput: materialLikeInput!) {
+    DeleteMaterialLike(materialLikeInput: $materialLikeInput) {
+      id
+      userId
+      materialId
+    }
+  }
+`);
+
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -647,4 +677,6 @@ export {
   DELETE_USER_BORROW_TOOL_MUTATION,
   EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION,
   EDIT_USER_BORROW_TOOL_STATUS_MUTATION,
+  ADD_MATERIAL_LIKE_MUTATION,
+  DELETE_MATERIAL_LIKE_MUTATION,
 };
