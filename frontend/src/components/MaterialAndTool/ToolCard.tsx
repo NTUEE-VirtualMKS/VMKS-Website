@@ -55,9 +55,10 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const [hover, setHover] = useState(false);
   const [star, setStar] = useState(() => {
     if (user?.toolLikeIds?.some((id) => tool?.toolLikeIds?.includes(id))) {
-      console.log(user);
+      localStorage.setItem(`starred-tool-${tool.id}`, JSON.stringify(true));
       return true;
     } else {
+      localStorage.setItem(`starred-tool-${tool.id}`, JSON.stringify(false));
       return false;
     }
   });
@@ -172,6 +173,8 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
     ],
   });
 
@@ -182,6 +185,8 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
+      { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
     ],
   });
 

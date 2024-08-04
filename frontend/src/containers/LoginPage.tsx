@@ -30,7 +30,7 @@ function LoginPage() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!signupMode) {
-      await login({ studentId, password });
+      await login({ studentId, password, redirect: true });
     } else {
       if (confirmPassword !== password) {
         toast({

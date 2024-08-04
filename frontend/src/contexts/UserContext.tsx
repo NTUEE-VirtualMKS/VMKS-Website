@@ -43,9 +43,9 @@ export type UserContextType = {
   pushToLoginPage: boolean;
   setUser: (value: UserType | null) => void;
   setPushToLoginPage: (value: boolean) => void;
-  login: ({ studentId, password }: LoginProps) => Promise<void>;
+  login: ({ studentId, password, redirect }: LoginProps) => Promise<void>;
   signup: ({ name, studentId, password }: SignupProps) => Promise<void>;
-  logout: () => void;
+  logout: ({ redirect }: { redirect: boolean }) => void;
   handleEditLanguage: ({ language }: { language: string }) => Promise<void>;
 };
 
@@ -86,6 +86,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.removeItem("language");
     }
   }, [user, i18n]);
+
+  // Add this useEffect to automatically login the user on app load
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const storedStudentId: string = JSON.parse(savedUser).studentID;
+      const storedPassword: string = JSON.parse(savedUser).password;
+      login({
+        studentId: storedStudentId,
+        password: storedPassword,
+        redirect: false,
+      }).catch((error) => {
+        console.error("Auto login failed:", error);
+      });
+    }
+  }, []);
 
   const [createUser, { loading: createUserLoading, error: createUserError }] =
     useMutation(ADD_USER_MUTATION, {
@@ -144,7 +160,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     { loading: getUserByStudentIdLoading, error: getUserByStudentIdError },
   ] = useLazyQuery(GET_USER_BY_STUDENT_ID_QUERY);
 
-  const login = async ({ studentId, password }: LoginProps) => {
+  const login = async ({ studentId, password, redirect }: LoginProps) => {
     if (getUserByStudentIdLoading) {
       toast({ title: "Loading..." });
     }
@@ -187,13 +203,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           materialLikeIds: user?.materialLikeIds,
         });
         i18n.changeLanguage(user.language);
-        toast({
-          title:
-            (user.isMinister ? "Minister" : user.isAdmin ? "Admin" : "User") +
-            " login successfully!",
-        });
+        if (redirect) {
+          toast({
+            title:
+              (user.isMinister ? "Minister" : user.isAdmin ? "Admin" : "User") +
+              " login successfully!",
+          });
+          navigate("/");
+        }
         setPushToLoginPage(false);
-        navigate("/");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -205,19 +223,21 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           variant: "destructive",
         });
       } else {
-        toast({
-          title: "User not found",
-          description: "Student id or password is wrong!",
-          variant: "destructive",
-        });
-        throw new Error(error as string);
+        if (redirect) {
+          toast({
+            title: "User not found",
+            description: "Student id or password is wrong!",
+            variant: "destructive",
+          });
+        }
+        logout({ redirect });
       }
     }
   };
 
-  const logout = () => {
+  const logout = ({ redirect }: { redirect: boolean }) => {
     setUser(null);
-    toast({ title: "Log out successfully!" });
+    if (redirect) toast({ title: "Log out successfully!" });
     localStorage.clear();
   };
 

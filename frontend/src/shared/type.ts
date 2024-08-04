@@ -117,6 +117,7 @@ export type SignupProps = {
 export type LoginProps = {
   studentId: string;
   password: string;
+  redirect: boolean;
 };
 
 export type ProfileCardProps = {
