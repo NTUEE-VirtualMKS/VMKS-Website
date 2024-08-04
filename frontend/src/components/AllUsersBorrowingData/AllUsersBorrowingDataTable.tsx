@@ -52,10 +52,16 @@ function AllUsersBorrowingDataTable({
 }: AllUsersBorrowingDataTableProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const [sortingAllUsersBorrowing, setSortingAllUsersBorrowing] = useState<SortingState>([]);
-  const [columnFiltersAllUsersBorrowing, setColumnFiltersAllUsersBorrowing] = useState<ColumnFiltersState>([]);
-  const [columnVisibilityAllUsersBorrowing, setColumnVisibilityAllUsersBorrowing] = useState<VisibilityState>({});
-  const [rowSelectionAllUsersBorrowing, setRowSelectionAllUsersBorrowing] = useState({});
+  const [sortingAllUsersBorrowing, setSortingAllUsersBorrowing] =
+    useState<SortingState>([]);
+  const [columnFiltersAllUsersBorrowing, setColumnFiltersAllUsersBorrowing] =
+    useState<ColumnFiltersState>([]);
+  const [
+    columnVisibilityAllUsersBorrowing,
+    setColumnVisibilityAllUsersBorrowing,
+  ] = useState<VisibilityState>({});
+  const [rowSelectionAllUsersBorrowing, setRowSelectionAllUsersBorrowing] =
+    useState({});
 
   const allUsersBorrowingTable = useReactTable({
     data: allUsersBorrowingData,
@@ -76,10 +82,16 @@ function AllUsersBorrowingDataTable({
     },
   });
 
-  const [sortingAllUsersUnreturned, setSortingAllUsersUnreturned] = useState<SortingState>([]);
-  const [columnFiltersAllUsersUnreturned, setColumnFiltersAllUsersUnreturned] = useState<ColumnFiltersState>([]);
-  const [columnVisibilityAllUsersUnreturned, setColumnVisibilityAllUsersUnreturned] = useState<VisibilityState>({});
-  const [rowSelectionAllUsersUnreturned, setRowSelectionAllUsersUnreturned] = useState({});
+  const [sortingAllUsersUnreturned, setSortingAllUsersUnreturned] =
+    useState<SortingState>([]);
+  const [columnFiltersAllUsersUnreturned, setColumnFiltersAllUsersUnreturned] =
+    useState<ColumnFiltersState>([]);
+  const [
+    columnVisibilityAllUsersUnreturned,
+    setColumnVisibilityAllUsersUnreturned,
+  ] = useState<VisibilityState>({});
+  const [rowSelectionAllUsersUnreturned, setRowSelectionAllUsersUnreturned] =
+    useState({});
 
   const allUsersUnreturnedTable = useReactTable({
     data: allUsersUnreturnedData,
@@ -179,167 +191,176 @@ function AllUsersBorrowingDataTable({
           </TabsList>
         </div>
         <TabsContent value="borrowing">
-          <div className="rounded-b-md border-[#444444] border border-t-transparent">
-            <Table>
-              <TableHeader>
-                {allUsersBorrowingTable.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} className="text-center">
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {allUsersBorrowingTable.getRowModel().rows?.length ? (
-                  allUsersBorrowingTable.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
+          <>
+            <div className="rounded-b-md border-[#444444] border border-t-transparent">
+              <Table>
+                <TableHeader>
+                  {allUsersBorrowingTable
+                    .getHeaderGroups()
+                    .map((headerGroup) => (
+                      <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => {
+                          return (
+                            <TableHead key={header.id} className="text-center">
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          );
+                        })}
+                      </TableRow>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                  {allUsersBorrowingTable.getRowModel().rows?.length ? (
+                    allUsersBorrowingTable.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={allUsersBorrowingColumns.length}
+                        className="h-24 text-center"
+                      >
+                        {t("noResults")}
+                      </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={allUsersBorrowingColumns.length}
-                      className="h-24 text-center"
-                    >
-                      {t("noResults")}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="flex-1 text-sm text-muted-foreground">
-              {allUsersBorrowingTable.getFilteredSelectedRowModel().rows.length}{" "}
-              of {allUsersBorrowingTable.getFilteredRowModel().rows.length}{" "}
-              row(s)
-              {" " + t("selected")}
+                  )}
+                </TableBody>
+              </Table>
             </div>
-            <div>
-              <Button
-                className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200 lowercase"
-                onClick={() =>
-                  handleChangeStatus({
-                    userBorrowTools: allUsersBorrowingTable
-                      .getFilteredSelectedRowModel()
-                      .rows.map((row) => row.original),
-                    status: "Not Returned Yet",
-                  })
-                }
-                disabled={
-                  !allUsersBorrowingTable.getFilteredSelectedRowModel().rows
+            <div className="flex items-center justify-end space-x-2 py-4">
+              <div className="flex-1 text-sm text-muted-foreground">
+                {
+                  allUsersBorrowingTable.getFilteredSelectedRowModel().rows
                     .length
-                }
-              >
-                {t("alreadyTaken")}
-              </Button>
+                }{" "}
+                of {allUsersBorrowingTable.getFilteredRowModel().rows.length}{" "}
+                row(s)
+                {" " + t("selected")}
+              </div>
+              <div>
+                <Button
+                  className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200 lowercase"
+                  onClick={() =>
+                    handleChangeStatus({
+                      userBorrowTools: allUsersBorrowingTable
+                        .getFilteredSelectedRowModel()
+                        .rows.map((row) => row.original),
+                      status: "Not Returned Yet",
+                    })
+                  }
+                  disabled={
+                    !allUsersBorrowingTable.getFilteredSelectedRowModel().rows
+                      .length
+                  }
+                >
+                  {t("alreadyTaken")}
+                </Button>
+              </div>
             </div>
-          </div>
+          </>
         </TabsContent>
         <TabsContent value="unreturned">
-          <div className="rounded-b-md border-[#444444] border border-t-transparent">
-            <Table>
-              <TableHeader>
-                {allUsersUnreturnedTable
-                  .getHeaderGroups()
-                  .map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => {
-                        return (
-                          <TableHead key={header.id} className="text-center">
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </TableHead>
-                        );
-                      })}
+          <>
+            <div className="rounded-b-md border-[#444444] border border-t-transparent">
+              <Table>
+                <TableHeader>
+                  {allUsersUnreturnedTable
+                    .getHeaderGroups()
+                    .map((headerGroup) => (
+                      <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => {
+                          return (
+                            <TableHead key={header.id} className="text-center">
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          );
+                        })}
+                      </TableRow>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                  {allUsersUnreturnedTable.getRowModel().rows?.length ? (
+                    allUsersUnreturnedTable.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={allUsersUnreturnedColumns.length}
+                        className="h-24 text-center"
+                      >
+                        {t("noResults")}
+                      </TableCell>
                     </TableRow>
-                  ))}
-              </TableHeader>
-              <TableBody>
-                {allUsersUnreturnedTable.getRowModel().rows?.length ? (
-                  allUsersUnreturnedTable.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={allUsersUnreturnedColumns.length}
-                      className="h-24 text-center"
-                    >
-                      {t("noResults")}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="flex-1 text-sm text-muted-foreground">
-              {
-                allUsersUnreturnedTable.getFilteredSelectedRowModel().rows
-                  .length
-              }{" "}
-              of {allUsersUnreturnedTable.getFilteredRowModel().rows.length}{" "}
-              row(s)
-              {" " + t("selected")}
+                  )}
+                </TableBody>
+              </Table>
             </div>
-            <div>
-              <Button
-                className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200 lowercase"
-                onClick={() =>
-                  handleChangeStatus({
-                    userBorrowTools: allUsersUnreturnedTable
-                      .getFilteredSelectedRowModel()
-                      .rows.map((row) => row.original),
-                    status: "Returned",
-                  })
-                }
-                disabled={
-                  !allUsersUnreturnedTable.getFilteredSelectedRowModel().rows
+            <div className="flex items-center justify-end space-x-2 py-4">
+              <div className="flex-1 text-sm text-muted-foreground">
+                {
+                  allUsersUnreturnedTable.getFilteredSelectedRowModel().rows
                     .length
-                }
-              >
-                {t("returned")}
-              </Button>
+                }{" "}
+                of {allUsersUnreturnedTable.getFilteredRowModel().rows.length}{" "}
+                row(s)
+                {" " + t("selected")}
+              </div>
+              <div>
+                <Button
+                  className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200 lowercase"
+                  onClick={() =>
+                    handleChangeStatus({
+                      userBorrowTools: allUsersUnreturnedTable
+                        .getFilteredSelectedRowModel()
+                        .rows.map((row) => row.original),
+                      status: "Returned",
+                    })
+                  }
+                  disabled={
+                    !allUsersUnreturnedTable.getFilteredSelectedRowModel().rows
+                      .length
+                  }
+                >
+                  {t("returned")}
+                </Button>
+              </div>
             </div>
-          </div>
+          </>
         </TabsContent>
       </Tabs>
     </div>

@@ -55,7 +55,7 @@ function AllUsersBorrowingList() {
     [];
 
   return (
-    <Tabs defaultValue="tool">
+    <Tabs defaultValue="material">
       <div className="flex flex-row-reverse">
         <div className="w-56 mt-1">
           <TabsList className="grid w-full grid-cols-2">

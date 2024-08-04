@@ -185,6 +185,7 @@ const typeDefs = `#graphql
     tutorialLink: String
     fee: Int!
     remain: Int!
+    materialLikeIds: [Int]
   }
 
   type Tool {
@@ -241,6 +242,7 @@ const typeDefs = `#graphql
     isMinister: Boolean!
     toolLikeIds: [Int]
     userBorrowToolIds: [Int]
+    materialLikeIds: [Int]
   }
 
   type signUpRet {
@@ -330,6 +332,17 @@ const typeDefs = `#graphql
     quantity: Int!,
   }
 
+  type MaterialLike {
+    id: Int!,
+    userId: Int!,
+    materialId: Int!,
+  }
+
+  input materialLikeInput {
+    userId: Int!,
+    materialId: Int!,
+  }
+
   ### Define Resolvers ###
 
   type Query {
@@ -370,6 +383,9 @@ const typeDefs = `#graphql
     GetUserBorrowToolById(id: Int!): UserBorrowTool
     GetUserBorrowToolsByUserId(userId: Int!): [UserBorrowTool]
     GetUserBorrowToolsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowTool]
+    GetMaterialLikes: [MaterialLike]
+    GetMaterialLikeById(id: Int!): MaterialLike
+    GetLikedMaterialsByUserId(userId: Int!): [Material]
   }
 
   type Mutation {
@@ -409,6 +425,8 @@ const typeDefs = `#graphql
     DeleteUserBorrowTool(id: Int!): UserBorrowTool
     EditUserBorrowToolQuantity(id: Int!, userBorrowToolInput: userBorrowToolInput!): UserBorrowTool
     EditUserBorrowToolStatus(id: Int!, status: String!): UserBorrowTool
+    AddMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
+    DeleteMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
   }
 
   type Subscription {

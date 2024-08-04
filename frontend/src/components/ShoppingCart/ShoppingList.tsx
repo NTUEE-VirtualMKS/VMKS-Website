@@ -16,17 +16,17 @@ function ShoppingList() {
   const { user } = useUser();
   const { toast } = useToast();
   const {
-    data: unborrowedData,
-    loading: unborrowedDataLoading,
-    error: unborrowedDataError,
+    data: unborrowedToolsData,
+    loading: unborrowedToolsDataLoading,
+    error: unborrowedToolsDataError,
   } = useQuery(GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY, {
     variables: { userId: user?.id!, status: unborrowedStatus },
   });
 
   const {
-    data: borrowingData,
-    loading: borrowingDataLoading,
-    error: borrowingDataError,
+    data: borrowingToolsData,
+    loading: borrowingToolsDataLoading,
+    error: borrowingToolsDataError,
   } = useQuery(GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY, {
     variables: {
       userId: user?.id!,
@@ -34,25 +34,31 @@ function ShoppingList() {
     },
   });
 
-  if (unborrowedDataLoading) return <LoaderSpinner />;
-  if (unborrowedDataError) {
-    toast({ title: `${unborrowedDataError.message}`, variant: "destructive" });
+  if (unborrowedToolsDataLoading) return <LoaderSpinner />;
+  if (unborrowedToolsDataError) {
+    toast({
+      title: `${unborrowedToolsDataError.message}`,
+      variant: "destructive",
+    });
   }
 
   const unborrowedTools =
-    (unborrowedData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
+    (unborrowedToolsData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
     [];
 
-  if (borrowingDataLoading) return <LoaderSpinner />;
-  if (borrowingDataError) {
-    toast({ title: `${borrowingDataError.message}`, variant: "destructive" });
+  if (borrowingToolsDataLoading) return <LoaderSpinner />;
+  if (borrowingToolsDataError) {
+    toast({
+      title: `${borrowingToolsDataError.message}`,
+      variant: "destructive",
+    });
   }
   const borrowingTools =
-    (borrowingData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
+    (borrowingToolsData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
     [];
 
   return (
-    <Tabs defaultValue="tool">
+    <Tabs defaultValue="material">
       <div className="flex flex-row-reverse">
         <div className="w-56 mt-1">
           <TabsList className="grid w-full grid-cols-2">
@@ -75,8 +81,8 @@ function ShoppingList() {
         <UserDataTable
           tableName={t("material")}
           Icon={Cpu}
-          unborrowedData={unborrowedTools}
-          borrowingData={borrowingTools}
+          unborrowedData={unborrowedTools} // TODO: Change to unborrowedMaterials
+          borrowingData={borrowingTools} // TODO: Change to borrowingMaterials
         />
       </TabsContent>
       <TabsContent value="tool">

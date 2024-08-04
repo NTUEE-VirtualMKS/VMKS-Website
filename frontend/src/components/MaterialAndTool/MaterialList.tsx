@@ -30,6 +30,7 @@ function MaterialList({ search }: { search: string }) {
       fee: material!.fee,
       tutorialLink: material!.tutorialLink,
       partName: material!.partName,
+      materialLikeIds: material!.materialLikeIds,
     };
     return filteredMaterial;
   });

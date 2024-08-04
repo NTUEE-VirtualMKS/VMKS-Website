@@ -463,6 +463,15 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     ),
   },
   {
+    accessorKey: "returnDate",
+    header: "Return Date",
+    cell: ({ row }) => (
+      <div className="text-center text-white text-base font-semibold">
+        {(row.getValue("returnDate") as string).split(",")[0]}
+      </div>
+    ),
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -493,7 +502,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
         ],
       });
 
-      const handleDelete = async () => {
+      const handleDeleteHistory = async () => {
         await deleteUserBorrowTool({
           variables: {
             deleteUserBorrowToolId: userBorrowTool.id,
@@ -506,7 +515,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
             variant: "destructive",
           });
         } else {
-          toast({ title: "Deleted successfully!" });
+          toast({ title: "History deleted successfully!" });
         }
       };
 
@@ -577,7 +586,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={handleDelete}
+              onClick={handleDeleteHistory}
               className="hover:text-red-400"
             >
               <Trash2 className="p-1.5" size={31} />

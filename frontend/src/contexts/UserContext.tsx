@@ -1,3 +1,4 @@
+// TODO: add updateUserToolLikeIds and updateUserMaterialLikeIds to backend
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -183,6 +184,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           isMinister: user.isMinister,
           toolLikeIds: user?.toolLikeIds,
           userBorrowToolIds: user?.userBorrowToolIds,
+          materialLikeIds: user?.materialLikeIds,
         });
         i18n.changeLanguage(user.language);
         toast({

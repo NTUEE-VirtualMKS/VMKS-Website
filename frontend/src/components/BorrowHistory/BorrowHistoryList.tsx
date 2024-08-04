@@ -52,7 +52,7 @@ function BorrowHistoryList() {
         <BorrowHistoryTable
           tableName={t("material")}
           Icon={Cpu}
-          borrowHistoryData={userBorrowedTools}
+          borrowHistoryData={userBorrowedTools} // TODO: Change to userBorrowedMaterials
         />
       </TabsContent>
       <TabsContent value="tool">
