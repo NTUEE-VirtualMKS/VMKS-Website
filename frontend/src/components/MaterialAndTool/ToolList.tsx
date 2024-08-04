@@ -16,6 +16,7 @@ function ToolList({ search }: { search: string }) {
   if (error) throw new Error(`Error! ${error.message}`);
 
   const allTools = data?.SearchToolsByName;
+  console.log(allTools);
   const tools = allTools?.map((tool) => {
     const filteredTool = {
       id: tool!.id,

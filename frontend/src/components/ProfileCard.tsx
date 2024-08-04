@@ -41,7 +41,7 @@ function ProfileCard({
 }: ProfileCardProps) {
   const { toast } = useToast();
   const { t } = useTranslation();
-  const { user } = useUser();
+  const { user, login } = useUser();
   if (!photoLink) return <LoaderSpinner />;
   const { windowWidth } = useWindow();
   const [showPassword, setShowPassword] = useState(false);
@@ -102,11 +102,11 @@ function ProfileCard({
           JSON.stringify(confirmPassword)
         );
         localStorage.setItem("imgUrl", JSON.stringify(imgUrl));
+        login({ studentId: studentID, password, redirect: false });
       } catch (e) {
         toast({ title: `${e}`, variant: "destructive" });
       }
       setVisible(false);
-      window.location.reload();
     }
   };
 

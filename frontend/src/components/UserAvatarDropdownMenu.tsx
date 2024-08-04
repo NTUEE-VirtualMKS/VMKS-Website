@@ -28,7 +28,7 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
   };
 
   const handleLogout = () => {
-    logout();
+    logout({ redirect: true });
     navigate("/");
   };
 

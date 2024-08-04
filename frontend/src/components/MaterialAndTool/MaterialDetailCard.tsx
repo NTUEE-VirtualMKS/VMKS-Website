@@ -147,14 +147,13 @@ function MaterialDetailCard({
             {t("usage")}: {materialUsage} {t("piece")}
           </p>
           <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("valuable")}: {materialValuable ? "Yes": "No"} 
+            {t("valuable")}: {materialValuable ? "Yes" : "No"}
           </p>
           {materialValuable && (
             <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-            {t("fee")}: {materialFee} NT$
-          </p>
-          )
-          }
+              {t("fee")}: {materialFee} NT$
+            </p>
+          )}
           {materialTutorialLink && (
             <a
               href={materialTutorialLink}
@@ -256,7 +255,9 @@ function MaterialDetailCard({
                     id="valuable"
                     className="checkbox-class"
                     checked={materialValuable}
-                    onCheckedChange={(checked) => setMaterialValuable(checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setMaterialValuable(checked as boolean)
+                    }
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">

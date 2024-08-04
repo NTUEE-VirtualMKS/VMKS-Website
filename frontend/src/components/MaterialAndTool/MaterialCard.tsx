@@ -58,8 +58,16 @@ function MaterialCard({
         material?.materialLikeIds?.includes(id)
       )
     ) {
+      localStorage.setItem(
+        `starred-material-${material.id}`,
+        JSON.stringify(true)
+      );
       return true;
     } else {
+      localStorage.setItem(
+        `starred-material-${material.id}`,
+        JSON.stringify(false)
+      );
       return false;
     }
   });
@@ -153,6 +161,8 @@ function MaterialCard({
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_MATERIAL_LIKES_QUERY },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
     ],
   });
 
@@ -163,6 +173,8 @@ function MaterialCard({
     refetchQueries: [
       { query: ALL_USER_QUERY },
       { query: GET_MATERIAL_LIKES_QUERY },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
+      { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
     ],
   });
 
