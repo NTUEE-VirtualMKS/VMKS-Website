@@ -1,5 +1,5 @@
 // TODO: handle borrow and repair buttons
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import RouteBar from "@/components/MaterialAndTool/RouteBar.tsx";
 import { useQuery } from "@apollo/client";
@@ -9,15 +9,23 @@ import { useUser } from "@/contexts/UserContext.tsx";
 import { useToast } from "@/components/ui/use-toast.ts";
 import { useTranslation } from "react-i18next";
 import MaterialDetailCard from "@/components/MaterialAndTool/MaterialDetailCard.tsx";
+import { useEffect } from "react";
 
 function MaterialDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useUser();
   const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
     variables: { id: parseInt(id as string) },
   });
+
+  useEffect(() => {
+    if (!loading && !error && !data?.GetMaterialById) {
+      navigate("/NotFound");
+    }
+  }, [loading, error, data, navigate]);
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);

@@ -33,6 +33,7 @@ import {
 import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { materialBaseUrl } from "@/constants";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -247,7 +248,7 @@ function MaterialCard({
   };
 
   const handleShare = () => {
-    const shareableLink = `${window.location.origin}/MaterialPage/Material/${material.id}`;
+    const shareableLink = `${window.location.origin}${materialBaseUrl}/${material.id}`;
     navigator.clipboard
       .writeText(shareableLink)
       .then(() => {

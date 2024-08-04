@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
 import HomePage from "@/containers/HomePage";
 import Advanced from "@/Advanced";
 import LoaderSpinner from "@/components/LoaderSpinner";
@@ -34,6 +34,11 @@ const AllUsersBorrowingDataPage = lazy(
 );
 const AnnouncementPage = lazy(() => import("@/containers/AnnouncementPage"));
 const NotFound = lazy(() => import("@/containers/NotFound"));
+const DisposableMaterialPage = lazy(
+  () => import("@/containers/DisposableMaterialPage")
+);
+const MachinePage = lazy(() => import("@/containers/MachinePage"));
+const SettingsPage = lazy(() => import("@/containers/SettingsPage"));
 
 function App() {
   const { isOnline } = useNetworkStatus();
@@ -46,7 +51,7 @@ function App() {
           <NavBar />
           {user && isOnline && (
             <div className="flex-none z-20">
-              <SideBar />
+              <Sidebar />
             </div>
           )}
         </div>
@@ -166,6 +171,30 @@ function App() {
                     ) : (
                       <NotFound />
                     )}
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/DisposableMaterialPage"
+                element={
+                  <Suspense fallback={<LoaderSpinner />}>
+                    <DisposableMaterialPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/MachinePage"
+                element={
+                  <Suspense fallback={<LoaderSpinner />}>
+                    <MachinePage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/SettingsPage"
+                element={
+                  <Suspense fallback={<LoaderSpinner />}>
+                    <SettingsPage />
                   </Suspense>
                 }
               />

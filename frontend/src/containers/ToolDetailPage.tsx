@@ -9,15 +9,24 @@ import { useUser } from "@/contexts/UserContext.tsx";
 import { useToast } from "@/components/ui/use-toast.ts";
 import { useTranslation } from "react-i18next";
 import ToolDetailCard from "@/components/MaterialAndTool/ToolDetailCard.tsx";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function ToolDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useUser();
   const { data, loading, error } = useQuery(GET_TOOL_BY_ID_QUERY, {
     variables: { getToolByIdId: parseInt(id as string) },
   });
+
+  useEffect(() => {
+    if (!loading && !error && !data?.GetToolById) {
+      navigate("/NotFound");
+    }
+  }, [loading, error, data, navigate]);
 
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);

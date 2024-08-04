@@ -1,4 +1,4 @@
-import { LogOut, UserRound, History, Bell } from "lucide-react";
+import { LogOut, UserRound, History, Bell, Settings } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +46,11 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
           <span>{t("profile")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate("/SettingsPage")}>
+          <Settings className="mr-2 h-4 w-4" />
+          <span>{t("settings")}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigate("/MessagePage")}>
           <div className="relative inline-block">
             <Bell className="mr-2 h-4 w-4" />
@@ -76,6 +81,7 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
             <DropdownMenuSeparator />
           </RadioGroup>
         )}
+        
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{t("logout")}</span>

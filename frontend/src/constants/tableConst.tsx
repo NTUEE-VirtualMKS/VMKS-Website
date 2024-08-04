@@ -165,7 +165,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
       const userBorrowTool = row.original;
       const handleShare = () => {
         navigator.clipboard.writeText(
-          `${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
+          `${window.location.origin}${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
@@ -324,7 +324,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
       const { toast } = useToast();
       const handleShare = () => {
         navigator.clipboard.writeText(
-          `${toolBaseUrl}/${userBorrowTool.id}` // TODO: change to deployed link
+          `${window.location.origin}${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
@@ -479,7 +479,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
       const { toast } = useToast();
       const handleShare = () => {
         navigator.clipboard.writeText(
-          `${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
+          `${window.location.origin}${toolBaseUrl}/${userBorrowTool.toolId}` // TODO: change to deployed link
         );
         toast({ title: "Link copied to clipboard!", variant: "share" });
       };
