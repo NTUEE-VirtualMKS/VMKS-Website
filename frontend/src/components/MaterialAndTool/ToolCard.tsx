@@ -39,7 +39,11 @@ import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import LoaderSpinner from "../LoaderSpinner";
-import { borrowingStatus, unborrowedStatus } from "@/constants/index";
+import {
+  borrowingStatus,
+  toolBaseUrl,
+  unborrowedStatus,
+} from "@/constants/index";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -253,7 +257,7 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   };
 
   const handleShare = () => {
-    const shareableLink = `${window.location.origin}/ToolPage/Tool/${tool.id}`;
+    const shareableLink = `${window.location.origin}${toolBaseUrl}/${tool.id}`;
     navigator.clipboard
       .writeText(shareableLink)
       .then(() => {

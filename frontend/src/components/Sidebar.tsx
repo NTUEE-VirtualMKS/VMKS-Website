@@ -2,34 +2,64 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { useQuery } from "@apollo/client";
-import { GET_LIKED_TOOLS_BY_USER_ID_QUERY } from "@/graphql";
+import {
+  GET_LIKED_TOOLS_BY_USER_ID_QUERY,
+  GET_LIKED_MATERIALS_BY_USER_ID_QUERY,
+} from "@/graphql";
 import LoaderSpinner from "./LoaderSpinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { MaterialType, ToolType } from "@/shared/type";
 
-function SideBar() {
+function Sidebar() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { user } = useUser();
 
-  const { data, loading, error, refetch } = useQuery(
-    GET_LIKED_TOOLS_BY_USER_ID_QUERY,
-    {
-      variables: {
-        userId: user?.id!,
-      },
-    }
-  );
+  const {
+    data: likedToolsData,
+    loading: likedToolsLoading,
+    error: likedToolsError,
+    refetch: refetchLikedTools,
+  } = useQuery(GET_LIKED_TOOLS_BY_USER_ID_QUERY, {
+    variables: {
+      userId: user?.id!,
+    },
+  });
 
-  if (loading) return <LoaderSpinner />;
-  if (error) console.log("login");
-  const likedTools = data?.GetLikedToolsByUserId || [];
+  const {
+    data: likedMaterialsData,
+    loading: likedMaterialsLoading,
+    error: likedMaterialsError,
+    refetch: refetchLikedMaterials,
+  } = useQuery(GET_LIKED_MATERIALS_BY_USER_ID_QUERY, {
+    variables: {
+      userId: user?.id!,
+    },
+  });
+
+  if (likedToolsLoading) return <LoaderSpinner />;
+  if (likedToolsError) {
+    throw new Error(likedToolsError.message);
+  }
+
+  const likedTools =
+    (likedToolsData?.GetLikedToolsByUserId as ToolType[]) || [];
+
+  if (likedMaterialsLoading) return <LoaderSpinner />;
+  if (likedMaterialsError) {
+    throw new Error(likedMaterialsError.message);
+  }
+
+  const likedMaterials =
+    (likedMaterialsData?.GetLikedMaterialsByUserId as MaterialType[]) || [];
 
   const handleShow = async () => {
-    await refetch();
+    await refetchLikedMaterials();
+    await refetchLikedTools();
     setIsVisible(!isVisible);
   };
 
@@ -73,6 +103,33 @@ function SideBar() {
           <>
             <div className="flex flex-col gap-0.5 overflow-y-auto h-[72%]">
               <div className="flex flex-col gap-2">
+                <p className="text-white text-sm text-center border-b w-8/12 mx-auto border-white border-opacity-50">
+                  {t("material")}
+                </p>
+                {likedMaterials.length !== 0 &&
+                  likedMaterials.map((material) => (
+                    <Tooltip key={material?.id}>
+                      <TooltipTrigger className="w-10/12 mx-auto p-1">
+                        <img
+                          className="bg-white object-cover transform active:scale-90 transition-transform duration-200"
+                          src={material?.photoLink}
+                          alt={material?.name}
+                          onClick={() =>
+                            navigate(`/MaterialPage/Material/${material?.id}`)
+                          }
+                        />
+                        <TooltipContent
+                          className="bg-black bg-opacity-80 text-white"
+                          side="right"
+                        >
+                          {material?.name}
+                        </TooltipContent>
+                      </TooltipTrigger>
+                    </Tooltip>
+                  ))}
+                <p className="text-white text-sm text-center border-b w-8/12 mx-auto border-white border-opacity-50">
+                  {t("tool")}
+                </p>
                 {likedTools.length !== 0 &&
                   likedTools.map((tool) => (
                     <Tooltip key={tool?.id}>
@@ -107,4 +164,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default Sidebar;

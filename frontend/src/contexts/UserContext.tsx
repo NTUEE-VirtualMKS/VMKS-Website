@@ -230,7 +230,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             variant: "destructive",
           });
         }
-        logout({ redirect });
+        logout({ redirect: false });
       }
     }
   };
