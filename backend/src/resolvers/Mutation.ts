@@ -24,6 +24,7 @@ import {
   ToolLikeInput,
   UserBorrowToolInput,
   MaterialLikeInput,
+  UserBorrowMaterialInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -589,6 +590,25 @@ const Mutation = {
         remain: remain,
       },
     });
+
+    // update userBorrowMaterials
+    const userBorrowMaterialIds = editMaterial.userBorrowMaterialIds;
+    await prisma.userBorrowMaterial.updateMany({
+      where: {
+        id: {
+          in: userBorrowMaterialIds,
+        },
+      },
+      data: {
+        name: editMaterial.name,
+        partName: editMaterial.partName,
+        category: editMaterial.category,
+        position: editMaterial.position,
+        figure: editMaterial.photoLink,
+        remain: editMaterial.remain,
+      },
+    });
+
     pubsub.publish("MATERIAL_UPDATED", { MaterialUpdated: editMaterial });
     return editMaterial;
   },
@@ -866,6 +886,19 @@ const Mutation = {
       },
     });
 
+    const userBorrowMaterialIds = findUser.userBorrowMaterialIds;
+    // update userBorrowMaterials
+    await prisma.userBorrowMaterial.updateMany({
+      where: {
+        id: {
+          in: userBorrowMaterialIds,
+        },
+      },
+      data: {
+        borrower: updateUser.name,
+        studentId: updateUser.studentID,
+      },
+    });
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
     return updateUser;
   },
@@ -1621,6 +1654,268 @@ const Mutation = {
     });
 
     return deleteMaterialLike;
+  },
+
+  // UserBorrowMaterial
+  AddUserBorrowMaterial: async (
+    _parents,
+    args: { userBorrowMaterialInput: UserBorrowMaterialInput },
+    _context,
+  ) => {
+    const { userId, materialId, quantity } = args.userBorrowMaterialInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error("User Not Found");
+    }
+
+    const material = await prisma.material.findUnique({
+      where: {
+        id: materialId,
+      },
+    });
+
+    if (!material) {
+      throw new Error("Material Not Found");
+    }
+
+    // update material
+    const remain = material.remain - quantity;
+    const usage = material.usage + quantity;
+    await prisma.material.update({
+      where: {
+        id: materialId,
+      },
+      data: {
+        remain,
+        usage,
+      },
+    });
+
+    const newUserBorrowMaterial = await prisma.userBorrowMaterial.create({
+      data: {
+        userId: userId,
+        materialId: materialId,
+        borrower: user.name,
+        studentId: user.studentID,
+        figure: material.photoLink,
+        name: material.name,
+        partName: material.partName,
+        category: material.category,
+        remain: remain,
+        position: material.position,
+        quantity,
+      },
+    });
+
+    await prisma.material.update({
+      where: {
+        id: materialId,
+      },
+      data: {
+        userBorrowMaterialIds: [
+          ...material.userBorrowMaterialIds,
+          newUserBorrowMaterial.id,
+        ],
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        userBorrowMaterialIds: [
+          ...user.userBorrowMaterialIds,
+          newUserBorrowMaterial.id,
+        ],
+      },
+    });
+
+    return newUserBorrowMaterial;
+  },
+
+  DeleteUserBorrowMaterial: async (
+    _parents,
+    args: { id: number },
+    _context,
+  ) => {
+    const id = args.id;
+    const userBorrowMaterial = await prisma.userBorrowMaterial.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowMaterial) {
+      throw new Error("User Borrow Material Not Found");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userBorrowMaterial.userId,
+      },
+    });
+
+    const material = await prisma.material.findUnique({
+      where: {
+        id: userBorrowMaterial.materialId,
+      },
+    });
+
+    const remain = material.remain + userBorrowMaterial.quantity;
+    await prisma.material.update({
+      where: {
+        id: userBorrowMaterial.materialId,
+      },
+      data: {
+        remain,
+      },
+    });
+
+    const deleteUserBorrowMaterial = await prisma.userBorrowMaterial.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    await prisma.material.update({
+      where: {
+        id: userBorrowMaterial.materialId,
+      },
+      data: {
+        userBorrowMaterialIds: {
+          set: material.userBorrowMaterialIds.filter(
+            (id) => id !== userBorrowMaterial.id,
+          ),
+        },
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: userBorrowMaterial.userId,
+      },
+      data: {
+        userBorrowMaterialIds: {
+          set: user.userBorrowMaterialIds.filter(
+            (id) => id !== userBorrowMaterial.id,
+          ),
+        },
+      },
+    });
+
+    return deleteUserBorrowMaterial;
+  },
+
+  EditUserBorrowMaterialQuantity: async (
+    _parents,
+    args: { id: number; userBorrowMaterialInput: UserBorrowMaterialInput },
+    _context,
+  ) => {
+    const { id, userBorrowMaterialInput } = args;
+    const { materialId, quantity } = userBorrowMaterialInput;
+    // new quantity
+    const userBorrowMaterial = await prisma.userBorrowMaterial.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowMaterial) {
+      throw new Error("User Borrow Material Not Found");
+    }
+
+    const material = await prisma.material.findUnique({
+      where: {
+        id: materialId,
+      },
+    });
+
+    const remain = material.remain + userBorrowMaterial.quantity - quantity;
+    const usage = material.usage + quantity - userBorrowMaterial.quantity;
+    await prisma.material.update({
+      where: {
+        id: userBorrowMaterial.materialId,
+      },
+      data: {
+        remain,
+        usage,
+      },
+    });
+
+    const editUserBorrowMaterial = await prisma.userBorrowMaterial.update({
+      where: {
+        id: id,
+      },
+      data: {
+        quantity: quantity,
+        remain: remain,
+      },
+    });
+
+    return editUserBorrowMaterial;
+  },
+
+  EditUserBorrowMaterialStatus: async (
+    _parents,
+    args: { id: number; status: string },
+    _context,
+  ) => {
+    const { id, status } = args;
+    const userBorrowMaterial = await prisma.userBorrowMaterial.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!userBorrowMaterial) {
+      throw new Error("User Borrow Material Not Found");
+    }
+
+    const editUserBorrowMaterial = await prisma.userBorrowMaterial.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: status,
+      },
+    });
+
+    if (status === "Returned") {
+      await prisma.material.update({
+        where: {
+          id: userBorrowMaterial.materialId,
+        },
+        data: {
+          remain: userBorrowMaterial.remain + userBorrowMaterial.quantity,
+        },
+      });
+      // update userBorrowMaterial's returnDate
+      await prisma.userBorrowMaterial.update({
+        where: {
+          id: id,
+        },
+        data: {
+          returnDate: new Date().toLocaleString(),
+        },
+      });
+    } else if (status === "Success") {
+      // update userBorrowMaterial's borrowDate
+      await prisma.userBorrowMaterial.update({
+        where: {
+          id: id,
+        },
+        data: {
+          borrowDate: new Date().toLocaleString(),
+        },
+      });
+    }
+
+    return editUserBorrowMaterial;
   },
 };
 

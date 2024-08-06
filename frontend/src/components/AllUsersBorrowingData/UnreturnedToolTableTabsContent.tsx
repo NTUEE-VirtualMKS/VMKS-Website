@@ -33,10 +33,10 @@ import {
   unreturnedStatus,
 } from "@/constants";
 
-function UnreturnedTableTabsContent({
-  allUsersUnreturnedData,
+function UnreturnedToolTableTabsContent({
+  allUsersUnreturnedToolData,
 }: {
-  allUsersUnreturnedData: UserBorrowToolType[];
+  allUsersUnreturnedToolData: UserBorrowToolType[];
 }) {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -47,7 +47,7 @@ function UnreturnedTableTabsContent({
   const [rowSelection, setRowSelection] = useState({});
 
   const allUsersUnreturnedTable = useReactTable({
-    data: allUsersUnreturnedData,
+    data: allUsersUnreturnedToolData,
     columns: allUsersUnreturnedColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -192,4 +192,4 @@ function UnreturnedTableTabsContent({
   );
 }
 
-export default UnreturnedTableTabsContent;
+export default UnreturnedToolTableTabsContent;

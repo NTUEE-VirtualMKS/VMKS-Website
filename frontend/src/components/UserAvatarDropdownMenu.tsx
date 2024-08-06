@@ -81,7 +81,6 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
             <DropdownMenuSeparator />
           </RadioGroup>
         )}
-        
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{t("logout")}</span>

@@ -179,6 +179,7 @@ const ALL_MATERIAL_QUERY = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -199,6 +200,7 @@ const GET_MATERIAL_BY_ID_QUERY = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -219,6 +221,7 @@ const SEARCH_MATERIAL_BY_NAME_QUERY = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -239,6 +242,7 @@ const SEARCH_MATERIAL_BY_CATEGORY_QUERY = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -259,6 +263,7 @@ const SEARCH_MATERIAL_BY_POSITION_QUERY = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -316,40 +321,40 @@ const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
 
 const ALL_TOOL_QUERY = gql(`
   query AllTools {
-  AllTools {
-    id
-    name
-    partName
-    category
-    position
-    description
-    photoLink
-    usage
-    tutorialLink
-    remain
-    toolLikeIds
-    userBorrowToolIds
+    AllTools {
+      id
+      name
+      partName
+      category
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      remain
+      toolLikeIds
+      userBorrowToolIds
+    }
   }
-}
 `);
 
 const GET_TOOL_BY_ID_QUERY = gql(`
-query GetToolById($getToolByIdId: Int!) {
-  GetToolById(id: $getToolByIdId) {
-    id
-    name
-    partName
-    category
-    position
-    description
-    photoLink
-    usage
-    tutorialLink
-    remain
-    toolLikeIds
-    userBorrowToolIds
-  }
-}  
+  query GetToolById($getToolByIdId: Int!) {
+    GetToolById(id: $getToolByIdId) {
+      id
+      name
+      partName
+      category
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      remain
+      toolLikeIds
+      userBorrowToolIds
+    }
+  }  
 `);
 
 const SEARCH_TOOL_BY_CATEGORY_QUERY = gql(`
@@ -411,23 +416,24 @@ const SEARCH_TOOL_BY_POSITION_QUERY = gql(`
 
 const ALL_USER_QUERY = gql(`
   query AllUser {
-  AllUser {
-    id
-    name
-    studentID
-    password
-    photoLink
-    language
-    threeDPId
-    laserCutAvailable
-    articlesId
-    isAdmin
-    isMinister
-    toolLikeIds
-    userBorrowToolIds
-    materialLikeIds
+    AllUser {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+      materialLikeIds
+      userBorrowMaterialIds
+    }
   }
-}
 `);
 
 const SEARCH_USER_BY_NAME_QUERY = gql(`
@@ -447,29 +453,31 @@ const SEARCH_USER_BY_NAME_QUERY = gql(`
       toolLikeIds
       userBorrowToolIds
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
 
 const GET_USER_BY_STUDENT_ID_QUERY = gql(`
   query GetUserByStudentID($studentId: String!) {
-  GetUserByStudentID(studentID: $studentId) {
-    id
-    name
-    studentID
-    password
-    photoLink
-    language
-    threeDPId
-    laserCutAvailable
-    articlesId
-    isAdmin
-    isMinister
-    toolLikeIds
-    userBorrowToolIds
-    materialLikeIds
+    GetUserByStudentID(studentID: $studentId) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+      materialLikeIds
+      userBorrowMaterialIds
+    }
   }
-}
 `);
 
 const GET_AUTHORIZED_CODE_QUERY = gql(`
@@ -680,6 +688,116 @@ const GET_LIKED_MATERIALS_BY_USER_ID_QUERY = gql(`
   }
 `);
 
+const GET_ALL_USER_BORROW_MATERIALS_QUERY = gql(`
+  query GetAllUserBorrowMaterials {
+    GetAllUserBorrowMaterials {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY = gql(`
+  query GetAllUserBorrowMaterialsByStatus($status: [String]!) {
+    GetAllUserBorrowMaterialsByStatus(status: $status) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_MATERIAL_BY_ID_QUERY = gql(`
+  query GetUserBorrowMaterialById($getUserBorrowMaterialByIdId: Int!) {
+    GetUserBorrowMaterialById(id: $getUserBorrowMaterialByIdId) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY = gql(`
+  query GetUserBorrowMaterialsByUserId($userId: Int!) {
+    GetUserBorrowMaterialsByUserId(userId: $userId) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY = gql(`
+  query GetUserBorrowMaterialsByStatusAndUserId($userId: Int!, $status: [String]!) {
+    GetUserBorrowMaterialsByStatusAndUserId(userId: $userId, status: $status) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -720,4 +838,9 @@ export {
   GET_MATERIAL_LIKES_QUERY,
   GET_MATERIAL_LIKE_BY_ID_QUERY,
   GET_LIKED_MATERIALS_BY_USER_ID_QUERY,
+  GET_ALL_USER_BORROW_MATERIALS_QUERY,
+  GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
+  GET_USER_BORROW_MATERIAL_BY_ID_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
 };

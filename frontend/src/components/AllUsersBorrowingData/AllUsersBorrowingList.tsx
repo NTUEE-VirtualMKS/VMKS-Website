@@ -1,57 +1,101 @@
 // Admin only
-import AllUsersBorrowingDataTable from "./AllUsersBorrowingDataTable";
+import AllUsersBorrowingToolDataTable from "./AllUsersBorrowingToolDataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Cpu, Hammer } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../ui/use-toast";
 import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
-import { UserBorrowToolType } from "@/shared/type";
-import { GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY } from "@/graphql";
+import { UserBorrowToolType, UserBorrowMaterialType } from "@/shared/type";
+import {
+  GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+  GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
+} from "@/graphql";
 import { allUsersBorrowingStatus, unreturnedStatus } from "@/constants/index";
+import AllUsersBorrowingMaterialDataTable from "./AllUsersBorrowingMaterialDataTable";
 
-// allUsersUnreturnedData
+// allUsersUnreturnedToolData
 function AllUsersBorrowingList() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const {
-    data: allUsersBorrowingData,
-    loading: allUsersBorrowingDataLoading,
-    error: allUsersBorrowingDataError,
+    data: allUsersBorrowingToolData,
+    loading: allUsersBorrowingToolDataLoading,
+    error: allUsersBorrowingToolDataError,
   } = useQuery(GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY, {
     variables: { status: allUsersBorrowingStatus },
   });
 
   const {
-    data: allUsersUnreturnedData,
-    loading: allUsersUnreturnedDataLoading,
-    error: allUsersUnreturnedDataError,
+    data: allUsersUnreturnedToolData,
+    loading: allUsersUnreturnedToolDataLoading,
+    error: allUsersUnreturnedToolDataError,
   } = useQuery(GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY, {
     variables: { status: unreturnedStatus },
   });
 
-  if (allUsersBorrowingDataLoading) return <LoaderSpinner />;
-  if (allUsersBorrowingDataError) {
+  const {
+    data: allUsersBorrowingMaterialData,
+    loading: allUsersBorrowingMaterialDataLoading,
+    error: allUsersBorrowingMaterialDataError,
+  } = useQuery(GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY, {
+    variables: { status: allUsersBorrowingStatus },
+  });
+
+  const {
+    data: allUsersUnreturnedMaterialData,
+    loading: allUsersUnreturnedMaterialDataLoading,
+    error: allUsersUnreturnedMaterialDataError,
+  } = useQuery(GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY, {
+    variables: { status: unreturnedStatus },
+  });
+
+  if (allUsersBorrowingToolDataLoading) return <LoaderSpinner />;
+  if (allUsersBorrowingToolDataError) {
     toast({
-      title: `${allUsersBorrowingDataError.message}`,
+      title: `${allUsersBorrowingToolDataError.message}`,
       variant: "destructive",
     });
   }
 
   const allUsersBorrowingTools =
-    (allUsersBorrowingData?.GetAllUserBorrowToolsByStatus as UserBorrowToolType[]) ||
+    (allUsersBorrowingToolData?.GetAllUserBorrowToolsByStatus as UserBorrowToolType[]) ||
     [];
 
-  if (allUsersUnreturnedDataLoading) return <LoaderSpinner />;
-  if (allUsersUnreturnedDataError) {
+  if (allUsersUnreturnedToolDataLoading) return <LoaderSpinner />;
+  if (allUsersUnreturnedToolDataError) {
     toast({
-      title: `${allUsersUnreturnedDataError.message}`,
+      title: `${allUsersUnreturnedToolDataError.message}`,
       variant: "destructive",
     });
   }
 
   const allUsersUnreturnedTools =
-    (allUsersUnreturnedData?.GetAllUserBorrowToolsByStatus as UserBorrowToolType[]) ||
+    (allUsersUnreturnedToolData?.GetAllUserBorrowToolsByStatus as UserBorrowToolType[]) ||
+    [];
+
+  if (allUsersBorrowingMaterialDataLoading) return <LoaderSpinner />;
+  if (allUsersBorrowingMaterialDataError) {
+    toast({
+      title: `${allUsersBorrowingMaterialDataError.message}`,
+      variant: "destructive",
+    });
+  }
+
+  const allUsersBorrowingMaterials =
+    (allUsersBorrowingMaterialData?.GetAllUserBorrowMaterialsByStatus as UserBorrowMaterialType[]) ||
+    [];
+
+  if (allUsersUnreturnedMaterialDataLoading) return <LoaderSpinner />;
+  if (allUsersUnreturnedMaterialDataError) {
+    toast({
+      title: `${allUsersUnreturnedMaterialDataError.message}`,
+      variant: "destructive",
+    });
+  }
+
+  const allUsersUnreturnedMaterials =
+    (allUsersUnreturnedMaterialData?.GetAllUserBorrowMaterialsByStatus as UserBorrowMaterialType[]) ||
     [];
 
   return (
@@ -75,19 +119,19 @@ function AllUsersBorrowingList() {
         </div>
       </div>
       <TabsContent value="material" className="w-full">
-        <AllUsersBorrowingDataTable
+        <AllUsersBorrowingMaterialDataTable
           tableName={t("material")}
           Icon={Cpu}
-          allUsersBorrowingData={allUsersBorrowingTools}
-          allUsersUnreturnedData={allUsersUnreturnedTools}
+          allUsersBorrowingMaterialData={allUsersBorrowingMaterials}
+          allUsersUnreturnedMaterialData={allUsersUnreturnedMaterials}
         />
       </TabsContent>
       <TabsContent value="tool">
-        <AllUsersBorrowingDataTable
+        <AllUsersBorrowingToolDataTable
           tableName={t("tool")}
           Icon={Hammer}
-          allUsersBorrowingData={allUsersBorrowingTools}
-          allUsersUnreturnedData={allUsersUnreturnedTools}
+          allUsersBorrowingToolData={allUsersBorrowingTools}
+          allUsersUnreturnedToolData={allUsersUnreturnedTools}
         />
       </TabsContent>
     </Tabs>

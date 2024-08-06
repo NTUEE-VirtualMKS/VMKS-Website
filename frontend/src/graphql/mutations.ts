@@ -172,6 +172,7 @@ const ADD_MATERIAL_MUTATION = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -192,6 +193,7 @@ const DELETE_MATERIAL_MUTATION = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -212,6 +214,7 @@ const EDIT_MATERIAL_MUTATION = gql(`
       fee
       remain
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -344,6 +347,7 @@ const ADD_USER_MUTATION = gql(`
       toolLikeIds
       userBorrowToolIds
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -365,6 +369,7 @@ const DELETE_USER_MUTATION = gql(`
       toolLikeIds
       userBorrowToolIds
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -386,6 +391,7 @@ const EDIT_USER_MUTATION = gql(`
       toolLikeIds
       userBorrowToolIds
       materialLikeIds
+      userBorrowMaterialIds
     }
   }
 `);
@@ -412,21 +418,23 @@ const DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION = gql(`
 // MaterialUsageUpdate
 const MATERIAL_USAGE_UPDATE_MUTATION = gql(`
   mutation MaterialUsageUpdate($materialUsageUpdateId: Int!, $materialUsageUpdateInput: MaterialUsageUpdateInput!) {
-  MaterialUsageUpdate(id: $materialUsageUpdateId, materialUsageUpdateInput: $materialUsageUpdateInput) {
-    id
-    name
-    partName
-    category
-    valuable
-    position
-    description
-    photoLink
-    usage
-    tutorialLink
-    fee
-    remain
+    MaterialUsageUpdate(id: $materialUsageUpdateId, materialUsageUpdateInput: $materialUsageUpdateInput) {
+      id
+      name
+      partName
+      category
+      valuable
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+      fee
+      remain
+      materialLikeIds
+      userBorrowMaterialIds
+    }
   }
-}
 `);
 
 // ToolUsageUpdate
@@ -641,6 +649,94 @@ const DELETE_MATERIAL_LIKE_MUTATION = gql(`
   }
 `);
 
+// user borrow material
+const ADD_USER_BORROW_MATERIAL_MUTATION = gql(`
+  mutation AddUserBorrowMaterial($userBorrowMaterialInput: userBorrowMaterialInput!) {
+    AddUserBorrowMaterial(userBorrowMaterialInput: $userBorrowMaterialInput) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const DELETE_USER_BORROW_MATERIAL_MUTATION = gql(`
+  mutation DeleteUserBorrowMaterial($deleteUserBorrowMaterialId: Int!) {
+    DeleteUserBorrowMaterial(id: $deleteUserBorrowMaterialId) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION = gql(`
+  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: Int!, $userBorrowMaterialInput: userBorrowMaterialInput!) {
+    EditUserBorrowMaterialQuantity(id: $editUserBorrowMaterialQuantityId, userBorrowMaterialInput: $userBorrowMaterialInput) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
+
+const EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION = gql(`
+  mutation EditUserBorrowMaterialStatus($editUserBorrowMaterialStatusId: Int!, $status: String!) {
+    EditUserBorrowMaterialStatus(id: $editUserBorrowMaterialStatusId, status: $status) {
+      id
+      userId
+      materialId
+      borrower
+      studentId
+      figure
+      name
+      partName
+      category
+      remain
+      position
+      quantity
+      status
+      borrowDate
+      returnDate
+    }
+  }
+`);
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -679,4 +775,8 @@ export {
   EDIT_USER_BORROW_TOOL_STATUS_MUTATION,
   ADD_MATERIAL_LIKE_MUTATION,
   DELETE_MATERIAL_LIKE_MUTATION,
+  ADD_USER_BORROW_MATERIAL_MUTATION,
+  DELETE_USER_BORROW_MATERIAL_MUTATION,
+  EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION,
+  EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
 };

@@ -1,22 +1,22 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
 import type { UserBorrowToolType } from "@/shared/type";
-import UnborrowedTableTabsContent from "./UnborrowedTableTabsContent";
-import BorrowingTableTabsContent from "./BorrowingTableTabsContent";
+import UnborrowedToolTableTabsContent from "./UnborrowedToolTableTabsContent";
+import BorrowingToolTableTabsContent from "./BorrowingToolTableTabsContent";
 
-type UserDataTableProps = {
+type UserToolDataTableProps = {
   tableName: string;
   Icon: React.ElementType;
   unborrowedData: UserBorrowToolType[];
   borrowingData: UserBorrowToolType[];
 };
 
-function UserDataTable({
+function UserToolDataTable({
   tableName,
   Icon,
   unborrowedData,
   borrowingData,
-}: UserDataTableProps) {
+}: UserToolDataTableProps) {
   const { t } = useTranslation();
 
   return (
@@ -45,14 +45,14 @@ function UserDataTable({
           </TabsList>
         </div>
         <TabsContent value="unborrowed">
-          <UnborrowedTableTabsContent unborrowedData={unborrowedData} />
+          <UnborrowedToolTableTabsContent unborrowedData={unborrowedData} />
         </TabsContent>
         <TabsContent value="borrowing">
-          <BorrowingTableTabsContent borrowingData={borrowingData} />
+          <BorrowingToolTableTabsContent borrowingData={borrowingData} />
         </TabsContent>
       </Tabs>
     </div>
   );
 }
 
-export default UserDataTable;
+export default UserToolDataTable;

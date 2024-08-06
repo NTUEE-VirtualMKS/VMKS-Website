@@ -152,6 +152,12 @@ interface MaterialLikeInput {
   materialId: number;
 }
 
+interface UserBorrowMaterialInput {
+  userId: number;
+  materialId: number;
+  quantity: number;
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -173,4 +179,5 @@ export type {
   ToolLikeInput,
   UserBorrowToolInput,
   MaterialLikeInput,
+  UserBorrowMaterialInput,
 };

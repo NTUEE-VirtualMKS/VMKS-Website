@@ -1,19 +1,17 @@
 import { Link } from "react-router-dom";
 import { ToolType } from "@/shared/type";
-import { DELETE_TOOL_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import {
+  ADD_TOOL_LIKE_MUTATION,
   ALL_USER_QUERY,
+  DELETE_TOOL_LIKE_MUTATION,
   GET_TOOL_LIKES_QUERY,
+  DELETE_TOOL_MUTATION,
   SEARCH_TOOL_BY_NAME_QUERY,
   GET_ALL_USER_BORROW_TOOLS_QUERY,
   GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
-} from "@/graphql/queries";
-import {
-  ADD_TOOL_LIKE_MUTATION,
-  DELETE_TOOL_LIKE_MUTATION,
   ADD_USER_BORROW_TOOL_MUTATION,
-} from "@/graphql/mutations";
+} from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { Share, ShoppingCart, Star, Trash2 } from "lucide-react";

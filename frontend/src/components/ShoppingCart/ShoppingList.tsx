@@ -1,14 +1,18 @@
-import UserDataTable from "./UserDataTable";
+import UserToolDataTable from "./UserToolDataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Cpu, Hammer } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY } from "@/graphql";
+import {
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+} from "@/graphql";
 import { useUser } from "@/contexts/UserContext";
 import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "../ui/use-toast";
-import { UserBorrowToolType } from "@/shared/type";
+import { UserBorrowMaterialType, UserBorrowToolType } from "@/shared/type";
 import { borrowingStatus, unborrowedStatus } from "@/constants/index";
+import UserMaterialDataTable from "./UserMaterialDataTable";
 
 // status: "Unborrowed" | "Processing" | "Success" | "Failed" | "Not Returned Yet" | "Returned";
 function ShoppingList() {
@@ -28,6 +32,25 @@ function ShoppingList() {
     loading: borrowingToolsDataLoading,
     error: borrowingToolsDataError,
   } = useQuery(GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY, {
+    variables: {
+      userId: user?.id!,
+      status: borrowingStatus,
+    },
+  });
+
+  const {
+    data: unborrowedMaterialsData,
+    loading: unborrowedMaterialsDataLoading,
+    error: unborrowedMaterialsDataError,
+  } = useQuery(GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY, {
+    variables: { userId: user?.id!, status: unborrowedStatus },
+  });
+
+  const {
+    data: borrowingMaterialsData,
+    loading: borrowingMaterialsDataLoading,
+    error: borrowingMaterialsDataError,
+  } = useQuery(GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY, {
     variables: {
       userId: user?.id!,
       status: borrowingStatus,
@@ -57,6 +80,29 @@ function ShoppingList() {
     (borrowingToolsData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
     [];
 
+  if (unborrowedMaterialsDataLoading) return <LoaderSpinner />;
+  if (unborrowedMaterialsDataError) {
+    toast({
+      title: `${unborrowedMaterialsDataError.message}`,
+      variant: "destructive",
+    });
+  }
+
+  const unborrowedMaterials =
+    (unborrowedMaterialsData?.GetUserBorrowMaterialsByStatusAndUserId as UserBorrowMaterialType[]) ||
+    [];
+
+  if (borrowingMaterialsDataLoading) return <LoaderSpinner />;
+  if (borrowingMaterialsDataError) {
+    toast({
+      title: `${borrowingMaterialsDataError.message}`,
+      variant: "destructive",
+    });
+  }
+  const borrowingMaterials =
+    (borrowingMaterialsData?.GetUserBorrowMaterialsByStatusAndUserId as UserBorrowMaterialType[]) ||
+    [];
+
   return (
     <Tabs defaultValue="material">
       <div className="flex flex-row-reverse">
@@ -78,15 +124,15 @@ function ShoppingList() {
         </div>
       </div>
       <TabsContent value="material" className="w-full">
-        <UserDataTable
+        <UserMaterialDataTable
           tableName={t("material")}
           Icon={Cpu}
-          unborrowedData={unborrowedTools} // TODO: Change to unborrowedMaterials
-          borrowingData={borrowingTools} // TODO: Change to borrowingMaterials
+          unborrowedData={unborrowedMaterials}
+          borrowingData={borrowingMaterials}
         />
       </TabsContent>
       <TabsContent value="tool">
-        <UserDataTable
+        <UserToolDataTable
           tableName={t("tool")}
           Icon={Hammer}
           unborrowedData={unborrowedTools}
