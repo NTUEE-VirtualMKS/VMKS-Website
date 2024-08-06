@@ -35,20 +35,22 @@ model DisposableMaterial {
 }
 
 model Material {
-  id              Int            @id @default(autoincrement())
-  name            String
-  partName        String?
-  category        String
-  valuable        Boolean
-  position        String
-  description     String
-  photoLink       String
-  usage           Int
-  tutorialLink    String?
-  fee             Int
-  remain          Int
-  materialLikes   MaterialLike[]
-  materialLikeIds Int[]
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  partName              String?
+  category              String
+  valuable              Boolean
+  position              String
+  description           String
+  photoLink             String
+  usage                 Int
+  tutorialLink          String?
+  fee                   Int
+  remain                Int
+  materialLikes         MaterialLike[]
+  materialLikeIds       Int[]
+  userBorrowMaterials   UserBorrowMaterial[]
+  userBorrowMaterialIds Int[]
 }
 
 model Tool {
@@ -95,25 +97,27 @@ model ThreeDP {
 }
 
 model User {
-  id                Int              @id @default(autoincrement())
-  name              String
-  studentID         String           @unique
-  password          String
-  photoLink         String?
-  language          String           @default("en")
-  threeDPUse        ThreeDP?         @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  threeDPId         Int?
-  laserCutAvailable Boolean          @default(false)
-  articles          Article[]
-  articlesId        Int[]
-  isAdmin           Boolean          @default(false)
-  isMinister        Boolean          @default(false)
-  toolLikes         ToolLike[]
-  toolLikeIds       Int[]
-  userBorrowTools   UserBorrowTool[]
-  userBorrowToolIds Int[]
-  materialLikes     MaterialLike[]
-  materialLikeIds   Int[]
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  studentID             String               @unique
+  password              String
+  photoLink             String?
+  language              String               @default("en")
+  threeDPUse            ThreeDP?             @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  threeDPId             Int?
+  laserCutAvailable     Boolean              @default(false)
+  articles              Article[]
+  articlesId            Int[]
+  isAdmin               Boolean              @default(false)
+  isMinister            Boolean              @default(false)
+  toolLikes             ToolLike[]
+  toolLikeIds           Int[]
+  userBorrowTools       UserBorrowTool[]
+  userBorrowToolIds     Int[]
+  materialLikes         MaterialLike[]
+  materialLikeIds       Int[]
+  userBorrowMaterials   UserBorrowMaterial[]
+  userBorrowMaterialIds Int[]
 }
 
 model AuthorizedCode {
@@ -169,4 +173,24 @@ model MaterialLike {
   materialId Int
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int
+}
+
+model UserBorrowMaterial {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  materialId Int
+  borrower   String
+  studentId  String
+  figure     String
+  name       String
+  partName   String?
+  category   String
+  remain     Int
+  position   String
+  quantity   Int
+  status     String   @default("Unborrowed")
+  borrowDate String   @default("")
+  returnDate String   @default("")
 }

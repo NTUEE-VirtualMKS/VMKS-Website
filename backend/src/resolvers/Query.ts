@@ -18,9 +18,14 @@ const Query = {
 
   AllTools: async (_parents, _args, _context) => {
     const tools = await prisma.tool.findMany({
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return tools;
   },
@@ -47,9 +52,14 @@ const Query = {
           startsWith: category,
         },
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     return searchToolsByCategory;
@@ -65,9 +75,14 @@ const Query = {
       where: {
         position: position,
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     return searchToolsByPosition;
@@ -76,9 +91,14 @@ const Query = {
   SearchToolsByName: async (_parents, args: { name: string }, _context) => {
     if (args.name === "") {
       const allTools = await prisma.tool.findMany({
-        orderBy: {
-          usage: "desc",
-        },
+        orderBy: [
+          {
+            usage: "desc",
+          },
+          {
+            id: "desc",
+          },
+        ],
       });
       return allTools;
     }
@@ -127,9 +147,14 @@ const Query = {
 
   AllDisposableMaterials: async (_parents, _args, _context) => {
     const materials = await prisma.disposableMaterial.findMany({
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return materials;
   },
@@ -147,9 +172,14 @@ const Query = {
             startsWith: category,
           },
         },
-        orderBy: {
-          usage: "desc",
-        },
+        orderBy: [
+          {
+            usage: "desc",
+          },
+          {
+            id: "desc",
+          },
+        ],
       });
     return searchDisposableMaterialsByCategory;
   },
@@ -167,9 +197,14 @@ const Query = {
             startsWith: position,
           },
         },
-        orderBy: {
-          usage: "desc",
-        },
+        orderBy: [
+          {
+            usage: "desc",
+          },
+          {
+            id: "desc",
+          },
+        ],
       });
     return searchDisposableMaterialsByPosition;
   },
@@ -187,9 +222,14 @@ const Query = {
             contains: _name,
           },
         },
-        orderBy: {
-          usage: "desc",
-        },
+        orderBy: [
+          {
+            usage: "desc",
+          },
+          {
+            id: "desc",
+          },
+        ],
       });
     if (searchDisposableMaterialsByName.length === 0)
       return searchDisposableMaterialsByName;
@@ -246,9 +286,14 @@ const Query = {
 
   AllMachines: async (_parents, _args, _context) => {
     const machines = await prisma.machine.findMany({
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return machines;
   },
@@ -265,9 +310,14 @@ const Query = {
           startsWith: category,
         },
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return searchMachinesByCategory;
   },
@@ -282,18 +332,28 @@ const Query = {
       where: {
         position: position,
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return searchMachinesByPosition;
   },
 
   AllMaterials: async (_parents, _args, _context) => {
     const materials = await prisma.material.findMany({
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return materials;
   },
@@ -320,9 +380,14 @@ const Query = {
           startsWith: category,
         },
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     return searchMaterialsByCategory;
@@ -338,9 +403,14 @@ const Query = {
       where: {
         position: position,
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     return searchMaterialsByPosition;
@@ -356,9 +426,14 @@ const Query = {
           mode: "insensitive",
         },
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     // const len = searchMaterialByName.length;
@@ -398,9 +473,14 @@ const Query = {
 
   AllThreeDP: async () => {
     const threeDP = await prisma.threeDP.findMany({
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return threeDP;
   },
@@ -417,9 +497,14 @@ const Query = {
           startsWith: category,
         },
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
     return FindThreeDPByCategory;
   },
@@ -434,9 +519,14 @@ const Query = {
       where: {
         position: position,
       },
-      orderBy: {
-        usage: "desc",
-      },
+      orderBy: [
+        {
+          usage: "desc",
+        },
+        {
+          id: "desc",
+        },
+      ],
     });
 
     return searchThreeDPByPosition;
@@ -819,6 +909,107 @@ const Query = {
     });
 
     return likedMaterials;
+  },
+
+  // UserBorrowMaterial
+  GetAllUserBorrowMaterials: async () => {
+    const allUserBorrowMaterials = await prisma.userBorrowMaterial.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return allUserBorrowMaterials;
+  },
+
+  GetAllUserBorrowMaterialsByStatus: async (
+    _parents,
+    args: { status: string[] },
+    _context,
+  ) => {
+    const { status } = args;
+    const allUserBorrowMaterials = await prisma.userBorrowMaterial.findMany({
+      where: {
+        status: {
+          in: status,
+        },
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return allUserBorrowMaterials;
+  },
+
+  GetUserBorrowMaterialById: async (
+    _parents,
+    args: { id: number },
+    _context,
+  ) => {
+    const id = args.id;
+    const userBorrowMaterial = await prisma.userBorrowMaterial.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return userBorrowMaterial;
+  },
+
+  GetUserBorrowMaterialsByUserId: async (
+    _parents,
+    args: { userId: number },
+    _context,
+  ) => {
+    const userId = args.userId;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const userBorrowMaterials = await prisma.userBorrowMaterial.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return userBorrowMaterials;
+  },
+
+  GetUserBorrowMaterialsByStatusAndUserId: async (
+    _parents,
+    args: { userId: number; status: string[] },
+    _context,
+  ) => {
+    const { userId, status } = args;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const userBorrowMaterials = await prisma.userBorrowMaterial.findMany({
+      where: {
+        userId: userId,
+        status: {
+          in: status,
+        },
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return userBorrowMaterials;
   },
 };
 

@@ -1,4 +1,4 @@
-// TODO: add updateUserToolLikeIds and updateUserMaterialLikeIds to backend
+// TODO: jwt
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -201,6 +201,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           toolLikeIds: user?.toolLikeIds,
           userBorrowToolIds: user?.userBorrowToolIds,
           materialLikeIds: user?.materialLikeIds,
+          userBorrowMaterialIds: user?.userBorrowMaterialIds,
         });
         i18n.changeLanguage(user.language);
         if (redirect) {

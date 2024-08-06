@@ -31,6 +31,7 @@ function MaterialList({ search }: { search: string }) {
       tutorialLink: material!.tutorialLink,
       partName: material!.partName,
       materialLikeIds: material!.materialLikeIds,
+      userBorrowMaterialIds: material!.userBorrowMaterialIds,
     };
     return filteredMaterial;
   });

@@ -186,6 +186,7 @@ const typeDefs = `#graphql
     fee: Int!
     remain: Int!
     materialLikeIds: [Int]
+    userBorrowMaterialIds: [Int]
   }
 
   type Tool {
@@ -243,6 +244,7 @@ const typeDefs = `#graphql
     toolLikeIds: [Int]
     userBorrowToolIds: [Int]
     materialLikeIds: [Int]
+    userBorrowMaterialIds: [Int]
   }
 
   type signUpRet {
@@ -343,6 +345,30 @@ const typeDefs = `#graphql
     materialId: Int!,
   }
 
+  type UserBorrowMaterial {
+    id: Int!,
+    userId: Int!,
+    materialId: Int!,
+    borrower: String!,
+    studentId: String!,
+    figure: String!,
+    name: String!,
+    partName: String,
+    category: String!,
+    remain: Int!,
+    position: String!,
+    quantity: Int!,
+    status: String!,
+    borrowDate: String!,
+    returnDate: String!,
+  }
+
+  input userBorrowMaterialInput {
+    userId: Int!,
+    materialId: Int!,
+    quantity: Int!,
+  }
+
   ### Define Resolvers ###
 
   type Query {
@@ -386,6 +412,11 @@ const typeDefs = `#graphql
     GetMaterialLikes: [MaterialLike]
     GetMaterialLikeById(id: Int!): MaterialLike
     GetLikedMaterialsByUserId(userId: Int!): [Material]
+    GetAllUserBorrowMaterials: [UserBorrowMaterial]
+    GetAllUserBorrowMaterialsByStatus(status: [String]!): [UserBorrowMaterial]
+    GetUserBorrowMaterialById(id: Int!): UserBorrowMaterial
+    GetUserBorrowMaterialsByUserId(userId: Int!): [UserBorrowMaterial]
+    GetUserBorrowMaterialsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowMaterial]
   }
 
   type Mutation {
@@ -427,6 +458,10 @@ const typeDefs = `#graphql
     EditUserBorrowToolStatus(id: Int!, status: String!): UserBorrowTool
     AddMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
     DeleteMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
+    AddUserBorrowMaterial(userBorrowMaterialInput: userBorrowMaterialInput!): UserBorrowMaterial
+    DeleteUserBorrowMaterial(id: Int!): UserBorrowMaterial
+    EditUserBorrowMaterialQuantity(id: Int!, userBorrowMaterialInput: userBorrowMaterialInput!): UserBorrowMaterial
+    EditUserBorrowMaterialStatus(id: Int!, status: String!): UserBorrowMaterial
   }
 
   type Subscription {

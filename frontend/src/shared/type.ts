@@ -26,6 +26,7 @@ export type UserType = {
   toolLikeIds?: Array<number | null> | null;
   userBorrowToolIds?: Array<number | null> | null;
   materialLikeIds?: Array<number | null> | null;
+  userBorrowMaterialIds?: Array<number | null> | null;
 };
 
 export type MaterialType = {
@@ -43,6 +44,7 @@ export type MaterialType = {
   fee: number;
   remain: number;
   materialLikeIds?: Array<number | null> | null;
+  userBorrowMaterialIds?: Array<number | null> | null;
 };
 
 export type ToolType = {
@@ -197,6 +199,25 @@ export type UserBorrowToolType = {
   id: number;
   userId: number;
   toolId: number;
+  borrower: string;
+  studentId: string;
+  figure: string;
+  name: string;
+  partName?: string | null;
+  category: string;
+  remain: number;
+  position: string;
+  quantity: number;
+  status: string;
+  borrowDate: string;
+  returnDate: string;
+};
+
+export type UserBorrowMaterialType = {
+  __typename?: "UserBorrowMaterial";
+  id: number;
+  userId: number;
+  materialId: number;
   borrower: string;
   studentId: string;
   figure: string;

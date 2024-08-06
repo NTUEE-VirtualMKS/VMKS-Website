@@ -4,13 +4,16 @@ import {
   ADD_MATERIAL_LIKE_MUTATION,
   ALL_USER_QUERY,
   DELETE_MATERIAL_LIKE_MUTATION,
-  DELETE_MATERIAL_MUTATION,
   GET_MATERIAL_LIKES_QUERY,
+  DELETE_MATERIAL_MUTATION,
+  SEARCH_MATERIAL_BY_NAME_QUERY,
+  GET_ALL_USER_BORROW_MATERIALS_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+  ADD_USER_BORROW_MATERIAL_MUTATION,
 } from "@/graphql";
-import { useMutation } from "@apollo/client";
-import { ALL_MATERIAL_QUERY, SEARCH_MATERIAL_BY_NAME_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
+import { useMutation } from "@apollo/client";
 import { ShoppingCart, Trash2, Star, Share } from "lucide-react";
 import { useEffect, useState } from "react";
 import { stagger, useAnimate, animate } from "framer-motion";
@@ -33,7 +36,12 @@ import {
 import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { materialBaseUrl } from "@/constants";
+import LoaderSpinner from "../LoaderSpinner";
+import {
+  borrowingStatus,
+  materialBaseUrl,
+  unborrowedStatus,
+} from "@/constants/index";
 
 const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -78,7 +86,18 @@ function MaterialCard({
     {
       refetchQueries: [
         { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
-        { query: ALL_MATERIAL_QUERY },
+        { query: GET_ALL_USER_BORROW_MATERIALS_QUERY },
+        {
+          query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+          variables: { userId: user?.id!, status: unborrowedStatus },
+        },
+        {
+          query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+          variables: {
+            userId: user?.id!,
+            status: borrowingStatus,
+          },
+        },
       ],
     }
   );
@@ -97,26 +116,41 @@ function MaterialCard({
     }
   };
 
-  // TODO: implement handleAddToShoppingCart
+  const [
+    addUserBorrowMaterial,
+    {
+      loading: AddUserBorrowMaterialLoading,
+      error: AddUserBorrowMaterialError,
+    },
+  ] = useMutation(ADD_USER_BORROW_MATERIAL_MUTATION, {
+    refetchQueries: [
+      { query: GET_ALL_USER_BORROW_MATERIALS_QUERY },
+      {
+        query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+        variables: { userId: user?.id!, status: ["Unborrowed"] },
+      },
+    ],
+  });
+
   const handleAddToShoppingCart = async () => {
-    // await addUserBorrowTool({
-    //   variables: {
-    //     userBorrowToolInput: {
-    //       userId: user?.id!,
-    //       toolId: tool.id,
-    //       quantity: 0,
-    //     },
-    //   },
-    // });
-    // if (AddUserBorrowToolLoading) return <LoaderSpinner />;
-    // if (AddUserBorrowToolError) {
-    //   toast({
-    //     title: `${AddUserBorrowToolError.message}`,
-    //     variant: "destructive",
-    //   });
-    // } else {
-    //   toast({ title: "Tool added to shopping cart!" });
-    // }
+    await addUserBorrowMaterial({
+      variables: {
+        userBorrowMaterialInput: {
+          userId: user?.id!,
+          materialId: material.id,
+          quantity: 0,
+        },
+      },
+    });
+    if (AddUserBorrowMaterialLoading) return <LoaderSpinner />;
+    if (AddUserBorrowMaterialError) {
+      toast({
+        title: `${AddUserBorrowMaterialError.message}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({ title: "Material added to shopping cart!" });
+    }
   };
 
   const sparkles = Array.from({ length: 12 });

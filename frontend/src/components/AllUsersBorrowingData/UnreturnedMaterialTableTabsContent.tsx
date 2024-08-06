@@ -20,34 +20,35 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { UserBorrowToolType } from "@/shared/type";
+import type { UserBorrowMaterialType } from "@/shared/type";
 import { useMutation } from "@apollo/client";
-import { EDIT_USER_BORROW_TOOL_STATUS_MUTATION } from "@/graphql/mutations";
-import { GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY } from "@/graphql/queries";
+import { EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION } from "@/graphql/mutations";
+import { GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "../ui/use-toast";
-import { allUsersBorrowingColumns } from "@/constants/tableConst";
+import { allUsersBorrowingMaterialColumns } from "@/constants/tableConst";
 import {
   allUsersBorrowingStatus,
   returnedStatus,
   unreturnedStatus,
 } from "@/constants";
 
-function BorrowingTableTabsContent({
-  allUsersBorrowingData,
+function UnreturnedMaterialTableTabsContent({
+  allUsersUnreturnedMaterialData,
 }: {
-  allUsersBorrowingData: UserBorrowToolType[];
+  allUsersUnreturnedMaterialData: UserBorrowMaterialType[];
 }) {
   const { t } = useTranslation();
   const { toast } = useToast();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const allUsersBorrowingTable = useReactTable({
-    data: allUsersBorrowingData,
-    columns: allUsersBorrowingColumns,
+  const allUsersUnreturnedTable = useReactTable({
+    data: allUsersUnreturnedMaterialData,
+    columns: allUsersBorrowingMaterialColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -65,42 +66,44 @@ function BorrowingTableTabsContent({
   });
 
   const [
-    editUserBorrowToolStatus,
+    editUserBorrowMaterialStatus,
     {
-      loading: editUserBorrowToolStatusLoading,
-      error: editUserBorrowToolStatusError,
+      loading: editUserBorrowMaterialStatusLoading,
+      error: editUserBorrowMaterialStatusError,
     },
-  ] = useMutation(EDIT_USER_BORROW_TOOL_STATUS_MUTATION, {
+  ] = useMutation(EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION, {
     refetchQueries: [
       {
-        query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+        query: GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
         variables: { status: unreturnedStatus },
       },
       {
-        query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+        query: GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
         variables: { status: returnedStatus },
       },
       {
-        query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+        query: GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
         variables: { status: allUsersBorrowingStatus },
       },
     ],
   });
 
-  const handleChangeStatus = async (userBorrowTools: UserBorrowToolType[]) => {
+  const handleChangeStatus = async (
+    userBorrowMaterials: UserBorrowMaterialType[]
+  ) => {
     try {
-      console.log(userBorrowTools);
-      userBorrowTools.forEach(async (userBorrowTool) => {
-        await editUserBorrowToolStatus({
+      console.log(userBorrowMaterials);
+      userBorrowMaterials.forEach(async (userBorrowMaterial) => {
+        await editUserBorrowMaterialStatus({
           variables: {
-            editUserBorrowToolStatusId: userBorrowTool.id,
-            status: "Not Returned Yet",
+            editUserBorrowMaterialStatusId: userBorrowMaterial.id,
+            status: "Returned",
           },
         });
-        if (editUserBorrowToolStatusLoading) return <LoaderSpinner />;
-        if (editUserBorrowToolStatusError) {
+        if (editUserBorrowMaterialStatusLoading) return <LoaderSpinner />;
+        if (editUserBorrowMaterialStatusError) {
           toast({
-            title: `${editUserBorrowToolStatusError.message}`,
+            title: `${editUserBorrowMaterialStatusError.message}`,
             variant: "destructive",
           });
         }
@@ -116,7 +119,7 @@ function BorrowingTableTabsContent({
       <div className="rounded-b-md border-[#444444] border border-t-transparent">
         <Table>
           <TableHeader>
-            {allUsersBorrowingTable.getHeaderGroups().map((headerGroup) => (
+            {allUsersUnreturnedTable.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
@@ -134,8 +137,8 @@ function BorrowingTableTabsContent({
             ))}
           </TableHeader>
           <TableBody>
-            {allUsersBorrowingTable.getRowModel().rows?.length ? (
-              allUsersBorrowingTable.getRowModel().rows.map((row) => (
+            {allUsersUnreturnedTable.getRowModel().rows?.length ? (
+              allUsersUnreturnedTable.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -153,7 +156,7 @@ function BorrowingTableTabsContent({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={allUsersBorrowingColumns.length}
+                  colSpan={allUsersBorrowingMaterialColumns.length}
                   className="h-24 text-center"
                 >
                   {t("noResults")}
@@ -165,8 +168,8 @@ function BorrowingTableTabsContent({
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {allUsersBorrowingTable.getFilteredSelectedRowModel().rows.length} of{" "}
-          {allUsersBorrowingTable.getFilteredRowModel().rows.length} row(s)
+          {allUsersUnreturnedTable.getFilteredSelectedRowModel().rows.length} of{" "}
+          {allUsersUnreturnedTable.getFilteredRowModel().rows.length} row(s)
           {" " + t("selected")}
         </div>
         <div>
@@ -174,16 +177,16 @@ function BorrowingTableTabsContent({
             className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200 lowercase"
             onClick={() =>
               handleChangeStatus(
-                allUsersBorrowingTable
+                allUsersUnreturnedTable
                   .getFilteredSelectedRowModel()
                   .rows.map((row) => row.original)
               )
             }
             disabled={
-              !allUsersBorrowingTable.getFilteredSelectedRowModel().rows.length
+              !allUsersUnreturnedTable.getFilteredSelectedRowModel().rows.length
             }
           >
-            {t("alreadyTaken")}
+            {t("returned")}
           </Button>
         </div>
       </div>
@@ -191,4 +194,4 @@ function BorrowingTableTabsContent({
   );
 }
 
-export default BorrowingTableTabsContent;
+export default UnreturnedMaterialTableTabsContent;

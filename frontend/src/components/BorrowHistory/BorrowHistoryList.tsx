@@ -1,32 +1,62 @@
-import BorrowHistoryTable from "./BorrowHistoryTable";
+import BorrowHistoryToolTable from "./BorrowHistoryToolTable";
+import BorrowHistoryMaterialTable from "./BorrowHistoryMaterialTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Cpu, Hammer } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY } from "@/graphql";
+import {
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+} from "@/graphql";
 import { useUser } from "@/contexts/UserContext";
 import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "../ui/use-toast";
-import { UserBorrowToolType } from "@/shared/type";
+import { UserBorrowMaterialType, UserBorrowToolType } from "@/shared/type";
 import { returnedStatus } from "@/constants";
 
 function BorrowHistoryList() {
   const { t } = useTranslation();
   const { user } = useUser();
   const { toast } = useToast();
-  const { data, loading, error } = useQuery(
-    GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
-    {
-      variables: { userId: user?.id!, status: returnedStatus },
-    }
-  );
-  if (loading) return <LoaderSpinner />;
-  if (error) {
-    toast({ title: `${error.message}`, variant: "destructive" });
+  const {
+    data: userBorrowedToolsData,
+    loading: userBorrowedToolsLoading,
+    error: userBorrowedToolsError,
+  } = useQuery(GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY, {
+    variables: { userId: user?.id!, status: returnedStatus },
+  });
+
+  const {
+    data: userBorrowedMaterialsData,
+    loading: userBorrowedMaterialsLoading,
+    error: userBorrowedMaterialsError,
+  } = useQuery(GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY, {
+    variables: { userId: user?.id!, status: returnedStatus },
+  });
+
+  if (userBorrowedToolsLoading) return <LoaderSpinner />;
+  if (userBorrowedToolsError) {
+    toast({
+      title: `${userBorrowedToolsError.message}`,
+      variant: "destructive",
+    });
   }
 
   const userBorrowedTools =
-    (data?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) || [];
+    (userBorrowedToolsData?.GetUserBorrowToolsByStatusAndUserId as UserBorrowToolType[]) ||
+    [];
+
+  if (userBorrowedMaterialsLoading) return <LoaderSpinner />;
+  if (userBorrowedMaterialsError) {
+    toast({
+      title: `${userBorrowedMaterialsError.message}`,
+      variant: "destructive",
+    });
+  }
+
+  const userBorrowedMaterials =
+    (userBorrowedMaterialsData?.GetUserBorrowMaterialsByStatusAndUserId as UserBorrowMaterialType[]) ||
+    [];
 
   return (
     <Tabs defaultValue="material">
@@ -49,14 +79,14 @@ function BorrowHistoryList() {
         </div>
       </div>
       <TabsContent value="material" className="w-full">
-        <BorrowHistoryTable
+        <BorrowHistoryMaterialTable
           tableName={t("material")}
           Icon={Cpu}
-          borrowHistoryData={userBorrowedTools} // TODO: Change to userBorrowedMaterials
+          borrowHistoryData={userBorrowedMaterials}
         />
       </TabsContent>
       <TabsContent value="tool">
-        <BorrowHistoryTable
+        <BorrowHistoryToolTable
           tableName={t("tool")}
           Icon={Hammer}
           borrowHistoryData={userBorrowedTools}

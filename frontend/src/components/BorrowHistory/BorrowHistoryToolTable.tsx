@@ -22,7 +22,7 @@ import { borrowHistoryColumns } from "@/constants/tableConst";
 import { useTranslation } from "react-i18next";
 import { UserBorrowToolType } from "@/shared/type";
 
-function BorrowHistoryTable({
+function BorrowHistoryToolTable({
   tableName,
   Icon,
   borrowHistoryData,
@@ -118,4 +118,4 @@ function BorrowHistoryTable({
   );
 }
 
-export default BorrowHistoryTable;
+export default BorrowHistoryToolTable;

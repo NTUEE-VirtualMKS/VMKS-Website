@@ -40,7 +40,7 @@ import {
   unborrowedStatus,
 } from "@/constants/index";
 
-function UnborrowedTableTabsContent({
+function UnborrowedToolTableTabsContent({
   unborrowedData,
 }: {
   unborrowedData: UserBorrowToolType[];
@@ -237,4 +237,4 @@ function UnborrowedTableTabsContent({
   );
 }
 
-export default UnborrowedTableTabsContent;
+export default UnborrowedToolTableTabsContent;
