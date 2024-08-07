@@ -94,6 +94,7 @@ function ProfileCard({
       localStorage.setItem("username", JSON.stringify(username));
       localStorage.setItem("imgUrl", JSON.stringify(imgUrl));
       localStorage.setItem("language", userLanguage);
+      setVisible(false);
     } catch (error) {
       toast({ title: `${error}`.split(":")[1], variant: "destructive" });
       handleCancel();
@@ -197,7 +198,7 @@ function ProfileCard({
                     <p className="text-white text-xs">{t("edit")}</p>
                   </TooltipContent>
                 </Tooltip>
-                <DialogContent className="sm:max-w-[425px] text-white bg-black">
+                <DialogContent className="text-white bg-black rounded-xl w-11/12 sm:w-11/12">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("editProfile")}
@@ -207,21 +208,24 @@ function ProfileCard({
                     </DialogDescription>
                   </DialogHeader>
                   <div className="flex flex-col gap-1">
-                    <Label htmlFor="name">{t("name")}</Label>
-                    <Input
-                      id="name"
-                      placeholder="name"
-                      className="col-span-3 input-class"
-                      value={username}
-                      required
-                      onChange={(e) => setUsername(e.target.value)}
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="name">{t("name")}</Label>
+                      <Input
+                        id="name"
+                        placeholder="name"
+                        className="col-span-3 input-class"
+                        value={username}
+                        required
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </div>
+                    <p className="text-white text-base">{t("avatar")}</p>
+                    <ImageUploader
+                      imgUrl={imgUrl}
+                      setImgUrl={setImgUrl}
+                      imageRef={imageRef}
                     />
                   </div>
-                  <ImageUploader
-                    imgUrl={imgUrl}
-                    setImgUrl={setImgUrl}
-                    imageRef={imageRef}
-                  />
                   <div className="flex flex-row-reverse gap-2">
                     <Button
                       onClick={() =>

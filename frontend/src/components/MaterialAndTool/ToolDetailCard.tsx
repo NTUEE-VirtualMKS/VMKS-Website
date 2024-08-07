@@ -1,9 +1,15 @@
 import { useUser } from "@/contexts/UserContext";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Pencil } from "lucide-react";
+import { Pencil, Share, ShoppingCart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import { GET_TOOL_BY_ID_QUERY, EDIT_TOOL_MUTATION } from "@/graphql";
+import {
+  GET_TOOL_BY_ID_QUERY,
+  EDIT_TOOL_MUTATION,
+  ADD_USER_BORROW_TOOL_MUTATION,
+  GET_ALL_USER_BORROW_TOOLS_QUERY,
+  GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+} from "@/graphql";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { ToolInput } from "@/shared/type";
@@ -21,6 +27,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { toolBaseUrl, unborrowedStatus } from "@/constants";
 
 function ToolDetailCard({
   id,
@@ -100,13 +108,70 @@ function ToolDetailCard({
     }
   };
 
+  const [
+    addUserBorrowTool,
+    { loading: AddUserBorrowToolLoading, error: AddUserBorrowToolError },
+  ] = useMutation(ADD_USER_BORROW_TOOL_MUTATION, {
+    refetchQueries: [
+      { query: GET_ALL_USER_BORROW_TOOLS_QUERY },
+      {
+        query: GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
+        variables: { userId: user?.id!, status: unborrowedStatus },
+      },
+    ],
+  });
+
+  const handleAddToShoppingCart = async () => {
+    if (!user) {
+      toast({
+        title: "Please log in to borrow the tool!",
+        variant: "destructive",
+      });
+      return;
+    }
+    await addUserBorrowTool({
+      variables: {
+        userBorrowToolInput: {
+          userId: user?.id!,
+          toolId: parseInt(id),
+          quantity: 0,
+        },
+      },
+    });
+    if (AddUserBorrowToolLoading) return <LoaderSpinner />;
+    if (AddUserBorrowToolError) {
+      toast({
+        title: `${AddUserBorrowToolError.message}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({ title: "Tool added to shopping cart!" });
+    }
+  };
+
+  const handleShare = () => {
+    const shareableLink = `${window.location.origin}${toolBaseUrl}/${id}`;
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() => {
+        toast({ title: "Link copied to clipboard!", variant: "share" });
+      })
+      .catch((err) => {
+        toast({
+          title: "Failed to copy the link.",
+          description: err,
+          variant: "destructive",
+        });
+      });
+  };
+
   return (
     <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
       <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
         <img
           src={toolPhotoLink}
           alt={toolName}
-          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-5/12"
+          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
         />
         <div className="w-9/12 flex flex-col ml-5">
           <h1 className="text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
@@ -134,22 +199,22 @@ function ToolDetailCard({
               href={toolTutorialLink}
               target="_blank"
               rel="noreferrer"
-              className="mt-1 text-sky-300 cursor-pointer hover:underline w-5/12 active:scale-95 transition-transform duration-200 focus:text-blue-600 text-base sm:text-base md:text-lg lg:text-lg xl:text-lg"
+              className="mt-1 text-sky-300 cursor-pointer hover:underline w-6/12 active:scale-95 transition-transform duration-200 focus:text-blue-600 text-base sm:text-base md:text-lg lg:text-lg xl:text-lg"
             >
               {t("tutorialLink")}
             </a>
           )}
         </div>
       </div>
-      {user?.isAdmin && (
-        <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse">
+        {user?.isAdmin && (
           <Dialog
             open={visible}
             onOpenChange={(visible) => setVisible(visible)}
           >
             <Tooltip>
               <TooltipTrigger>
-                <div className="w-10 h-10  rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
+                <div className="w-10 h-10 rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
                   <DialogTrigger
                     asChild
                     onClick={() => setVisible(true)}
@@ -163,8 +228,7 @@ function ToolDetailCard({
                 </TooltipContent>
               </TooltipTrigger>
             </Tooltip>
-
-            <DialogContent className="sm:max-w-[425px] text-white bg-black">
+            <DialogContent className="w-11/12 sm:w-11/12 text-white bg-black rounded-xl">
               <DialogHeader>
                 <DialogTitle className="text-2xl">{t("editTool")}</DialogTitle>
                 <DialogDescription className="text-sm">
@@ -312,8 +376,44 @@ function ToolDetailCard({
               </div>
             </DialogContent>
           </Dialog>
+        )}
+        <div className="w-10 h-10 rounded-full p-2 text-white hover:text-green-300 hover:bg-green-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer">
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              onClick={handleShare}
+              className="transform active:scale-90 transition-transform duration-200"
+            >
+              <Share size={33} />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black bg-opacity-80">
+              <p className="text-white text-xs">{t("share")}</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
-      )}
+        <div
+          className={cn(
+            "w-10 h-10 rounded-full p-2 text-white  hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer",
+            user && "hover:text-sky-300 hover:bg-sky-300"
+          )}
+        >
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              className="transform active:scale-90 transition-transform duration-200"
+            >
+              <ShoppingCart
+                size={33}
+                onClick={handleAddToShoppingCart}
+                className={cn("", !user && "text-white text-opacity-50")}
+              />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black bg-opacity-80">
+              <p className="text-white text-xs">{t("borrow")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 }

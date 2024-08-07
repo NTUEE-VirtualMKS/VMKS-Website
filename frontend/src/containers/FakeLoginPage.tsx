@@ -10,6 +10,9 @@ function FakeLoginPage() {
     if (!user) {
       setPushToLoginPage(true);
       navigate("/Login");
+    } else {
+      setPushToLoginPage(false);
+      navigate("/");
     }
   }, []);
 

@@ -8,7 +8,6 @@ import { Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ImageUploaderProps } from "@/shared/type";
 
-
 function ImageUploader({ imgUrl, setImgUrl, imageRef }: ImageUploaderProps) {
   const { t } = useTranslation();
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -48,7 +47,6 @@ function ImageUploader({ imgUrl, setImgUrl, imageRef }: ImageUploaderProps) {
 
   return (
     <>
-      <p className="text-white text-base">{t("avatar")}</p>
       <div className="image_div" onClick={() => imageRef?.current?.click()}>
         <Input
           id="image"
@@ -65,23 +63,26 @@ function ImageUploader({ imgUrl, setImgUrl, imageRef }: ImageUploaderProps) {
             <Loader size={20} className="animate-spin ml-2" />
           </div>
         )}
-        <div className="flex flex-col items-center gap-1">
-          <h2 className="text-12 font-bold text-sky-300">Click to upload</h2>
+        <div className="flex flex-col items-center">
+          <p className="text-14 font-bold text-sky-300">{t("clickToUpload")}</p>
           <p className="text-12 font-normal text-[#71788B]">
-            SVG, PNG, or JPG (max. 1080x1080px)
+            SVG, PNG, or JPG ({t("max")} 1080x1080px)
           </p>
         </div>
       </div>
       {imgUrl && (
-        <div className="flex-center w-full">
-          <img
-            src={imgUrl}
-            width={150}
-            height={150}
-            alt="avatar"
-            className="rounded-full border border-[#444444] bg-[#1f1f1f]"
-          />
-        </div>
+        <>
+          <p className="text-white text-base">{t("preview")}</p>
+          <div className="flex-center w-full">
+            <img
+              src={imgUrl}
+              width={150}
+              height={150}
+              alt="avatar"
+              className="rounded-full border border-[#444444] bg-[#1f1f1f] aspect-square"
+            />
+          </div>
+        </>
       )}
     </>
   );

@@ -1,22 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
-import type { UserBorrowToolType } from "@/shared/type";
+import type { AllUsersBorrowingToolDataTableProps } from "@/shared/type";
 import BorrowingToolTableTabsContent from "./BorrowingToolTableTabsContent";
 import UnreturnedToolTableTabsContent from "./UnreturnedToolTableTabsContent";
-
-type AllUsersBorrowingDataTableProps = {
-  tableName: string;
-  Icon: React.ElementType;
-  allUsersBorrowingToolData: UserBorrowToolType[];
-  allUsersUnreturnedToolData: UserBorrowToolType[];
-};
 
 function AllUsersBorrowingToolDataTable({
   tableName,
   Icon,
   allUsersBorrowingToolData,
   allUsersUnreturnedToolData,
-}: AllUsersBorrowingDataTableProps) {
+}: AllUsersBorrowingToolDataTableProps) {
   const { t } = useTranslation();
 
   return (

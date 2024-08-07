@@ -1,15 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
-import type { UserBorrowToolType } from "@/shared/type";
+import type { UserToolDataTableProps } from "@/shared/type";
 import UnborrowedToolTableTabsContent from "./UnborrowedToolTableTabsContent";
 import BorrowingToolTableTabsContent from "./BorrowingToolTableTabsContent";
-
-type UserToolDataTableProps = {
-  tableName: string;
-  Icon: React.ElementType;
-  unborrowedData: UserBorrowToolType[];
-  borrowingData: UserBorrowToolType[];
-};
 
 function UserToolDataTable({
   tableName,

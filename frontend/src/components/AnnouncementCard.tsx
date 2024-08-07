@@ -137,7 +137,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                 <TooltipContent className="bg-black bg-opacity-80">
                   <p className="text-white text-xs">{t("edit")}</p>
                 </TooltipContent>
-                <DialogContent className="sm:max-w-[425px]  text-white bg-black">
+                <DialogContent className="w-11/12 sm:w-11/12 rounded-xl  text-white bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("editAnnouncement")}

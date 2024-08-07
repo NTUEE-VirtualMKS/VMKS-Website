@@ -4,10 +4,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Pencil } from "lucide-react";
+import { Pencil, Share, ShoppingCart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import { GET_MATERIAL_BY_ID_QUERY, EDIT_MATERIAL_MUTATION } from "@/graphql";
+import {
+  GET_MATERIAL_BY_ID_QUERY,
+  EDIT_MATERIAL_MUTATION,
+  ADD_USER_BORROW_MATERIAL_MUTATION,
+  GET_ALL_USER_BORROW_MATERIALS_QUERY,
+  GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+} from "@/graphql";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { MaterialInput } from "@/shared/type";
@@ -26,6 +32,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { materialBaseUrl, unborrowedStatus } from "@/constants";
+import { cn } from "@/lib/utils";
 
 function MaterialDetailCard({
   id,
@@ -116,13 +124,73 @@ function MaterialDetailCard({
     }
   };
 
+  const handleShare = () => {
+    const shareableLink = `${window.location.origin}${materialBaseUrl}/${id}`;
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() => {
+        toast({ title: "Link copied to clipboard!", variant: "share" });
+      })
+      .catch((err) => {
+        toast({
+          title: "Failed to copy the link.",
+          description: err,
+          variant: "destructive",
+        });
+      });
+  };
+
+  const [
+    addUserBorrowMaterial,
+    {
+      loading: AddUserBorrowMaterialLoading,
+      error: AddUserBorrowMaterialError,
+    },
+  ] = useMutation(ADD_USER_BORROW_MATERIAL_MUTATION, {
+    refetchQueries: [
+      { query: GET_ALL_USER_BORROW_MATERIALS_QUERY },
+      {
+        query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+        variables: { userId: user?.id!, status: unborrowedStatus },
+      },
+    ],
+  });
+
+  const handleAddToShoppingCart = async () => {
+    if (!user) {
+      toast({
+        title: "Please log in to borrow the material!",
+        variant: "destructive",
+      });
+      return;
+    }
+    await addUserBorrowMaterial({
+      variables: {
+        userBorrowMaterialInput: {
+          userId: user?.id!,
+          materialId: parseInt(id),
+          quantity: 0,
+        },
+      },
+    });
+    if (AddUserBorrowMaterialLoading) return <LoaderSpinner />;
+    if (AddUserBorrowMaterialError) {
+      toast({
+        title: `${AddUserBorrowMaterialError.message}`,
+        variant: "destructive",
+      });
+    } else {
+      toast({ title: "Material added to shopping cart!" });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
       <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
         <img
           src={materialPhotoLink}
           alt={materialName}
-          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-5/12"
+          className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
         />
         <div className="w-9/12 flex flex-col ml-5">
           <h1 className="text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
@@ -165,15 +233,15 @@ function MaterialDetailCard({
           )}
         </div>
       </div>
-      {user?.isAdmin && (
-        <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse gap-1.5 mb-1 mx-1">
+        {user?.isAdmin && (
           <Dialog
             open={visible}
             onOpenChange={(visible) => setVisible(visible)}
           >
             <Tooltip>
               <TooltipTrigger>
-                <div className="w-10 h-10  rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
+                <div className="w-10 h-10 rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
                   <DialogTrigger
                     asChild
                     onClick={() => setVisible(true)}
@@ -187,7 +255,7 @@ function MaterialDetailCard({
                 <p className="text-white text-xs">{t("edit")}</p>
               </TooltipContent>
             </Tooltip>
-            <DialogContent className="sm:max-w-[425px] text-white bg-black">
+            <DialogContent className="w-11/12 sm:w-11/12 rounded-xl text-white bg-black">
               <DialogHeader>
                 <DialogTitle className="text-2xl">
                   {t("editMaterial")}
@@ -365,8 +433,44 @@ function MaterialDetailCard({
               </div>
             </DialogContent>
           </Dialog>
+        )}
+        <div className="w-10 h-10 rounded-full p-2 text-white hover:text-green-300 hover:bg-green-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer">
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              onClick={handleShare}
+              className="transform active:scale-90 transition-transform duration-200"
+            >
+              <Share size={33} />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black bg-opacity-80">
+              <p className="text-white text-xs">{t("share")}</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
-      )}
+        <div
+          className={cn(
+            "w-10 h-10 rounded-full p-2 text-white  hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer",
+            user && "hover:text-sky-300 hover:bg-sky-300"
+          )}
+        >
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              className="transform active:scale-90 transition-transform duration-200"
+            >
+              <ShoppingCart
+                size={33}
+                onClick={handleAddToShoppingCart}
+                className={cn("", !user && "text-white text-opacity-50")}
+              />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black bg-opacity-80">
+              <p className="text-white text-xs">{t("borrow")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 }

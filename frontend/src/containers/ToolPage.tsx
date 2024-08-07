@@ -163,7 +163,7 @@ function ToolPage() {
                     </Button>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] text-white bg-black">
+                <DialogContent className="w-11/1 sm:w-11/12 rounded-xl text-white bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("newTool")}
