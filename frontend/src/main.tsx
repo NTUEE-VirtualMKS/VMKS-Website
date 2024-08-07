@@ -19,10 +19,21 @@ import { UserProvider } from "./contexts/UserContext";
 import { WindowProvider } from "./contexts/WindowContext";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
+import { setContext } from "@apollo/client/link/context";
 
 // HTTP connection to the API
 const httpLink = new HttpLink({
   uri: "http://localhost:5000/",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
 });
 
 // WebSocket link for subscriptions
@@ -42,7 +53,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink
+  authLink.concat(httpLink) // Combine authLink and httpLink
 );
 
 // Apollo client setup

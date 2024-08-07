@@ -34,6 +34,7 @@
     "i18next": "^23.12.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-localstorage-backend": "^4.2.0",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.407.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

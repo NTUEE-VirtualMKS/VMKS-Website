@@ -111,11 +111,14 @@ const typeDefs = `#graphql
   input UserEditInput {
     name: String!
     studentID: String!
-    password: String!
     photoLink: String!
     language: String!
-    isAdmin: Boolean!
-    isMinister: Boolean!
+    password: String!
+  }
+
+  input UserPasswordEditInput {
+    originalPassword: String!
+    newPassword: String!
   }
 
   input UserMachineUpdateInput {
@@ -256,6 +259,12 @@ const typeDefs = `#graphql
     name: String!
     studentID: String!
     password: String!
+    photoLink: String!
+    language: String!
+    threeDPId: Int
+    laserCutAvailable: Boolean!
+    isAdmin: Boolean!
+    isMinister: Boolean!
   }
   
   type logInRet {
@@ -444,6 +453,8 @@ const typeDefs = `#graphql
     AddUser(userInput: UserInput!) : User
     DeleteUser(id: Int!): User
     EditUser(id: Int!, userEditInput: UserEditInput!): User
+    EditUserPassword(id: Int!, userPasswordEditInput: UserPasswordEditInput!): User
+    EditUserRole(id: Int!, authorizedCode: String!, password: String!): User
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateIntroduction(introductionInput: IntroductionInput!): Introduction

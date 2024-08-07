@@ -84,6 +84,11 @@ interface SignUpInput {
   name: string;
   studentID: string;
   password: string;
+  photoLink: string;
+  language: string;
+  laserCutAvailable: boolean;
+  isAdmin: boolean;
+  isMinister: boolean;
 }
 
 interface LogInInput {
@@ -97,7 +102,6 @@ interface UserInput {
   password: string;
   photoLink: string;
   language: string;
-  threeDPId: number;
   laserCutAvailable: boolean;
   isAdmin: boolean;
   isMinister: boolean;
@@ -106,11 +110,14 @@ interface UserInput {
 interface UserEditInput {
   name: string;
   studentID: string;
-  password: string;
   photoLink: string;
   language: string;
-  isAdmin: boolean;
-  isMinister: boolean;
+  password: string;
+}
+
+interface UserPasswordEditInput {
+  originalPassword: string;
+  newPassword: string;
 }
 
 interface UserMachineUpdateInput {
@@ -164,6 +171,7 @@ export type {
   ThreeDPInput,
   UserInput,
   UserEditInput,
+  UserPasswordEditInput,
   UserMachineUpdateInput,
   ToolUsageUpdateInput,
   DisposableMaterialInput,

@@ -16,6 +16,7 @@ import {
   ThreeDPInput,
   UserInput,
   UserEditInput,
+  UserPasswordEditInput,
   UserMachineUpdateInput,
   ArticleInput,
   IntroductionInput,
@@ -518,6 +519,7 @@ const Mutation = {
         fee: fee,
         remain: remain,
         materialLikeIds: [],
+        userBorrowMaterialIds: [],
       },
     });
     pubsub.publish("MATERIAL_CREATED", { MaterialCreated: newMaterial });
@@ -759,7 +761,6 @@ const Mutation = {
       password,
       photoLink,
       language,
-      threeDPId,
       laserCutAvailable,
       isAdmin,
       isMinister,
@@ -780,12 +781,14 @@ const Mutation = {
         password: password,
         photoLink: photoLink,
         language: language,
-        threeDPId: threeDPId,
+        threeDPId: null,
         laserCutAvailable: laserCutAvailable,
         isAdmin: isAdmin,
         isMinister: isMinister,
         toolLikeIds: [],
+        userBorrowToolIds: [],
         materialLikeIds: [],
+        userBorrowMaterialIds: [],
       },
     });
 
@@ -839,22 +842,22 @@ const Mutation = {
     _context,
   ) => {
     const id = args.id;
-    const {
-      name,
-      studentID,
-      password,
-      photoLink,
-      language,
-      isAdmin,
-      isMinister,
-    } = args.userEditInput;
-    const findUser = await prisma.user.findFirst({
+    const { name, studentID, photoLink, language, password } =
+      args.userEditInput;
+
+    const findUser = await prisma.user.findUnique({
       where: {
         id: id,
       },
     });
+
     if (!findUser) {
-      throw new Error("user not found!");
+      throw new Error("User not found!");
+    }
+
+    const validatePassword = await bcrypt.compare(password, findUser.password);
+    if (!validatePassword) {
+      throw new Error("Password is incorrect!");
     }
 
     const updateUser = await prisma.user.update({
@@ -864,11 +867,8 @@ const Mutation = {
       data: {
         name: name,
         studentID: studentID,
-        password: password,
         photoLink: photoLink,
         language: language,
-        isAdmin: isAdmin,
-        isMinister: isMinister,
       },
     });
 
@@ -899,6 +899,88 @@ const Mutation = {
         studentId: updateUser.studentID,
       },
     });
+
+    pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
+    return updateUser;
+  },
+
+  EditUserPassword: async (
+    _parents,
+    args: { id: number; userPasswordEditInput: UserPasswordEditInput },
+    _context,
+  ) => {
+    const costFactor = 12;
+    const { id, userPasswordEditInput } = args;
+    const { originalPassword, newPassword } = userPasswordEditInput;
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!findUser) {
+      throw new Error("user not found!");
+    }
+    const comparePassword = await bcrypt.compare(
+      originalPassword,
+      findUser.password,
+    );
+    if (!comparePassword) {
+      throw new Error("original password is incorrect!");
+    }
+    const salt = await bcrypt.genSalt(costFactor);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const updateUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
+    return updateUser;
+  },
+
+  EditUserRole: async (
+    _parents,
+    args: { id: number; authorizedCode: string; password: string },
+    _context,
+  ) => {
+    const { id, authorizedCode, password } = args;
+
+    // check authorized code existence
+    const existence = await prisma.authorizedCode.findFirst();
+    if (!existence) {
+      throw new Error("Authorized code not found!");
+    }
+    const codeList = existence.codeList;
+    if (!codeList.includes(authorizedCode)) {
+      throw new Error("Authorized code does not exist!");
+    }
+
+    // check user existence
+    const findUser = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!findUser) {
+      throw new Error("User not found!");
+    }
+
+    // check password correctness
+    const comparedPassword = await bcrypt.compare(password, findUser.password);
+    if (!comparedPassword) {
+      throw new Error("Password is incorrect!");
+    }
+    const updateUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isAdmin: true,
+      },
+    });
     pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
     return updateUser;
   },
@@ -916,7 +998,7 @@ const Mutation = {
       },
     });
     if (!findUser) {
-      throw new Error("user not found!");
+      throw new Error("User not found!");
     }
 
     const oldThreeDPId = findUser.threeDPId;
@@ -929,7 +1011,7 @@ const Mutation = {
           },
         });
         if (!oldThreeDP) {
-          throw new Error("old threeDP not found!");
+          throw new Error("Old threeDP not found!");
         }
         const oldWaitingID = oldThreeDP.waitingId;
         const index = oldWaitingID.indexOf(id);
@@ -943,7 +1025,7 @@ const Mutation = {
           },
         });
         if (!updateOldThreeDP) {
-          throw new Error("update old threeDP failed!");
+          throw new Error("Update old threeDP failed!");
         }
       }
 
@@ -954,7 +1036,7 @@ const Mutation = {
           },
         });
         if (!newThreeDP) {
-          throw new Error("new threeDP not found!");
+          throw new Error("New threeDP not found!");
         }
         const newWaitingID = newThreeDP.waitingId;
         newWaitingID.push(id);
@@ -967,7 +1049,7 @@ const Mutation = {
           },
         });
         if (!updateNewThreeDP) {
-          throw new Error("update new threeDP failed!");
+          throw new Error("Update new threeDP failed!");
         }
       }
     }
@@ -1082,11 +1164,10 @@ const Mutation = {
     args: { authorizedCodeInput: AuthorizedCodeInput },
     _context,
   ) => {
-    console.log(args.authorizedCodeInput);
-    const existence = await prisma.authorizedCode.findFirst({});
-    // console.log(args);
+    const existence = await prisma.authorizedCode.findFirst();
     const { codeList } = args.authorizedCodeInput;
-    let updateAuthorizedCode;
+
+    let updateAuthorizedCode = {};
 
     if (existence === null || existence === undefined) {
       updateAuthorizedCode = await prisma.authorizedCode.create({
@@ -1115,7 +1196,16 @@ const Mutation = {
 
   SignUp: async (_parents, args: { signUpInput: SignUpInput }, _context) => {
     const costFactor = 12;
-    const { name, studentID, password } = args.signUpInput;
+    const {
+      name,
+      studentID,
+      password,
+      photoLink,
+      language,
+      laserCutAvailable,
+      isAdmin,
+      isMinister,
+    } = args.signUpInput;
 
     const studentIDExisted = await prisma.user.findFirst({
       where: {
@@ -1126,12 +1216,23 @@ const Mutation = {
     if (studentIDExisted !== null) {
       throw new Error("This student id is already registered!");
     } else {
-      const hashedpassword = await bcrypt.hash(password, costFactor);
+      const salt = await bcrypt.genSalt(costFactor);
+      const hashedpassword = await bcrypt.hash(password, salt);
       const newUser = await prisma.user.create({
         data: {
           name: name,
           studentID: studentID,
           password: hashedpassword,
+          photoLink: photoLink,
+          language: language,
+          threeDPId: null,
+          laserCutAvailable: laserCutAvailable,
+          isAdmin: isAdmin,
+          isMinister: isMinister,
+          toolLikeIds: [],
+          userBorrowToolIds: [],
+          materialLikeIds: [],
+          userBorrowMaterialIds: [],
         },
       });
 
@@ -1147,7 +1248,9 @@ const Mutation = {
           isAdmin: newUser.isAdmin,
           isMinister: newUser.isMinister,
           toolLikeIds: newUser.toolLikeIds,
+          userBorrowToolIds: newUser.userBorrowToolIds,
           materialLikeIds: newUser.materialLikeIds,
+          userBorrowMaterialIds: newUser.userBorrowMaterialIds,
         },
         env.JWT_SECRET,
         {
@@ -1172,7 +1275,7 @@ const Mutation = {
       },
     });
     if (!user) {
-      throw new Error("User Not Found");
+      throw new Error("User not found!");
     }
 
     const tool = await prisma.tool.findUnique({
@@ -1182,7 +1285,7 @@ const Mutation = {
     });
 
     if (!tool) {
-      throw new Error("Tool Not Found");
+      throw new Error("Tool not found!");
     }
 
     const newToolLike = await prisma.toolLike.create({
@@ -1227,7 +1330,7 @@ const Mutation = {
       },
     });
     if (!user) {
-      throw new Error("User Not Found");
+      throw new Error("User not found!");
     }
 
     const tool = await prisma.tool.findUnique({
@@ -1237,7 +1340,7 @@ const Mutation = {
     });
 
     if (!tool) {
-      throw new Error("Tool Not Found");
+      throw new Error("Tool not found!");
     }
 
     // Find the intersection of user.toolLikeIds and tool.toolLikedIds
@@ -1283,7 +1386,7 @@ const Mutation = {
       },
     });
     if (!findUser) {
-      throw new Error("User Not Found");
+      throw new Error("User not found!");
     }
     const updateUser = await prisma.user.update({
       where: {
@@ -1309,7 +1412,7 @@ const Mutation = {
       },
     });
     if (!user) {
-      throw new Error("User Not Found");
+      throw new Error("User not found!");
     }
 
     const tool = await prisma.tool.findUnique({
@@ -1319,7 +1422,7 @@ const Mutation = {
     });
 
     if (!tool) {
-      throw new Error("Tool Not Found");
+      throw new Error("Tool not found!");
     }
 
     // update tool

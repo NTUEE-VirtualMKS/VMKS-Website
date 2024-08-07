@@ -86,7 +86,6 @@ function MaterialDetailCard({
       toast({ title: "id is undefined", variant: "destructive" });
     } else {
       try {
-        console.log(materialValuable);
         await editMaterial({
           variables: {
             editMaterialId: parseInt(id),

@@ -2,6 +2,7 @@ import { MaterialInput } from "@/shared/type";
 import { read, utils } from "xlsx";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
+import { ChangeEvent } from "react";
 
 function MaterialImportButton({
   setMaterials,
@@ -11,9 +12,9 @@ function MaterialImportButton({
   setLength: (length: number) => void;
 }) {
   const { toast } = useToast();
-  const handleImport = (e: any) => {
+  const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files.length) {
+    if (files?.length) {
       const file = files[0];
       if (file.type !== "text/csv") {
         toast({
@@ -25,8 +26,8 @@ function MaterialImportButton({
         setLength(0);
       } else {
         const reader = new FileReader();
-        reader.onload = (event: any) => {
-          const wb = read(event.target.result);
+        reader.onload = (event: ProgressEvent<FileReader>) => {
+          const wb = read(event.target?.result);
           const sheets = wb.SheetNames;
 
           if (sheets.length) {

@@ -2,15 +2,10 @@ import { icons } from "@/constants/index";
 
 function Footer() {
   return (
-    <footer className="flex flex-row">
-      <img
-        src="/footer_logo.png"
-        alt="footer"
-        className="w-30 h-30 float-left"
-      />
+    <footer className="flex flex-row justify-center bg-slate-900 items-center h-16 border-t border-[#444444] gap-10">
       {icons.map(({ href, src, alt }) => (
         <a href={href}>
-          <img src={src} alt={alt} className="w-12 m-2" />
+          <img src={src} alt={alt} className="w-10 bg-white rounded-full" />
         </a>
       ))}
     </footer>

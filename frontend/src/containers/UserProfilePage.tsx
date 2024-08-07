@@ -16,7 +16,7 @@ function UserProfilePage() {
         <ProfileCard
           id={user?.id!}
           name={user?.name!}
-          studenetID={user?.studentID!}
+          studentID={user?.studentID!}
           password={user?.password!}
           language={user?.language!}
           photoLink={user?.photoLink!}

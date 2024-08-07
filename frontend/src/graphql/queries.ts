@@ -798,6 +798,31 @@ const GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY = gql(`
   }
 `);
 
+const LOGIN_QUERY = gql(`
+  query LogIn($logInInput: logInInput!) {
+    LogIn(logInInput: $logInInput) {
+      user {
+        id
+        name
+        studentID
+        password
+        photoLink
+        language
+        threeDPId
+        laserCutAvailable
+        articlesId
+        isAdmin
+        isMinister
+        toolLikeIds
+        userBorrowToolIds
+        materialLikeIds
+        userBorrowMaterialIds
+      }
+      token
+    }
+  }
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -843,4 +868,5 @@ export {
   GET_USER_BORROW_MATERIAL_BY_ID_QUERY,
   GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY,
   GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+  LOGIN_QUERY,
 };
