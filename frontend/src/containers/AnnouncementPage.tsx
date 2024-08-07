@@ -58,9 +58,9 @@ function AnnouncementPage() {
 
   return (
     <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8">
-      <h1 className="text-white p-1 flex flex-row items-center gap-2">
+      <h1 className="text-white p-1 flex flex-row items-center gap-1 text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl">
         <Volume2 className="text-white" size={35} />
-        {t("allAnnouncements")}
+        {t("announcements")}
       </h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <DialogTrigger asChild>
@@ -75,7 +75,7 @@ function AnnouncementPage() {
             </div>
           )}
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] rounded-lg text-white bg-black">
+        <DialogContent className="w-11/12 sm:w-11/12 rounded-lg text-white bg-black">
           <DialogHeader>
             <DialogTitle className="text-2xl">
               {t("newAnnouncement")}

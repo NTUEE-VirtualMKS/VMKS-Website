@@ -287,6 +287,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       }
       const updatedUser = response?.data?.EditUserLanguage;
       setUser(updatedUser!);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       i18n.changeLanguage(language);
       toast({ title: "Language changed successfully!" });
     } catch (error) {

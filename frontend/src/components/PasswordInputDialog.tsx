@@ -9,14 +9,7 @@ import { Button } from "./ui/button";
 import { PasswordInput } from "@/components/PasswordInput";
 import { Label } from "./ui/label";
 import { useTranslation } from "react-i18next";
-
-type PasswordInputDialogProps = {
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-  handleFunction: () => void;
-  pwd: string;
-  setPwd: (pwd: string) => void;
-};
+import type {PasswordInputDialogProps} from '@/shared/type';
 
 function PasswordInputDialog({
   visible,
@@ -28,7 +21,7 @@ function PasswordInputDialog({
   const { t } = useTranslation();
   return (
     <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
-      <DialogContent className="sm:max-w-[425px] text-white bg-black">
+      <DialogContent className="w-11/12 sm:w-11/12 text-white bg-black">
         <DialogHeader>
           <DialogTitle className="text-2xl">{t("enterPassword")}</DialogTitle>
           <DialogDescription className="text-sm">

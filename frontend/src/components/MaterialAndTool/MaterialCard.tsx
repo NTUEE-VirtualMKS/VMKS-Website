@@ -127,12 +127,18 @@ function MaterialCard({
       { query: GET_ALL_USER_BORROW_MATERIALS_QUERY },
       {
         query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
-        variables: { userId: user?.id!, status: ["Unborrowed"] },
+        variables: { userId: user?.id!, status: unborrowedStatus },
       },
     ],
   });
 
   const handleAddToShoppingCart = async () => {
+    if (!user) {
+      toast({
+        title: "Please log in to borrow the material!",
+      });
+      return;
+    }
     await addUserBorrowMaterial({
       variables: {
         userBorrowMaterialInput: {
@@ -442,23 +448,14 @@ function MaterialCard({
             >
               <div className="w-[35px] h-[35px]">
                 <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
-                  {user ? (
-                    <ShoppingCart
-                      className="p-1.5 hover:text-sky-300"
-                      size={35}
-                      onClick={handleAddToShoppingCart}
-                    />
-                  ) : (
-                    <ShoppingCart
-                      className="p-1.5 text-white text-opacity-50"
-                      size={35}
-                      onClick={() =>
-                        toast({
-                          title: "Please log in to borrow the material.",
-                        })
-                      }
-                    />
-                  )}
+                  <ShoppingCart
+                    className={cn(
+                      "p-1.5",
+                      user ? "hover:text-sky-300" : "text-white text-opacity-50"
+                    )}
+                    size={35}
+                    onClick={handleAddToShoppingCart}
+                  />
                 </TooltipTrigger>
                 <TooltipContent className="bg-black bg-opacity-80">
                   <p className="text-white text-xs">{t("addToShoppingCart")}</p>

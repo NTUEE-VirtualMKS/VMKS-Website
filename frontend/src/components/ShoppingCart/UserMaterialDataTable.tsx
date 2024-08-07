@@ -1,15 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
-import type { UserBorrowMaterialType } from "@/shared/type";
+import type { UserMaterialDataTableProps } from "@/shared/type";
 import UnborrowedMaterialTableTabsContent from "./UnborrowedMaterialTableTabsContent";
 import BorrowingMaterialTableTabsContent from "./BorrowingMaterialTableTabsContent";
-
-type UserMaterialDataTableProps = {
-  tableName: string;
-  Icon: React.ElementType;
-  unborrowedData: UserBorrowMaterialType[];
-  borrowingData: UserBorrowMaterialType[];
-};
 
 function UserMaterialDataTable({
   tableName,

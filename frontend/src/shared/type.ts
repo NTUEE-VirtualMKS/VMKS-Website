@@ -236,3 +236,39 @@ export type ImageUploaderProps = {
   setImgUrl: (imgUrl: string) => void;
   imageRef: RefObject<HTMLInputElement>;
 };
+
+export type PasswordInputDialogProps = {
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+  handleFunction: () => void;
+  pwd: string;
+  setPwd: (pwd: string) => void;
+};
+
+export type AllUsersBorrowingMaterialDataTableProps = {
+  tableName: string;
+  Icon: React.ElementType;
+  allUsersBorrowingMaterialData: UserBorrowMaterialType[];
+  allUsersUnreturnedMaterialData: UserBorrowMaterialType[];
+};
+
+export type AllUsersBorrowingToolDataTableProps = {
+  tableName: string;
+  Icon: React.ElementType;
+  allUsersBorrowingToolData: UserBorrowToolType[];
+  allUsersUnreturnedToolData: UserBorrowToolType[];
+};
+
+export type UserMaterialDataTableProps = {
+  tableName: string;
+  Icon: React.ElementType;
+  unborrowedData: UserBorrowMaterialType[];
+  borrowingData: UserBorrowMaterialType[];
+};
+
+export type UserToolDataTableProps = {
+  tableName: string;
+  Icon: React.ElementType;
+  unborrowedData: UserBorrowToolType[];
+  borrowingData: UserBorrowToolType[];
+};

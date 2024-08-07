@@ -1,22 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
-import type { UserBorrowMaterialType } from "@/shared/type";
+import type { AllUsersBorrowingMaterialDataTableProps } from "@/shared/type";
 import BorrowingMaterialTableTabsContent from "./BorrowingMaterialTableTabsContent";
 import UnreturnedMaterialTableTabsContent from "./UnreturnedMaterialTableTabsContent";
-
-type AllUsersBorrowingDataTableProps = {
-  tableName: string;
-  Icon: React.ElementType;
-  allUsersBorrowingMaterialData: UserBorrowMaterialType[];
-  allUsersUnreturnedMaterialData: UserBorrowMaterialType[];
-};
 
 function AllUsersBorrowingMaterialDataTable({
   tableName,
   Icon,
   allUsersBorrowingMaterialData,
   allUsersUnreturnedMaterialData,
-}: AllUsersBorrowingDataTableProps) {
+}: AllUsersBorrowingMaterialDataTableProps) {
   const { t } = useTranslation();
 
   return (
