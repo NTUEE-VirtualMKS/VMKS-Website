@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export type AnnouncementType = {
   id: number;
   title: string;
@@ -125,7 +127,7 @@ export type LoginProps = {
 export type ProfileCardProps = {
   id: number;
   name: string;
-  studenetID: string;
+  studentID: string;
   password: string;
   photoLink?: string;
   language: string;
@@ -137,11 +139,8 @@ export type ProfileCardProps = {
 export type UserEditInput = {
   name: string;
   studentID: string;
-  password: string;
   photoLink: string;
   language: string;
-  isAdmin: boolean;
-  isMinister: boolean;
 };
 
 export type BorrowType = {
@@ -230,4 +229,10 @@ export type UserBorrowMaterialType = {
   status: string;
   borrowDate: string;
   returnDate: string;
+};
+
+export type ImageUploaderProps = {
+  imgUrl: string;
+  setImgUrl: (imgUrl: string) => void;
+  imageRef: RefObject<HTMLInputElement>;
 };

@@ -89,7 +89,6 @@ function BorrowingToolTableTabsContent({
 
   const handleChangeStatus = async (userBorrowTools: UserBorrowToolType[]) => {
     try {
-      console.log(userBorrowTools);
       userBorrowTools.forEach(async (userBorrowTool) => {
         await editUserBorrowToolStatus({
           variables: {

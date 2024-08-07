@@ -662,13 +662,13 @@ const Query = {
         updatedAt: "desc",
       },
     });
-    if (!introductions[0]) throw new Error("No introduction found");
+    if (!introductions[0]) throw new Error("Introduction not found!");
     return introductions[0];
   },
 
   GetAuthorizedCode: async () => {
     const authorizedCode = await prisma.authorizedCode.findFirst({});
-    if (!authorizedCode) throw new Error("No introduction found");
+    if (!authorizedCode) throw new Error("Authorized code not found!");
     else return authorizedCode;
   },
 
@@ -679,11 +679,12 @@ const Query = {
         studentID: studentID,
       },
     });
-    if (!user) throw new Error("StudentID not found");
+    if (!user) throw new Error("Student ID or password is incorrect!");
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) throw new Error("Invalid password");
+    if (!isPasswordValid)
+      throw new Error("Student ID or password is incorrect!");
     else {
       const token = jwt.sign(
         {
@@ -691,10 +692,16 @@ const Query = {
           name: user.name,
           studentID: user.studentID,
           photoLink: user.photoLink,
+          language: user.language,
           threeDPId: user.threeDPId,
           laserCutAvailable: user.laserCutAvailable,
+          articlesId: user.articlesId,
           isAdmin: user.isAdmin,
           isMinister: user.isMinister,
+          toolLikeIds: user.toolLikeIds,
+          materialLikeIds: user.materialLikeIds,
+          userBorrowToolIds: user.userBorrowToolIds,
+          userBorrowMaterialIds: user.userBorrowMaterialIds,
         },
         env.JWT_SECRET,
         {

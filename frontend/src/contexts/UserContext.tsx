@@ -1,20 +1,17 @@
-// TODO: jwt
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/components/ui/use-toast";
+import { LOGIN_QUERY } from "@/graphql/queries";
 import {
-  ALL_USER_QUERY,
-  GET_USER_BY_STUDENT_ID_QUERY,
-} from "@/graphql/queries";
-import {
-  ADD_USER_MUTATION,
   EDIT_USER_LANGUAGE_MUTATION,
+  SIGNUP_MUTATION,
 } from "@/graphql/mutations";
 import type { UserType, SignupProps, LoginProps } from "@/shared/type.ts";
 import { z } from "zod";
 import { validDepartmentCodes } from "@/constants/index";
+import { jwtDecode } from "jwt-decode";
 
 const studentIdSchema = z.string().refine((studentId) => {
   return (
@@ -73,40 +70,48 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
+  const [token, setToken] = useState<string | null>(() => {
+    const savedToken = localStorage.getItem("token");
+    return savedToken ? savedToken : null;
+  });
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
       if (user.language) {
         i18n.changeLanguage(user.language);
         localStorage.setItem("language", user.language);
       }
     } else {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       localStorage.removeItem("language");
     }
-  }, [user, i18n]);
+  }, [user, i18n, token]);
+
+  const isTokenExpired = (token: string) => {
+    const decoded: { exp: number } = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp < currentTime;
+  };
 
   // Add this useEffect to automatically login the user on app load
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      const storedStudentId: string = JSON.parse(savedUser).studentID;
-      const storedPassword: string = JSON.parse(savedUser).password;
-      login({
-        studentId: storedStudentId,
-        password: storedPassword,
-        redirect: false,
-      }).catch((error) => {
-        console.error("Auto login failed:", error);
-      });
+    const savedToken = localStorage.getItem("token");
+    if (savedToken && !isTokenExpired(savedToken)) {
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+        setToken(savedToken);
+      }
+    } else {
+      logout({ redirect: false });
     }
   }, []);
 
   const [createUser, { loading: createUserLoading, error: createUserError }] =
-    useMutation(ADD_USER_MUTATION, {
-      refetchQueries: [{ query: ALL_USER_QUERY }],
-    });
+    useMutation(SIGNUP_MUTATION);
 
   const signup = async ({ name, studentId, password }: SignupProps) => {
     const defaultPhotoUrl =
@@ -115,7 +120,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       signupSchema.parse({ name, studentId, password });
       await createUser({
         variables: {
-          userInput: {
+          signUpInput: {
             name,
             studentID: studentId.toUpperCase(),
             password,
@@ -155,36 +160,39 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  const [
-    getUserByStudentId,
-    { loading: getUserByStudentIdLoading, error: getUserByStudentIdError },
-  ] = useLazyQuery(GET_USER_BY_STUDENT_ID_QUERY);
+  const [userLogin, { loading: userLoginLoading, error: userLoginError }] =
+    useLazyQuery(LOGIN_QUERY);
 
   const login = async ({ studentId, password, redirect }: LoginProps) => {
-    if (getUserByStudentIdLoading) {
+    if (userLoginLoading) {
       toast({ title: "Loading..." });
     }
-    if (getUserByStudentIdError) {
+    if (userLoginError) {
       toast({
-        title: `${getUserByStudentIdError.message}`,
+        title: `${userLoginError.message}`,
         variant: "destructive",
       });
-      throw new Error(getUserByStudentIdError.message);
+      throw new Error(userLoginError.message);
     }
 
     try {
       loginSchema.parse({ studentId, password });
-      const response = await getUserByStudentId({
-        variables: { studentId: studentId.toUpperCase() },
+      const response = await userLogin({
+        variables: {
+          logInInput: {
+            studentID: studentId.toUpperCase(),
+            password: password,
+          },
+        },
       });
 
-      const user = response?.data?.GetUserByStudentID;
+      const data = response?.data?.LogIn;
+      const user = data?.user;
+      const token = data?.token;
+
       if (!user) {
         toast({ title: "User not found", variant: "destructive" });
         throw new Error("User not found");
-      } else if (user.password !== password) {
-        toast({ title: "Password incorrect", variant: "destructive" });
-        throw new Error("Password incorrect");
       } else {
         setUser({
           id: user.id,
@@ -203,6 +211,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           materialLikeIds: user?.materialLikeIds,
           userBorrowMaterialIds: user?.userBorrowMaterialIds,
         });
+        setToken(token!);
         i18n.changeLanguage(user.language);
         if (redirect) {
           toast({
@@ -246,7 +255,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     editLanguage,
     { loading: EditLanguageLoading, error: EditLanguageError },
   ] = useMutation(EDIT_USER_LANGUAGE_MUTATION, {
-    refetchQueries: [{ query: ALL_USER_QUERY }],
+    refetchQueries: [
+      {
+        query: LOGIN_QUERY,
+        variables: { studentId: user?.studentID, password: user?.password },
+      },
+    ],
   });
 
   const handleEditLanguage = async ({ language }: { language: string }) => {

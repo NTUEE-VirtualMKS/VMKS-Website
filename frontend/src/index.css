@@ -69,10 +69,6 @@
 }
 
 @layer utilities {
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-
   .text-12 {
     @apply text-[12px] leading-normal;
   }
@@ -107,6 +103,14 @@
 
   .checkbox-class {
     @apply text-16 bg-[#15171C] text-white focus-visible:ring-offset-sky-300;
+  }
+
+  .image_div {
+    @apply flex-center h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed border-[#24272C] bg-black;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
   }
 }
 

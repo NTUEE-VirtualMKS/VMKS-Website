@@ -737,6 +737,76 @@ const EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION = gql(`
     }
   }
 `);
+
+const SIGNUP_MUTATION = gql(`
+  mutation SignUp($signUpInput: signUpInput!) {
+    SignUp(signUpInput: $signUpInput) {
+      user {
+        id
+        name
+        studentID
+        password
+        photoLink
+        language
+        threeDPId
+        laserCutAvailable
+        articlesId
+        isAdmin
+        isMinister
+        toolLikeIds
+        userBorrowToolIds
+        materialLikeIds
+        userBorrowMaterialIds
+      }
+      token
+    }
+  }
+`);
+
+const EDIT_USER_PASSWORD_MUTATION = gql(`
+  mutation EditUserPassword($editUserPasswordId: Int!, $userPasswordEditInput: UserPasswordEditInput!) {
+    EditUserPassword(id: $editUserPasswordId, userPasswordEditInput: $userPasswordEditInput) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+      materialLikeIds
+      userBorrowMaterialIds
+    }
+  }
+`);
+
+const EDIT_USER_ROLE_MUTATION = gql(`
+  mutation EditUserRole($editUserRoleId: Int!, $authorizedCode: String!, $password: String!) {
+    EditUserRole(id: $editUserRoleId, authorizedCode: $authorizedCode, password: $password) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+      materialLikeIds
+      userBorrowMaterialIds
+    }
+  }
+`);
+
 export {
   ADD_ANNOUNCEMENT_MUTATION,
   DELETE_ANNOUNCEMENT_MUTATION,
@@ -760,6 +830,8 @@ export {
   ADD_USER_MUTATION,
   DELETE_USER_MUTATION,
   EDIT_USER_MUTATION,
+  EDIT_USER_PASSWORD_MUTATION,
+  EDIT_USER_ROLE_MUTATION,
   DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION,
   MATERIAL_USAGE_UPDATE_MUTATION,
   TOOL_USAGE_UPDATE_MUTATION,
@@ -779,4 +851,5 @@ export {
   DELETE_USER_BORROW_MATERIAL_MUTATION,
   EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION,
   EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
+  SIGNUP_MUTATION,
 };

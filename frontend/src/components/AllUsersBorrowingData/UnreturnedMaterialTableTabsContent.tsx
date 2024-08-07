@@ -92,7 +92,6 @@ function UnreturnedMaterialTableTabsContent({
     userBorrowMaterials: UserBorrowMaterialType[]
   ) => {
     try {
-      console.log(userBorrowMaterials);
       userBorrowMaterials.forEach(async (userBorrowMaterial) => {
         await editUserBorrowMaterialStatus({
           variables: {
