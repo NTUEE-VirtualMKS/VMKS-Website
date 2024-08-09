@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { MaterialType } from "@/shared/type";
 import {
   ADD_MATERIAL_LIKE_MUTATION,
-  ALL_USER_QUERY,
   DELETE_MATERIAL_LIKE_MUTATION,
   GET_MATERIAL_LIKES_QUERY,
   DELETE_MATERIAL_MUTATION,
@@ -67,16 +66,8 @@ function MaterialCard({
         material?.materialLikeIds?.includes(id)
       )
     ) {
-      localStorage.setItem(
-        `starred-material-${material.id}`,
-        JSON.stringify(true)
-      );
       return true;
     } else {
-      localStorage.setItem(
-        `starred-material-${material.id}`,
-        JSON.stringify(false)
-      );
       return false;
     }
   });
@@ -200,7 +191,6 @@ function MaterialCard({
     { loading: AddMaterialLikeLoading, error: AddMaterialLikeError },
   ] = useMutation(ADD_MATERIAL_LIKE_MUTATION, {
     refetchQueries: [
-      { query: ALL_USER_QUERY },
       { query: GET_MATERIAL_LIKES_QUERY },
       { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
       { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },
@@ -212,7 +202,6 @@ function MaterialCard({
     { loading: DeleteMaterialLikeLoading, error: DeleteMaterialLikeError },
   ] = useMutation(DELETE_MATERIAL_LIKE_MUTATION, {
     refetchQueries: [
-      { query: ALL_USER_QUERY },
       { query: GET_MATERIAL_LIKES_QUERY },
       { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
       { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: search } },

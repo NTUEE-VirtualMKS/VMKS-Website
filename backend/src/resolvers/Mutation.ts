@@ -19,13 +19,15 @@ import {
   UserPasswordEditInput,
   UserMachineUpdateInput,
   ArticleInput,
-  IntroductionInput,
   AuthorizedCodeInput,
   SignUpInput,
   ToolLikeInput,
   UserBorrowToolInput,
   MaterialLikeInput,
   UserBorrowMaterialInput,
+  PromoteUserInput,
+  DemoteUserInput,
+  AdminScheduleInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -941,13 +943,13 @@ const Mutation = {
     return updateUser;
   },
 
-  EditUserRole: async (
+  PromoteUser: async (
     _parents,
-    args: { id: number; authorizedCode: string; password: string },
+    args: { id: number; promoteUserInput: PromoteUserInput },
     _context,
   ) => {
-    const { id, authorizedCode, password } = args;
-
+    const { id, promoteUserInput } = args;
+    const { authorizedCode, password, isAdmin } = promoteUserInput;
     // check authorized code existence
     const existence = await prisma.authorizedCode.findFirst();
     if (!existence) {
@@ -973,16 +975,91 @@ const Mutation = {
     if (!comparedPassword) {
       throw new Error("Password is incorrect!");
     }
-    const updateUser = await prisma.user.update({
+
+    if (isAdmin) {
+      const promotedUser = await prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          isMinister: true,
+        },
+      });
+      pubsub.publish("USER_UPDATED", { UserUpdated: promotedUser });
+      return promotedUser;
+    } else {
+      const promotedUser = await prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          isAdmin: true,
+        },
+      });
+      pubsub.publish("USER_UPDATED", { UserUpdated: promotedUser });
+      return promotedUser;
+    }
+  },
+
+  DemoteUser: async (
+    _parents,
+    args: { id: number; demoteUserInput: DemoteUserInput },
+    _context,
+  ) => {
+    const { id, demoteUserInput } = args;
+    const { studentID, password, isMinister } = demoteUserInput;
+
+    // check my existence
+    const user = await prisma.user.findFirst({
       where: {
         id: id,
       },
-      data: {
-        isAdmin: true,
+    });
+
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
+    // check my password
+    const comparedPassword = await bcrypt.compare(password, user.password);
+    if (!comparedPassword) {
+      throw new Error("Password is incorrect!");
+    }
+
+    // check target existence
+    const target = await prisma.user.findFirst({
+      where: {
+        studentID: studentID,
       },
     });
-    pubsub.publish("USER_UPDATED", { UserUpdated: updateUser });
-    return updateUser;
+
+    if (!target) {
+      throw new Error("Target not found!");
+    }
+
+    if (isMinister) {
+      const demotedUser = await prisma.user.update({
+        where: {
+          studentID: studentID,
+        },
+        data: {
+          isMinister: false,
+        },
+      });
+      pubsub.publish("USER_UPDATED", { UserUpdated: demotedUser });
+      return demotedUser;
+    } else {
+      const demotedUser = await prisma.user.update({
+        where: {
+          studentID: studentID,
+        },
+        data: {
+          isAdmin: false,
+        },
+      });
+      pubsub.publish("USER_UPDATED", { UserUpdated: demotedUser });
+      return demotedUser;
+    }
   },
 
   UserMachineUsageUpdate: async (
@@ -1114,49 +1191,6 @@ const Mutation = {
     });
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
-  },
-
-  UpdateIntroduction: async (
-    _parents,
-    args: { introductionInput: IntroductionInput },
-    _context,
-  ) => {
-    const existence = await prisma.introduction.findMany({
-      orderBy: {
-        updatedAt: "desc",
-      },
-      take: 1,
-    });
-    console.log(args);
-    const { content } = args.introductionInput;
-
-    if (existence[0] === null || existence[0] === undefined) {
-      const newIntroduction = await prisma.introduction.create({
-        data: {
-          content: content,
-          updatedAt: new Date().toLocaleString(),
-        },
-      });
-      pubsub.publish("INTRODUCTION_CREATED", {
-        IntroductionCreated: newIntroduction,
-      });
-      return newIntroduction;
-    } else {
-      const id = existence[0].id;
-      const updatedIntroduction = await prisma.introduction.update({
-        where: {
-          id: id,
-        },
-        data: {
-          content: content,
-          updatedAt: new Date().toLocaleString(),
-        },
-      });
-      pubsub.publish("INTRODUCTION_UPDATED", {
-        IntroductionUpdated: updatedIntroduction,
-      });
-      return updatedIntroduction;
-    }
   },
 
   UpdateAuthorizedCode: async (
@@ -2019,6 +2053,62 @@ const Mutation = {
     }
 
     return editUserBorrowMaterial;
+  },
+
+  // AdminSchedule
+  AddAdminSchedule: async (
+    _parents,
+    args: { adminScheduleInput: AdminScheduleInput },
+    _context,
+  ) => {
+    const { admin, day, period } = args.adminScheduleInput;
+    const newAdminSchedule = await prisma.adminSchedule.create({
+      data: {
+        admin,
+        day,
+        period,
+      },
+    });
+
+    return newAdminSchedule;
+  },
+
+  DeleteAdminSchedule: async (_parents, args: { id: number }, _context) => {
+    const id = args.id;
+    const deleteAdminSchedule = await prisma.adminSchedule.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return deleteAdminSchedule;
+  },
+
+  EditAdminSchedule: async (
+    _parents,
+    args: { id: number; name: string },
+    _context,
+  ) => {
+    const { id, name } = args;
+    const findAdminSchedule = await prisma.adminSchedule.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!findAdminSchedule) {
+      throw new Error("Admin Schedule Not Found");
+    }
+
+    const editAdminSchedule = await prisma.adminSchedule.update({
+      where: {
+        id: id,
+      },
+      data: {
+        admin: name,
+      },
+    });
+
+    return editAdminSchedule;
   },
 };
 

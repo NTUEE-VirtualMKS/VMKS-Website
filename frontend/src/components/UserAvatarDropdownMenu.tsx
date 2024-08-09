@@ -23,8 +23,10 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
   const changeLanguage = (lng: string) => {
     if (user) {
       handleEditLanguage({ language: lng });
+    } else {
+      i18n.changeLanguage(lng);
+      localStorage.setItem("language", lng);
     }
-    i18n.changeLanguage(lng);
   };
 
   const handleLogout = () => {
@@ -67,15 +69,25 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
           <span>{t("borrowHistory")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {windowWidth < 601 && (
+        {windowWidth < 446 && (
           <RadioGroup defaultValue={i18n.language}>
-            <DropdownMenuItem onClick={() => changeLanguage("en")}>
-              <RadioGroupItem value="en" id="en" className="w-3 h-3 mr-2" />
+            <DropdownMenuItem>
+              <RadioGroupItem
+                value="en"
+                id="en"
+                className="w-3 h-3 mr-2"
+                onClick={() => changeLanguage("en")}
+              />
               <Label htmlFor="en">English</Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => changeLanguage("zh")}>
-              <RadioGroupItem value="zh" id="zh" className="w-3 h-3 mr-2" />
+            <DropdownMenuItem>
+              <RadioGroupItem
+                value="zh"
+                id="zh"
+                className="w-3 h-3 mr-2"
+                onClick={() => changeLanguage("zh")}
+              />
               <Label htmlFor="zh">中文 (繁體)</Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

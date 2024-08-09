@@ -21,8 +21,10 @@ function LanguageSwitcher() {
   const changeLanguage = (lng: string) => {
     if (user) {
       handleEditLanguage({ language: lng });
+    } else {
+      i18n.changeLanguage(lng);
+      localStorage.setItem("language", lng);
     }
-    i18n.changeLanguage(lng);
   };
 
   return (
@@ -42,13 +44,23 @@ function LanguageSwitcher() {
           >
             <DropdownMenuLabel>{t("languages")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => changeLanguage("en")}>
-              <RadioGroupItem value="en" id="en" className="w-3 h-3 mr-2" />
+            <DropdownMenuItem>
+              <RadioGroupItem
+                value="en"
+                id="en"
+                className="w-3 h-3 mr-2"
+                onClick={() => changeLanguage("en")}
+              />
               <Label htmlFor="en">English (United States)</Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => changeLanguage("zh")}>
-              <RadioGroupItem value="zh" id="zh" className="w-3 h-3 mr-2" />
+            <DropdownMenuItem>
+              <RadioGroupItem
+                value="zh"
+                id="zh"
+                className="w-3 h-3 mr-2"
+                onClick={() => changeLanguage("zh")}
+              />
               <Label htmlFor="zh">中文 (繁體)</Label>
             </DropdownMenuItem>
           </DropdownMenuContent>

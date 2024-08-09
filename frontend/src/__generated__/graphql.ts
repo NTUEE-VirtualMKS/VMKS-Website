@@ -17,6 +17,20 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AdminSchedule = {
+  __typename?: 'AdminSchedule';
+  admin: Scalars['String']['output'];
+  day: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  period: Scalars['String']['output'];
+};
+
+export type AdminScheduleInput = {
+  admin: Scalars['String']['input'];
+  day: Scalars['String']['input'];
+  period: Scalars['String']['input'];
+};
+
 export type Announcement = {
   __typename?: 'Announcement';
   content: Scalars['String']['output'];
@@ -64,6 +78,12 @@ export type AuthorizedCodeInput = {
   codeList?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type DemoteUserInput = {
+  isMinister: Scalars['Boolean']['input'];
+  password: Scalars['String']['input'];
+  studentID: Scalars['String']['input'];
+};
+
 export type DisposableMaterial = {
   __typename?: 'DisposableMaterial';
   category: Scalars['String']['output'];
@@ -95,16 +115,6 @@ export type DisposableMaterialInput = {
 export type DisposableMaterialUsageUpdateInput = {
   remain: Scalars['Boolean']['input'];
   usage: Scalars['Int']['input'];
-};
-
-export type Introduction = {
-  __typename?: 'Introduction';
-  content: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-};
-
-export type IntroductionInput = {
-  content: Scalars['String']['input'];
 };
 
 export type Machine = {
@@ -177,6 +187,7 @@ export type MaterialUsageUpdateInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  AddAdminSchedule?: Maybe<AdminSchedule>;
   AddAnnouncement?: Maybe<Announcement>;
   AddArticle?: Maybe<Article>;
   AddDisposableMaterial?: Maybe<DisposableMaterial>;
@@ -189,6 +200,7 @@ export type Mutation = {
   AddUser?: Maybe<User>;
   AddUserBorrowMaterial?: Maybe<UserBorrowMaterial>;
   AddUserBorrowTool?: Maybe<UserBorrowTool>;
+  DeleteAdminSchedule?: Maybe<AdminSchedule>;
   DeleteAnnouncement?: Maybe<Announcement>;
   DeleteDisposableMaterial?: Maybe<DisposableMaterial>;
   DeleteMachine?: Maybe<Machine>;
@@ -200,7 +212,9 @@ export type Mutation = {
   DeleteUser?: Maybe<User>;
   DeleteUserBorrowMaterial?: Maybe<UserBorrowMaterial>;
   DeleteUserBorrowTool?: Maybe<UserBorrowTool>;
+  DemoteUser?: Maybe<User>;
   DisposableMaterialUsageUpdate?: Maybe<DisposableMaterial>;
+  EditAdminSchedule?: Maybe<AdminSchedule>;
   EditAnnouncement?: Maybe<Announcement>;
   EditDisposableMaterial?: Maybe<DisposableMaterial>;
   EditMachine?: Maybe<Machine>;
@@ -214,13 +228,17 @@ export type Mutation = {
   EditUserBorrowToolStatus?: Maybe<UserBorrowTool>;
   EditUserLanguage?: Maybe<User>;
   EditUserPassword?: Maybe<User>;
-  EditUserRole?: Maybe<User>;
   MaterialUsageUpdate?: Maybe<Material>;
+  PromoteUser?: Maybe<User>;
   SignUp?: Maybe<SignUpRet>;
   ToolUsageUpdate?: Maybe<Tool>;
   UpdateAuthorizedCode?: Maybe<AuthorizedCode>;
-  UpdateIntroduction?: Maybe<Introduction>;
   UserMachineUsageUpdate?: Maybe<User>;
+};
+
+
+export type MutationAddAdminScheduleArgs = {
+  adminScheduleInput: AdminScheduleInput;
 };
 
 
@@ -284,6 +302,11 @@ export type MutationAddUserBorrowToolArgs = {
 };
 
 
+export type MutationDeleteAdminScheduleArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDeleteAnnouncementArgs = {
   id: Scalars['Int']['input'];
 };
@@ -339,9 +362,21 @@ export type MutationDeleteUserBorrowToolArgs = {
 };
 
 
+export type MutationDemoteUserArgs = {
+  demoteUserInput: DemoteUserInput;
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDisposableMaterialUsageUpdateArgs = {
   disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput;
   id: Scalars['Int']['input'];
+};
+
+
+export type MutationEditAdminScheduleArgs = {
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -423,16 +458,15 @@ export type MutationEditUserPasswordArgs = {
 };
 
 
-export type MutationEditUserRoleArgs = {
-  authorizedCode: Scalars['String']['input'];
-  id: Scalars['Int']['input'];
-  password: Scalars['String']['input'];
-};
-
-
 export type MutationMaterialUsageUpdateArgs = {
   id: Scalars['Int']['input'];
   materialUsageUpdateInput: MaterialUsageUpdateInput;
+};
+
+
+export type MutationPromoteUserArgs = {
+  id: Scalars['Int']['input'];
+  promoteUserInput: PromoteUserInput;
 };
 
 
@@ -452,18 +486,20 @@ export type MutationUpdateAuthorizedCodeArgs = {
 };
 
 
-export type MutationUpdateIntroductionArgs = {
-  introductionInput: IntroductionInput;
-};
-
-
 export type MutationUserMachineUsageUpdateArgs = {
   id: Scalars['Int']['input'];
   userMachineUpdateInput: UserMachineUpdateInput;
 };
 
+export type PromoteUserInput = {
+  authorizedCode: Scalars['String']['input'];
+  isAdmin: Scalars['Boolean']['input'];
+  password: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  AllAdminSchedules?: Maybe<Array<Maybe<Array<Maybe<AdminSchedule>>>>>;
   AllAnnouncements?: Maybe<Array<Maybe<Announcement>>>;
   AllArticles?: Maybe<Array<Maybe<Article>>>;
   AllDisposableMaterials?: Maybe<Array<Maybe<DisposableMaterial>>>;
@@ -472,7 +508,8 @@ export type Query = {
   AllThreeDP?: Maybe<Array<Maybe<ThreeDp>>>;
   AllTools?: Maybe<Array<Maybe<Tool>>>;
   AllUser?: Maybe<Array<Maybe<User>>>;
-  CurrentIntroduction?: Maybe<Introduction>;
+  GetAdminScheduleByDay?: Maybe<Array<Maybe<AdminSchedule>>>;
+  GetAdminScheduleByPeriod?: Maybe<Array<Maybe<AdminSchedule>>>;
   GetAllUserBorrowMaterials?: Maybe<Array<Maybe<UserBorrowMaterial>>>;
   GetAllUserBorrowMaterialsByStatus?: Maybe<Array<Maybe<UserBorrowMaterial>>>;
   GetAllUserBorrowTools?: Maybe<Array<Maybe<UserBorrowTool>>>;
@@ -509,6 +546,16 @@ export type Query = {
   SearchToolsByName?: Maybe<Array<Maybe<Tool>>>;
   SearchToolsByPosition?: Maybe<Array<Maybe<Tool>>>;
   SearchUserByName?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryGetAdminScheduleByDayArgs = {
+  day: Scalars['String']['input'];
+};
+
+
+export type QueryGetAdminScheduleByPeriodArgs = {
+  period: Scalars['String']['input'];
 };
 
 
@@ -677,8 +724,6 @@ export type Subscription = {
   DisposableMaterialCreated?: Maybe<DisposableMaterial>;
   DisposableMaterialDeleted?: Maybe<DisposableMaterial>;
   DisposableMaterialUpdated?: Maybe<DisposableMaterial>;
-  IntroductionCreated?: Maybe<Introduction>;
-  IntroductionUpdated?: Maybe<Introduction>;
   MachineCreated?: Maybe<Machine>;
   MachineDeleted?: Maybe<Machine>;
   MachineUpdated?: Maybe<Machine>;
@@ -1095,13 +1140,6 @@ export type UserMachineUsageUpdateMutationVariables = Exact<{
 
 export type UserMachineUsageUpdateMutation = { __typename?: 'Mutation', UserMachineUsageUpdate?: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, language: string } | null };
 
-export type UpdateIntroductionMutationVariables = Exact<{
-  introductionInput: IntroductionInput;
-}>;
-
-
-export type UpdateIntroductionMutation = { __typename?: 'Mutation', UpdateIntroduction?: { __typename?: 'Introduction', id: number, content: string } | null };
-
 export type UpdateAuthorizedCodeMutationVariables = Exact<{
   authorizedCodeInput: AuthorizedCodeInput;
 }>;
@@ -1220,14 +1258,43 @@ export type EditUserPasswordMutationVariables = Exact<{
 
 export type EditUserPasswordMutation = { __typename?: 'Mutation', EditUserPassword?: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, language: string, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null };
 
-export type EditUserRoleMutationVariables = Exact<{
-  editUserRoleId: Scalars['Int']['input'];
-  authorizedCode: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+export type PromoteUserMutationVariables = Exact<{
+  promoteUserId: Scalars['Int']['input'];
+  promoteUserInput: PromoteUserInput;
 }>;
 
 
-export type EditUserRoleMutation = { __typename?: 'Mutation', EditUserRole?: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, language: string, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null };
+export type PromoteUserMutation = { __typename?: 'Mutation', PromoteUser?: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, language: string, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null };
+
+export type DemoteUserMutationVariables = Exact<{
+  demoteUserId: Scalars['Int']['input'];
+  demoteUserInput: DemoteUserInput;
+}>;
+
+
+export type DemoteUserMutation = { __typename?: 'Mutation', DemoteUser?: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, language: string, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null };
+
+export type AddAdminScheduleMutationVariables = Exact<{
+  adminScheduleInput: AdminScheduleInput;
+}>;
+
+
+export type AddAdminScheduleMutation = { __typename?: 'Mutation', AddAdminSchedule?: { __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null };
+
+export type DeleteAdminScheduleMutationVariables = Exact<{
+  deleteAdminScheduleId: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteAdminScheduleMutation = { __typename?: 'Mutation', DeleteAdminSchedule?: { __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null };
+
+export type EditAdminScheduleMutationVariables = Exact<{
+  editAdminScheduleId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type EditAdminScheduleMutation = { __typename?: 'Mutation', EditAdminSchedule?: { __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null };
 
 export type AllAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1400,11 +1467,6 @@ export type GetAuthorizedCodeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAuthorizedCodeQuery = { __typename?: 'Query', GetAuthorizedCode?: { __typename?: 'AuthorizedCode', id: number, codeList?: Array<string | null> | null, updatedAt: string } | null };
 
-export type CurrentIntroductionQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CurrentIntroductionQuery = { __typename?: 'Query', CurrentIntroduction?: { __typename?: 'Introduction', id: number, content: string } | null };
-
 export type GetToolLikesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1518,15 +1580,29 @@ export type LogInQueryVariables = Exact<{
 
 export type LogInQuery = { __typename?: 'Query', LogIn?: { __typename?: 'logInRet', token: string, user: { __typename?: 'User', id: number, name: string, studentID: string, password: string, photoLink?: string | null, language: string, threeDPId?: number | null, laserCutAvailable: boolean, articlesId?: Array<number | null> | null, isAdmin: boolean, isMinister: boolean, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } } | null };
 
+export type GetAdminScheduleByDayQueryVariables = Exact<{
+  day: Scalars['String']['input'];
+}>;
+
+
+export type GetAdminScheduleByDayQuery = { __typename?: 'Query', GetAdminScheduleByDay?: Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null };
+
+export type GetAdminScheduleByPeriodQueryVariables = Exact<{
+  period: Scalars['String']['input'];
+}>;
+
+
+export type GetAdminScheduleByPeriodQuery = { __typename?: 'Query', GetAdminScheduleByPeriod?: Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null };
+
+export type AllAdminSchedulesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllAdminSchedulesQuery = { __typename?: 'Query', AllAdminSchedules?: Array<Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null> | null };
+
 export type AnnouncementCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AnnouncementCreatedSubscription = { __typename?: 'Subscription', AnnouncementCreated?: { __typename?: 'Announcement', id: number, date: string, title: string, content: string } | null };
-
-export type IntroductionUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type IntroductionUpdatedSubscription = { __typename?: 'Subscription', IntroductionUpdated?: { __typename?: 'Introduction', id: number, content: string } | null };
 
 
 export const AddAnnouncementDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddAnnouncement"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"announcementInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AnnouncementInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AddAnnouncement"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"announcementInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"announcementInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AddAnnouncementMutation, AddAnnouncementMutationVariables>;
@@ -1555,7 +1631,6 @@ export const DisposableMaterialUsageUpdateDocument = {"kind":"Document","definit
 export const MaterialUsageUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MaterialUsageUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"materialUsageUpdateId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"materialUsageUpdateInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MaterialUsageUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"MaterialUsageUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"materialUsageUpdateId"}}},{"kind":"Argument","name":{"kind":"Name","value":"materialUsageUpdateInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"materialUsageUpdateInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<MaterialUsageUpdateMutation, MaterialUsageUpdateMutationVariables>;
 export const ToolUsageUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ToolUsageUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"toolUsageUpdateId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"toolUsageUpdateInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ToolUsageUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ToolUsageUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"toolUsageUpdateId"}}},{"kind":"Argument","name":{"kind":"Name","value":"toolUsageUpdateInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"toolUsageUpdateInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<ToolUsageUpdateMutation, ToolUsageUpdateMutationVariables>;
 export const UserMachineUsageUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UserMachineUsageUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userMachineUsageUpdateId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userMachineUpdateInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserMachineUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"UserMachineUsageUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userMachineUsageUpdateId"}}},{"kind":"Argument","name":{"kind":"Name","value":"userMachineUpdateInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userMachineUpdateInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"language"}}]}}]}}]} as unknown as DocumentNode<UserMachineUsageUpdateMutation, UserMachineUsageUpdateMutationVariables>;
-export const UpdateIntroductionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateIntroduction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"introductionInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IntroductionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"UpdateIntroduction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"introductionInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"introductionInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<UpdateIntroductionMutation, UpdateIntroductionMutationVariables>;
 export const UpdateAuthorizedCodeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAuthorizedCode"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authorizedCodeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthorizedCodeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"UpdateAuthorizedCode"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authorizedCodeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authorizedCodeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"codeList"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateAuthorizedCodeMutation, UpdateAuthorizedCodeMutationVariables>;
 export const AddToolLikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddToolLike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"toolLikeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"toolLikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AddToolLike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"toolLikeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"toolLikeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"toolId"}}]}}]}}]} as unknown as DocumentNode<AddToolLikeMutation, AddToolLikeMutationVariables>;
 export const DeleteToolLikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteToolLike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"toolLikeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"toolLikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"DeleteToolLike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"toolLikeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"toolLikeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"toolId"}}]}}]}}]} as unknown as DocumentNode<DeleteToolLikeMutation, DeleteToolLikeMutationVariables>;
@@ -1572,7 +1647,11 @@ export const EditUserBorrowMaterialQuantityDocument = {"kind":"Document","defini
 export const EditUserBorrowMaterialStatusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditUserBorrowMaterialStatus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"editUserBorrowMaterialStatusId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EditUserBorrowMaterialStatus"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"editUserBorrowMaterialStatusId"}}},{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"materialId"}},{"kind":"Field","name":{"kind":"Name","value":"borrower"}},{"kind":"Field","name":{"kind":"Name","value":"studentId"}},{"kind":"Field","name":{"kind":"Name","value":"figure"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"borrowDate"}},{"kind":"Field","name":{"kind":"Name","value":"returnDate"}}]}}]}}]} as unknown as DocumentNode<EditUserBorrowMaterialStatusMutation, EditUserBorrowMaterialStatusMutationVariables>;
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"signUpInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"signUpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SignUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"signUpInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"signUpInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
 export const EditUserPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditUserPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"editUserPasswordId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userPasswordEditInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserPasswordEditInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EditUserPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"editUserPasswordId"}}},{"kind":"Argument","name":{"kind":"Name","value":"userPasswordEditInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userPasswordEditInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<EditUserPasswordMutation, EditUserPasswordMutationVariables>;
-export const EditUserRoleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditUserRole"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"editUserRoleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authorizedCode"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EditUserRole"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"editUserRoleId"}}},{"kind":"Argument","name":{"kind":"Name","value":"authorizedCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authorizedCode"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<EditUserRoleMutation, EditUserRoleMutationVariables>;
+export const PromoteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PromoteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"promoteUserId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"promoteUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PromoteUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"PromoteUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"promoteUserId"}}},{"kind":"Argument","name":{"kind":"Name","value":"promoteUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"promoteUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<PromoteUserMutation, PromoteUserMutationVariables>;
+export const DemoteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DemoteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"demoteUserId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"demoteUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DemoteUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"DemoteUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"demoteUserId"}}},{"kind":"Argument","name":{"kind":"Name","value":"demoteUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"demoteUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<DemoteUserMutation, DemoteUserMutationVariables>;
+export const AddAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"adminScheduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminScheduleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AddAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"adminScheduleInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"adminScheduleInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<AddAdminScheduleMutation, AddAdminScheduleMutationVariables>;
+export const DeleteAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deleteAdminScheduleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"DeleteAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deleteAdminScheduleId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<DeleteAdminScheduleMutation, DeleteAdminScheduleMutationVariables>;
+export const EditAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"editAdminScheduleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EditAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"editAdminScheduleId"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<EditAdminScheduleMutation, EditAdminScheduleMutationVariables>;
 export const AllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AllAnnouncementsQuery, AllAnnouncementsQueryVariables>;
 export const AllArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"writerId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"headline"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"userpic"}}]}}]}}]} as unknown as DocumentNode<AllArticlesQuery, AllArticlesQueryVariables>;
 export const AllDisposableMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDisposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllDisposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<AllDisposableMaterialsQuery, AllDisposableMaterialsQueryVariables>;
@@ -1600,7 +1679,6 @@ export const AllUserDocument = {"kind":"Document","definitions":[{"kind":"Operat
 export const SearchUserByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchUserByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchUserByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchUserByNameQuery, SearchUserByNameQueryVariables>;
 export const GetUserByStudentIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByStudentID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetUserByStudentID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"studentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<GetUserByStudentIdQuery, GetUserByStudentIdQueryVariables>;
 export const GetAuthorizedCodeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuthorizedCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAuthorizedCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"codeList"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetAuthorizedCodeQuery, GetAuthorizedCodeQueryVariables>;
-export const CurrentIntroductionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CurrentIntroduction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"CurrentIntroduction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<CurrentIntroductionQuery, CurrentIntroductionQueryVariables>;
 export const GetToolLikesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetToolLikes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetToolLikes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"toolId"}}]}}]}}]} as unknown as DocumentNode<GetToolLikesQuery, GetToolLikesQueryVariables>;
 export const GetToolLikeByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetToolLikeById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getToolLikeByIdId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetToolLikeById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getToolLikeByIdId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"toolId"}}]}}]}}]} as unknown as DocumentNode<GetToolLikeByIdQuery, GetToolLikeByIdQueryVariables>;
 export const GetLikedToolsByUserIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLikedToolsByUserId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetLikedToolsByUserId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<GetLikedToolsByUserIdQuery, GetLikedToolsByUserIdQueryVariables>;
@@ -1618,5 +1696,7 @@ export const GetUserBorrowMaterialByIdDocument = {"kind":"Document","definitions
 export const GetUserBorrowMaterialsByUserIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserBorrowMaterialsByUserId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetUserBorrowMaterialsByUserId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"materialId"}},{"kind":"Field","name":{"kind":"Name","value":"borrower"}},{"kind":"Field","name":{"kind":"Name","value":"studentId"}},{"kind":"Field","name":{"kind":"Name","value":"figure"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"borrowDate"}},{"kind":"Field","name":{"kind":"Name","value":"returnDate"}}]}}]}}]} as unknown as DocumentNode<GetUserBorrowMaterialsByUserIdQuery, GetUserBorrowMaterialsByUserIdQueryVariables>;
 export const GetUserBorrowMaterialsByStatusAndUserIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserBorrowMaterialsByStatusAndUserId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetUserBorrowMaterialsByStatusAndUserId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"materialId"}},{"kind":"Field","name":{"kind":"Name","value":"borrower"}},{"kind":"Field","name":{"kind":"Name","value":"studentId"}},{"kind":"Field","name":{"kind":"Name","value":"figure"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"borrowDate"}},{"kind":"Field","name":{"kind":"Name","value":"returnDate"}}]}}]}}]} as unknown as DocumentNode<GetUserBorrowMaterialsByStatusAndUserIdQuery, GetUserBorrowMaterialsByStatusAndUserIdQueryVariables>;
 export const LogInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LogIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"logInInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"logInInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"LogIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"logInInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"logInInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<LogInQuery, LogInQueryVariables>;
+export const GetAdminScheduleByDayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAdminScheduleByDay"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"day"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAdminScheduleByDay"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"day"},"value":{"kind":"Variable","name":{"kind":"Name","value":"day"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<GetAdminScheduleByDayQuery, GetAdminScheduleByDayQueryVariables>;
+export const GetAdminScheduleByPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAdminScheduleByPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAdminScheduleByPeriod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"period"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<GetAdminScheduleByPeriodQuery, GetAdminScheduleByPeriodQueryVariables>;
+export const AllAdminSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<AllAdminSchedulesQuery, AllAdminSchedulesQueryVariables>;
 export const AnnouncementCreatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"AnnouncementCreated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AnnouncementCreated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AnnouncementCreatedSubscription, AnnouncementCreatedSubscriptionVariables>;
-export const IntroductionUpdatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"IntroductionUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"IntroductionUpdated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<IntroductionUpdatedSubscription, IntroductionUpdatedSubscriptionVariables>;

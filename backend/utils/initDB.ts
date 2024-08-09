@@ -1,29 +1,54 @@
+import { AdminScheduleInput } from "@/types/types.ts";
 import { prisma } from "../prisma/client.ts";
 import fs from "fs";
+import bcrypt from "bcrypt";
 
-const initUserData = JSON.parse(
-  fs.readFileSync("./data/user.json", "utf-8"),
-).user;
+const userData = JSON.parse(fs.readFileSync("./data/user.json", "utf-8")).user;
+
+const adminScheduleData: AdminScheduleInput[] = JSON.parse(
+  fs.readFileSync("./data/schedule.json", "utf-8"),
+).schedule;
 
 const initUserDB = async () => {
-  for (let i = 0; i < initUserData.length; i++) {
+  adminScheduleData.map(async ({ admin, day, period }: AdminScheduleInput) => {
     try {
-      await prisma.user.create({
+      await prisma.adminSchedule.create({
         data: {
-          name: initUserData[i].name,
-          studentID: initUserData[i].studentID,
-          password: initUserData[i].password,
-          photoLink: initUserData[i].photoLink,
-          threeDPId: initUserData[i].threeDPId,
-          laserCutAvailable: initUserData[i].laserCutAvailable,
-          articlesId: initUserData[i].articlesId,
-          isAdmin: initUserData[i].isAdmin,
+          admin: admin,
+          day: day,
+          period: period,
         },
       });
     } catch (err) {
       console.log(err);
     }
-  }
+  });
+  userData.map(async (user: any) => {
+    try {
+      const costFactor = 12;
+      const salt = await bcrypt.genSalt(costFactor);
+      const hashedpassword = await bcrypt.hash(user.password, salt);
+      await prisma.user.create({
+        data: {
+          name: user.name,
+          studentID: user.studentID,
+          password: hashedpassword,
+          photoLink: user.photoLink,
+          language: user.language,
+          threeDPId: null,
+          laserCutAvailable: user.laserCutAvailable,
+          isAdmin: user.isAdmin,
+          isMinister: user.isMinister,
+          toolLikeIds: [],
+          userBorrowToolIds: [],
+          materialLikeIds: [],
+          userBorrowMaterialIds: [],
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
 };
 
 initUserDB();

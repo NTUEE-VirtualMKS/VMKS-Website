@@ -135,10 +135,6 @@ interface ArticleInput {
   userpic: string;
 }
 
-interface IntroductionInput {
-  content: string;
-}
-
 interface AuthorizedCodeInput {
   codeList: string[];
 }
@@ -165,6 +161,24 @@ interface UserBorrowMaterialInput {
   quantity: number;
 }
 
+interface PromoteUserInput {
+  authorizedCode: string;
+  password: string;
+  isAdmin: boolean;
+}
+
+interface DemoteUserInput {
+  studentID: string;
+  password: string;
+  isMinister: boolean;
+}
+
+interface AdminScheduleInput {
+  admin: string;
+  day: string;
+  period: string;
+}
+
 export type {
   AnnouncementInput,
   ToolInput,
@@ -180,7 +194,6 @@ export type {
   MaterialInput,
   MaterialUsageUpdateInput,
   ArticleInput,
-  IntroductionInput,
   AuthorizedCodeInput,
   SignUpInput,
   LogInInput,
@@ -188,4 +201,7 @@ export type {
   UserBorrowToolInput,
   MaterialLikeInput,
   UserBorrowMaterialInput,
+  PromoteUserInput,
+  DemoteUserInput,
+  AdminScheduleInput,
 };

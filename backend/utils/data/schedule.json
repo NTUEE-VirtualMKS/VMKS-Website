@@ -1,0 +1,144 @@
+{
+  "schedule": [
+    {
+      "admin": "陳柏睿",
+      "day": "sunday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "sunday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "sunday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "sunday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "monday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "monday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "monday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "monday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "tuesday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "tuesday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "tuesday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "tuesday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "wednesday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "wednesday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "wednesday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "wednesday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "thursday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "thursday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "thursday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "thursday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "friday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "friday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "friday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "friday",
+      "period": "18:00-21:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "saturday",
+      "period": "09:00-12:00"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "saturday",
+      "period": "13:00-16:00 (A)"
+    },
+    {
+      "admin": "陳柏睿",
+      "day": "saturday",
+      "period": "13:00-16:00 (B)"
+    },
+    {
+      "admin": "吳柏均",
+      "day": "saturday",
+      "period": "18:00-21:00"
+    }
+  ]
+}

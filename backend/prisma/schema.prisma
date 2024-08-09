@@ -14,12 +14,6 @@ model Announcement {
   content String
 }
 
-model Introduction {
-  id        Int    @id @default(autoincrement())
-  content   String
-  updatedAt String
-}
-
 model DisposableMaterial {
   id           Int     @id @default(autoincrement())
   name         String
@@ -193,4 +187,11 @@ model UserBorrowMaterial {
   status     String   @default("Unborrowed")
   borrowDate String   @default("")
   returnDate String   @default("")
+}
+
+model AdminSchedule {
+  id     Int    @id @default(autoincrement())
+  admin  String
+  day    String
+  period String
 }

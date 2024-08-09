@@ -289,15 +289,6 @@ const typeDefs = `#graphql
     userpic: String,
   }
 
-  type Introduction {
-    id: Int!,
-    content: String!,
-  }
-
-  input IntroductionInput {
-    content: String!,
-  }
-
   type AuthorizedCode {
     id: Int!,
     codeList: [String],
@@ -378,6 +369,30 @@ const typeDefs = `#graphql
     quantity: Int!,
   }
 
+  input PromoteUserInput {
+    authorizedCode: String!,
+    password: String!,
+    isAdmin: Boolean!,
+  }
+
+  input DemoteUserInput {
+    studentID: String!,
+    password: String!,
+    isMinister: Boolean!,
+  }
+
+  type AdminSchedule {
+    id: Int!,
+    admin: String!,
+    day: String!,
+    period: String!,
+  }
+
+  input AdminScheduleInput {
+    admin: String!,
+    day: String!,
+    period: String!,
+  }
   ### Define Resolvers ###
 
   type Query {
@@ -407,7 +422,6 @@ const typeDefs = `#graphql
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
-    CurrentIntroduction: Introduction
     GetAuthorizedCode: AuthorizedCode
     LogIn(logInInput: logInInput!): logInRet
     GetToolLikes: [ToolLike]
@@ -426,6 +440,9 @@ const typeDefs = `#graphql
     GetUserBorrowMaterialById(id: Int!): UserBorrowMaterial
     GetUserBorrowMaterialsByUserId(userId: Int!): [UserBorrowMaterial]
     GetUserBorrowMaterialsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowMaterial]
+    AllAdminSchedules: [[AdminSchedule]]
+    GetAdminScheduleByDay(day: String!): [AdminSchedule]
+    GetAdminScheduleByPeriod(period: String!): [AdminSchedule]
   }
 
   type Mutation {
@@ -454,10 +471,10 @@ const typeDefs = `#graphql
     DeleteUser(id: Int!): User
     EditUser(id: Int!, userEditInput: UserEditInput!): User
     EditUserPassword(id: Int!, userPasswordEditInput: UserPasswordEditInput!): User
-    EditUserRole(id: Int!, authorizedCode: String!, password: String!): User
+    PromoteUser(id: Int!, promoteUserInput: PromoteUserInput!): User
+    DemoteUser(id: Int!, demoteUserInput: DemoteUserInput!): User
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
-    UpdateIntroduction(introductionInput: IntroductionInput!): Introduction
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: signUpInput!): signUpRet
     AddToolLike(toolLikeInput: toolLikeInput!): ToolLike
@@ -473,6 +490,9 @@ const typeDefs = `#graphql
     DeleteUserBorrowMaterial(id: Int!): UserBorrowMaterial
     EditUserBorrowMaterialQuantity(id: Int!, userBorrowMaterialInput: userBorrowMaterialInput!): UserBorrowMaterial
     EditUserBorrowMaterialStatus(id: Int!, status: String!): UserBorrowMaterial
+    AddAdminSchedule(adminScheduleInput: AdminScheduleInput!): AdminSchedule
+    DeleteAdminSchedule(id: Int!): AdminSchedule
+    EditAdminSchedule(id: Int!, name: String!): AdminSchedule
   }
 
   type Subscription {
@@ -499,8 +519,6 @@ const typeDefs = `#graphql
     UserUpdated: User
     UserMachineUpdate: User
     ArticleCreated: Article
-    IntroductionCreated: Introduction
-    IntroductionUpdated: Introduction
     UserSignedUp: User
     UserLoggedIn: User
   }

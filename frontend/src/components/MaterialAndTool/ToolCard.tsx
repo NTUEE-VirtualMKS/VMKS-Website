@@ -3,7 +3,6 @@ import { ToolType } from "@/shared/type";
 import { useMutation } from "@apollo/client";
 import {
   ADD_TOOL_LIKE_MUTATION,
-  ALL_USER_QUERY,
   DELETE_TOOL_LIKE_MUTATION,
   GET_TOOL_LIKES_QUERY,
   DELETE_TOOL_MUTATION,
@@ -57,10 +56,8 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
   const [hover, setHover] = useState(false);
   const [star, setStar] = useState(() => {
     if (user?.toolLikeIds?.some((id) => tool?.toolLikeIds?.includes(id))) {
-      localStorage.setItem(`starred-tool-${tool.id}`, JSON.stringify(true));
       return true;
     } else {
-      localStorage.setItem(`starred-tool-${tool.id}`, JSON.stringify(false));
       return false;
     }
   });
@@ -180,7 +177,6 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
     { loading: AddToolLikeLoading, error: AddToolLikeError },
   ] = useMutation(ADD_TOOL_LIKE_MUTATION, {
     refetchQueries: [
-      { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
       { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
       { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
@@ -192,7 +188,6 @@ function ToolCard({ tool, search }: { tool: ToolType; search: string }) {
     { loading: DeleteToolLikeLoading, error: DeleteToolLikeError },
   ] = useMutation(DELETE_TOOL_LIKE_MUTATION, {
     refetchQueries: [
-      { query: ALL_USER_QUERY },
       { query: GET_TOOL_LIKES_QUERY },
       { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
       { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: search } },
