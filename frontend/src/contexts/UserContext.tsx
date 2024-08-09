@@ -276,7 +276,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       });
       if (EditLanguageLoading) {
-        toast({ title: "Loading..." });
+        console.log("Loading...");
       }
       if (EditLanguageError) {
         toast({
@@ -286,8 +286,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         throw new Error(EditLanguageError.message);
       }
       const updatedUser = response?.data?.EditUserLanguage;
-      setUser(updatedUser!);
       localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUser(updatedUser!);
       i18n.changeLanguage(language);
       toast({ title: "Language changed successfully!" });
     } catch (error) {

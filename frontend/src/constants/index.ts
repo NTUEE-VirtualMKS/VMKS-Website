@@ -81,22 +81,22 @@ export const listEn = [
   "Event Registration: If it's an event website, provide the functionality for users to register or sign up for events.",
 ];
 
-export const timetable = [
+export const adminSchedule = [
   {
     time: "09:00-12:00",
-    name: "吳柏均A",
+    name: "吳柏均",
   },
   {
     time: "13:00-16:00(A)",
-    name: "吳柏均B",
+    name: "吳柏均",
   },
   {
     time: "13:00-16:00(B)",
-    name: "吳柏均C",
+    name: "吳柏均",
   },
   {
     time: "18:00-21:00",
-    name: "吳柏均D",
+    name: "吳柏均",
   },
 ];
 
@@ -142,21 +142,28 @@ export const toolRulesEn = [
   "Dust and Fire Protection: Follow fire safety and proper handling measures for tools that are flammable, explosive, or produce large amounts of dust.",
 ];
 
-export const adminTimetable = {
-  first: ["Max", "Max", "Max", "Max", "Max", "Max", "Max"],
-  second: ["Max", "Max", "Max", "Max", "Max", "Max", "Max"],
-  third: ["Max", "Max", "Max", "Max", "Max", "Max", "Max"],
-  last: ["Max", "Max", "Max", "Max", "Max", "Max", "Max"],
-};
+export const adminWorkSchedule = [
+  ["吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均"],
+  ["吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均"],
+  ["吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均"],
+  ["吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均", "吳柏均"],
+];
 
 export const week = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
+
+export const periods = [
+  "09:00-12:00",
+  "13:00-16:00 (A)",
+  "13:00-16:00 (B)",
+  "18:00-21:00",
 ];
 
 export const additionalNoteZh =

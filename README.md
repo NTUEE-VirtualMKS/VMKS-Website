@@ -32,7 +32,7 @@ docker-compose up -d
 
 ### Step 2 : Install dotenv & ts-node
 
-```
+```sh
 cd backend
 pnpm setup
 ```

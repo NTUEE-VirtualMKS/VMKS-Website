@@ -656,16 +656,6 @@ const Query = {
       .flat(); //making the returning array an array of machines without any empty arrays
   },
 
-  CurrentIntroduction: async () => {
-    const introductions = await prisma.introduction.findMany({
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
-    if (!introductions[0]) throw new Error("Introduction not found!");
-    return introductions[0];
-  },
-
   GetAuthorizedCode: async () => {
     const authorizedCode = await prisma.authorizedCode.findFirst({});
     if (!authorizedCode) throw new Error("Authorized code not found!");
@@ -1017,6 +1007,111 @@ const Query = {
     });
 
     return userBorrowMaterials;
+  },
+
+  // AdminSchedule
+  AllAdminSchedules: async () => {
+    const week = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+    const firstPeriodAdminSchedules = (
+      await prisma.adminSchedule.findMany({
+        where: {
+          period: "09:00-12:00",
+        },
+      })
+    ).sort(
+      (a, b) =>
+        week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase()),
+    );
+    const secondPeriodAdminSchedules = (
+      await prisma.adminSchedule.findMany({
+        where: {
+          period: "13:00-16:00 (A)",
+        },
+      })
+    ).sort(
+      (a, b) =>
+        week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase()),
+    );
+    const thirdPeriodAdminSchedules = (
+      await prisma.adminSchedule.findMany({
+        where: {
+          period: "13:00-16:00 (B)",
+        },
+      })
+    ).sort(
+      (a, b) =>
+        week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase()),
+    );
+    const lastPeriodAdminSchedules = (
+      await prisma.adminSchedule.findMany({
+        where: {
+          period: "18:00-21:00",
+        },
+      })
+    ).sort(
+      (a, b) =>
+        week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase()),
+    );
+    return [
+      firstPeriodAdminSchedules,
+      secondPeriodAdminSchedules,
+      thirdPeriodAdminSchedules,
+      lastPeriodAdminSchedules,
+    ];
+  },
+
+  GetAdminScheduleByDay: async (_parents, args: { day: string }, _context) => {
+    const day = args.day;
+    const adminSchedule = await prisma.adminSchedule.findMany({
+      where: {
+        day: day,
+      },
+    });
+
+    return adminSchedule.sort((a, b) => {
+      if (a.period < b.period) return -1;
+      if (a.period > b.period) return 1;
+      return 0;
+    });
+  },
+
+  GetAdminScheduleByPeriod: async (
+    _parents,
+    args: { period: string },
+    _context,
+  ) => {
+    const period = args.period;
+    const adminSchedule = await prisma.adminSchedule.findMany({
+      where: {
+        period: period,
+      },
+    });
+
+    // Define the order of the days of the week
+    const week = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+
+    // Sort the adminSchedule by the day of the week
+    return adminSchedule.sort((a, b) => {
+      return (
+        week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase())
+      );
+    });
   },
 };
 

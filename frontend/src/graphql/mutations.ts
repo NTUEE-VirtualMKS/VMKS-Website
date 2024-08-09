@@ -476,15 +476,6 @@ const USER_MACHINE_USAGE_UPDATE_MUTATION = gql(`
   }
 `);
 
-const INTRODUCTION_UPDATE_MUTATION = gql(`
-  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {
-    UpdateIntroduction(introductionInput: $introductionInput) {
-      id
-      content
-    }
-  }
-`);
-
 //update authorizedCode
 const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
   mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {
@@ -785,9 +776,9 @@ const EDIT_USER_PASSWORD_MUTATION = gql(`
   }
 `);
 
-const EDIT_USER_ROLE_MUTATION = gql(`
-  mutation EditUserRole($editUserRoleId: Int!, $authorizedCode: String!, $password: String!) {
-    EditUserRole(id: $editUserRoleId, authorizedCode: $authorizedCode, password: $password) {
+const PROMOTE_USER_MUTATION = gql(`
+  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {
+    PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {
       id
       name
       studentID
@@ -803,6 +794,61 @@ const EDIT_USER_ROLE_MUTATION = gql(`
       userBorrowToolIds
       materialLikeIds
       userBorrowMaterialIds
+    }
+  }
+`);
+
+const DEMOTE_USER_MUTATION = gql(`
+  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {
+    DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {
+      id
+      name
+      studentID
+      password
+      photoLink
+      language
+      threeDPId
+      laserCutAvailable
+      articlesId
+      isAdmin
+      isMinister
+      toolLikeIds
+      userBorrowToolIds
+      materialLikeIds
+      userBorrowMaterialIds
+    }
+  }
+`);
+
+const ADD_ADMIN_SCHEDULE_MUTATION = gql(`
+  mutation AddAdminSchedule($adminScheduleInput: AdminScheduleInput!) {
+    AddAdminSchedule(adminScheduleInput: $adminScheduleInput) {
+      id
+      admin
+      day
+      period
+    }
+  }
+`);
+
+const DELETE_ADMIN_SCHEDULE_MUTATION = gql(`
+  mutation DeleteAdminSchedule($deleteAdminScheduleId: Int!) {
+    DeleteAdminSchedule(id: $deleteAdminScheduleId) {
+      id
+      admin
+      day
+      period
+    }
+  }
+`);
+
+const EDIT_ADMIN_SCHEDULE_MUTATION = gql(`
+  mutation EditAdminSchedule($editAdminScheduleId: Int!, $name: String!) {
+    EditAdminSchedule(id: $editAdminScheduleId, name: $name) {
+      id
+      admin
+      day
+      period
     }
   }
 `);
@@ -831,12 +877,12 @@ export {
   DELETE_USER_MUTATION,
   EDIT_USER_MUTATION,
   EDIT_USER_PASSWORD_MUTATION,
-  EDIT_USER_ROLE_MUTATION,
+  PROMOTE_USER_MUTATION,
+  DEMOTE_USER_MUTATION,
   DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION,
   MATERIAL_USAGE_UPDATE_MUTATION,
   TOOL_USAGE_UPDATE_MUTATION,
   USER_MACHINE_USAGE_UPDATE_MUTATION,
-  INTRODUCTION_UPDATE_MUTATION,
   AUTHORIZED_CODE_UPDATE_MUTATION,
   ADD_TOOL_LIKE_MUTATION,
   DELETE_TOOL_LIKE_MUTATION,
@@ -852,4 +898,7 @@ export {
   EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION,
   EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
   SIGNUP_MUTATION,
+  ADD_ADMIN_SCHEDULE_MUTATION,
+  DELETE_ADMIN_SCHEDULE_MUTATION,
+  EDIT_ADMIN_SCHEDULE_MUTATION,
 };

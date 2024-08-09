@@ -14,13 +14,19 @@ import {
   websiteUserPrecautionsEn,
   toolAndEquipmentPrecautionsEn,
 } from "@/constants/index";
-import Timetable from "@/components/Timetable";
+import AdminSchedule from "@/components/AdminSchedule";
 import { Anchor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@apollo/client";
+import { ALL_ADMIN_SCHEDULES_QUERY } from "@/graphql";
+import { useToast } from "@/components/ui/use-toast";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import type { AdminScheduleType } from "@/shared/type";
 
 function IntroductionPage() {
   const { t, i18n } = useTranslation();
+  const { toast } = useToast();
   const language = i18n.language;
   const sessionA = useRef(null);
   const sessionB = useRef(null);
@@ -48,6 +54,16 @@ function IntroductionPage() {
   const textColor = (sessionId: string) =>
     sessionId === activeSession ? "text-white" : "text-gray-500";
 
+  const { data, loading, error } = useQuery(ALL_ADMIN_SCHEDULES_QUERY);
+  if (loading) {
+    return <LoaderSpinner />;
+  }
+  if (error) {
+    toast({ title: error.message, variant: "destructive" });
+  }
+  const adminSchedule =
+    (data?.AllAdminSchedules as AdminScheduleType[][]) || [];
+
   return (
     <>
       <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
@@ -63,7 +79,7 @@ function IntroductionPage() {
             onClick={() => scrollToSection(sessionB, "sessionB")}
             className={textColor("sessionB")}
           >
-            <a href="#timetable">{t("schedule")}</a>
+            <a href="#adminSchedule">{t("schedule")}</a>
           </li>
           <li
             onClick={() => scrollToSection(sessionC, "sessionC")}
@@ -73,7 +89,7 @@ function IntroductionPage() {
           </li>
         </ul>
       </div>
-      <div className="w-9/12 mx-auto mt-24 mb-8 text-white flex flex-col">
+      <div className="w-8/12 mx-auto mt-24 mb-8 text-white flex flex-col">
         <div>
           <h1 ref={sessionA} className="p-1">
             MKS {t("introduction")}
@@ -102,7 +118,7 @@ function IntroductionPage() {
           <h2 className="mt-5 flex items-center">
             <span>
               <a
-                href="#timetable"
+                href="#adminSchedule"
                 onClick={() => scrollToSection(sessionB, "sessionB")}
               >
                 <Anchor
@@ -113,8 +129,8 @@ function IntroductionPage() {
             </span>
             {t("schedule")}
           </h2>
-          <center className="mt-8 w-11/12 mx-auto">
-            <Timetable />
+          <center className="mt-8 w-full">
+            <AdminSchedule adminSchedule={adminSchedule} />
           </center>
           <h2 className="mt-5 flex items-center" ref={sessionC}>
             <span>

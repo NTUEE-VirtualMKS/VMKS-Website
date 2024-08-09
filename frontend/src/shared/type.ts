@@ -272,3 +272,11 @@ export type UserToolDataTableProps = {
   unborrowedData: UserBorrowToolType[];
   borrowingData: UserBorrowToolType[];
 };
+
+export type AdminScheduleType = {
+  __typename?: "AdminSchedule";
+  id: number;
+  admin: string;
+  day: string;
+  period: string;
+};

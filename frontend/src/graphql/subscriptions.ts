@@ -11,13 +11,4 @@ const ANNOUNCEMENT_CREATED_SUBSCRIPTION = gql(`
   }
 `);
 
-const INTRODUCTION_UPDATED_SUBSCRIPTION = gql(`
-  subscription IntroductionUpdated {
-    IntroductionUpdated {
-      id
-      content
-    }
-  }
-`);
-
-export { ANNOUNCEMENT_CREATED_SUBSCRIPTION, INTRODUCTION_UPDATED_SUBSCRIPTION };
+export { ANNOUNCEMENT_CREATED_SUBSCRIPTION };

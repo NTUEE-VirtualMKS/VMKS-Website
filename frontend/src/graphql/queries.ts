@@ -490,15 +490,6 @@ const GET_AUTHORIZED_CODE_QUERY = gql(`
   }
 `);
 
-const CURRENT_INTRODUCTION_QUERY = gql(`
-  query CurrentIntroduction {
-    CurrentIntroduction {
-      id
-      content
-    }
-  }
-`);
-
 const GET_TOOL_LIKES_QUERY = gql(`
   query GetToolLikes {
     GetToolLikes {
@@ -823,6 +814,39 @@ const LOGIN_QUERY = gql(`
   }
 `);
 
+const GET_ADMIN_SCHEDULE_BY_DAY_QUERY = gql(`
+  query GetAdminScheduleByDay($day: String!) {
+    GetAdminScheduleByDay(day: $day) {
+      id
+      admin
+      day
+      period
+    }
+  }
+`);
+
+const GET_ADMIN_SCHEDULE_BY_PERIOD_QUERY = gql(`
+  query GetAdminScheduleByPeriod($period: String!) {
+    GetAdminScheduleByPeriod(period: $period) {
+      id
+      admin
+      day
+      period
+    }
+  }
+`);
+
+const ALL_ADMIN_SCHEDULES_QUERY = gql(`
+  query AllAdminSchedules {
+    AllAdminSchedules {
+      id
+      admin
+      day
+      period
+    }
+  }
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -851,7 +875,6 @@ export {
   GET_TOOL_BY_ID_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
   GET_USER_BY_STUDENT_ID_QUERY,
-  CURRENT_INTRODUCTION_QUERY,
   GET_TOOL_LIKES_QUERY,
   GET_TOOL_LIKE_BY_ID_QUERY,
   GET_LIKED_TOOLS_BY_USER_ID_QUERY,
@@ -869,4 +892,7 @@ export {
   GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY,
   GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
   LOGIN_QUERY,
+  GET_ADMIN_SCHEDULE_BY_DAY_QUERY,
+  GET_ADMIN_SCHEDULE_BY_PERIOD_QUERY,
+  ALL_ADMIN_SCHEDULES_QUERY,
 };

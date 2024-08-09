@@ -1,24 +1,37 @@
 {
   "user": [
     {
-      "name": "Po-Chun Wu",
-      "studentID": "B11901000",
-      "password": "manager",
-      "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
-      "threeDPId": null,
+      "name": "陳秉緯",
+      "studentID": "B11901164",
+      "password": "12345678",
+      "photoLink": "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43",
+      "language": "zh",
       "laserCutAvailable": true,
       "articlesId": [],
-      "isAdmin": true
+      "isAdmin": true,
+      "isMinister": true
     },
     {
-      "name": "Bo-Rui Chen",
-      "studentID": "B10901000",
-      "password": "user",
+      "name": "吳柏均",
+      "studentID": "B11901000",
+      "password": "admin-admin",
       "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
-      "threeDPId": null,
+      "language": "zh",
+      "laserCutAvailable": true,
+      "articlesId": [],
+      "isAdmin": true,
+      "isMinister": false
+    },
+    {
+      "name": "陳柏睿",
+      "studentID": "B10902000",
+      "password": "user-user",
+      "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
+      "language": "en",
       "laserCutAvailable": false,
       "articlesId": [],
-      "isAdmin": false
+      "isAdmin": false,
+      "isMinister": false
     }
   ]
 }

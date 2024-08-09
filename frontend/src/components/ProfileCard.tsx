@@ -1,7 +1,7 @@
 import type { ProfileCardProps } from "@/shared/type";
 import LoaderSpinner from "./LoaderSpinner";
 import { useEffect, useRef, useState } from "react";
-import { EDIT_USER_MUTATION, EDIT_USER_ROLE_MUTATION } from "@/graphql";
+import { EDIT_USER_MUTATION, PROMOTE_USER_MUTATION } from "@/graphql";
 import { useMutation } from "@apollo/client";
 import { useToast } from "./ui/use-toast";
 import {
@@ -51,19 +51,17 @@ function ProfileCard({
   const [imgUrl, setImgUrl] = useState(photoLink);
   const [userLanguage, setUserLanguage] = useState(language);
   const [canUseLaser, _setCanUseLaser] = useState(laserCutAvailable);
-  const [admin, _setAdmin] = useState(isAdmin);
+  const [admin, setAdmin] = useState(isAdmin);
   const [minister, _setMinister] = useState(isMinister);
   const [visible, setVisible] = useState(false);
   const [authorizedCode, setAuthorizedCode] = useState("");
   const [editUser, { loading, error }] = useMutation(EDIT_USER_MUTATION);
   const [
-    editUserRole,
-    { loading: editUserRoleLoading, error: editUserRoleError },
-  ] = useMutation(EDIT_USER_ROLE_MUTATION);
-  const [
-    enterPasswordForEdittingUserRole,
-    setEnterPasswordForEdittingUserRole,
-  ] = useState(false);
+    promoteUser,
+    { loading: promoteUserLoading, error: promoteUserError },
+  ] = useMutation(PROMOTE_USER_MUTATION);
+  const [enterPasswordForPromotingUser, setEnterPasswordForPromotingUser] =
+    useState(false);
   const [
     enterPasswordForEdittingUserProfile,
     setEnterPasswordForEdittingUserProfile,
@@ -102,24 +100,28 @@ function ProfileCard({
     setPwd("");
   };
 
-  const handleEditUserRole = async () => {
+  const handleUserPromotion = async () => {
     try {
-      setEnterPasswordForEdittingUserRole(false);
-      await editUserRole({
+      setEnterPasswordForPromotingUser(false);
+      await promoteUser({
         variables: {
-          editUserRoleId: id,
-          authorizedCode: authorizedCode,
-          password: pwd,
+          promoteUserId: id,
+          promoteUserInput: {
+            authorizedCode: authorizedCode,
+            password: pwd,
+            isAdmin: admin,
+          },
         },
       });
-      if (editUserRoleLoading) return <LoaderSpinner />;
-      if (editUserRoleError) {
+      if (promoteUserLoading) return <LoaderSpinner />;
+      if (promoteUserError) {
         toast({
-          title: `${editUserRoleError.message}`,
+          title: `${promoteUserError.message}`,
           variant: "destructive",
         });
       }
       toast({ title: "User role updated successfully!" });
+      setAdmin(true);
       login({ studentId, password: pwd, redirect: false });
     } catch (error) {
       toast({ title: `${error}`.split(":")[1], variant: "destructive" });
@@ -131,13 +133,16 @@ function ProfileCard({
 
   const handleCancel = () => {
     setVisible(false);
+    setPwd("");
     const storedUsername = localStorage.getItem("username");
     const storedImgUrl = localStorage.getItem("imgUrl");
     const storedUserLanguage = localStorage.getItem("language");
-    if (storedUsername && storedImgUrl && storedUserLanguage) {
+    const storedAdmin = localStorage.getItem("admin");
+    if (storedUsername && storedImgUrl && storedUserLanguage && storedAdmin) {
       setUsername(JSON.parse(storedUsername));
       setImgUrl(JSON.parse(storedImgUrl));
       setUserLanguage(storedUserLanguage);
+      setAdmin(JSON.parse(storedAdmin));
     }
   };
 
@@ -145,11 +150,12 @@ function ProfileCard({
     const storedUsername = localStorage.getItem("username");
     const storedImgUrl = localStorage.getItem("imgUrl");
     const storedUserLanguage = localStorage.getItem("language");
-    console.log(storedUsername, storedImgUrl, storedUserLanguage);
-    if (storedUsername && storedImgUrl && storedUserLanguage) {
+    const storedAdmin = localStorage.getItem("admin");
+    if (storedUsername && storedImgUrl && storedUserLanguage && storedAdmin) {
       setUsername(JSON.parse(storedUsername));
       setImgUrl(JSON.parse(storedImgUrl));
       setUserLanguage(storedUserLanguage);
+      setAdmin(JSON.parse(storedAdmin));
     }
   }, []);
 
@@ -263,9 +269,6 @@ function ProfileCard({
                   {canUseLaser ? "Yes" : "No"}
                 </span>
               </p>
-              <p className="text-lg text-white">
-                {t("languages").split("s")[0]}: {userLanguage}
-              </p>
             </>
             {!user?.isAdmin && (
               <div className="flex flex-row mt-2 items-center">
@@ -289,7 +292,7 @@ function ProfileCard({
                 />
                 <Button
                   className="ml-2 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
-                  onClick={() => setEnterPasswordForEdittingUserRole(true)}
+                  onClick={() => setEnterPasswordForPromotingUser(true)}
                 >
                   {t("submit")}
                 </Button>
@@ -306,9 +309,9 @@ function ProfileCard({
         setPwd={setPwd}
       />
       <PasswordInputDialog
-        visible={enterPasswordForEdittingUserRole}
-        setVisible={setEnterPasswordForEdittingUserRole}
-        handleFunction={handleEditUserRole}
+        visible={enterPasswordForPromotingUser}
+        setVisible={setEnterPasswordForPromotingUser}
+        handleFunction={handleUserPromotion}
         pwd={pwd}
         setPwd={setPwd}
       />

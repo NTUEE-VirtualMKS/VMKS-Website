@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { PasswordInput } from "@/components/PasswordInput";
 import { Label } from "./ui/label";
 import { useTranslation } from "react-i18next";
-import type {PasswordInputDialogProps} from '@/shared/type';
+import type { PasswordInputDialogProps } from "@/shared/type";
 
 function PasswordInputDialog({
   visible,
@@ -19,6 +19,12 @@ function PasswordInputDialog({
   setPwd,
 }: PasswordInputDialogProps) {
   const { t } = useTranslation();
+
+  const handleCancel = () => {
+    setPwd("");
+    setVisible(false);
+  };
+
   return (
     <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
       <DialogContent className="w-11/12 sm:w-11/12 text-white bg-black">
@@ -51,7 +57,7 @@ function PasswordInputDialog({
             {t("submit")}
           </Button>
           <Button
-            onClick={() => setVisible(false)}
+            onClick={handleCancel}
             className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
           >
             {t("cancel")}

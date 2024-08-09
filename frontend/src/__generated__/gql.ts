@@ -39,7 +39,6 @@ const documents = {
     "\n  mutation MaterialUsageUpdate($materialUsageUpdateId: Int!, $materialUsageUpdateInput: MaterialUsageUpdateInput!) {\n    MaterialUsageUpdate(id: $materialUsageUpdateId, materialUsageUpdateInput: $materialUsageUpdateInput) {\n      id\n      name\n      partName\n      category\n      valuable\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      fee\n      remain\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.MaterialUsageUpdateDocument,
     "\n  mutation ToolUsageUpdate($toolUsageUpdateId: Int!, $toolUsageUpdateInput: ToolUsageUpdateInput!) {\n    ToolUsageUpdate(id: $toolUsageUpdateId, toolUsageUpdateInput: $toolUsageUpdateInput) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n      toolLikeIds\n      userBorrowToolIds\n    }\n  }\n": types.ToolUsageUpdateDocument,
     "\n  mutation UserMachineUsageUpdate($userMachineUsageUpdateId: Int!, $userMachineUpdateInput: UserMachineUpdateInput!) {\n    UserMachineUsageUpdate(id: $userMachineUsageUpdateId, userMachineUpdateInput: $userMachineUpdateInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      language\n    }\n  }\n": types.UserMachineUsageUpdateDocument,
-    "\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n": types.UpdateIntroductionDocument,
     "\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n": types.UpdateAuthorizedCodeDocument,
     "\n  mutation AddToolLike($toolLikeInput: toolLikeInput!) {\n    AddToolLike(toolLikeInput: $toolLikeInput) {\n      id\n      userId\n      toolId\n    }\n  }\n": types.AddToolLikeDocument,
     "\n  mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {\n    DeleteToolLike(toolLikeInput: $toolLikeInput) {\n      id\n      userId\n      toolId\n    }\n  }\n": types.DeleteToolLikeDocument,
@@ -56,7 +55,11 @@ const documents = {
     "\n  mutation EditUserBorrowMaterialStatus($editUserBorrowMaterialStatusId: Int!, $status: String!) {\n    EditUserBorrowMaterialStatus(id: $editUserBorrowMaterialStatusId, status: $status) {\n      id\n      userId\n      materialId\n      borrower\n      studentId\n      figure\n      name\n      partName\n      category\n      remain\n      position\n      quantity\n      status\n      borrowDate\n      returnDate\n    }\n  }\n": types.EditUserBorrowMaterialStatusDocument,
     "\n  mutation SignUp($signUpInput: signUpInput!) {\n    SignUp(signUpInput: $signUpInput) {\n      user {\n        id\n        name\n        studentID\n        password\n        photoLink\n        language\n        threeDPId\n        laserCutAvailable\n        articlesId\n        isAdmin\n        isMinister\n        toolLikeIds\n        userBorrowToolIds\n        materialLikeIds\n        userBorrowMaterialIds\n      }\n      token\n    }\n  }\n": types.SignUpDocument,
     "\n  mutation EditUserPassword($editUserPasswordId: Int!, $userPasswordEditInput: UserPasswordEditInput!) {\n    EditUserPassword(id: $editUserPasswordId, userPasswordEditInput: $userPasswordEditInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.EditUserPasswordDocument,
-    "\n  mutation EditUserRole($editUserRoleId: Int!, $authorizedCode: String!, $password: String!) {\n    EditUserRole(id: $editUserRoleId, authorizedCode: $authorizedCode, password: $password) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.EditUserRoleDocument,
+    "\n  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {\n    PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.PromoteUserDocument,
+    "\n  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {\n    DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.DemoteUserDocument,
+    "\n  mutation AddAdminSchedule($adminScheduleInput: AdminScheduleInput!) {\n    AddAdminSchedule(adminScheduleInput: $adminScheduleInput) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.AddAdminScheduleDocument,
+    "\n  mutation DeleteAdminSchedule($deleteAdminScheduleId: Int!) {\n    DeleteAdminSchedule(id: $deleteAdminScheduleId) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.DeleteAdminScheduleDocument,
+    "\n  mutation EditAdminSchedule($editAdminScheduleId: Int!, $name: String!) {\n    EditAdminSchedule(id: $editAdminScheduleId, name: $name) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.EditAdminScheduleDocument,
     "\n  query AllAnnouncements {\n    AllAnnouncements {\n      id\n      title\n      date\n      content\n    }\n  }\n": types.AllAnnouncementsDocument,
     "\n  query AllArticles {\n    AllArticles {\n      id\n      writerId\n      description\n      imageURL\n      time\n      title\n      headline\n      content\n      userpic\n    }\n  }\n": types.AllArticlesDocument,
     "\n  query AllDisposableMaterials {\n    AllDisposableMaterials {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      fee\n      remain\n    }\n  }\n": types.AllDisposableMaterialsDocument,
@@ -84,7 +87,6 @@ const documents = {
     "\n  query SearchUserByName($name: String!) {\n    SearchUserByName(name: $name) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.SearchUserByNameDocument,
     "\n  query GetUserByStudentID($studentId: String!) {\n    GetUserByStudentID(studentID: $studentId) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.GetUserByStudentIdDocument,
     "\n  query GetAuthorizedCode {\n    GetAuthorizedCode {\n      id\n      codeList\n      updatedAt\n    }\n  }\n": types.GetAuthorizedCodeDocument,
-    "\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n": types.CurrentIntroductionDocument,
     "\n  query GetToolLikes {\n    GetToolLikes {\n      id\n      userId\n      toolId\n    }\n  }\n": types.GetToolLikesDocument,
     "\n  query GetToolLikeById($getToolLikeByIdId: Int!) {\n    GetToolLikeById(id: $getToolLikeByIdId) {\n      id\n      userId\n      toolId\n    }\n  }\n": types.GetToolLikeByIdDocument,
     "\n  query GetLikedToolsByUserId($userId: Int!) {\n    GetLikedToolsByUserId(userId: $userId) {\n      id\n      name\n      partName\n      category\n      position\n      description\n      photoLink\n      usage\n      tutorialLink\n      remain\n      toolLikeIds\n      userBorrowToolIds\n    }\n  }\n": types.GetLikedToolsByUserIdDocument,
@@ -102,8 +104,10 @@ const documents = {
     "\n  query GetUserBorrowMaterialsByUserId($userId: Int!) {\n    GetUserBorrowMaterialsByUserId(userId: $userId) {\n      id\n      userId\n      materialId\n      borrower\n      studentId\n      figure\n      name\n      partName\n      category\n      remain\n      position\n      quantity\n      status\n      borrowDate\n      returnDate\n    }\n  }\n": types.GetUserBorrowMaterialsByUserIdDocument,
     "\n  query GetUserBorrowMaterialsByStatusAndUserId($userId: Int!, $status: [String]!) {\n    GetUserBorrowMaterialsByStatusAndUserId(userId: $userId, status: $status) {\n      id\n      userId\n      materialId\n      borrower\n      studentId\n      figure\n      name\n      partName\n      category\n      remain\n      position\n      quantity\n      status\n      borrowDate\n      returnDate\n    }\n  }\n": types.GetUserBorrowMaterialsByStatusAndUserIdDocument,
     "\n  query LogIn($logInInput: logInInput!) {\n    LogIn(logInInput: $logInInput) {\n      user {\n        id\n        name\n        studentID\n        password\n        photoLink\n        language\n        threeDPId\n        laserCutAvailable\n        articlesId\n        isAdmin\n        isMinister\n        toolLikeIds\n        userBorrowToolIds\n        materialLikeIds\n        userBorrowMaterialIds\n      }\n      token\n    }\n  }\n": types.LogInDocument,
+    "\n  query GetAdminScheduleByDay($day: String!) {\n    GetAdminScheduleByDay(day: $day) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.GetAdminScheduleByDayDocument,
+    "\n  query GetAdminScheduleByPeriod($period: String!) {\n    GetAdminScheduleByPeriod(period: $period) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.GetAdminScheduleByPeriodDocument,
+    "\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.AllAdminSchedulesDocument,
     "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n": types.AnnouncementCreatedDocument,
-    "\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n": types.IntroductionUpdatedDocument,
 };
 
 /**
@@ -227,10 +231,6 @@ export function gql(source: "\n  mutation UserMachineUsageUpdate($userMachineUsa
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateIntroduction($introductionInput: IntroductionInput!) {\n    UpdateIntroduction(introductionInput: $introductionInput) {\n      id\n      content\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function gql(source: "\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateAuthorizedCode($authorizedCodeInput: AuthorizedCodeInput!) {\n    UpdateAuthorizedCode(authorizedCodeInput: $authorizedCodeInput) {\n      id\n      codeList\n      updatedAt\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -295,7 +295,23 @@ export function gql(source: "\n  mutation EditUserPassword($editUserPasswordId: 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation EditUserRole($editUserRoleId: Int!, $authorizedCode: String!, $password: String!) {\n    EditUserRole(id: $editUserRoleId, authorizedCode: $authorizedCode, password: $password) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"): (typeof documents)["\n  mutation EditUserRole($editUserRoleId: Int!, $authorizedCode: String!, $password: String!) {\n    EditUserRole(id: $editUserRoleId, authorizedCode: $authorizedCode, password: $password) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"];
+export function gql(source: "\n  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {\n    PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"): (typeof documents)["\n  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {\n    PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {\n    DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"): (typeof documents)["\n  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {\n    DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation AddAdminSchedule($adminScheduleInput: AdminScheduleInput!) {\n    AddAdminSchedule(adminScheduleInput: $adminScheduleInput) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  mutation AddAdminSchedule($adminScheduleInput: AdminScheduleInput!) {\n    AddAdminSchedule(adminScheduleInput: $adminScheduleInput) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DeleteAdminSchedule($deleteAdminScheduleId: Int!) {\n    DeleteAdminSchedule(id: $deleteAdminScheduleId) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteAdminSchedule($deleteAdminScheduleId: Int!) {\n    DeleteAdminSchedule(id: $deleteAdminScheduleId) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation EditAdminSchedule($editAdminScheduleId: Int!, $name: String!) {\n    EditAdminSchedule(id: $editAdminScheduleId, name: $name) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  mutation EditAdminSchedule($editAdminScheduleId: Int!, $name: String!) {\n    EditAdminSchedule(id: $editAdminScheduleId, name: $name) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -407,10 +423,6 @@ export function gql(source: "\n  query GetAuthorizedCode {\n    GetAuthorizedCod
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  query CurrentIntroduction {\n    CurrentIntroduction {\n      id\n      content\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function gql(source: "\n  query GetToolLikes {\n    GetToolLikes {\n      id\n      userId\n      toolId\n    }\n  }\n"): (typeof documents)["\n  query GetToolLikes {\n    GetToolLikes {\n      id\n      userId\n      toolId\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -479,11 +491,19 @@ export function gql(source: "\n  query LogIn($logInInput: logInInput!) {\n    Lo
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"];
+export function gql(source: "\n  query GetAdminScheduleByDay($day: String!) {\n    GetAdminScheduleByDay(day: $day) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  query GetAdminScheduleByDay($day: String!) {\n    GetAdminScheduleByDay(day: $day) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription IntroductionUpdated {\n    IntroductionUpdated {\n      id\n      content\n    }\n  }\n"];
+export function gql(source: "\n  query GetAdminScheduleByPeriod($period: String!) {\n    GetAdminScheduleByPeriod(period: $period) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  query GetAdminScheduleByPeriod($period: String!) {\n    GetAdminScheduleByPeriod(period: $period) {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,5 +1,5 @@
 import HomePageAnnouncement from "@/components/HomepageComponents/HomePageAnnouncement";
-import HomePageTimetable from "@/components/HomepageComponents/HomePageTimetable";
+import HomePageSchedule from "@/components/HomepageComponents/HomePageSchedule";
 import HomePageForum from "@/components/HomepageComponents/HomePageForum";
 import HomePageMaterialBox from "@/components/HomepageComponents/HomePageMaterialBox";
 import { useWindow } from "@/contexts/WindowContext";
@@ -56,7 +56,7 @@ function HomePage() {
                   </div>
                 </div>
               )}
-              <HomePageTimetable />
+              <HomePageSchedule />
             </div>
           </div>
           <HomePageMaterialBox />
