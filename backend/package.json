@@ -5,10 +5,10 @@
   "scripts": {
     "setup": "npm install -g dotenv-cli && npm install ts-node",
     "generate": "npx prisma generate",
-    "migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
-    "studio": "dotenv -e .env.development -- npx prisma studio",
-    "start": "dotenv -e .env.development -- npx tsx ./src/index.ts",
-    "initData": "cd utils && dotenv -e ../.env.development -- npx tsx ./initDB.ts",
+    "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
+    "studio": "dotenv -e .env -- npx prisma studio",
+    "start": "dotenv -e .env -- npx tsx ./src/index.ts",
+    "initData": "cd utils && dotenv -e ../.env -- npx tsx ./initDB.ts",
     "format": "pnpm exec prettier . --write",
     "lint": "pnpm eslint ."
   },
@@ -23,7 +23,9 @@
     "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.4.8",
+    "@types/nodemailer": "^6.4.15",
     "@types/ws": "^8.5.5",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
@@ -48,6 +50,7 @@
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.14.0",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.14",
     "nodemon": "^2.0.22",
     "prettier-plugin-prisma": "^5.0.0",
     "ws": "^8.13.0"

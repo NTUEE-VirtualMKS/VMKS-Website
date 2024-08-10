@@ -27,7 +27,8 @@ import {
 } from "@/components/ui/tooltip";
 import { useUser } from "@/contexts/UserContext";
 import PasswordInputDialog from "./PasswordInputDialog";
-import ImageUploader from "@/components/ImageUploader";
+import UserAvatarUploader from "@/components/UserAvatarUploader";
+import StudentIDCardUploadDialog from "./StudentIDCardUploadDialog";
 
 function ProfileCard({
   id,
@@ -39,10 +40,10 @@ function ProfileCard({
   isAdmin,
   isMinister,
 }: ProfileCardProps) {
+  if (!photoLink) return <LoaderSpinner />;
   const { toast } = useToast();
   const { t } = useTranslation();
   const { user, login } = useUser();
-  if (!photoLink) return <LoaderSpinner />;
   const { windowWidth } = useWindow();
   const imageRef = useRef<HTMLInputElement>(null);
   const [username, setUsername] = useState(name);
@@ -226,7 +227,7 @@ function ProfileCard({
                       />
                     </div>
                     <p className="text-white text-base">{t("avatar")}</p>
-                    <ImageUploader
+                    <UserAvatarUploader
                       imgUrl={imgUrl}
                       setImgUrl={setImgUrl}
                       imageRef={imageRef}
@@ -269,6 +270,7 @@ function ProfileCard({
                   {canUseLaser ? "Yes" : "No"}
                 </span>
               </p>
+              <StudentIDCardUploadDialog />
             </>
             {!user?.isAdmin && (
               <div className="flex flex-row mt-2 items-center">

@@ -12,6 +12,7 @@ import type { UserType, SignupProps, LoginProps } from "@/shared/type.ts";
 import { z } from "zod";
 import { validDepartmentCodes } from "@/constants/index";
 import { jwtDecode } from "jwt-decode";
+import { generateLoginInfo } from "@/lib/utils";
 
 const studentIdSchema = z.string().refine((studentId) => {
   return (
@@ -117,6 +118,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const defaultPhotoUrl =
       "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
     try {
+      const { browserName, osName, time, timeZoneShort, date } =
+        generateLoginInfo();
       signupSchema.parse({ name, studentId, password });
       await createUser({
         variables: {
@@ -125,10 +128,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             studentID: studentId.toUpperCase(),
             password,
             photoLink: defaultPhotoUrl,
-            language: "en",
+            language: localStorage.getItem("language") || "en",
             isAdmin: false,
             isMinister: false,
             laserCutAvailable: false,
+            browser: browserName,
+            os: osName,
+            time,
+            timeZone: timeZoneShort,
+            date,
           },
         },
       });

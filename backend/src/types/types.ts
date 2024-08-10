@@ -89,6 +89,11 @@ interface SignUpInput {
   laserCutAvailable: boolean;
   isAdmin: boolean;
   isMinister: boolean;
+  browser: string;
+  os: string;
+  time: string;
+  timeZone: string;
+  date: string;
 }
 
 interface LogInInput {

@@ -250,12 +250,12 @@ const typeDefs = `#graphql
     userBorrowMaterialIds: [Int]
   }
 
-  type signUpRet {
+  type SignUpRet {
     user: User!
     token: String!
   }
 
-  input signUpInput {
+  input SignUpInput {
     name: String!
     studentID: String!
     password: String!
@@ -265,14 +265,19 @@ const typeDefs = `#graphql
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
     isMinister: Boolean!
+    browser: String!
+    os: String!
+    time: String!
+    timeZone: String!
+    date: String!
   }
   
-  type logInRet {
+  type LogInRet {
     user: User!
     token: String!
   }
 
-  input logInInput {
+  input LogInInput {
     studentID: String!
     password: String!
   }
@@ -305,7 +310,7 @@ const typeDefs = `#graphql
     toolId: Int!,
   }
 
-  input toolLikeInput {
+  input ToolLikeInput {
     userId: Int!,
     toolId: Int!,
   }
@@ -328,7 +333,7 @@ const typeDefs = `#graphql
     returnDate: String!,
   }
 
-  input userBorrowToolInput {
+  input UserBorrowToolInput {
     userId: Int!,
     toolId: Int!,
     quantity: Int!,
@@ -340,7 +345,7 @@ const typeDefs = `#graphql
     materialId: Int!,
   }
 
-  input materialLikeInput {
+  input MaterialLikeInput {
     userId: Int!,
     materialId: Int!,
   }
@@ -363,7 +368,7 @@ const typeDefs = `#graphql
     returnDate: String!,
   }
 
-  input userBorrowMaterialInput {
+  input UserBorrowMaterialInput {
     userId: Int!,
     materialId: Int!,
     quantity: Int!,
@@ -423,7 +428,7 @@ const typeDefs = `#graphql
     AllArticles: [Article]
     SearchMachineByName(input: String!): [Machine]
     GetAuthorizedCode: AuthorizedCode
-    LogIn(logInInput: logInInput!): logInRet
+    LogIn(logInInput: LogInInput!): LogInRet
     GetToolLikes: [ToolLike]
     GetToolLikeById(id: Int!): ToolLike
     GetLikedToolsByUserId(userId: Int!): [Tool]
@@ -476,19 +481,19 @@ const typeDefs = `#graphql
     UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
-    SignUp(signUpInput: signUpInput!): signUpRet
-    AddToolLike(toolLikeInput: toolLikeInput!): ToolLike
-    DeleteToolLike(toolLikeInput: toolLikeInput!): ToolLike
+    SignUp(signUpInput: SignUpInput!): SignUpRet
+    AddToolLike(toolLikeInput: ToolLikeInput!): ToolLike
+    DeleteToolLike(toolLikeInput: ToolLikeInput!): ToolLike
     EditUserLanguage(id: Int!, language: String!): User
-    AddUserBorrowTool(userBorrowToolInput: userBorrowToolInput!): UserBorrowTool
+    AddUserBorrowTool(userBorrowToolInput: UserBorrowToolInput!): UserBorrowTool
     DeleteUserBorrowTool(id: Int!): UserBorrowTool
-    EditUserBorrowToolQuantity(id: Int!, userBorrowToolInput: userBorrowToolInput!): UserBorrowTool
+    EditUserBorrowToolQuantity(id: Int!, userBorrowToolInput: UserBorrowToolInput!): UserBorrowTool
     EditUserBorrowToolStatus(id: Int!, status: String!): UserBorrowTool
-    AddMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
-    DeleteMaterialLike(materialLikeInput: materialLikeInput!): MaterialLike
-    AddUserBorrowMaterial(userBorrowMaterialInput: userBorrowMaterialInput!): UserBorrowMaterial
+    AddMaterialLike(materialLikeInput: MaterialLikeInput!): MaterialLike
+    DeleteMaterialLike(materialLikeInput: MaterialLikeInput!): MaterialLike
+    AddUserBorrowMaterial(userBorrowMaterialInput: UserBorrowMaterialInput!): UserBorrowMaterial
     DeleteUserBorrowMaterial(id: Int!): UserBorrowMaterial
-    EditUserBorrowMaterialQuantity(id: Int!, userBorrowMaterialInput: userBorrowMaterialInput!): UserBorrowMaterial
+    EditUserBorrowMaterialQuantity(id: Int!, userBorrowMaterialInput: UserBorrowMaterialInput!): UserBorrowMaterial
     EditUserBorrowMaterialStatus(id: Int!, status: String!): UserBorrowMaterial
     AddAdminSchedule(adminScheduleInput: AdminScheduleInput!): AdminSchedule
     DeleteAdminSchedule(id: Int!): AdminSchedule
