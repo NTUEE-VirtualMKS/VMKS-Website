@@ -6,9 +6,13 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useToast } from "./ui/use-toast";
 import { Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { ImageUploaderProps } from "@/shared/type";
+import { UserAvatarUploaderProps } from "@/shared/type";
 
-function ImageUploader({ imgUrl, setImgUrl, imageRef }: ImageUploaderProps) {
+function UserAvatarUploader({
+  imgUrl,
+  setImgUrl,
+  imageRef,
+}: UserAvatarUploaderProps) {
   const { t } = useTranslation();
   const [isImageLoading, setIsImageLoading] = useState(false);
   const { toast } = useToast();
@@ -88,4 +92,4 @@ function ImageUploader({ imgUrl, setImgUrl, imageRef }: ImageUploaderProps) {
   );
 }
 
-export default ImageUploader;
+export default UserAvatarUploader;

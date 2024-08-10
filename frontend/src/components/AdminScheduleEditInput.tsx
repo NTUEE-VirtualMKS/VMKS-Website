@@ -29,23 +29,36 @@ function AdminScheduleEditInput({
   );
 
   const handleEdit = () => {
-    try {
-      editAdminSchedule({
-        variables: {
-          editAdminScheduleId: adminSchedule.id,
-          name: admin,
-        },
-      });
-      if (loading) {
-        return <LoaderSpinner />;
+    if (admin !== adminSchedule.admin && admin !== "") {
+      try {
+        editAdminSchedule({
+          variables: {
+            editAdminScheduleId: adminSchedule.id,
+            name: admin,
+          },
+        });
+        if (loading) {
+          return <LoaderSpinner />;
+        }
+        if (error) {
+          toast({ title: error.message, variant: "destructive" });
+        }
+        toast({ title: "Admin's name updated successfully!" });
+      } catch (error) {
+        toast({ title: `${error}`.split(":")[1], variant: "destructive" });
       }
-      if (error) {
-        toast({ title: error.message, variant: "destructive" });
-      }
-      toast({ title: "Admin's name updated successfully!" });
+    }
+    if (admin === "") {
+      setAdmin(adminSchedule.admin);
+    }
+    setIsEdit(false);
+  };
+
+  const handleClick = () => {
+    if (user?.isMinister) {
+      setIsEdit(true);
+    } else {
       setIsEdit(false);
-    } catch (error) {
-      toast({ title: `${error}`.split(":")[1], variant: "destructive" });
     }
   };
 
@@ -67,7 +80,7 @@ function AdminScheduleEditInput({
         user?.isMinister &&
           "cursor-pointer transform active:scale-95 transition-transform duration-200"
       )}
-      onClick={() => setIsEdit(true)}
+      onClick={handleClick}
     >
       {admin}
     </TableCell>

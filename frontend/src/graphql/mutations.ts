@@ -489,7 +489,7 @@ const AUTHORIZED_CODE_UPDATE_MUTATION = gql(`
 
 // tool like
 const ADD_TOOL_LIKE_MUTATION = gql(`
-  mutation AddToolLike($toolLikeInput: toolLikeInput!) {
+  mutation AddToolLike($toolLikeInput: ToolLikeInput!) {
     AddToolLike(toolLikeInput: $toolLikeInput) {
       id
       userId
@@ -499,7 +499,7 @@ const ADD_TOOL_LIKE_MUTATION = gql(`
 `);
 
 const DELETE_TOOL_LIKE_MUTATION = gql(`
-  mutation DeleteToolLike($toolLikeInput: toolLikeInput!) {
+  mutation DeleteToolLike($toolLikeInput: ToolLikeInput!) {
     DeleteToolLike(toolLikeInput: $toolLikeInput) {
       id
       userId
@@ -532,7 +532,7 @@ const EDIT_USER_LANGUAGE_MUTATION = gql(`
 
 // user borrow tool
 const ADD_USER_BORROW_TOOL_MUTATION = gql(`
-  mutation AddUserBorrowTool($userBorrowToolInput: userBorrowToolInput!) {
+  mutation AddUserBorrowTool($userBorrowToolInput: UserBorrowToolInput!) {
     AddUserBorrowTool(userBorrowToolInput: $userBorrowToolInput) {
       id
       userId
@@ -576,7 +576,7 @@ const DELETE_USER_BORROW_TOOL_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION = gql(`
-  mutation EditUserBorrowToolQuantity($editUserBorrowToolQuantityId: Int!, $userBorrowToolInput: userBorrowToolInput!) {
+  mutation EditUserBorrowToolQuantity($editUserBorrowToolQuantityId: Int!, $userBorrowToolInput: UserBorrowToolInput!) {
     EditUserBorrowToolQuantity(id: $editUserBorrowToolQuantityId, userBorrowToolInput: $userBorrowToolInput) {
       id
       userId
@@ -621,7 +621,7 @@ const EDIT_USER_BORROW_TOOL_STATUS_MUTATION = gql(`
 
 // material like
 const ADD_MATERIAL_LIKE_MUTATION = gql(`
-  mutation AddMaterialLike($materialLikeInput: materialLikeInput!) {
+  mutation AddMaterialLike($materialLikeInput: MaterialLikeInput!) {
     AddMaterialLike(materialLikeInput: $materialLikeInput) {
       id
       userId
@@ -631,7 +631,7 @@ const ADD_MATERIAL_LIKE_MUTATION = gql(`
 `);
 
 const DELETE_MATERIAL_LIKE_MUTATION = gql(`
-  mutation DeleteMaterialLike($materialLikeInput: materialLikeInput!) {
+  mutation DeleteMaterialLike($materialLikeInput: MaterialLikeInput!) {
     DeleteMaterialLike(materialLikeInput: $materialLikeInput) {
       id
       userId
@@ -642,7 +642,7 @@ const DELETE_MATERIAL_LIKE_MUTATION = gql(`
 
 // user borrow material
 const ADD_USER_BORROW_MATERIAL_MUTATION = gql(`
-  mutation AddUserBorrowMaterial($userBorrowMaterialInput: userBorrowMaterialInput!) {
+  mutation AddUserBorrowMaterial($userBorrowMaterialInput: UserBorrowMaterialInput!) {
     AddUserBorrowMaterial(userBorrowMaterialInput: $userBorrowMaterialInput) {
       id
       userId
@@ -686,7 +686,7 @@ const DELETE_USER_BORROW_MATERIAL_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION = gql(`
-  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: Int!, $userBorrowMaterialInput: userBorrowMaterialInput!) {
+  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: Int!, $userBorrowMaterialInput: UserBorrowMaterialInput!) {
     EditUserBorrowMaterialQuantity(id: $editUserBorrowMaterialQuantityId, userBorrowMaterialInput: $userBorrowMaterialInput) {
       id
       userId
@@ -730,7 +730,7 @@ const EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION = gql(`
 `);
 
 const SIGNUP_MUTATION = gql(`
-  mutation SignUp($signUpInput: signUpInput!) {
+  mutation SignUp($signUpInput: SignUpInput!) {
     SignUp(signUpInput: $signUpInput) {
       user {
         id

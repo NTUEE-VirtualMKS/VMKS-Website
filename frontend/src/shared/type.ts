@@ -231,7 +231,7 @@ export type UserBorrowMaterialType = {
   returnDate: string;
 };
 
-export type ImageUploaderProps = {
+export type UserAvatarUploaderProps = {
   imgUrl: string;
   setImgUrl: (imgUrl: string) => void;
   imageRef: RefObject<HTMLInputElement>;

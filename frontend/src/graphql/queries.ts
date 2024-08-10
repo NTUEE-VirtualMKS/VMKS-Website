@@ -790,7 +790,7 @@ const GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY = gql(`
 `);
 
 const LOGIN_QUERY = gql(`
-  query LogIn($logInInput: logInInput!) {
+  query LogIn($logInInput: LogInInput!) {
     LogIn(logInInput: $logInInput) {
       user {
         id
