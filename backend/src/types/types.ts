@@ -89,6 +89,10 @@ interface SignUpInput {
   laserCutAvailable: boolean;
   isAdmin: boolean;
   isMinister: boolean;
+}
+
+interface SignupAuthCodeInput {
+  studentID: string;
   browser: string;
   os: string;
   time: string;
@@ -99,6 +103,12 @@ interface SignUpInput {
 interface LogInInput {
   studentID: string;
   password: string;
+  browser: string;
+  os: string;
+  time: string;
+  timeZone: string;
+  date: string;
+  redirect: boolean;
 }
 
 interface UserInput {
@@ -201,6 +211,7 @@ export type {
   ArticleInput,
   AuthorizedCodeInput,
   SignUpInput,
+  SignupAuthCodeInput,
   LogInInput,
   ToolLikeInput,
   UserBorrowToolInput,

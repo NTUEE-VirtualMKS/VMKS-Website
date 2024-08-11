@@ -10,7 +10,7 @@ import {
 } from "@/graphql/mutations";
 import type { UserType, SignupProps, LoginProps } from "@/shared/type.ts";
 import { z } from "zod";
-import { validDepartmentCodes } from "@/constants/index";
+import { defaultPhotoUrl, validDepartmentCodes } from "@/constants/index";
 import { jwtDecode } from "jwt-decode";
 import { generateLoginInfo } from "@/lib/utils";
 
@@ -31,7 +31,10 @@ const loginSchema = z.object({
 });
 
 const signupSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(20, "Name is too long, max 20 characters"),
   studentId: studentIdSchema,
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
@@ -115,56 +118,30 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     useMutation(SIGNUP_MUTATION);
 
   const signup = async ({ name, studentId, password }: SignupProps) => {
-    const defaultPhotoUrl =
-      "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
-    try {
-      const { browserName, osName, time, timeZoneShort, date } =
-        generateLoginInfo();
-      signupSchema.parse({ name, studentId, password });
-      await createUser({
-        variables: {
-          signUpInput: {
-            name,
-            studentID: studentId.toUpperCase(),
-            password,
-            photoLink: defaultPhotoUrl,
-            language: localStorage.getItem("language") || "en",
-            isAdmin: false,
-            isMinister: false,
-            laserCutAvailable: false,
-            browser: browserName,
-            os: osName,
-            time,
-            timeZone: timeZoneShort,
-            date,
-          },
+    signupSchema.parse({ name, studentId, password });
+    await createUser({
+      variables: {
+        signUpInput: {
+          name,
+          studentID: studentId.toUpperCase(),
+          password,
+          photoLink: defaultPhotoUrl,
+          language: localStorage.getItem("language") || "en",
+          isAdmin: false,
+          isMinister: false,
+          laserCutAvailable: false,
         },
-      });
-      if (createUserLoading) {
-        toast({ title: "Loading..." });
-      }
-      if (createUserError) {
-        toast({ title: `${createUserError.message}`, variant: "destructive" });
-        throw new Error(createUserError.message);
-      }
+      },
+    });
+    if (createUserLoading) {
+      toast({ title: "Loading..." });
+    }
+    if (createUserError) {
+      toast({ title: `${createUserError.message}`, variant: "destructive" });
+      throw new Error(createUserError.message);
+    } else {
       toast({ title: "Sign up successfully!" });
       navigate("/Login");
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        // Extract and display error messages from Zod validation
-        const errorMessage = error.errors.map((e) => e.message).join(". ");
-        toast({
-          title: "Invalid input",
-          description: errorMessage,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: `${error}`.split(":")[1],
-          variant: "destructive",
-        });
-      }
     }
   };
 
@@ -182,6 +159,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       });
       throw new Error(userLoginError.message);
     }
+    const { browserName, osName, time, timeZoneShort, date } =
+      generateLoginInfo();
 
     try {
       loginSchema.parse({ studentId, password });
@@ -190,6 +169,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           logInInput: {
             studentID: studentId.toUpperCase(),
             password: password,
+            browser: browserName,
+            os: osName,
+            time,
+            timeZone: timeZoneShort,
+            date,
+            redirect,
           },
         },
       });

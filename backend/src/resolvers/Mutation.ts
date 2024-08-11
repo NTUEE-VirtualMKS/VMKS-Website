@@ -29,6 +29,7 @@ import {
   PromoteUserInput,
   DemoteUserInput,
   AdminScheduleInput,
+  SignupAuthCodeInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -1182,7 +1183,7 @@ const Mutation = {
       },
     });
 
-    const updateArticles = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: writerId,
       },
@@ -1240,11 +1241,6 @@ const Mutation = {
       laserCutAvailable,
       isAdmin,
       isMinister,
-      browser,
-      os,
-      time,
-      timeZone,
-      date,
     } = args.signUpInput;
 
     const studentIDExisted = await prisma.user.findFirst({
@@ -1298,109 +1294,141 @@ const Mutation = {
         },
       );
 
-      // Send authentication code via email
-      const authCode = Math.floor(100000 + Math.random() * 900000);
-      const email = `${studentID.toLowerCase()}@ntu.edu.tw`;
-      const accountName = env.EMAIL_ACCOUNT_NAME;
-      const user = env.EMAIL_USER;
-      const pass = env.EMAIL_PASS;
-      const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: user,
-          pass: pass,
-        },
-      });
-
-      const mailOptions = {
-        from: `${accountName} <${user}>`,
-        to: email,
-        subject: "Your Authentication Code of VMKS for Signup",
-        html: `
-          <!DOCTYPE html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Signup Code</title>
-              <style>
-                body {
-                  font-family: Arial, sans-serif;
-                  background-color: #f4f4f4;
-                  margin: 0;
-                  padding: 0;
-                  color: #333333;
-                }
-                .email-container {
-                  max-width: 600px;
-                  margin: 0 auto;
-                  background-color: #ffffff;
-                  padding: 20px;
-                  border-radius: 8px;
-                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                }
-                .header {
-                  text-align: center;
-                  margin-bottom: 20px;
-                }
-                .header img {
-                  width: 50px;
-                }
-                .header h1 {
-                  font-size: 24px;
-                  margin: 10px 0;
-                  color: #333333;
-                }
-                .code-container {
-                  text-align: center;
-                  margin: 30px 0;
-                  font-size: 36px;
-                  font-weight: bold;
-                  color: #333333;
-                }
-                .footer {
-                  text-align: center;
-                  font-size: 12px;
-                  color: #888888;
-                  margin-top: 30px;
-                }
-                .footer p {
-                  margin: 5px 0;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="email-container">
-                <div class="header">
-                  <img src="https://avatars.githubusercontent.com/u/138299847?s=200&v=4" alt="logo">
-                  <h1>
-                    <b>VMKS</b>
-                  </h1>
-                </div>
-                <p>Signup code</p>
-                <div class="code-container">
-                  ${authCode}
-                </div>
-                <p>This code expires in 10 minutes.</p>
-                <div class="footer">
-                  <p>This signup was requested using <strong>${browser}, ${os}</strong> at <strong>${time} ${timeZone} on ${date}</strong>.</p>
-                  <p>- VMKS Team</p>
-                </div>
-              </div>
-            </body>
-          </html>
-        `,
-      };
-
-      try {
-        await transporter.sendMail(mailOptions);
-      } catch (error) {
-        console.error("Error sending email:", error);
-        throw new Error("Signup successful, but failed to send email.");
-      }
-
       pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
       return { user: newUser, token: token };
+    }
+  },
+
+  // SignupAuthCode
+  AddSignupAuthCode: async (
+    _parents,
+    args: { signupAuthCodeInput: SignupAuthCodeInput },
+    _context,
+  ) => {
+    const { studentID, browser, os, time, timeZone, date } =
+      args.signupAuthCodeInput;
+
+    const authCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const email = `${studentID.toLowerCase()}@ntu.edu.tw`;
+    const accountName = env.EMAIL_ACCOUNT_NAME;
+    const user = env.EMAIL_USER;
+    const pass = env.EMAIL_PASS;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: user,
+        pass: pass,
+      },
+    });
+
+    const mailOptions = {
+      from: `${accountName} <${user}>`,
+      to: email,
+      subject: "Your Authentication Code of VMKS for Signup",
+      html: `
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Signup Code</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                color: #333333;
+              }
+              .email-container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                text-align: center;
+                margin-bottom: 20px;
+              }
+              .header img {
+                width: 50px;
+              }
+              .header h1 {
+                font-size: 24px;
+                margin: 10px 0;
+                color: #333333;
+              }
+              .code-container {
+                text-align: center;
+                margin: 30px 0;
+                font-size: 36px;
+                font-weight: bold;
+                color: #333333;
+              }
+              .footer {
+                text-align: center;
+                font-size: 12px;
+                color: #888888;
+                margin-top: 30px;
+              }
+              .footer p {
+                margin: 5px 0;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="email-container">
+              <div class="header">
+                <img src="https://avatars.githubusercontent.com/u/138299847?s=200&v=4" alt="logo">
+                <h1>
+                  <b>Signup Auth Code</b>
+                </h1>
+              </div>
+              <div class="code-container">
+                ${authCode}
+              </div>
+              <div class="footer">
+                <p>This signup was requested using <strong>${browser}, ${os}</strong> at <strong>${time} ${timeZone} on ${date}</strong>.</p>
+                <p>- VMKS Team</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      throw new Error("Signup successful, but failed to send email.");
+    }
+
+    const findSignupAuthCode = await prisma.signupAuthCode.findFirst({
+      where: {
+        studentID: studentID,
+      },
+    });
+    if (findSignupAuthCode) {
+      const updatedSignupAuthCode = await prisma.signupAuthCode.update({
+        where: {
+          id: findSignupAuthCode.id,
+        },
+        data: {
+          code: authCode,
+        },
+      });
+      return updatedSignupAuthCode;
+    } else {
+      const newSignupAuthCode = await prisma.signupAuthCode.create({
+        data: {
+          studentID: studentID,
+          code: authCode,
+        },
+      });
+      return newSignupAuthCode;
     }
   },
 

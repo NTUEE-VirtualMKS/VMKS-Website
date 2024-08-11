@@ -265,13 +265,17 @@ const typeDefs = `#graphql
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
     isMinister: Boolean!
+  }
+  
+  input SignupAuthCodeInput {
+    studentID: String!
     browser: String!
     os: String!
     time: String!
     timeZone: String!
     date: String!
   }
-  
+
   type LogInRet {
     user: User!
     token: String!
@@ -280,6 +284,17 @@ const typeDefs = `#graphql
   input LogInInput {
     studentID: String!
     password: String!
+    browser: String!
+    os: String!
+    time: String!
+    timeZone: String!
+    date: String!
+    redirect: Boolean!
+  }
+
+  type SignupAuthCode {
+    studentID: String!
+    code: String!
   }
 
   type Article {
@@ -448,6 +463,9 @@ const typeDefs = `#graphql
     AllAdminSchedules: [[AdminSchedule]]
     GetAdminScheduleByDay(day: String!): [AdminSchedule]
     GetAdminScheduleByPeriod(period: String!): [AdminSchedule]
+    GetAllSignupAuthCodes: [SignupAuthCode]
+    GetSignupAuthCodeByStudentID(studentID: String!): SignupAuthCode
+    CheckSignupAuthCode(studentID: String!, code: String!): Boolean
   }
 
   type Mutation {
@@ -482,6 +500,7 @@ const typeDefs = `#graphql
     AddArticle(articleInput: ArticleInput!): Article
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: SignUpInput!): SignUpRet
+    AddSignupAuthCode(signupAuthCodeInput: SignupAuthCodeInput!): SignupAuthCode
     AddToolLike(toolLikeInput: ToolLikeInput!): ToolLike
     DeleteToolLike(toolLikeInput: ToolLikeInput!): ToolLike
     EditUserLanguage(id: Int!, language: String!): User
