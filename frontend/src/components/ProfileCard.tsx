@@ -169,7 +169,7 @@ function ProfileCard({
             width={330}
             height={330}
             alt="User Image"
-            className="aspect-square rounded-full bg-[#1f1f1f] border border-[#444444]"
+            className="aspect-square rounded-full bg-[#1f1f1f]"
           />
           <div className="flex flex-col max-md:items-center">
             <div className="flex flex-row items-center justify-between">

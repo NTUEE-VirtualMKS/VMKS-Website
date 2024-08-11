@@ -1,4 +1,4 @@
-import { LogOut, UserRound, History, Bell, Settings } from "lucide-react";
+import { LogOut, UserRound, History, ShoppingCart } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +39,7 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
-        className="bg-black bg-opacity-90 border border-white text-white mt-1.5"
+        className="bg-black bg-opacity-90 border border-[#444444] text-white mt-1.5"
       >
         <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -48,7 +48,12 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
           <span>{t("profile")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate("/SettingsPage")}>
+        <DropdownMenuItem onClick={() => navigate("/ShoppingCartPage")}>
+          <ShoppingCart className="mr-2 h-4 w-4" />
+          <span>{t("shoppingCart")}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        {/* <DropdownMenuItem onClick={() => navigate("/SettingsPage")}>
           <Settings className="mr-2 h-4 w-4" />
           <span>{t("settings")}</span>
         </DropdownMenuItem>
@@ -63,7 +68,7 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
           </div>
           <span>{t("notifications")}</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /> */}
         <DropdownMenuItem onClick={() => navigate("/BorrowHistoryPage")}>
           <History className="mr-2 h-4 w-4" />
           <span>{t("borrowHistory")}</span>

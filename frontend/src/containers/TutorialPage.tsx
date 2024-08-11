@@ -71,7 +71,7 @@ function TutorialPage() {
           </li>
         </ul>
       </div>
-      <div className="flex flex-col w-8/12 mx-auto mt-24 mb-8 text-white">
+      <div className="flex flex-col w-8/12 mx-auto mt-20 mb-8 text-white">
         <h1
           ref={sessionA}
           className="text-white p-1 flex flex-row gap-2 items-center"

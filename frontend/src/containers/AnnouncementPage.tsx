@@ -57,7 +57,7 @@ function AnnouncementPage() {
   };
 
   return (
-    <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8">
+    <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
       <h1 className="text-white p-1 flex flex-row items-center gap-1 text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl">
         <Volume2 className="text-white" size={35} />
         {t("announcements")}

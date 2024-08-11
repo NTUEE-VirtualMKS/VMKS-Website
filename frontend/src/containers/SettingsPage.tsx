@@ -1,3 +1,4 @@
+// TODO: optional: add settings for user to change their settings
 import { useToast } from "@/components/ui/use-toast";
 import { Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   UserRound,
-  ShoppingCart,
+  Bell,
   Info,
   Globe,
   NotebookPen,
@@ -45,22 +45,21 @@ function NavBar() {
   return (
     <nav
       className={cn(
-        "flex-1 px-5 flex flex-row justify-between bg-slate-900",
-        windowWidth > 600 ? "py-1" : "py-3.5"
+        "flex-1 px-3 flex flex-row justify-between bg-black bg-opacity-95 fixed top-0 w-full border-b border-[#444444]",
+        windowWidth > 600 ? "py-0.5" : "py-2"
       )}
     >
       <>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <img
             src="/logo-2.png"
-            className="w-12 object-cover mb-1 cursor-pointer aspect-square "
+            className="w-9 object-cover cursor-pointer aspect-square"
             alt="logo"
             onClick={() => navigate("/")}
           />
-
           {windowWidth > 600 && (
             <p
-              className="text-5xl text-white font-bold cursor-pointer"
+              className="text-4xl text-white font-bold cursor-pointer"
               onClick={() => navigate("/")}
             >
               VMKS
@@ -99,11 +98,17 @@ function NavBar() {
             ariaLabel={t("info")}
           />
           {user && (
-            <IconButton
-              onClick={() => navigate("/ShoppingCartPage")}
-              Icon={ShoppingCart}
-              ariaLabel={t("shoppingCart")}
-            />
+            <div className="relative inline-block">
+              <IconButton
+                onClick={() => navigate("/MessagePage")}
+                Icon={Bell}
+                ariaLabel={t("notifications")}
+              />
+              <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
+                <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
+              </span>
+            </div>
           )}
           {isOnline && (
             <>
@@ -116,19 +121,13 @@ function NavBar() {
               ) : (
                 <Tooltip>
                   <UserAvatarDropdownMenu>
-                    <div className="relative inline-block mt-1.5">
-                      <TooltipTrigger>
-                        <img
-                          src={imgUrl}
-                          className="rounded-full w-12 h-12 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#1f1f1f] border-[#444444] border"
-                          alt="avatar"
-                        />
-                      </TooltipTrigger>
-                      <span className="absolute -top-[0.2rem] -right-[0.2rem] flex h-4 w-4">
-                        <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-300 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
-                      </span>
-                    </div>
+                    <TooltipTrigger>
+                      <img
+                        src={imgUrl}
+                        className="rounded-full w-11 h-11 aspect-square transform active:scale-90 transition-transform duration-200 cursor-pointer bg-[#1f1f1f]"
+                        alt="avatar"
+                      />
+                    </TooltipTrigger>
                   </UserAvatarDropdownMenu>
                   <TooltipContent className="bg-black bg-opacity-80">
                     <p className="text-white text-xs">{t("myAccount")}</p>

@@ -138,7 +138,7 @@ function ToolPage() {
 
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-24 mb-8 text-white">
+      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
         <h1 className="text-white p-1 flex flex-row gap-2 items-center">
           <Hammer className="text-white" size={35} />
           {t("allTools")}

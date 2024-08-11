@@ -5,30 +5,26 @@ import HomePageMaterialBox from "@/components/HomepageComponents/HomePageMateria
 import { useWindow } from "@/contexts/WindowContext";
 import Searchbar from "@/components/Searchbar";
 import { useTranslation } from "react-i18next";
+import FilterButton from "@/components/FilterButton";
+import { useState } from "react";
 
 function HomePage() {
   const { windowWidth } = useWindow();
   const { t } = useTranslation();
+  const [type, setType] = useState("material");
   return (
-    <div className="p-6 bg-cover bg-gradient-to-tl from-slate-900 to-black">
+    <div className="p-6">
       <div className="flex flex-col gap-2 sm:gap-2 md:gap-4 lg:gap-4 xl:gap-4 sm:flex-col md:flex-col lg:flex-col xl:flex-row">
         {windowWidth < 767 && (
-          <div className="mt-3 flex flex-col w-11/12 mx-auto">
-            {windowWidth < 601 && (
-              <div className="text-5xl font-bold text-white mb-2">VMKS</div>
-            )}
+          <div className="mt-3 flex flex-col w-full">
             <div className="flex flex-row gap-3">
               <Searchbar
-                route="MaterialPage"
-                placeholder={t("searchMaterial")}
+                route={type === "material" ? "MaterialPage" : "ToolPage"}
+                placeholder={
+                  type === "material" ? t("searchMaterial") : t("searchTool")
+                }
               />
-              <button className="transform active:scale-90 transition-transform duration-200">
-                <img
-                  loading="lazy"
-                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&"
-                  className="w-12"
-                />
-              </button>
+              <FilterButton type={type} setType={setType} />
             </div>
           </div>
         )}
@@ -43,16 +39,14 @@ function HomePage() {
                   </div>
                   <div className="flex flex-row flex-center gap-3">
                     <Searchbar
-                      route="MaterialPage"
-                      placeholder={t("searchMaterial")}
+                      route={type === "material" ? "MaterialPage" : "ToolPage"}
+                      placeholder={
+                        type === "material"
+                          ? t("searchMaterial")
+                          : t("searchTool")
+                      }
                     />
-                    <button className="transform active:scale-90 transition-transform duration-200">
-                      <img
-                        loading="lazy"
-                        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b513ff04ae74d7aff913c526a595a5779b717ba56978a19f01e8fac8d6ca19d5?apiKey=15bded22c0614ce289c46521633cb381&"
-                        className="w-12"
-                      />
-                    </button>
+                    <FilterButton type={type} setType={setType} />
                   </div>
                 </div>
               )}
