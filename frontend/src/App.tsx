@@ -38,7 +38,7 @@ const DisposableMaterialPage = lazy(
   () => import("@/containers/DisposableMaterialPage")
 );
 const MachinePage = lazy(() => import("@/containers/MachinePage"));
-const SettingsPage = lazy(() => import("@/containers/SettingsPage"));
+// const SettingsPage = lazy(() => import("@/containers/SettingsPage"));
 
 function App() {
   const { isOnline } = useNetworkStatus();
@@ -47,16 +47,16 @@ function App() {
   return !pushToLoginPage ? (
     <div className="flex flex-row">
       <div className="flex-1 flex-col h-screen">
-        <div className="fixed top-0 bg-black w-full z-10">
+        <div className="fixed top-0 w-full z-10">
           <NavBar />
           {user && isOnline && (
-            <div className="flex-none z-20">
+            <div className="flex-none">
               <Sidebar />
             </div>
           )}
         </div>
         {isOnline ? (
-          <div className="flex-1 mx-2 mt-16 sm:mt-16 md:mt-20 lg:mt-20 xl:mt-20">
+          <div className="flex-1 mx-2 mt-12 sm:mt-12 md:mt-16 lg:mt-16 xl:mt-16">
             <Routes>
               <Route
                 path="/"
@@ -190,14 +190,14 @@ function App() {
                   </Suspense>
                 }
               />
-              <Route
+              {/* <Route
                 path="/SettingsPage"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     <SettingsPage />
                   </Suspense>
                 }
-              />
+              /> */}
               <Route
                 path="/AnnouncementPage"
                 element={

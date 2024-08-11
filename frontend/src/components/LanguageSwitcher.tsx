@@ -32,15 +32,15 @@ function LanguageSwitcher() {
       <RadioGroup defaultValue={i18n.language}>
         <DropdownMenu>
           <TooltipTrigger>
-            <div className="flex flex-col justify-center items-center w-12 h-12 rounded-full aspect-square bg-zinc-300 bg-opacity-15 hover:bg-opacity-30 transform active:scale-90 transition-transform duration-200 hover:cursor-pointer">
+            <div className="flex flex-col justify-center items-center w-11 h-11 rounded-full aspect-square bg-zinc-300 bg-opacity-20 hover:bg-opacity-30 transform active:scale-90 transition-transform duration-200 hover:cursor-pointer">
               <DropdownMenuTrigger asChild>
-                <Languages className="text-white w-12 h-12 aspect-square p-2.5" />
+                <Languages className="text-white w-11 h-11 aspect-square p-2.5" />
               </DropdownMenuTrigger>
             </div>
           </TooltipTrigger>
           <DropdownMenuContent
             align="center"
-            className="bg-black bg-opacity-90 border border-white text-white mt-2.5"
+            className="bg-black text-white mt-2.5"
           >
             <DropdownMenuLabel>{t("languages")}</DropdownMenuLabel>
             <DropdownMenuSeparator />

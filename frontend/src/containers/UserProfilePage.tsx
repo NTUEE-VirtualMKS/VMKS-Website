@@ -7,7 +7,7 @@ function UserProfilePage() {
   const { user } = useUser();
   const { t } = useTranslation();
   return (
-    <section className="flex flex-col w-10/12 mx-auto justify-start mt-24">
+    <section className="flex flex-col w-10/12 mx-auto justify-start mt-20">
       <h1 className="text-white p-1 flex flex-row items-center gap-2">
         <UserRound className="text-white" size={35} />
         {t("userProfile")}

@@ -43,8 +43,11 @@ function HomePageSchedule() {
       <div className="flex flex-col grow py-5 w-full font-semibold bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:mt-6">
         <div className="flex flex-col px-5 max-md:pl-5">
           <div className="text-2xl text-white flex flex-row items-center gap-2 font-semibold">
-            <Calendar size={28} /> {t("todayAdminSchedule")} (
-            {t(handleNumberToDay(new Date().getDay()))})
+            <Calendar size={28} />
+            <span className="">
+              {t("schedule") +
+                ` (${t(handleNumberToDay(new Date().getDay()))})`}
+            </span>
           </div>
           <button
             className="self-end mt-1.5 text-sm text-right whitespace-nowrap text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"

@@ -97,6 +97,10 @@
     @apply text-[32px] leading-normal;
   }
 
+  .text-36 {
+    @apply text-[36px] leading-normal;
+  }
+
   .input-class {
     @apply text-16 placeholder:text-16 bg-[#15171C] rounded-[6px] placeholder:text-[#71788B] border-none text-white focus-visible:ring-offset-sky-300;
   }

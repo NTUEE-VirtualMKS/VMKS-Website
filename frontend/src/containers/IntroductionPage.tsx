@@ -89,7 +89,7 @@ function IntroductionPage() {
           </li>
         </ul>
       </div>
-      <div className="w-8/12 mx-auto mt-24 mb-8 text-white flex flex-col">
+      <div className="w-8/12 mx-auto mt-20 mb-8 text-white flex flex-col">
         <div>
           <h1 ref={sessionA} className="p-1">
             MKS {t("introduction")}
