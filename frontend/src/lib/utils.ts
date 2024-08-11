@@ -43,6 +43,7 @@ function getBrowserAndOSInfo() {
       "Red Hat": "Red Hat",
       "Linux Mint": "Linux Mint",
       "Arch Linux": "Arch Linux",
+      Manjaro: "Manjaro",
     };
 
     for (const [key, value] of Object.entries(linuxDistros)) {

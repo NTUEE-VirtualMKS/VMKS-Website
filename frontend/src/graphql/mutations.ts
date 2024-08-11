@@ -754,6 +754,15 @@ const SIGNUP_MUTATION = gql(`
   }
 `);
 
+const ADD_SIGNUP_AUTH_CODE_MUTATION = gql(`
+  mutation AddSignupAuthCode($signupAuthCodeInput: SignupAuthCodeInput!) {
+    AddSignupAuthCode(signupAuthCodeInput: $signupAuthCodeInput) {
+      studentID
+      code
+    }
+  }
+`);
+
 const EDIT_USER_PASSWORD_MUTATION = gql(`
   mutation EditUserPassword($editUserPasswordId: Int!, $userPasswordEditInput: UserPasswordEditInput!) {
     EditUserPassword(id: $editUserPasswordId, userPasswordEditInput: $userPasswordEditInput) {
@@ -898,6 +907,7 @@ export {
   EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION,
   EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
   SIGNUP_MUTATION,
+  ADD_SIGNUP_AUTH_CODE_MUTATION,
   ADD_ADMIN_SCHEDULE_MUTATION,
   DELETE_ADMIN_SCHEDULE_MUTATION,
   EDIT_ADMIN_SCHEDULE_MUTATION,

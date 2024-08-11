@@ -273,7 +273,7 @@ function ProfileCard({
               <StudentIDCardUploadDialog />
             </>
             {!user?.isAdmin && (
-              <div className="flex flex-row mt-2 items-center">
+              <div className="flex flex-row mt-3 items-center">
                 {windowWidth > 630 &&
                   !(windowWidth > 767 && windowWidth < 1031) && (
                     <Label

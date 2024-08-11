@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Outlet } from "react-router-dom";
 import { Label } from "@radix-ui/react-label";
 import {
@@ -16,16 +16,67 @@ import { useUser } from "@/contexts/UserContext";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/PasswordInput";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Mail, MailOpen } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useLazyQuery } from "@apollo/client";
+import {
+  ADD_SIGNUP_AUTH_CODE_MUTATION,
+  CHECK_SIGNUP_AUTH_CODE_QUERY,
+} from "@/graphql";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import { generateLoginInfo } from "@/lib/utils";
+
+const FormSchema = z.object({
+  signupAuthCode: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
+  }),
+});
 
 function LoginPage() {
   const { login, signup } = useUser();
+  const { toast } = useToast();
   const { t } = useTranslation();
   const [signupMode, setSignupMode] = useState(false);
-  const [username, setUsername] = useState("");
+  const [enterSignupAuthCode, setEnterSignupAuthCode] = useState(false);
+  const [name, setName] = useState("");
   const [studentId, setStudentID] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { toast } = useToast();
+  const [addSignupAuthCode, { loading, error }] = useMutation(
+    ADD_SIGNUP_AUTH_CODE_MUTATION
+  );
+  const [showMailOpen, setShowMailOpen] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowMailOpen((prev) => !prev);
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      signupAuthCode: "",
+    },
+  });
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,16 +89,74 @@ function LoginPage() {
           variant: "destructive",
         });
       } else {
-        await signup({ name: username, studentId, password });
-        setSignupMode(false);
+        const { browserName, osName, time, timeZoneShort, date } =
+          generateLoginInfo();
+        await addSignupAuthCode({
+          variables: {
+            signupAuthCodeInput: {
+              studentID: studentId.toUpperCase(),
+              browser: browserName,
+              os: osName,
+              time,
+              timeZone: timeZoneShort,
+              date,
+            },
+          },
+        });
+        if (loading) return <LoaderSpinner />;
+        if (error) {
+          toast({
+            title: "Error",
+            description: `${error}`.split(":")[1],
+            variant: "destructive",
+          });
+        } else {
+          setEnterSignupAuthCode(true);
+          toast({ title: "Auth code sent to your school email." });
+        }
       }
     }
   };
 
-  return (
+  const [checkSignupAuthCode, { loading: checkLoading }] = useLazyQuery(
+    CHECK_SIGNUP_AUTH_CODE_QUERY
+  );
+
+  const onSignupAuthCodeSubmit = async (data: z.infer<typeof FormSchema>) => {
+    const { signupAuthCode } = data;
+    try {
+      await checkSignupAuthCode({
+        variables: {
+          studentId: studentId.toUpperCase(),
+          code: signupAuthCode,
+        },
+      });
+      if (checkLoading) return <LoaderSpinner />;
+      await signup({ name, studentId, password });
+      setSignupMode(false);
+      setEnterSignupAuthCode(false);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const errorMessage = error.errors.map((e) => e.message).join(". ");
+        toast({
+          title: "Invalid input",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${error}`.split(":")[1],
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  return !enterSignupAuthCode ? (
     <form
       onSubmit={onSubmit}
-      className="w-10/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto mt-16 rounded-lg"
+      className="w-10/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto mt-12 rounded-lg"
     >
       <Tabs
         value={signupMode ? "signup" : "login"}
@@ -95,18 +204,18 @@ function LoginPage() {
           <div className="grid w-full items-center space-y-4">
             {signupMode && (
               <div className="flex flex-col gap-1">
-                <Label htmlFor="username" className="text-white">
-                  {t("username")}
+                <Label htmlFor="name" className="text-white">
+                  {t("name")}
                 </Label>
                 <Input
-                  id="username"
+                  id="name"
                   className="input-class"
                   type="text"
-                  name="username"
-                  placeholder={t("username")}
+                  name="name"
+                  placeholder={t("name")}
                   required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             )}
@@ -203,6 +312,73 @@ function LoginPage() {
         <Outlet />
       </Card>
     </form>
+  ) : (
+    <div className="w-[23rem] mx-auto mt-32 rounded-lg ">
+      <Card className="w-sm bg-black border border-[#444444] p-6">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSignupAuthCodeSubmit)}
+            className="flex flex-col gap-10"
+          >
+            <FormField
+              control={form.control}
+              name="signupAuthCode"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-center gap-5">
+                  <FormLabel className="text-white text-5xl flex flex-row items-center gap-2">
+                    {showMailOpen ? <MailOpen size={42} /> : <Mail size={42} />}
+                    Auth Code
+                  </FormLabel>
+                  <FormControl>
+                    <InputOTP maxLength={6} {...field}>
+                      <InputOTPGroup>
+                        <InputOTPSlot
+                          index={0}
+                          className="w-12 h-14 text-2xl"
+                        />
+                        <InputOTPSlot
+                          index={1}
+                          className="w-12 h-14 text-2xl"
+                        />
+                        <InputOTPSlot
+                          index={2}
+                          className="w-12 h-14 text-2xl"
+                        />
+                        <InputOTPSlot
+                          index={3}
+                          className="w-12 h-14 text-2xl"
+                        />
+                        <InputOTPSlot
+                          index={4}
+                          className="w-12 h-14 text-2xl"
+                        />
+                        <InputOTPSlot
+                          index={5}
+                          className="w-12 h-14 text-2xl"
+                        />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                  <FormDescription className="text-base">
+                    Please enter the one-time auth code sent to your school
+                    email.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-row-reverse">
+              <Button
+                type="submit"
+                className="text-white border border-white transform active:scale-90 transition-transform duration-200"
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </Card>
+    </div>
   );
 }
 

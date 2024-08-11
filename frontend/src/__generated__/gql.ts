@@ -54,6 +54,7 @@ const documents = {
     "\n  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: Int!, $userBorrowMaterialInput: UserBorrowMaterialInput!) {\n    EditUserBorrowMaterialQuantity(id: $editUserBorrowMaterialQuantityId, userBorrowMaterialInput: $userBorrowMaterialInput) {\n      id\n      userId\n      materialId\n      borrower\n      studentId\n      figure\n      name\n      partName\n      category\n      remain\n      position\n      quantity\n      status\n      borrowDate\n      returnDate\n    }\n  }\n": types.EditUserBorrowMaterialQuantityDocument,
     "\n  mutation EditUserBorrowMaterialStatus($editUserBorrowMaterialStatusId: Int!, $status: String!) {\n    EditUserBorrowMaterialStatus(id: $editUserBorrowMaterialStatusId, status: $status) {\n      id\n      userId\n      materialId\n      borrower\n      studentId\n      figure\n      name\n      partName\n      category\n      remain\n      position\n      quantity\n      status\n      borrowDate\n      returnDate\n    }\n  }\n": types.EditUserBorrowMaterialStatusDocument,
     "\n  mutation SignUp($signUpInput: SignUpInput!) {\n    SignUp(signUpInput: $signUpInput) {\n      user {\n        id\n        name\n        studentID\n        password\n        photoLink\n        language\n        threeDPId\n        laserCutAvailable\n        articlesId\n        isAdmin\n        isMinister\n        toolLikeIds\n        userBorrowToolIds\n        materialLikeIds\n        userBorrowMaterialIds\n      }\n      token\n    }\n  }\n": types.SignUpDocument,
+    "\n  mutation AddSignupAuthCode($signupAuthCodeInput: SignupAuthCodeInput!) {\n    AddSignupAuthCode(signupAuthCodeInput: $signupAuthCodeInput) {\n      studentID\n      code\n    }\n  }\n": types.AddSignupAuthCodeDocument,
     "\n  mutation EditUserPassword($editUserPasswordId: Int!, $userPasswordEditInput: UserPasswordEditInput!) {\n    EditUserPassword(id: $editUserPasswordId, userPasswordEditInput: $userPasswordEditInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.EditUserPasswordDocument,
     "\n  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {\n    PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.PromoteUserDocument,
     "\n  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {\n    DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {\n      id\n      name\n      studentID\n      password\n      photoLink\n      language\n      threeDPId\n      laserCutAvailable\n      articlesId\n      isAdmin\n      isMinister\n      toolLikeIds\n      userBorrowToolIds\n      materialLikeIds\n      userBorrowMaterialIds\n    }\n  }\n": types.DemoteUserDocument,
@@ -107,6 +108,9 @@ const documents = {
     "\n  query GetAdminScheduleByDay($day: String!) {\n    GetAdminScheduleByDay(day: $day) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.GetAdminScheduleByDayDocument,
     "\n  query GetAdminScheduleByPeriod($period: String!) {\n    GetAdminScheduleByPeriod(period: $period) {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.GetAdminScheduleByPeriodDocument,
     "\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n": types.AllAdminSchedulesDocument,
+    "\n  query GetAllSignupAuthCodes {\n    GetAllSignupAuthCodes {\n      studentID\n      code\n    }\n  }\n": types.GetAllSignupAuthCodesDocument,
+    "\n  query GetSignupAuthCodeByStudentID($studentId: String!) {\n    GetSignupAuthCodeByStudentID(studentID: $studentId) {\n      studentID\n      code\n    }\n  }\n": types.GetSignupAuthCodeByStudentIdDocument,
+    "\n  query Query($studentId: String!, $code: String!) {\n    CheckSignupAuthCode(studentID: $studentId, code: $code)\n  }\n": types.QueryDocument,
     "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n": types.AnnouncementCreatedDocument,
 };
 
@@ -288,6 +292,10 @@ export function gql(source: "\n  mutation EditUserBorrowMaterialStatus($editUser
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation SignUp($signUpInput: SignUpInput!) {\n    SignUp(signUpInput: $signUpInput) {\n      user {\n        id\n        name\n        studentID\n        password\n        photoLink\n        language\n        threeDPId\n        laserCutAvailable\n        articlesId\n        isAdmin\n        isMinister\n        toolLikeIds\n        userBorrowToolIds\n        materialLikeIds\n        userBorrowMaterialIds\n      }\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation SignUp($signUpInput: SignUpInput!) {\n    SignUp(signUpInput: $signUpInput) {\n      user {\n        id\n        name\n        studentID\n        password\n        photoLink\n        language\n        threeDPId\n        laserCutAvailable\n        articlesId\n        isAdmin\n        isMinister\n        toolLikeIds\n        userBorrowToolIds\n        materialLikeIds\n        userBorrowMaterialIds\n      }\n      token\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation AddSignupAuthCode($signupAuthCodeInput: SignupAuthCodeInput!) {\n    AddSignupAuthCode(signupAuthCodeInput: $signupAuthCodeInput) {\n      studentID\n      code\n    }\n  }\n"): (typeof documents)["\n  mutation AddSignupAuthCode($signupAuthCodeInput: SignupAuthCodeInput!) {\n    AddSignupAuthCode(signupAuthCodeInput: $signupAuthCodeInput) {\n      studentID\n      code\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -500,6 +508,18 @@ export function gql(source: "\n  query GetAdminScheduleByPeriod($period: String!
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n"): (typeof documents)["\n  query AllAdminSchedules {\n    AllAdminSchedules {\n      id\n      admin\n      day\n      period\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetAllSignupAuthCodes {\n    GetAllSignupAuthCodes {\n      studentID\n      code\n    }\n  }\n"): (typeof documents)["\n  query GetAllSignupAuthCodes {\n    GetAllSignupAuthCodes {\n      studentID\n      code\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetSignupAuthCodeByStudentID($studentId: String!) {\n    GetSignupAuthCodeByStudentID(studentID: $studentId) {\n      studentID\n      code\n    }\n  }\n"): (typeof documents)["\n  query GetSignupAuthCodeByStudentID($studentId: String!) {\n    GetSignupAuthCodeByStudentID(studentID: $studentId) {\n      studentID\n      code\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Query($studentId: String!, $code: String!) {\n    CheckSignupAuthCode(studentID: $studentId, code: $code)\n  }\n"): (typeof documents)["\n  query Query($studentId: String!, $code: String!) {\n    CheckSignupAuthCode(studentID: $studentId, code: $code)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

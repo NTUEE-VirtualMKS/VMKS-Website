@@ -847,6 +847,30 @@ const ALL_ADMIN_SCHEDULES_QUERY = gql(`
   }
 `);
 
+const GET_ALL_SIGNUP_AUTH_CODES_QUERY = gql(`
+  query GetAllSignupAuthCodes {
+    GetAllSignupAuthCodes {
+      studentID
+      code
+    }
+  }
+`);
+
+const GET_SIGNUP_AUTH_CODE_BY_STUDENT_ID_QUERY = gql(`
+  query GetSignupAuthCodeByStudentID($studentId: String!) {
+    GetSignupAuthCodeByStudentID(studentID: $studentId) {
+      studentID
+      code
+    }
+  }
+`);
+
+const CHECK_SIGNUP_AUTH_CODE_QUERY = gql(`
+  query Query($studentId: String!, $code: String!) {
+    CheckSignupAuthCode(studentID: $studentId, code: $code)
+  }
+`);
+
 export {
   ALL_ANNOUNCEMENT_QUERY,
   ALL_ARTICLE_QUERY,
@@ -895,4 +919,7 @@ export {
   GET_ADMIN_SCHEDULE_BY_DAY_QUERY,
   GET_ADMIN_SCHEDULE_BY_PERIOD_QUERY,
   ALL_ADMIN_SCHEDULES_QUERY,
+  GET_ALL_SIGNUP_AUTH_CODES_QUERY,
+  GET_SIGNUP_AUTH_CODE_BY_STUDENT_ID_QUERY,
+  CHECK_SIGNUP_AUTH_CODE_QUERY,
 };

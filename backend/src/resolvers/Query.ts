@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "../../utils/env.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
+import nodemailer from "nodemailer";
 
 const Query = {
   AllAnnouncements: async (_parents, _args, _context) => {
@@ -663,7 +664,9 @@ const Query = {
   },
 
   LogIn: async (_parents, args: { logInInput: LogInInput }, _context) => {
-    const { studentID, password } = args.logInInput;
+    const { studentID, password, browser, os, time, timeZone, date, redirect } =
+      args.logInInput;
+
     const user = await prisma.user.findUnique({
       where: {
         studentID: studentID,
@@ -698,6 +701,122 @@ const Query = {
           expiresIn: env.JWT_EXPIRES_IN,
         },
       );
+
+      if (redirect) {
+        const email = `${studentID.toLowerCase()}@ntu.edu.tw`;
+        const accountName = env.EMAIL_ACCOUNT_NAME;
+        const emailUser = env.EMAIL_USER;
+        const pass = env.EMAIL_PASS;
+        const transporter = nodemailer.createTransport({
+          service: "Gmail",
+          auth: {
+            user: emailUser,
+            pass: pass,
+          },
+        });
+
+        const mailOptions = {
+          from: `${accountName} <${emailUser}>`,
+          to: email,
+          subject: "Security Alert: New Login Detected",
+          html: `
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>New Login Notification</title>
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  margin: 0;
+                  padding: 0;
+                  color: #333333;
+                }
+                .container {
+                  max-width: 600px;
+                  margin: 20px auto;
+                  background-color: #ffffff;
+                  padding: 20px;
+                  border: 1px solid #e1e1e1;
+                  border-radius: 5px;
+                }
+                .header {
+                  text-align: center;
+                  margin-bottom: 20px;
+                }
+                .header img {
+                  width: 50px;
+                }
+                .header h1 {
+                  font-size: 24px;
+                  margin: 10px 0;
+                  color: #333333;
+                }
+                .content {
+                  text-align: center;
+                }
+                .device-info {
+                  font-size: 18px;
+                  margin: 20px 0;
+                }
+                .notice {
+                  font-size: 14px;
+                  color: #888;
+                  margin-top: 30px;
+                  text-align: left;
+                  line-height: 1.5;
+                }
+                .footer {
+                  text-align: center;
+                  font-size: 12px;
+                  color: #888888;
+                  margin-top: 30px;
+                }
+                .footer p {
+                  margin: 5px 0;
+                }
+                .footer a {
+                  color: #007bff;
+                  text-decoration: none;
+                }
+                </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <img src="https://avatars.githubusercontent.com/u/138299847?s=200&v=4" alt="logo">
+                  <h1>
+                    <b>New Login Detected</b>
+                  </h1>
+                </div>
+                <div class="content">
+                  <p>We noticed a new login, <strong>${user.name}</strong>.</p>
+                  <p>If this was you, you can safely ignore this email.</p>
+                  <div class="device-info">
+                    <p><strong>${os}</strong> &bull; <strong>${browser}</strong>
+                    <p>${date} at ${time} (${timeZone})</p>
+                  </div>
+                </div>
+                <div class="footer">
+                  <p>If this wasn't you, you can <a href="{{security_url}}">secure your account</a> from a device you've logged in with in the past. <a href="{{learn_more_url}}">Learn more</a></p>
+                  <p>- VMKS Team</p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `,
+        };
+
+        try {
+          await transporter.sendMail(mailOptions);
+        } catch (error) {
+          console.error("Error sending email:", error);
+          throw new Error("Signup successful, but failed to send email.");
+        }
+      }
+
       pubsub.publish("USER_LOGGEDIN", { UserLoggedIn: user });
       return { user: user, token: token };
     }
@@ -1112,6 +1231,48 @@ const Query = {
         week.indexOf(a.day.toLowerCase()) - week.indexOf(b.day.toLowerCase())
       );
     });
+  },
+
+  // SignupAuthCode
+  GetAllSignupAuthCodes: async () => {
+    const signupAuthCodes = await prisma.signupAuthCode.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return signupAuthCodes;
+  },
+
+  GetSignupAuthCodeByStudentID: async (
+    _parents,
+    args: { studentID: string },
+    _context,
+  ) => {
+    const studentID = args.studentID;
+    const signupAuthCode = await prisma.signupAuthCode.findFirst({
+      where: {
+        studentID: studentID,
+      },
+    });
+
+    return signupAuthCode;
+  },
+
+  CheckSignupAuthCode: async (
+    _parents,
+    args: { studentID: string; code: string },
+    _context,
+  ) => {
+    const { studentID, code } = args;
+    const signupAuthCode = await prisma.signupAuthCode.findFirst({
+      where: {
+        studentID: studentID,
+        code: code,
+      },
+    });
+
+    if (!signupAuthCode) throw new Error("Invalid code");
+    return true;
   },
 };
 

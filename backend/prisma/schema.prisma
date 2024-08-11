@@ -195,3 +195,9 @@ model AdminSchedule {
   day    String
   period String
 }
+
+model SignupAuthCode {
+  id        Int    @id @default(autoincrement())
+  code      String
+  studentID String
+}

@@ -53,25 +53,25 @@ function HomePageSchedule() {
             {t("seeAll")}
           </button>
         </div>
-        <div className="flex m-4 justify-between self-center mt-3 w-72 text-white bg-[#303030] bg-opacity-50 hover:bg-opacity-70 border border-[#444444] rounded-xl">
+        <div className="flex mx-4 mt-2 justify-between self-center w-[16.5rem] text-white bg-[#303030] bg-opacity-50 hover:bg-opacity-70 border border-[#444444] rounded-xl">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent rounded-t-2xl">
-                <TableHead className="text-white text-center font-semibold border-none">
+                <TableHead className="text-white text-center font-semibold">
                   {t("period")}
                 </TableHead>
-                <TableHead className="text-white text-center font-semibold border-none">
+                <TableHead className="text-white text-center font-semibold">
                   {t("onDutyAdmin")}
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {adminSchedule.map(({ period, admin }, index) => (
-                <TableRow key={index}>
-                  <TableCell className="text-white text-center w-6/12 mx-auto border-none">
+                <TableRow key={index} className="border-none">
+                  <TableCell className="text-white text-center w-6/12 mx-auto">
                     {period}
                   </TableCell>
-                  <TableCell className="text-white text-center w-6/12 mx-auto border-none">
+                  <TableCell className="text-white text-center w-6/12 mx-auto">
                     {admin}
                   </TableCell>
                 </TableRow>
