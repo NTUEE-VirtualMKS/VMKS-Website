@@ -169,7 +169,7 @@ function ProfileCard({
             width={330}
             height={330}
             alt="User Image"
-            className="aspect-square rounded-full bg-[#1f1f1f]"
+            className="aspect-square rounded-full dark:bg-[#1f1f1f]"
           />
           <div className="flex flex-col max-md:items-center">
             <div className="flex flex-row items-center justify-between">
@@ -180,7 +180,7 @@ function ProfileCard({
                   height={25}
                   alt="verified"
                 />
-                <p className="text-18 font-medium text-white sm:text-18 md:text-18 bg:text-20 xl:text-20">
+                <p className="text-18 font-medium dark:text-white sm:text-18 md:text-18 bg:text-20 xl:text-20">
                   {t("verified")}{" "}
                   {minister ? t("minister") : admin ? t("admin") : t("user")}
                 </p>
@@ -191,7 +191,7 @@ function ProfileCard({
               >
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="p-2 aspect-square text-white hover:text-sky-300 rounded-full  hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
+                    <div className="p-2 aspect-square dark:text-white dark:hover:text-sky-300 hover:text-blue-500 rounded-full hover:bg-blue-500 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
                       <DialogTrigger
                         asChild
                         onClick={() => setVisible(true)}
@@ -201,11 +201,11 @@ function ProfileCard({
                       </DialogTrigger>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent className="bg-black bg-opacity-80">
-                    <p className="text-white text-xs">{t("edit")}</p>
+                  <TooltipContent className="text-white bg-black bg-opacity-80">
+                    <p className="dark:text-white text-xs">{t("edit")}</p>
                   </TooltipContent>
                 </Tooltip>
-                <DialogContent className="text-white bg-black rounded-xl w-11/12 sm:w-11/12">
+                <DialogContent className="dark:text-white dark:bg-black rounded-xl w-11/12 sm:w-11/12">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("editProfile")}
@@ -226,7 +226,7 @@ function ProfileCard({
                         onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
-                    <p className="text-white text-base">{t("avatar")}</p>
+                    <p className="dark:text-white text-base">{t("avatar")}</p>
                     <UserAvatarUploader
                       imgUrl={imgUrl}
                       setImgUrl={setImgUrl}
@@ -238,13 +238,13 @@ function ProfileCard({
                       onClick={() =>
                         setEnterPasswordForEdittingUserProfile(true)
                       }
-                      className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                      className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={handleCancel}
-                      className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
                     >
                       {t("cancel")}
                     </Button>
@@ -253,13 +253,13 @@ function ProfileCard({
               </Dialog>
             </div>
             <>
-              <p className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold tracking-[-0.32px] text-white">
+              <p className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold tracking-[-0.32px] dark:text-white">
                 {username}
               </p>
-              <p className="text-lg text-white">
+              <p className="text-lg dark:text-white">
                 {t("studentId")}: {studentId}
               </p>
-              <p className="text-lg text-white">
+              <p className="text-lg dark:text-white">
                 {t("laserCutAvailable") + ": "}
                 <span
                   className={cn(
@@ -278,7 +278,7 @@ function ProfileCard({
                   !(windowWidth > 767 && windowWidth < 1031) && (
                     <Label
                       htmlFor="authorized-code"
-                      className="text-white text-lg mr-1"
+                      className="dark:text-white text-lg mr-1"
                     >
                       {t("authorizedCode") + ": "}
                     </Label>

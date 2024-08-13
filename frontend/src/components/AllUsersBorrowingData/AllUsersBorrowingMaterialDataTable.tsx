@@ -16,23 +16,17 @@ function AllUsersBorrowingMaterialDataTable({
     <div className="w-full">
       <Tabs defaultValue="borrowing">
         <section className="mb-1">
-          <p className="text-white text-3xl font-bold flex flex-row gap-2 flex-center">
-            <Icon className="text-white" size={28} />
+          <p className="dark:text-white text-3xl font-bold flex flex-row gap-2 flex-center">
+            <Icon className="dark:text-white" size={28} />
             {tableName}
           </p>
         </section>
         <div>
           <TabsList className="grid w-full grid-cols-2 rounded-b-none border-b-transparent">
-            <TabsTrigger
-              value="borrowing"
-              className="text-zinc-500 bg-[#303030] bg-opacity-30 text-lg font-semibold"
-            >
+            <TabsTrigger value="borrowing" className="text-lg font-semibold">
               {t("borrowing")}
             </TabsTrigger>
-            <TabsTrigger
-              value="unreturned"
-              className="text-zinc-500 bg-[#303030] bg-opacity-30 text-lg font-semibold"
-            >
+            <TabsTrigger value="unreturned" className="text-lg font-semibold">
               {t("unreturned")}
             </TabsTrigger>
           </TabsList>

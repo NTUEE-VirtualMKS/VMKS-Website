@@ -17,7 +17,10 @@ function RouteBar({ route }: RouteBarProps) {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/" className="text-white text-20 hover:text-sky-300">
+              <Link
+                to="/"
+                className=" dark:text-white text-20 hover:text-sky-300"
+              >
                 Home
               </Link>
             </BreadcrumbLink>
@@ -25,12 +28,12 @@ function RouteBar({ route }: RouteBarProps) {
           {routes.map((route) => {
             return (
               <div key={route} className="flex flex-row">
-                <BreadcrumbSeparator className="text-white mt-1.5 mr-1.5 [&>svg]:size-5" />
+                <BreadcrumbSeparator className=" dark:text-white mt-1.5 mr-1.5 [&>svg]:size-5" />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link
                       to={"/" + route}
-                      className="text-white text-20 hover:text-sky-300"
+                      className=" dark:text-white text-20 hover:text-sky-300"
                     >
                       {route}
                     </Link>

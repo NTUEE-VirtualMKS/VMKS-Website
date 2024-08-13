@@ -185,7 +185,7 @@ function MaterialDetailCard({
   };
 
   return (
-    <div className="flex flex-col gap-2 p-3 bg-[#15171C] w-10/12 mx-auto rounded-lg my-5 border border-[#444444]">
+    <div className="flex flex-col gap-2 p-3 dark:bg-[#15171C] bg-white w-10/12 mx-auto rounded-lg my-5 border dark:border-[#444444] shadow-md">
       <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row my-4 mx-2">
         <img
           src={materialPhotoLink}
@@ -193,31 +193,31 @@ function MaterialDetailCard({
           className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
         />
         <div className="w-9/12 flex flex-col ml-5">
-          <h1 className="text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
+          <h1 className=" dark:text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
             {materialName}
           </h1>
-          <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("description")}: {materialDescription}
           </p>
           {materialPartName && (
-            <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+            <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
               {t("partName")}: {materialPartName}
             </p>
           )}
-          <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("position")}: {materialPosition}
           </p>
-          <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("remain")}: {materialRemain} {t("piece")}
           </p>
-          <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("usage")}: {materialUsage} {t("piece")}
           </p>
-          <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("valuable")}: {materialValuable ? "Yes" : "No"}
           </p>
           {materialValuable && (
-            <p className="text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+            <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
               {t("fee")}: {materialFee} NT$
             </p>
           )}
@@ -241,7 +241,7 @@ function MaterialDetailCard({
           >
             <Tooltip>
               <TooltipTrigger>
-                <div className="w-10 h-10 rounded-full p-2 text-white hover:text-sky-300 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
+                <div className="w-10 h-10 rounded-full p-2  dark:text-white dark:hover:text-sky-300 hover:text-blue-500 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center">
                   <DialogTrigger
                     asChild
                     onClick={() => setVisible(true)}
@@ -255,7 +255,7 @@ function MaterialDetailCard({
                 <p className="text-white text-xs">{t("edit")}</p>
               </TooltipContent>
             </Tooltip>
-            <DialogContent className="w-11/12 sm:w-11/12 rounded-xl text-white bg-black">
+            <DialogContent className="w-11/12 sm:w-11/12  dark:text-white dark:bg-black rounded-xl">
               <DialogHeader>
                 <DialogTitle className="text-2xl">
                   {t("editMaterial")}
@@ -420,13 +420,13 @@ function MaterialDetailCard({
                       valuable: materialValuable,
                     })
                   }
-                  className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                  className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
                 >
                   {t("submit")}
                 </Button>
                 <Button
                   onClick={() => setVisible(false)}
-                  className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                  className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
                 >
                   {t("cancel")}
                 </Button>
@@ -434,7 +434,7 @@ function MaterialDetailCard({
             </DialogContent>
           </Dialog>
         )}
-        <div className="w-10 h-10 rounded-full p-2 text-white hover:text-green-300 hover:bg-green-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer">
+        <div className="w-10 h-10 rounded-full p-2 dark:text-white hover:text-green-500 dark:hover:text-green-300 hover:bg-green-300 hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer">
           <Tooltip>
             <TooltipTrigger
               asChild
@@ -450,8 +450,9 @@ function MaterialDetailCard({
         </div>
         <div
           className={cn(
-            "w-10 h-10 rounded-full p-2 text-white  hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer",
-            user && "hover:text-sky-300 hover:bg-sky-300"
+            "w-10 h-10 rounded-full p-2  dark:text-white  hover:bg-opacity-20 bg-transparent flex justify-center items-center cursor-pointer",
+            user &&
+              "dark:hover:text-sky-300 hover:text-blue-500 hover:bg-sky-300"
           )}
         >
           <Tooltip>
@@ -462,7 +463,7 @@ function MaterialDetailCard({
               <ShoppingCart
                 size={33}
                 onClick={handleAddToShoppingCart}
-                className={cn("", !user && "text-white text-opacity-50")}
+                className={cn("", !user && " dark:text-white text-opacity-50")}
               />
             </TooltipTrigger>
             <TooltipContent className="bg-black bg-opacity-80">

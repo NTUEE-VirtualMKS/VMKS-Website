@@ -297,7 +297,7 @@ function MaterialCard({
       className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
       key={material.id}
     >
-      <div className="flex flex-col justify-between h-full p-3 bg-[#181b20] w-11/12 mx-auto rounded-lg border border-[#444444]">
+      <div className="flex flex-col justify-between h-full p-3 dark:bg-[#181b20] w-11/12 mx-auto rounded-lg border dark:border-[#444444] shadow-md bg-white">
         <Link to={`/MaterialPage/Material/${material.id}`}>
           <img
             src={material.photoLink}
@@ -305,18 +305,18 @@ function MaterialCard({
             className="w-10/12 mx-auto mt-2 bg-white"
           />
           <div className="ml-3 mt-2">
-            <h2 className="text-white text-24">{material.name}</h2>
-            <p className="text-white text-16">
+            <h2 className="dark:text-white text-24">{material.name}</h2>
+            <p className="dark:text-white text-16">
               {t("partName")}:{" "}
               {material?.partName ? `${material?.partName}` : t("none")}
             </p>
-            <p className="text-white text-16">
+            <p className="dark:text-white text-16">
               {t("position")}: {material.position}
             </p>
-            <p className="text-white text-16">
+            <p className="dark:text-white text-16">
               {t("remain")}: {material?.remain} {t("piece")}
             </p>
-            <p className="text-white text-16">
+            <p className="dark:text-white text-16">
               {t("usage")}: {material?.usage} {t("piece")}
             </p>
           </div>
@@ -330,7 +330,7 @@ function MaterialCard({
                     <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
                       <AlertDialogTrigger asChild>
                         <Trash2
-                          className="p-1.5 hover:text-red-400"
+                          className="p-1.5 dark:hover:text-red-400 hover:text-red-500"
                           size={35}
                         />
                       </AlertDialogTrigger>
@@ -338,7 +338,7 @@ function MaterialCard({
                     <TooltipContent className="bg-black bg-opacity-80">
                       <p className="text-white text-xs">{t("delete")}</p>
                     </TooltipContent>
-                    <AlertDialogContent className="text-white bg-black">
+                    <AlertDialogContent className="dark:text-white dark:bg-black">
                       <AlertDialogHeader>
                         <AlertDialogTitle>
                           {t("alertDialogTitle")}
@@ -351,11 +351,11 @@ function MaterialCard({
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90 hover:text-sky-300">
+                        <AlertDialogCancel className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md">
                           {t("cancel")}
                         </AlertDialogCancel>
                         <AlertDialogAction
-                          className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90"
+                          className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
                           onClick={handleDelete}
                         >
                           {t("continue")}
@@ -379,9 +379,11 @@ function MaterialCard({
                   {user ? (
                     <>
                       <Star
-                        fill={star ? "yellow" : "none"}
-                        color={star || hover ? "yellow" : "white"}
-                        className="p-1.5"
+                        fill={star ? "#fff126" : "none"}
+                        className={cn(
+                          "p-1.5",
+                          star || hover ? "text-[#fff126]" : "dark:text-white"
+                        )}
                         size={35}
                         onMouseEnter={() => setHover(true)}
                         onMouseLeave={() => setHover(false)}
@@ -393,14 +395,14 @@ function MaterialCard({
                       >
                         {Array.from({ length: 12 }).map((_, index) => (
                           <svg
-                            className={`absolute left-1/2 top-1/2 opacity-0 sparkle-${index} hover:text-yellow-300`}
+                            className={`absolute left-1/2 top-1/2 opacity-0 sparkle-${index} hover:text-[#fff126]`}
                             key={index}
                             viewBox="0 0 122 117"
                             width="7"
                             height="7"
                           >
                             <path
-                              className="fill-yellow-200"
+                              className="fill-[#fff126]"
                               d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z"
                             />
                           </svg>
@@ -432,7 +434,7 @@ function MaterialCard({
             <div
               className={cn(
                 "rounded-full hover:bg-opacity-20",
-                user ? "hover:bg-sky-300" : ""
+                user && "hover:bg-sky-400"
               )}
             >
               <div className="w-[35px] h-[35px]">
@@ -440,7 +442,9 @@ function MaterialCard({
                   <ShoppingCart
                     className={cn(
                       "p-1.5",
-                      user ? "hover:text-sky-300" : "text-white text-opacity-50"
+                      user
+                        ? "hover:text-blue-500 dark:hover:text-sky-300"
+                        : "dark:text-white text-gray-300 dark:text-opacity-50"
                     )}
                     size={35}
                     onClick={handleAddToShoppingCart}
@@ -453,13 +457,17 @@ function MaterialCard({
             </div>
           </Tooltip>
           <Tooltip>
-            <div className="rounded-full hover:bg-green-300 hover:bg-opacity-20">
+            <div className="rounded-full hover:bg-green-400 hover:bg-opacity-20">
               <div className="w-[35px] h-[35px]">
                 <TooltipTrigger
                   className="rounded-full transform active:scale-90 transition-transform duration-200"
                   onClick={handleShare}
                 >
-                  <Share className="p-1.5 hover:text-green-300" size={35} />
+                  <Share
+                    className="p-1.5 dark:hover:text-green-300 hover:text-green-500"
+                    size={35}
+                    onClick={handleShare}
+                  />
                 </TooltipTrigger>
                 <TooltipContent className="bg-black bg-opacity-80">
                   <p className="text-white text-xs">{t("share")}</p>

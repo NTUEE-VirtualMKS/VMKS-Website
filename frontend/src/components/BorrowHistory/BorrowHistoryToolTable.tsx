@@ -59,12 +59,12 @@ function BorrowHistoryToolTable({
   return (
     <div className="w-full">
       <section className="mb-1">
-        <p className="text-white text-3xl font-bold flex flex-row gap-2 flex-center">
-          <Icon className="text-white" size={28} />
+        <p className="dark:text-white text-3xl font-bold flex flex-row gap-2 flex-center">
+          <Icon className="dark:text-white" size={28} />
           {tableName}
         </p>
       </section>
-      <div className="rounded-md border-[#444444] border mb-4 mt-2">
+      <div className="rounded-md dark:border-[#444444] border mb-4 mt-2">
         <Table>
           <TableHeader>
             {borrowHistoryTable.getHeaderGroups().map((headerGroup) => (

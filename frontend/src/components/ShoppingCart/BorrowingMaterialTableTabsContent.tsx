@@ -54,7 +54,7 @@ function BorrowingMaterialTableTabsContent({
   });
 
   return (
-    <div className="rounded-b-md border-[#444444] border border-t-transparent mb-4">
+    <div className="rounded-b-md dark:border-[#444444] border border-t-transparent mb-4">
       <Table>
         <TableHeader>
           {borrowingTable.getHeaderGroups().map((headerGroup) => (

@@ -160,14 +160,14 @@ function LoginPage() {
     >
       <Tabs
         value={signupMode ? "signup" : "login"}
-        className="text-white bg-black rounded-lg"
+        className="text-black bg-white dark:text-white dark:bg-black rounded-lg"
       >
         <TabsList className="grid grid-cols-2 rounded-t-md p-1 ">
           <TabsTrigger
             asChild
             key="Login"
             value="login"
-            className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tl-lg font-semibold text-base"
+            className="dark:bg-[#303030] dark:text-zinc-400 cursor-pointer rounded-tl-lg font-semibold text-base"
             onClick={() => setSignupMode(false)}
           >
             <div>{t("login")}</div>
@@ -176,19 +176,19 @@ function LoginPage() {
             asChild
             key="Sign Up"
             value="signup"
-            className="bg-[#303030] text-zinc-400 cursor-pointer rounded-tr-lg font-semibold text-base"
+            className="dark:bg-[#303030] dark:text-zinc-400 cursor-pointer rounded-tr-lg font-semibold text-base"
             onClick={() => setSignupMode(true)}
           >
             <div>{t("signup")}</div>
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <Card className="w-sm bg-black border border-[#444444] mt-2">
+      <Card className="w-sm dark:bg-black dark:border dark:border-[#444444] mt-2">
         <CardHeader>
-          <CardTitle className="flex flex-row items-center text-white justify-start gap-2 ml-1">
+          <CardTitle className="flex flex-row items-center dark:text-white justify-start gap-2 ml-1">
             <img
               data-testid="header-logo"
-              className="w-12 h-12"
+              className="w-12 h-12 bg-black rounded-full"
               src="/logo-2.png"
               alt="logo"
             />
@@ -204,7 +204,7 @@ function LoginPage() {
           <div className="grid w-full items-center space-y-4">
             {signupMode && (
               <div className="flex flex-col gap-1">
-                <Label htmlFor="name" className="text-white">
+                <Label htmlFor="name" className="dark:text-white">
                   {t("name")}
                 </Label>
                 <Input
@@ -220,7 +220,7 @@ function LoginPage() {
               </div>
             )}
             <div className="flex flex-col gap-1">
-              <Label htmlFor="studentId" className="text-white">
+              <Label htmlFor="studentId" className="dark:text-white">
                 {t("studentId")}
               </Label>
               <Input
@@ -235,7 +235,7 @@ function LoginPage() {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <Label htmlFor="password" className="text-white">
+              <Label htmlFor="password" className="dark:text-white">
                 {t("password")}
               </Label>
               <PasswordInput
@@ -250,7 +250,7 @@ function LoginPage() {
             </div>
             {signupMode && (
               <div className="flex flex-col gap-1">
-                <Label htmlFor="confirm-password" className="text-white">
+                <Label htmlFor="confirm-password" className="dark:text-white">
                   {t("confirmPassword")}
                 </Label>
                 <PasswordInput
@@ -282,7 +282,7 @@ function LoginPage() {
               </Button>
               <Button
                 size="sm"
-                className="text-white border border-white transform active:scale-90 transition-transform duration-200"
+                className="bg-black hover:bg-black text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
                 {t("signup")}
               </Button>
@@ -302,7 +302,7 @@ function LoginPage() {
               </Button>
               <Button
                 size="sm"
-                className="text-white border border-white transform active:scale-90 transition-transform duration-200"
+                className="bg-black hover:bg-black text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
                 {t("login")}
               </Button>

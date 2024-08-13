@@ -7,22 +7,22 @@ function HomePageForum() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col h-full py-5 px-4 w-full bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:pr-5">
+    <div className="flex flex-col h-full py-5 px-4 w-full dark:bg-[#202020] shadow-md border dark:border-[#444444] bg-opacity-50 rounded-[30px] max-md:pr-5">
       <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
         <div className="flex flex-col">
-          <div className="text-2xl text-white flex flex-row gap-2 items-center font-semibold">
+          <div className="text-2xl dark:text-white flex flex-row gap-2 items-center font-semibold">
             <NotebookPen size={28} />
             {t("forum")}
           </div>
           <div className="flex flex-row items-center gap-1">
             <div className="mt-2">🌟</div>
-            <div className="mt-2 text-base whitespace-nowrap text-white text-opacity-50 font-semibold">
+            <div className="mt-2 text-base whitespace-nowrap dark:text-white text-opacity-50 font-semibold">
               {t("recentlyAdded")}
             </div>
           </div>
         </div>
         <button
-          className="self-end mt-9 text-sm text-right text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
+          className="self-end mt-9 text-sm text-right dark:text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
           onClick={() => navigate("/advanced/forum")}
         >
           {t("seeAll")}
@@ -30,7 +30,7 @@ function HomePageForum() {
       </div>
       {
         // TODO: create a new component for each forum post and replace with map function.
-        <div className="flex flex-col py-0.5 px-2 mt-3 mb-96 w-full text-white border border-[#444444] rounded-lg max-md:mb-10 transform active:scale-95 transition-transform duration-200 cursor-pointer bg-[#303030] bg-opacity-50 hover:bg-opacity-70">
+        <div className="flex flex-col py-0.5 px-2 mt-3 mb-96 w-full dark:text-white border dark:border-[#444444] rounded-lg max-md:mb-10 transform active:scale-[0.97] transition-transform duration-200 cursor-pointer dark:bg-[#303030] bg-gray-50 bg-opacity-50 hover:bg-opacity-70 shadow">
           <div className="flex gap-5 justify-between w-full font-semibold p-1">
             <div className="flex gap-1 justify-between ">
               <img
@@ -43,7 +43,7 @@ function HomePageForum() {
                 <div className="text-sm whitespace-nowrap">
                   Blender with Unreal Engine 5
                 </div>
-                <div className="mt-1 text-xs text-white">
+                <div className="mt-1 text-xs dark:text-white">
                   Blend 3D artistry with Unreal Engine 5 for stunning visuals
                   and unparalleled real-time rendering experiences.
                 </div>

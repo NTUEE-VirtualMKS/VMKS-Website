@@ -45,9 +45,9 @@ import { Label } from "@/components/ui/label";
 const determineTextColor = (status: string) => {
   switch (status) {
     case "Success":
-      return "text-green-400 hover:text-green-400";
+      return "text-green-500 hover:text-green-500 dark:text-green-400 dark:hover:text-green-400";
     case "Processing":
-      return "text-orange-400 hover:text-orange-400";
+      return "text-orange-500 hover:text-orange-500 dark:text-orange-400 dark:hover:text-orange-400";
     case "Failed":
       return "text-red-500 hover:text-red-500";
     case "Not Returned Yet":
@@ -65,7 +65,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -75,7 +75,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -97,7 +97,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -106,7 +106,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -115,7 +115,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -124,7 +124,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -151,7 +151,7 @@ export const unborrowedColumns: ColumnDef<UserBorrowToolType>[] = [
       };
 
       return (
-        <div className="text-white w-28 mx-auto">
+        <div className="dark:text-white w-28 mx-auto">
           <Input
             type="number"
             placeholder="Quantity"
@@ -272,7 +272,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -281,7 +281,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -290,7 +290,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -299,7 +299,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -308,7 +308,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("quantity")}
       </div>
     ),
@@ -317,7 +317,7 @@ export const borrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "borrowDate",
     header: "Borrow Date",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {(row.getValue("borrowDate") as string).split(",")[0]}
       </div>
     ),
@@ -427,7 +427,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -436,7 +436,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -445,7 +445,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -454,7 +454,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("quantity")}
       </div>
     ),
@@ -463,7 +463,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "borrowDate",
     header: "Borrow Date",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {(row.getValue("borrowDate") as string).split(",")[0]}
       </div>
     ),
@@ -472,7 +472,7 @@ export const borrowHistoryColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "returnDate",
     header: "Return Date",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {(row.getValue("returnDate") as string).split(",")[0]}
       </div>
     ),
@@ -615,7 +615,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -625,7 +625,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -728,7 +728,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "borrower",
     header: "Borrower",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("borrower")}
       </div>
     ),
@@ -737,7 +737,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "studentId",
     header: "Student ID",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold uppercase">
+      <div className="text-center dark:text-white text-base font-semibold uppercase">
         {row.getValue("studentId")}
       </div>
     ),
@@ -757,7 +757,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -766,7 +766,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -775,7 +775,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -784,7 +784,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -793,7 +793,7 @@ export const allUsersBorrowingColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("quantity")}
       </div>
     ),
@@ -809,7 +809,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -819,7 +819,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -830,7 +830,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "borrower",
     header: "Borrower",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("borrower")}
       </div>
     ),
@@ -839,7 +839,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "studentId",
     header: "Student ID",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold uppercase">
+      <div className="text-center dark:text-white text-base font-semibold uppercase">
         {row.getValue("studentId")}
       </div>
     ),
@@ -859,7 +859,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -868,7 +868,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -877,7 +877,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -886,7 +886,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -895,7 +895,7 @@ export const allUsersUnreturnedColumns: ColumnDef<UserBorrowToolType>[] = [
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("quantity")}
       </div>
     ),
@@ -912,7 +912,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -922,7 +922,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="border-white"
+          className="dark:border-white"
         />
       </center>
     ),
@@ -944,7 +944,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -953,7 +953,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -962,7 +962,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -971,7 +971,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -998,7 +998,7 @@ export const unborrowedMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
       };
 
       return (
-        <div className="text-white w-28 mx-auto">
+        <div className="dark:text-white w-28 mx-auto">
           <Input
             type="number"
             placeholder="Quantity"
@@ -1119,7 +1119,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("name")}
       </div>
     ),
@@ -1128,7 +1128,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "partName",
     header: "Part Name",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("partName")}
       </div>
     ),
@@ -1137,7 +1137,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "remain",
     header: "Remain",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("remain")}
       </div>
     ),
@@ -1146,7 +1146,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "position",
     header: "Position",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("position")}
       </div>
     ),
@@ -1155,7 +1155,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {row.getValue("quantity")}
       </div>
     ),
@@ -1164,7 +1164,7 @@ export const borrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>[] = [
     accessorKey: "borrowDate",
     header: "Borrow Date",
     cell: ({ row }) => (
-      <div className="text-center text-white text-base font-semibold">
+      <div className="text-center dark:text-white text-base font-semibold">
         {(row.getValue("borrowDate") as string).split(",")[0]}
       </div>
     ),
@@ -1275,7 +1275,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("name")}
         </div>
       ),
@@ -1284,7 +1284,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "partName",
       header: "Part Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("partName")}
         </div>
       ),
@@ -1293,7 +1293,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "position",
       header: "Position",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("position")}
         </div>
       ),
@@ -1302,7 +1302,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "quantity",
       header: "Quantity",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("quantity")}
         </div>
       ),
@@ -1311,7 +1311,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "borrowDate",
       header: "Borrow Date",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {(row.getValue("borrowDate") as string).split(",")[0]}
         </div>
       ),
@@ -1320,7 +1320,7 @@ export const borrowHistoryMaterialColumns: ColumnDef<UserBorrowMaterialType>[] =
       accessorKey: "returnDate",
       header: "Return Date",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {(row.getValue("returnDate") as string).split(",")[0]}
         </div>
       ),
@@ -1469,7 +1469,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
               table.toggleAllPageRowsSelected(!!value)
             }
             aria-label="Select all"
-            className="border-white"
+            className="dark:border-white"
           />
         </center>
       ),
@@ -1479,7 +1479,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
-            className="border-white"
+            className="dark:border-white"
           />
         </center>
       ),
@@ -1584,7 +1584,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "borrower",
       header: "Borrower",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("borrower")}
         </div>
       ),
@@ -1593,7 +1593,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "studentId",
       header: "Student ID",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold uppercase">
+        <div className="text-center dark:text-white text-base font-semibold uppercase">
           {row.getValue("studentId")}
         </div>
       ),
@@ -1613,7 +1613,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("name")}
         </div>
       ),
@@ -1622,7 +1622,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "partName",
       header: "Part Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("partName")}
         </div>
       ),
@@ -1631,7 +1631,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "remain",
       header: "Remain",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("remain")}
         </div>
       ),
@@ -1640,7 +1640,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "position",
       header: "Position",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("position")}
         </div>
       ),
@@ -1649,7 +1649,7 @@ export const allUsersBorrowingMaterialColumns: ColumnDef<UserBorrowMaterialType>
       accessorKey: "quantity",
       header: "Quantity",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("quantity")}
         </div>
       ),
@@ -1668,7 +1668,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
               table.toggleAllPageRowsSelected(!!value)
             }
             aria-label="Select all"
-            className="border-white"
+            className="dark:border-white"
           />
         </center>
       ),
@@ -1678,7 +1678,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
-            className="border-white"
+            className="dark:border-white"
           />
         </center>
       ),
@@ -1689,7 +1689,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "borrower",
       header: "Borrower",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("borrower")}
         </div>
       ),
@@ -1698,7 +1698,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "studentId",
       header: "Student ID",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold uppercase">
+        <div className="text-center dark:text-white text-base font-semibold uppercase">
           {row.getValue("studentId")}
         </div>
       ),
@@ -1718,7 +1718,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("name")}
         </div>
       ),
@@ -1727,7 +1727,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "partName",
       header: "Part Name",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("partName")}
         </div>
       ),
@@ -1736,7 +1736,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "remain",
       header: "Remain",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("remain")}
         </div>
       ),
@@ -1745,7 +1745,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "position",
       header: "Position",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("position")}
         </div>
       ),
@@ -1754,7 +1754,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       accessorKey: "quantity",
       header: "Quantity",
       cell: ({ row }) => (
-        <div className="text-center text-white text-base font-semibold">
+        <div className="text-center dark:text-white text-base font-semibold">
           {row.getValue("quantity")}
         </div>
       ),

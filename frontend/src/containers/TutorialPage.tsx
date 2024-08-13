@@ -41,13 +41,15 @@ function TutorialPage() {
   };
 
   const textColor = (sessionId: string) =>
-    sessionId === activeSession ? "text-white" : "text-gray-500";
+    sessionId === activeSession
+      ? "dark:text-white"
+      : "dark:text-gray-500 text-gray-400";
 
   return (
     <>
       <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
         <ul className="list-none text-lg hidden flex-col items-center sm:hidden md:flex lg:flex xl:flex">
-          <h1 className="text-white text-xl">{t("tableOfContents")}</h1>
+          <h1 className="dark:text-white text-xl">{t("tableOfContents")}</h1>
           <li
             key="sessionA"
             onClick={() => scrollToSection(sessionA, "sessionA")}
@@ -71,15 +73,15 @@ function TutorialPage() {
           </li>
         </ul>
       </div>
-      <div className="flex flex-col w-8/12 mx-auto mt-20 mb-8 text-white">
+      <div className="flex flex-col w-8/12 mx-auto mt-20 mb-8 dark:text-white">
         <h1
           ref={sessionA}
-          className="text-white p-1 flex flex-row gap-2 items-center"
+          className="dark:text-white p-1 flex flex-row gap-2 items-center"
         >
-          <Info className="text-white" size={35} />
+          <Info className="dark:text-white" size={35} />
           {t("info")}
         </h1>
-        <h2 className="mt-5 flex items-center">
+        <h2 className="flex items-center">
           <span>
             <a
               href="#interaction"
@@ -104,7 +106,7 @@ function TutorialPage() {
             {language === "zh" ? interaction3Zh : interaction3En}
           </p>
         </div>
-        <div className="mb-14" ref={sessionB} />
+        <div className="mb-12" ref={sessionB} />
         <br />
         <h2 className="mt-5 flex items-center">
           <span>

@@ -34,7 +34,7 @@ function AnnouncementList() {
       ) : (
         <section className="flex flex-col size-full flex-center">
           <div className="flex-center w-full flex-col mt-36">
-            <p className="w-full text-4xl text-center font-bold text-white p-2 text-opacity-50">
+            <p className="w-full text-4xl text-center font-bold dark:text-white p-2 text-opacity-50">
               {t("noAnnouncement")}
             </p>
           </div>

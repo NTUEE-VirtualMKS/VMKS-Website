@@ -91,7 +91,7 @@ function App() {
                 }
               />
               <Route
-                path="/UserProfilePage"
+                path="/UserProfilePage/:id"
                 element={
                   <Suspense fallback={<LoaderSpinner />}>
                     {user ? <UserProfilePage /> : <NotFound />}

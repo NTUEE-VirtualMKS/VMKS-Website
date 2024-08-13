@@ -27,7 +27,7 @@ function PasswordInputDialog({
 
   return (
     <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
-      <DialogContent className="w-11/12 sm:w-11/12 text-white bg-black">
+      <DialogContent className="w-11/12 sm:w-11/12 dark:text-white dark:bg-black">
         <DialogHeader>
           <DialogTitle className="text-2xl">{t("enterPassword")}</DialogTitle>
           <DialogDescription className="text-sm">

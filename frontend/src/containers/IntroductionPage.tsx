@@ -52,7 +52,9 @@ function IntroductionPage() {
   };
 
   const textColor = (sessionId: string) =>
-    sessionId === activeSession ? "text-white" : "text-gray-500";
+    sessionId === activeSession
+      ? "dark:text-white"
+      : "dark:text-gray-500 text-gray-400";
 
   const { data, loading, error } = useQuery(ALL_ADMIN_SCHEDULES_QUERY);
   if (loading) {
@@ -68,7 +70,7 @@ function IntroductionPage() {
     <>
       <div className="w-1/12 h-24 fixed ml-0 mr-2 mt-8 sm:ml-0 sm:mr-2 md:ml-3 lg:ml-6 xl:ml-6">
         <ul className="list-none text-lg hidden flex-col items-center sm:hidden md:flex lg:flex xl:flex">
-          <h1 className="text-white text-xl">{t("tableOfContents")}</h1>
+          <h1 className="dark:text-white text-xl">{t("tableOfContents")}</h1>
           <li
             onClick={() => scrollToSection(sessionA, "sessionA")}
             className={textColor("sessionA")}
@@ -89,12 +91,12 @@ function IntroductionPage() {
           </li>
         </ul>
       </div>
-      <div className="w-8/12 mx-auto mt-20 mb-8 text-white flex flex-col">
+      <div className="w-8/12 mx-auto mt-20 mb-8 dark:text-white flex flex-col">
         <div>
           <h1 ref={sessionA} className="p-1">
             MKS {t("introduction")}
           </h1>
-          <h2 className="mt-5 flex items-center">
+          <h2 className="flex items-center">
             <span>
               <a
                 href="#introduction"
@@ -113,7 +115,7 @@ function IntroductionPage() {
               {language === "zh" ? introductionZh : introductionEn}
             </p>
           </div>
-          <div className="mb-10" ref={sessionB}></div>
+          <div className="mb-4" ref={sessionB}></div>
           <br />
           <h2 className="mt-5 flex items-center">
             <span>
@@ -132,7 +134,9 @@ function IntroductionPage() {
           <center className="mt-8 w-full">
             <AdminSchedule adminSchedule={adminSchedule} />
           </center>
-          <h2 className="mt-5 flex items-center" ref={sessionC}>
+          <div className="mb-4" ref={sessionC}></div>
+          <br />
+          <h2 className="mt-5 flex items-center">
             <span>
               <a
                 href="#rules"

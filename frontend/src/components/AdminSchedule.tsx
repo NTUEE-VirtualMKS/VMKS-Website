@@ -7,8 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { periods, week } from "@/constants/index";
-import { useUser } from "@/contexts/UserContext";
-import { cn } from "@/lib/utils";
 import { AdminScheduleType } from "@/shared/type";
 import { useTranslation } from "react-i18next";
 import AdminScheduleEditInput from "./AdminScheduleEditInput";
@@ -21,20 +19,18 @@ function AdminSchedule({
   adminSchedule: AdminScheduleType[][];
 }) {
   const { t } = useTranslation();
-  const { user } = useUser();
-
   return (
     <>
-      <div className="border border-[#444444] rounded-xl">
+      <div className="border dark:border-[#444444] rounded-xl">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-white text-center font-semibold text-base">
+              <TableHead className="dark:text-white text-center font-semibold text-base">
                 {t("period")}
               </TableHead>
               {week.map((day) => (
                 <TableHead
-                  className="text-white text-center font-semibold text-base"
+                  className="dark:text-white text-center font-semibold text-base"
                   key={day}
                 >
                   {t(`${day}`)}
@@ -45,7 +41,7 @@ function AdminSchedule({
           <TableBody>
             {adminSchedule.map((peroid: AdminScheduleType[], index: number) => (
               <TableRow key={index}>
-                <TableCell className="text-white text-center text-base">
+                <TableCell className="dark:text-white text-black text-center text-base">
                   {deteminePeriod(index)}
                 </TableCell>
                 {peroid.map((adminSchedule, index: number) => (
@@ -59,7 +55,9 @@ function AdminSchedule({
           </TableBody>
         </Table>
       </div>
-      <p className="text-center text-zinc-500 mt-3">{t("adminWorkSchedule")}</p>
+      <p className="text-center dark:text-zinc-500 text-zinc-400 mt-3">
+        {t("adminWorkSchedule")}
+      </p>
     </>
   );
 }

@@ -35,7 +35,7 @@ function Searchbar({
         onChange={(e) => setSearchParams({ search: e.target.value })}
         onLoad={() => setSearchParams({ search: "" })}
       />
-      <Search size={20} className="absolute left-4 top-3.5 text-white" />
+      <Search size={20} className="absolute left-4 top-3.5 dark:text-white" />
       {search && (
         <X
           size={50}
