@@ -1,16 +1,5 @@
 {
-  "user": [
-    {
-      "name": "陳秉緯",
-      "studentID": "B11901164",
-      "password": "12345678",
-      "photoLink": "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43",
-      "language": "zh",
-      "laserCutAvailable": true,
-      "articlesId": [],
-      "isAdmin": true,
-      "isMinister": true
-    },
+  "users": [
     {
       "name": "吳柏均",
       "studentID": "B11901000",
@@ -20,7 +9,7 @@
       "laserCutAvailable": true,
       "articlesId": [],
       "isAdmin": true,
-      "isMinister": false
+      "isMinister": true
     },
     {
       "name": "陳柏睿",

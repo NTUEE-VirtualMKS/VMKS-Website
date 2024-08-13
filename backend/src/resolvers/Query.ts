@@ -533,72 +533,100 @@ const Query = {
     return searchThreeDPByPosition;
   },
 
-  AllUser: async () => {
-    const users = await prisma.user.findMany();
+  GetAllUsers: async () => {
+    const users = await prisma.user.findMany({
+      orderBy: {
+        id: "desc"
+      },
+      omit: {
+        password: true,
+        threeDPId: true,
+        language: true,
+        toolLikeIds: true,
+        materialLikeIds: true,
+        userBorrowToolIds: true,
+        userBorrowMaterialIds: true,
+        articlesId: true,
+      }
+    });
+
     return users;
   },
 
   SearchUserByName: async (_parent, args: { name: string }, _context) => {
-    const _name = args.name;
-    const searchUserByName = await prisma.user.findMany({
+    const name = args.name;
+    const users = await prisma.user.findMany({
       where: {
         name: {
-          contains: _name,
+          contains: name,
         },
       },
       orderBy: {
         id: "desc",
       },
+      omit: {
+        password: true,
+        threeDPId: true,
+        language: true,
+        toolLikeIds: true,
+        materialLikeIds: true,
+        userBorrowToolIds: true,
+        userBorrowMaterialIds: true,
+        articlesId: true,
+      }
     });
-    if (searchUserByName.length === 0) return searchUserByName;
-    let pos: number[] = []; // pos is used to store the position of the _name in each string
-    let pi: number[] = []; // KMP
-    let posCount: number[] = []; // used in counting sort
-    let maxPos = -1; // used in counting sort
-    pi[0] = 0;
-    let k = 0;
-    for (let i = 1; i < _name.length; i++) {
-      while (k > 0 && _name[k] !== _name[i]) {
-        k = pi[k - 1];
-      }
-      if (_name[k] == _name[i]) {
-        k += 1;
-      }
-      pi[i] = k;
-    }
-    for (let i = 0; i < searchUserByName.length; i++) {
-      const userName = searchUserByName[i].name;
-      k = 0;
-      for (let j = 0; j < userName.length; j++) {
-        while (k > 0 && _name[k] !== userName[j]) {
-          k = pi[k - 1];
-        }
-        if (_name[k] === userName[j]) {
-          k += 1;
-        }
-        if (k === _name.length) {
-          pos[i] = j - k + 1;
-          if (pos[i] > maxPos) {
-            for (let l = maxPos + 1; l <= pos[i]; l++) {
-              posCount[l] = 0;
-            }
-            maxPos = pos[i];
-          }
-          posCount[pos[i]] += 1;
-          break;
-        }
-      }
-    }
-    //Counting sort
-    for (let i = 1; i <= maxPos; i++) {
-      posCount[i] += posCount[i - 1];
-    }
-    let orderedSearchUserByName: User[] = [];
-    for (let i = 0; i < searchUserByName.length; i++) {
-      posCount[pos[i]] -= 1;
-      orderedSearchUserByName[posCount[pos[i]]] = searchUserByName[i];
-    }
-    return orderedSearchUserByName;
+
+    return users;
+
+    // if (searchUserByName.length === 0) return searchUserByName;
+    // let pos: number[] = []; // pos is used to store the position of the _name in each string
+    // let pi: number[] = []; // KMP
+    // let posCount: number[] = []; // used in counting sort
+    // let maxPos = -1; // used in counting sort
+    // pi[0] = 0;
+    // let k = 0;
+    // for (let i = 1; i < _name.length; i++) {
+    //   while (k > 0 && _name[k] !== _name[i]) {
+    //     k = pi[k - 1];
+    //   }
+    //   if (_name[k] == _name[i]) {
+    //     k += 1;
+    //   }
+    //   pi[i] = k;
+    // }
+    // for (let i = 0; i < searchUserByName.length; i++) {
+    //   const userName = searchUserByName[i].name;
+    //   k = 0;
+    //   for (let j = 0; j < userName.length; j++) {
+    //     while (k > 0 && _name[k] !== userName[j]) {
+    //       k = pi[k - 1];
+    //     }
+    //     if (_name[k] === userName[j]) {
+    //       k += 1;
+    //     }
+    //     if (k === _name.length) {
+    //       pos[i] = j - k + 1;
+    //       if (pos[i] > maxPos) {
+    //         for (let l = maxPos + 1; l <= pos[i]; l++) {
+    //           posCount[l] = 0;
+    //         }
+    //         maxPos = pos[i];
+    //       }
+    //       posCount[pos[i]] += 1;
+    //       break;
+    //     }
+    //   }
+    // }
+    // //Counting sort
+    // for (let i = 1; i <= maxPos; i++) {
+    //   posCount[i] += posCount[i - 1];
+    // }
+    // let orderedSearchUserByName: User[] = [];
+    // for (let i = 0; i < searchUserByName.length; i++) {
+    //   posCount[pos[i]] -= 1;
+    //   orderedSearchUserByName[posCount[pos[i]]] = searchUserByName[i];
+    // }
+    // return orderedSearchUserByName;
   },
 
   GetUserByStudentID: async (
@@ -800,7 +828,8 @@ const Query = {
                   </div>
                 </div>
                 <div class="footer">
-                  <p>If this wasn't you, you can <a href="{{security_url}}">secure your account</a> from a device you've logged in with in the past. <a href="{{learn_more_url}}">Learn more</a></p>
+                  <p>If this wasn't you, you can <a href="{{security_url}}">secure your account</a> from a device you've logged in with in the past.</p>
+                  <p><a href="{{learn_more_url}}">Learn more</a></p>
                   <p>- VMKS Team</p>
                 </div>
               </div>

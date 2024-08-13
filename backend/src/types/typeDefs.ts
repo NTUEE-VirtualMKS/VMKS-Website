@@ -250,6 +250,16 @@ const typeDefs = `#graphql
     userBorrowMaterialIds: [Int]
   }
 
+  type SimpleUser {
+    id: Int!
+    name: String!
+    studentID: String!
+    photoLink: String
+    laserCutAvailable: Boolean!
+    isAdmin: Boolean!
+    isMinister: Boolean!
+  }
+
   type SignUpRet {
     user: User!
     token: String!
@@ -434,8 +444,8 @@ const typeDefs = `#graphql
     AllMachines: [Machine]
     SearchMachinesByCategory(category: String!): [Machine]
     SearchMachinesByPosition(position: String!): [Machine]
-    AllUser: [User]
-    SearchUserByName(name: String!): [User]
+    GetAllUsers: [SimpleUser]
+    SearchUserByName(name: String!): [SimpleUser]
     GetUserByStudentID(studentID: String!): User
     AllThreeDP: [ThreeDP]
     SearchThreeDPByCategory(category: String!): [ThreeDP]
