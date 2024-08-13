@@ -60,17 +60,17 @@ function StudentIDCardUploadDialog() {
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <Button
           onClick={() => setVisible(true)}
-          className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+          className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
         >
-          Upload Student ID Card
+          {t("uploadStudenetIDCard")}
         </Button>
-        <DialogContent className="text-white bg-black rounded-xl w-11/12 sm:w-11/12">
+        <DialogContent className="dark:text-white dark:bg-black rounded-xl w-11/12 sm:w-11/12">
           <DialogHeader>
             <DialogTitle className="text-2xl">
               {t("uploadStudenetIDCard")}
             </DialogTitle>
             <DialogDescription className="text-sm">
-              {t("pleaseUploadYourStudentIDCardFront")}:
+              {t("pleaseUploadTheFrontSideOfYourStudentIDCard")}:
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-1">

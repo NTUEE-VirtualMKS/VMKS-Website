@@ -34,7 +34,7 @@ function HomePage() {
             <div>
               {windowWidth < 1024 && windowWidth > 767 && (
                 <div className="mb-3 flex flex-row sm:flex-row md:flex-col lg:flex-col xl:flex-col gap-2 justify-start">
-                  <div className="text-3xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-5xl font-bold text-white">
+                  <div className="text-3xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-5xl font-bold dark:text-white">
                     Virtual Makerspace
                   </div>
                   <div className="flex flex-row flex-center gap-3">

@@ -22,7 +22,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
           type="button"
           variant="ghost"
           size="sm"
-          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-white text-white"
+          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white dark:text-white"
           onClick={() => setShowPassword(!showPassword)}
           disabled={disabled}
         >

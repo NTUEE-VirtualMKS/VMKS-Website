@@ -161,7 +161,7 @@ function UnborrowedTableTabsContent({
 
   return (
     <>
-      <div className="rounded-b-md border-[#444444] border border-t-transparent">
+      <div className="rounded-b-md dark:border-[#444444] border border-t-transparent">
         <Table>
           <TableHeader>
             {unborrowedTable.getHeaderGroups().map((headerGroup) => (
@@ -219,7 +219,7 @@ function UnborrowedTableTabsContent({
         </div>
         <div>
           <Button
-            className="text-sky-300 border border-sky-300 bg-transparent hover:bg-primary/90 transform active:scale-90 transition-transform duration-200"
+            className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
             onClick={() =>
               handleBorrow(
                 unborrowedTable

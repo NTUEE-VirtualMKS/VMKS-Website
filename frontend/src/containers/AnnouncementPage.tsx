@@ -58,24 +58,24 @@ function AnnouncementPage() {
 
   return (
     <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
-      <h1 className="text-white p-1 flex flex-row items-center gap-1 text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl">
-        <Volume2 className="text-white" size={35} />
+      <h1 className="dark:text-white p-1 flex flex-row items-center gap-1 text-4xl sm:text-4xl md:text-[2.6rem] lg:text-text-[2.6rem] xl:text-[2.6rem]">
+        <Volume2 className="dark:text-white" size={40} />
         {t("announcements")}
       </h1>
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
-        <DialogTrigger asChild>
-          {user?.isAdmin && (
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+        {user?.isAdmin && (
+          <DialogTrigger asChild>
+            <div className="flex flex-row-reverse">
               <Button
-                className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 cursor-pointer lowercase"
+                className="bg-white dark:bg-black m-3 dark:text-sky-300 text-blue-500 hover:bg-transparent shadow-md border dark:border-sky-300 border-blue-500 transform active:scale-90 transition-transform duration-200 cursor-pointer lowercase"
                 onClick={() => setVisible(true)}
               >
                 {t("newAnnouncement")}
               </Button>
             </div>
-          )}
-        </DialogTrigger>
-        <DialogContent className="w-11/12 sm:w-11/12 rounded-lg text-white bg-black">
+          </DialogTrigger>
+        )}
+        <DialogContent className="w-11/12 sm:w-11/12 rounded-lg dark:text-white dark:bg-black">
           <DialogHeader>
             <DialogTitle className="text-2xl">
               {t("newAnnouncement")}
@@ -113,13 +113,13 @@ function AnnouncementPage() {
           <div className="flex flex-row-reverse gap-2">
             <Button
               onClick={() => handleSubmit({ title, content })}
-              className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+              className="bg-white dark:bg-black dark:text-sky-300 text-blue-500 border dark:border-sky-300 border-blue-500 transform active:scale-90 transition-transform duration-200 hover:bg-transparent shadow-md"
             >
               {t("submit")}
             </Button>
             <Button
               onClick={() => setVisible(false)}
-              className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+              className="bg-white dark:bg-black dark:text-red-400 text-red-500 border dark:border-red-400 border-red-500 transform active:scale-90 transition-transform duration-200 hover:bg-transparent shadow-md"
             >
               {t("cancel")}
             </Button>

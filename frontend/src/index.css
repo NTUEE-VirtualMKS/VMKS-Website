@@ -102,15 +102,15 @@
   }
 
   .input-class {
-    @apply text-16 placeholder:text-16 bg-[#15171C] rounded-[6px] placeholder:text-[#71788B] border-none text-white focus-visible:ring-offset-sky-300;
+    @apply text-16 placeholder:text-16 dark:bg-[#15171C] bg-[#f0f0f0] rounded-[6px] placeholder:text-[#71788B] border-none dark:text-white;
   }
 
   .checkbox-class {
-    @apply text-16 bg-[#15171C] text-white focus-visible:ring-offset-sky-300;
+    @apply text-16 dark:bg-[#15171C] dark:text-white focus-visible:ring-offset-sky-300;
   }
 
   .image_div {
-    @apply flex-center h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed border-[#24272C] bg-black;
+    @apply flex-center h-[142px] w-full cursor-pointer flex-col gap-3 rounded-xl border-[3.2px] border-dashed dark:border-[#24272C] dark:bg-black;
   }
 
   .flex-center {

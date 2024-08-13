@@ -10,7 +10,7 @@ function SkeletonList() {
             key={index}
           >
             <div className="flex flex-col justify-between h-full p-1 w-11/12 mx-auto rounded-xl">
-              <Skeleton className="h-96 w-full rounded-xl bg-zinc-800" />
+              <Skeleton className="h-96 w-full rounded-xl dark:bg-zinc-800" />
             </div>
           </div>
         );

@@ -40,9 +40,9 @@ function HomePageSchedule() {
 
   return (
     <>
-      <div className="flex flex-col grow py-5 w-full font-semibold bg-[#202020] border border-[#444444] bg-opacity-50 rounded-[30px] max-md:mt-6">
+      <div className="flex flex-col grow py-5 w-full font-semibold dark:bg-[#202020] border dark:border-[#444444]  shadow-md bg-opacity-50 rounded-[30px] max-md:mt-6">
         <div className="flex flex-col px-5 max-md:pl-5">
-          <div className="text-2xl text-white flex flex-row items-center gap-2 font-semibold">
+          <div className="text-2xl dark:text-white flex flex-row items-center gap-2 font-semibold">
             <Calendar size={28} />
             <span className="">
               {t("schedule") +
@@ -50,20 +50,20 @@ function HomePageSchedule() {
             </span>
           </div>
           <button
-            className="self-end mt-1.5 text-sm text-right whitespace-nowrap text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
+            className="self-end mt-1.5 text-sm text-right whitespace-nowrap dark:text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
             onClick={() => navigate("/IntroductionPage")}
           >
             {t("seeAll")}
           </button>
         </div>
-        <div className="flex mx-4 mt-2 justify-between self-center w-[16.5rem] text-white bg-[#303030] bg-opacity-50 hover:bg-opacity-70 border border-[#444444] rounded-xl">
+        <div className="flex mx-4 mt-2 justify-between self-center w-[16.5rem] dark:text-white dark:bg-[#303030] bg-gray-50  shadow bg-opacity-50 hover:bg-opacity-70 border dark:border-[#444444] rounded-xl">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent rounded-t-2xl">
-                <TableHead className="text-white text-center font-semibold">
+                <TableHead className="dark:text-white text-center font-semibold">
                   {t("period")}
                 </TableHead>
-                <TableHead className="text-white text-center font-semibold">
+                <TableHead className="dark:text-white text-center font-semibold">
                   {t("onDutyAdmin")}
                 </TableHead>
               </TableRow>
@@ -71,10 +71,10 @@ function HomePageSchedule() {
             <TableBody>
               {adminSchedule.map(({ period, admin }, index) => (
                 <TableRow key={index} className="border-none">
-                  <TableCell className="text-white text-center w-6/12 mx-auto">
+                  <TableCell className="dark:text-white text-center w-6/12 mx-auto">
                     {period}
                   </TableCell>
-                  <TableCell className="text-white text-center w-6/12 mx-auto">
+                  <TableCell className="dark:text-white text-center w-6/12 mx-auto">
                     {admin}
                   </TableCell>
                 </TableRow>

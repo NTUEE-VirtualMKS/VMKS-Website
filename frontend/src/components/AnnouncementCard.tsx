@@ -106,38 +106,42 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
     <div>
       <div
         key={announcementId}
-        className="text-white border border-[#444444] my-2.5 mx-3 p-4 rounded-xl cursor-pointer bg-[#303030] bg-opacity-50 text-opacity-50 hover:bg-opacity-70"
+        className="dark:text-white shadow-md border dark:border-[#444444] my-2.5 mx-3 p-3.5 rounded-xl cursor-pointer dark:bg-[#303030] bg-opacity-50 text-opacity-50 hover:bg-opacity-70"
       >
-        <h2 className="text-white px-2">{announcementTitle}</h2>
+        <h2 className="dark:text-white px-2">{announcementTitle}</h2>
         <p className="text-gray-400 text-base px-2">
           {t("date")}: {new Date(announcementDate).toLocaleString()}
         </p>
-        <p className="text-white text-lg px-2">
+        <p className="dark:text-white text-lg px-2">
           {announcementContent.length > 350
             ? announcementContent.slice(0, 280) + "..."
             : announcementContent}
         </p>
         {user?.isAdmin && (
-          <div className="flex flex-row-reverse gap-2">
+          <div className="flex flex-row-reverse gap-2 mt-2">
             <Tooltip>
               <Dialog
                 open={visible}
                 onOpenChange={(visible) => setVisible(visible)}
               >
                 <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
-                  <>
+                  <div className="p-2 aspect-square dark:text-white dark:hover:text-sky-300 hover:text-blue-500 rounded-full hover:bg-blue-500 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
                     <DialogTrigger
+                      asChild
                       onClick={() => setVisible(true)}
-                      className="aspect-square text-white hover:text-sky-300 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-sky-300 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center"
+                      className="transform active:scale-90 transition-transform duration-200"
                     >
-                      <Pencil className="p-1.5" size={33} />
+                      <Pencil />
                     </DialogTrigger>
-                  </>
+                  </div>
                 </TooltipTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
+                <TooltipContent
+                  className="bg-black bg-opacity-80"
+                  side="bottom"
+                >
                   <p className="text-white text-xs">{t("edit")}</p>
                 </TooltipContent>
-                <DialogContent className="w-11/12 sm:w-11/12 rounded-xl  text-white bg-black">
+                <DialogContent className="w-11/12 sm:w-11/12 rounded-xl  dark:text-white dark:bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("editAnnouncement")}
@@ -180,13 +184,13 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                           content: announcementContent,
                         })
                       }
-                      className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                      className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={() => setVisible(false)}
-                      className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
                     >
                       {t("cancel")}
                     </Button>
@@ -197,16 +201,22 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
             <Tooltip>
               <AlertDialog>
                 <TooltipTrigger className="rounded-full transform active:scale-90 transition-transform duration-200">
-                  <AlertDialogTrigger asChild>
-                    <button className="aspect-square text-white hover:text-red-400 rounded-full transform active:scale-90 transition-transform duration-200 hover:bg-red-400 hover:bg-opacity-20 bg-transparent w-10 flex justify-center items-center">
-                      <Trash2 className="p-1.5" size={35} />
-                    </button>
-                  </AlertDialogTrigger>
+                  <div className="p-2 aspect-square dark:text-white dark:hover:text-red-400 hover:text-red-500 rounded-full hover:bg-red-500 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
+                    <AlertDialogTrigger
+                      asChild
+                      className="transform active:scale-90 transition-transform duration-200"
+                    >
+                      <Trash2 />
+                    </AlertDialogTrigger>
+                  </div>
                 </TooltipTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
+                <TooltipContent
+                  className="bg-black bg-opacity-80"
+                  side="bottom"
+                >
                   <p className="text-white text-xs">{t("delete")}</p>
                 </TooltipContent>
-                <AlertDialogContent className="text-white bg-black">
+                <AlertDialogContent className="dark:text-white dark:bg-black">
                   <AlertDialogHeader>
                     <AlertDialogTitle>{t("alertDialogTitle")}</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -217,11 +227,11 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90 hover:text-sky-300">
+                    <AlertDialogCancel className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md">
                       {t("cancel")}
                     </AlertDialogCancel>
                     <AlertDialogAction
-                      className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-primary/90"
+                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
                       onClick={() => handleDelete(announcementId)}
                     >
                       {t("continue")}

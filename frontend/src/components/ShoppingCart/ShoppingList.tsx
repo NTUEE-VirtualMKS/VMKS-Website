@@ -110,13 +110,13 @@ function ShoppingList() {
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger
               value="material"
-              className="text-zinc-500 bg-[#303030] bg-opacity-30 text-base font-semibold"
+              className="dark:text-zinc-500 dark:bg-[#303030] bg-opacity-30 text-base font-semibold"
             >
               {t("material")}
             </TabsTrigger>
             <TabsTrigger
               value="tool"
-              className="text-zinc-500 bg-[#303030] bg-opacity-30 text-base font-semibold"
+              className="dark:text-zinc-500 dark:bg-[#303030] bg-opacity-30 text-base font-semibold"
             >
               {t("tool")}
             </TabsTrigger>

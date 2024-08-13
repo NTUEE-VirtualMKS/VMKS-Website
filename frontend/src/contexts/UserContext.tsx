@@ -292,11 +292,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const contextValue = useMemo(
     () => ({
       user,
+      pushToLoginPage,
       setUser,
       login,
       logout,
       signup,
-      pushToLoginPage,
       setPushToLoginPage,
       handleEditLanguage,
     }),

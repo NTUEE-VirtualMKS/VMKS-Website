@@ -174,6 +174,10 @@ i18n
           friday: "Fri.",
           saturday: "Sat.",
           adminWorkSchedule: "Admin's Work Schedule",
+          theme: "Theme",
+          uploadStudenetIDCard: "Upload Student ID Card",
+          pleaseUploadTheFrontSideOfYourStudentIDCard:
+            "Please upload the front side of your student ID card",
         },
       },
       zh: {
@@ -330,6 +334,9 @@ i18n
           friday: "五",
           saturday: "六",
           adminWorkSchedule: "管理員班表",
+          theme: "主題",
+          uploadStudenetIDCard: "上傳學生證",
+          pleaseUploadTheFrontSideOfYourStudentIDCard: "請上傳學生證正面",
         },
       },
     },

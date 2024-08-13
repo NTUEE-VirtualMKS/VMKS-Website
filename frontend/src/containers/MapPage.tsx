@@ -14,8 +14,8 @@ const MapPage = () => {
   return (
     <>
       <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8">
-        <h1 className="text-white p-1 flex flex-row items-center gap-2">
-          <Globe className="text-white" size={35} />
+        <h1 className="dark:text-white p-1 flex flex-row items-center gap-2">
+          <Globe className="dark:text-white" size={35} />
           {t("map")}
         </h1>
       </div>

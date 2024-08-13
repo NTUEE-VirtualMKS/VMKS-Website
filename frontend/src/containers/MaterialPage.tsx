@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -142,9 +141,9 @@ function MaterialPage() {
 
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
-        <h1 className="text-white p-1 flex flex-row gap-2 items-center">
-          <Cpu className="text-white" size={35} />
+      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8  dark:text-white">
+        <h1 className=" dark:text-white p-1 flex flex-row gap-2 items-center">
+          <Cpu className=" dark:text-white" size={35} />
           {t("allMaterials")}
         </h1>
         <div className="my-1">
@@ -160,14 +159,14 @@ function MaterialPage() {
                 <DialogTrigger asChild>
                   <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
                     <Button
-                      className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200 lowercase"
+                      className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md lowercase"
                       onClick={() => setVisible(true)}
                     >
                       {t("newMaterial")}
                     </Button>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="w-11/1 sm:w-11/12 rounded-xl text-white bg-black">
+                <DialogContent className="w-11/1 sm:w-11/12 rounded-xl dark:text-white dark:bg-black">
                   <DialogHeader>
                     <DialogTitle className="text-2xl">
                       {t("newMaterial")}
@@ -315,13 +314,7 @@ function MaterialPage() {
                       />
                     </div>
                   </div>
-                  <DialogFooter>
-                    <Button
-                      onClick={() => setVisible(false)}
-                      className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-                    >
-                      {t("cancel")}
-                    </Button>
+                  <div className="flex flex-row-reverse gap-2">
                     <Button
                       onClick={() =>
                         handleAddMaterial({
@@ -338,11 +331,17 @@ function MaterialPage() {
                           partName,
                         })
                       }
-                      className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                      className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
                     >
                       {t("submit")}
                     </Button>
-                  </DialogFooter>
+                    <Button
+                      onClick={() => setVisible(false)}
+                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                    >
+                      {t("cancel")}
+                    </Button>
+                  </div>
                 </DialogContent>
               </Dialog>
               <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
@@ -354,7 +353,7 @@ function MaterialPage() {
               {length !== 0 && (
                 <Button
                   onClick={() => handleAddMaterials(materials)}
-                  className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                  className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
                 >
                   {t("upload")}
                 </Button>

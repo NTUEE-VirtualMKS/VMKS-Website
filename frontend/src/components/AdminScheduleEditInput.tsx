@@ -65,7 +65,7 @@ function AdminScheduleEditInput({
   return isEdit ? (
     <div className="flex flex-center mt-2">
       <Input
-        className="text-white w-20 text-center bg-[#15171C] rounded-[6px] placeholder:text-[#71788B] focus-visible:ring-offset-sky-300 text-base placeholder:text-base"
+        className="dark:text-white text-black w-20 text-center dark:bg-[#15171C] rounded-[6px] placeholder:text-[#71788B] focus-visible:ring-offset-sky-300 text-base placeholder:text-base"
         value={admin}
         onChange={(e) => setAdmin(e.target.value)}
         onBlur={handleEdit}
@@ -76,7 +76,7 @@ function AdminScheduleEditInput({
   ) : (
     <TableCell
       className={cn(
-        "text-white text-center text-base",
+        "dark:text-white text-center text-base text-black",
         user?.isMinister &&
           "cursor-pointer transform active:scale-95 transition-transform duration-200"
       )}

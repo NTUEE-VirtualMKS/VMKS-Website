@@ -9,9 +9,9 @@ function MachinePage() {
   const { t } = useTranslation();
 
   return (
-    <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
-      <h1 className="text-white p-1 flex flex-row items-center gap-2">
-        <Bot className="text-white" size={35} />
+    <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 dark:text-white">
+      <h1 className="dark:text-white p-1 flex flex-row items-center gap-2">
+        <Bot className="dark:text-white" size={35} />
         {t("allMachines")}
       </h1>
     </div>

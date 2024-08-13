@@ -68,7 +68,7 @@ function Sidebar() {
   return (
     <Sheet>
       <Tooltip>
-        <TooltipTrigger className="relative text-white -left-1.5 top-72 transition-transform duration-200 ease-in-out transform hover:scale-110">
+        <TooltipTrigger className="relative dark:text-white -left-1.5 top-72 transition-transform duration-200 ease-in-out transform hover:scale-110">
           <SheetTrigger asChild>
             <ChevronRight onClick={handleRefetch} />
           </SheetTrigger>
@@ -80,19 +80,23 @@ function Sidebar() {
           {t("sidebar")}
         </TooltipContent>
       </Tooltip>
-      <SheetContent side="left" className="bg-[#111111]">
+      <SheetContent side="left" className="dark:bg-[#111111] bg-gray-100">
         <SheetHeader>
           <button onClick={() => navigate("/")}>
-            <img className="w-5/12 mx-auto" src="/logo-2.png" alt="logo" />
+            <img
+              className="w-5/12 mx-auto bg-black rounded-full"
+              src="/logo-2.png"
+              alt="logo"
+            />
           </button>
-          <div className="flex flex-row gap-1 items-center text-white text-lg font-medium">
+          <div className="flex flex-row gap-1 items-center dark:text-white text-lg font-medium">
             <Star size={20} />
             {t("starred")}
           </div>
         </SheetHeader>
         <div className="flex flex-col gap-0.5 h-full mt-1.5">
           <div className="flex flex-col gap-2">
-            <p className="flex flex-row gap-1 flex-center text-white text-base border-b w-full border-white border-opacity-50">
+            <p className="flex flex-row gap-1 flex-center dark:text-white text-base border-b w-full border-gray-400 border-opacity-50">
               <Cpu size={16} />
               {t("material")}
             </p>
@@ -119,7 +123,7 @@ function Sidebar() {
                   </Tooltip>
                 ))}
             </div>
-            <p className="flex flex-row gap-1 flex-center text-white text-base border-b w-full border-white border-opacity-50">
+            <p className="flex flex-row gap-1 flex-center dark:text-white text-base border-b w-full border-gray-400 border-opacity-50">
               <Hammer size={16} />
               {t("tool")}
             </p>
@@ -135,7 +139,7 @@ function Sidebar() {
                         onClick={() => navigate(`/ToolPage/Tool/${tool?.id}`)}
                       />
                       <TooltipContent
-                        className="bg-black bg-opacity-80 text-white"
+                        className="bg-black bg-opacity-80 dark:text-white"
                         side="right"
                       >
                         {tool?.name}

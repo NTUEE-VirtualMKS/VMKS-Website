@@ -57,7 +57,7 @@ function MaterialImportButton({
   return (
     <Input
       type="file"
-      className="my-3 bg-[#15171C] text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+      className="my-3 dark:bg-[#15171C] text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 bg-transparent hover:bg-transparent transform active:scale-95 transition-transform duration-200 shadow"
       onChange={(e) => handleImport(e)}
     />
   );

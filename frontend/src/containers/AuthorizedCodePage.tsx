@@ -17,7 +17,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -148,23 +147,23 @@ function AuthorizedCodePage() {
 
   return (
     <>
-      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 text-white">
-        <h1 className="text-white p-1 flex flex-row items-center gap-2">
-          <KeyRound className="text-white" size={35} />
+      <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 dark:text-white">
+        <h1 className="dark:text-white p-1 flex flex-row items-center gap-2">
+          <KeyRound className="dark:text-white" size={35} />
           {t("generateCode")}
         </h1>
         <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
           <DialogTrigger asChild>
             <div className="flex flex-row">
               <Button
-                className="m-3 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                className="m-3 text-blue-500 border-blue-500 bg-transparent hover:bg-transparent shadow-md dark:text-sky-300 border dark:border-sky-300 transform active:scale-90 transition-transform duration-200"
                 onClick={() => setVisible(true)}
               >
                 {t("generateCode")}
               </Button>
             </div>
           </DialogTrigger>
-          <DialogContent className="w-11/12 sm:w-11/12 rounded-xl text-white bg-black">
+          <DialogContent className="w-11/12 sm:w-11/12 md:w-[23rem] lg:w-[25rem] xl:w-[25rem] rounded-xl dark:text-white dark:bg-black">
             <DialogHeader>
               <DialogTitle className="text-2xl">
                 {t("generateCode")}
@@ -186,7 +185,7 @@ function AuthorizedCodePage() {
                 onChange={(e) => setNumber(e.target.value)}
               />
             </div>
-            <div className="flex flex-row gap-2 ml-20 xs:ml-20 sm:ml-20 md:ml-12 lg:ml-12 xl:ml-12">
+            <div className="flex flex-row gap-2 ml-8 xs:ml-8 sm:ml-16 md:ml-8 lg:ml-10 xl:ml-10">
               <Label
                 htmlFor="code length"
                 className="text-right mt-3 w-10 mr-2"
@@ -198,55 +197,55 @@ function AuthorizedCodePage() {
                 onValueChange={(length) => setLength(length)}
               >
                 <SelectTrigger
-                  className="bg-[#15171C] w-11/12 border-0 focus:ring focus:ring-sky-300 text-16 text-base"
+                  className="dark:bg-[#15171C] input-class"
                   id="code length"
                 >
                   <SelectValue placeholder="code length" />
                 </SelectTrigger>
-                <SelectContent className="bg-black">
+                <SelectContent className="dark:bg-black">
                   <SelectGroup>
-                    <SelectLabel className="text-white text-base">
+                    <SelectLabel className="dark:text-white text-base">
                       {t("length")}
                     </SelectLabel>
-                    <SelectItem value="5" className="text-white text-base">
+                    <SelectItem value="5" className="dark:text-white text-base">
                       5
                     </SelectItem>
-                    <SelectItem value="6" className="text-white text-base">
+                    <SelectItem value="6" className="dark:text-white text-base">
                       6
                     </SelectItem>
-                    <SelectItem value="7" className="text-white text-base">
+                    <SelectItem value="7" className="dark:text-white text-base">
                       7
                     </SelectItem>
-                    <SelectItem value="8" className="text-white text-base">
+                    <SelectItem value="8" className="dark:text-white text-base">
                       8
                     </SelectItem>
-                    <SelectItem value="9" className="text-white text-base">
+                    <SelectItem value="9" className="dark:text-white text-base">
                       9
                     </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
-            <DialogFooter className="flex flex-row-reverse ">
-              <Button
-                onClick={() => setVisible(false)}
-                className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
-              >
-                {t("cancel")}
-              </Button>
+            <div className="flex flex-row-reverse gap-2">
               <Button
                 onClick={handleGenerate}
-                className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
               >
                 {t("submit")}
               </Button>
-            </DialogFooter>
+              <Button
+                onClick={() => setVisible(false)}
+                className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+              >
+                {t("cancel")}
+              </Button>
+            </div>
           </DialogContent>
         </Dialog>
         <div className="flex flex-row justify-start gap-4">
           {codeList.map((code, index) => (
-            <div key={index} className="text-white flex flex-col text-20">
-              <p className="text-white font-semibold text-xl">
+            <div key={index} className="dark:text-white flex flex-col text-20">
+              <p className="dark:text-white font-semibold text-xl">
                 {t("lastChange")}: {code.updatedAt.split(",")[0]}
               </p>
               {code.codeList?.map((code, index) => (
@@ -254,8 +253,8 @@ function AuthorizedCodePage() {
                   <p
                     key={index}
                     className={cn(
-                      "text-white text-lg font-semibold cursor-pointer transform active:scale-95 transition-transform duration-200",
-                      clickedCodes[code!] ? "text-blue-600" : "text-white"
+                      "dark:text-white text-lg font-semibold cursor-pointer transform active:scale-95 transition-transform duration-200",
+                      clickedCodes[code!] ? "text-blue-600" : "dark:text-white"
                     )}
                     onClick={() => copyToClipboard(code!)}
                   >

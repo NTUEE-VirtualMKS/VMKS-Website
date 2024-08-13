@@ -62,13 +62,15 @@ function UserAvatarUploader({
         {!isImageLoading ? (
           <img src="/upload-image.svg" width={40} height={40} alt="upload" />
         ) : (
-          <div className="text-16 flex-center font-medium text-white">
+          <div className="text-16 flex-center font-medium dark:text-white">
             Uploading
             <Loader size={20} className="animate-spin ml-2" />
           </div>
         )}
         <div className="flex flex-col items-center">
-          <p className="text-14 font-bold text-sky-300">{t("clickToUpload")}</p>
+          <p className="text-14 font-bold dark:text-sky-300 text-sky-500">
+            {t("clickToUpload")}
+          </p>
           <p className="text-12 font-normal text-[#71788B]">
             SVG, PNG, or JPG ({t("max")} 1080x1080px)
           </p>
@@ -76,14 +78,14 @@ function UserAvatarUploader({
       </div>
       {imgUrl && (
         <>
-          <p className="text-white text-base">{t("preview")}</p>
+          <p className="dark:text-white text-base">{t("preview")}</p>
           <div className="flex-center w-full">
             <img
               src={imgUrl}
               width={150}
               height={150}
               alt="avatar"
-              className="rounded-full border border-[#444444] bg-[#1f1f1f] aspect-square"
+              className="rounded-full border dark:border-[#444444] dark:bg-[#1f1f1f] aspect-square"
             />
           </div>
         </>

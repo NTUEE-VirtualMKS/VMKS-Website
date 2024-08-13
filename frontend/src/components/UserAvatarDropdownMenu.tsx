@@ -43,7 +43,9 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
       >
         <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate("/UserProfilePage")}>
+        <DropdownMenuItem
+          onClick={() => navigate(`/UserProfilePage/${user?.id}`)}
+        >
           <UserRound className="mr-2 h-4 w-4" />
           <span>{t("profile")}</span>
         </DropdownMenuItem>
@@ -57,18 +59,7 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
           <Settings className="mr-2 h-4 w-4" />
           <span>{t("settings")}</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate("/MessagePage")}>
-          <div className="relative inline-block">
-            <Bell className="mr-2 h-4 w-4" />
-            <span className="absolute -top-[0.20rem] right-[0.48rem] flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-sky-300 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-sky-400 ml-[0.075rem] mt-[0.075rem]"></span>
-            </span>
-          </div>
-          <span>{t("notifications")}</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator /> */}
+        <DropdownMenuSeparator />*/}
         <DropdownMenuItem onClick={() => navigate("/BorrowHistoryPage")}>
           <History className="mr-2 h-4 w-4" />
           <span>{t("borrowHistory")}</span>

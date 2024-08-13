@@ -9,7 +9,7 @@ function Suggestion({ search, name }: { search: string; name: string }) {
         <section className="flex flex-col size-full flex-center">
           <OctagonX size={280} className="text-red-500" />
           <div className="flex-center w-full flex-col">
-            <p className="w-full text-5xl text-center font-bold text-white p-2">
+            <p className="w-full text-5xl text-center font-bold dark:text-white p-2">
               "{search}" {t("notFound")}
             </p>
           </div>
@@ -17,7 +17,7 @@ function Suggestion({ search, name }: { search: string; name: string }) {
       ) : (
         <section className="flex flex-col size-full flex-center">
           <div className="flex-center w-full flex-col mt-40">
-            <p className="w-full text-4xl text-center font-bold text-white p-2 text-opacity-50">
+            <p className="w-full text-4xl text-center font-bold dark:text-white p-2 text-opacity-50">
               {t(`no${name}`)}
             </p>
           </div>
