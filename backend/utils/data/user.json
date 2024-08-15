@@ -2,8 +2,8 @@
   "users": [
     {
       "name": "吳柏均",
-      "studentID": "B11901000",
-      "password": "admin-admin",
+      "studentID": "B11901200",
+      "password": "Admin0-Admin0",
       "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
       "language": "zh",
       "laserCutAvailable": true,
@@ -13,8 +13,8 @@
     },
     {
       "name": "陳柏睿",
-      "studentID": "B10902000",
-      "password": "user-user",
+      "studentID": "B10902200",
+      "password": "User1-User1",
       "photoLink": "https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png",
       "language": "en",
       "laserCutAvailable": false,
