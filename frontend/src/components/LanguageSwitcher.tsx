@@ -40,9 +40,13 @@ function LanguageSwitcher() {
           </TooltipTrigger>
           <DropdownMenuContent
             align="center"
-            className="bg-black text-white mt-2.5"
+            side="bottom"
+            sideOffset={8}
+            className="dark:bg-[#2c2c2c] border dark:border-[#444444] dark:text-white"
           >
-            <DropdownMenuLabel>{t("languages")}</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-base">
+              {t("languages")}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <RadioGroupItem
@@ -51,7 +55,9 @@ function LanguageSwitcher() {
                 className="w-3 h-3 mr-2"
                 onClick={() => changeLanguage("en")}
               />
-              <Label htmlFor="en">English (United States)</Label>
+              <Label htmlFor="en" className="text-base">
+                English (United States)
+              </Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
@@ -61,12 +67,17 @@ function LanguageSwitcher() {
                 className="w-3 h-3 mr-2"
                 onClick={() => changeLanguage("zh")}
               />
-              <Label htmlFor="zh">中文 (繁體)</Label>
+              <Label htmlFor="zh" className="text-base">
+                中文 (繁體)
+              </Label>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </RadioGroup>
-      <TooltipContent className="bg-black bg-opacity-80">
+      <TooltipContent
+        className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+        side="bottom"
+      >
         <p className="text-white text-xs">{t("languages")}</p>
       </TooltipContent>
     </Tooltip>

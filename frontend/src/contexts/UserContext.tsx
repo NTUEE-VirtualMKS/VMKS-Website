@@ -15,28 +15,62 @@ import { jwtDecode } from "jwt-decode";
 import { generateLoginInfo } from "@/lib/utils";
 
 const studentIdSchema = z.string().refine((studentId) => {
+  const lastThreeDigits = parseInt(studentId.substring(6, 9), 10);
   return (
     studentId.length === 9 &&
     validDepartmentCodes.has(studentId[0].toUpperCase()) &&
     /^\d{2}$/.test(studentId.substring(1, 3)) &&
     /^\d$/.test(studentId[3]) &&
     /^\d{2}$/.test(studentId.substring(4, 6)) &&
-    /^\d{3}$/.test(studentId.substring(6, 9))
+    lastThreeDigits >= 1 &&
+    lastThreeDigits <= 200
   );
 }, "Invalid student ID format");
 
 const loginSchema = z.object({
   studentId: studentIdSchema,
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .refine((password) => {
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasNumbers = /[0-9]/.test(password);
+      const hasSymbols = /[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]/.test(password);
+
+      const typesCount = [
+        hasUpperCase,
+        hasLowerCase,
+        hasNumbers,
+        hasSymbols,
+      ].filter(Boolean).length;
+      return typesCount >= 3;
+    }, "Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and symbols"),
 });
 
 const signupSchema = z.object({
   name: z
     .string()
     .min(1, "Name is required")
-    .max(20, "Name is too long, max 20 characters"),
+    .max(15, "Name is too long, max 15 characters"),
   studentId: studentIdSchema,
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .refine((password) => {
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasNumbers = /[0-9]/.test(password);
+      const hasSymbols = /[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]/.test(password);
+
+      const typesCount = [
+        hasUpperCase,
+        hasLowerCase,
+        hasNumbers,
+        hasSymbols,
+      ].filter(Boolean).length;
+      return typesCount >= 3;
+    }, "Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and symbols"),
 });
 
 export type UserContextType = {
@@ -240,8 +274,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const logout = ({ redirect }: { redirect: boolean }) => {
     setUser(null);
+    setToken(null);
     if (redirect) toast({ title: "Log out successfully!" });
     localStorage.clear();
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("language");
   };
 
   const [

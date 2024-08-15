@@ -19,7 +19,7 @@ import { Anchor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client";
-import { ALL_ADMIN_SCHEDULES_QUERY } from "@/graphql";
+import { GET_ALL_ADMIN_SCHEDULES_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import type { AdminScheduleType } from "@/shared/type";
@@ -56,7 +56,7 @@ function IntroductionPage() {
       ? "dark:text-white"
       : "dark:text-gray-500 text-gray-400";
 
-  const { data, loading, error } = useQuery(ALL_ADMIN_SCHEDULES_QUERY);
+  const { data, loading, error } = useQuery(GET_ALL_ADMIN_SCHEDULES_QUERY);
   if (loading) {
     return <LoaderSpinner />;
   }
@@ -64,7 +64,7 @@ function IntroductionPage() {
     toast({ title: error.message, variant: "destructive" });
   }
   const adminSchedule =
-    (data?.AllAdminSchedules as AdminScheduleType[][]) || [];
+    (data?.GetAllAdminSchedules as AdminScheduleType[][]) || [];
 
   return (
     <>
@@ -183,4 +183,4 @@ function IntroductionPage() {
   );
 }
 
-export default IntroductionPage;
+export { IntroductionPage };

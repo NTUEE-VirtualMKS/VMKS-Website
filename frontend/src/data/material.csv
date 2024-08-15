@@ -3,4 +3,17 @@ HC-SR04,,"IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,Lo
 RC-522,,"IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,LoginPage",0,Tree-De,RFID module,https://domoticx.com/wp-content/uploads/2021/01/rc522-rfid-nfc-module-bovenkant.jpg,0,https://youtu.be/dQw4w9WgXcQ?feature=shared,0,5
 HC-05,,"IntroductionPage,MapPage,MaterialPage,TutorialPage,ShoppingCartPage,LoginPage",0,Tree-De,Bluetooth module,"https://m.media-amazon.com/images/I/612CH8mJu-L._AC_UF894,1000_QL80_.jpg",1,https://youtu.be/dQw4w9WgXcQ?feature=shared,0,10
 200 OK,http cat,MaterialPage,1,拍拍手,200 OK,https://http.cat/200,200,https://youtu.be/dQw4w9WgXcQ?feature=shared,200,200
+201 Created,http cat,MaterialPage,1,拍拍手,201 Created,https://http.cat/201,201,https://youtu.be/dQw4w9WgXcQ?feature=shared,201,201
+202 Accepted,http cat,MaterialPage,1,拍拍手,202 Accepted,https://http.cat/202,202,https://youtu.be/dQw4w9WgXcQ?feature=shared,202,202
+204 No Content,http cat,MaterialPage,1,拍拍手,204 No Content,https://http.cat/204,204,https://youtu.be/dQw4w9WgXcQ?feature=shared,204,204
+301 Moved Permanently,http cat,MaterialPage,1,拍拍手,301 Moved Permanently,https://http.cat/301,301,https://youtu.be/dQw4w9WgXcQ?feature=shared,301,301
+302 Found,http cat,MaterialPage,1,拍拍手,302 Found,https://http.cat/302,302,https://youtu.be/dQw4w9WgXcQ?feature=shared,302,302
+304 Not Modified,http cat,MaterialPage,1,拍拍手,304 Not Modified,https://http.cat/304,304,https://youtu.be/dQw4w9WgXcQ?feature=shared,304,304
+400 Bad Request,http cat,MaterialPage,1,拍拍手,400 Bad Request,https://http.cat/400,400,https://youtu.be/dQw4w9WgXcQ?feature=shared,400,400
 404 Not Found,http cat,MaterialPage,1,拍拍手,404 Not Found,https://http.cat/404,404,https://youtu.be/dQw4w9WgXcQ?feature=shared,404,404
+405 Method Not Allowed,http cat,MaterialPage,1,拍拍手,405 Method Not Allowed,https://http.cat/405,405,https://youtu.be/dQw4w9WgXcQ?feature=shared,405,405
+429 Too Many Requests,http cat,MaterialPage,1,拍拍手,429 Too Many Requests,https://http.cat/429,429,https://youtu.be/dQw4w9WgXcQ?feature=shared,429,429
+500 Internal Server Error,http cat,MaterialPage,1,拍拍手,500 Internal Server Error,https://http.cat/500,500,https://youtu.be/dQw4w9WgXcQ?feature=shared,500,500
+502 Bad Gateway,http cat,MaterialPage,1,拍拍手,502 Bad Gateway,https://http.cat/502,502,https://youtu.be/dQw4w9WgXcQ?feature=shared,502,502
+503 Service Unavailable,http cat,MaterialPage,1,拍拍手,503 Service Unavailable,https://http.cat/503,503,https://youtu.be/dQw4w9WgXcQ?feature=shared,503,503
+504 Gateway Timeout,http cat,MaterialPage,1,拍拍手,504 Gateway Timeout,https://http.cat/504,504,https://youtu.be/dQw4w9WgXcQ?feature=shared,504,504

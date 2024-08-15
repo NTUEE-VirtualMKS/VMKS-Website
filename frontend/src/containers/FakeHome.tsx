@@ -8,4 +8,4 @@ function FakeHome() {
   return <></>;
 }
 
-export default FakeHome;
+export { FakeHome };

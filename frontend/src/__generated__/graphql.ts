@@ -117,6 +117,54 @@ export type DisposableMaterialUsageUpdateInput = {
   usage: Scalars['Int']['input'];
 };
 
+export type GetAllAnnouncements = {
+  __typename?: 'GetAllAnnouncements';
+  announcements?: Maybe<Array<Maybe<Announcement>>>;
+  cursor?: Maybe<Scalars['Int']['output']>;
+};
+
+export type GetAllArticles = {
+  __typename?: 'GetAllArticles';
+  articles?: Maybe<Array<Maybe<Article>>>;
+  cursor?: Maybe<Scalars['Int']['output']>;
+};
+
+export type GetAllDisposableMaterials = {
+  __typename?: 'GetAllDisposableMaterials';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  disposableMaterials?: Maybe<Array<Maybe<DisposableMaterial>>>;
+};
+
+export type GetAllMachines = {
+  __typename?: 'GetAllMachines';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  machines?: Maybe<Array<Maybe<Machine>>>;
+};
+
+export type GetAllMaterials = {
+  __typename?: 'GetAllMaterials';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  materials?: Maybe<Array<Maybe<Material>>>;
+};
+
+export type GetAllThreeDPs = {
+  __typename?: 'GetAllThreeDPs';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  threeDPs?: Maybe<Array<Maybe<ThreeDp>>>;
+};
+
+export type GetAllTools = {
+  __typename?: 'GetAllTools';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  tools?: Maybe<Array<Maybe<Tool>>>;
+};
+
+export type GetAllUsers = {
+  __typename?: 'GetAllUsers';
+  cursor?: Maybe<Scalars['Int']['output']>;
+  users?: Maybe<Array<Maybe<SimpleUser>>>;
+};
+
 export type LogInInput = {
   browser: Scalars['String']['input'];
   date: Scalars['String']['input'];
@@ -527,23 +575,25 @@ export type PromoteUserInput = {
 
 export type Query = {
   __typename?: 'Query';
-  AllAdminSchedules?: Maybe<Array<Maybe<Array<Maybe<AdminSchedule>>>>>;
-  AllAnnouncements?: Maybe<Array<Maybe<Announcement>>>;
-  AllArticles?: Maybe<Array<Maybe<Article>>>;
-  AllDisposableMaterials?: Maybe<Array<Maybe<DisposableMaterial>>>;
-  AllMachines?: Maybe<Array<Maybe<Machine>>>;
-  AllMaterials?: Maybe<Array<Maybe<Material>>>;
-  AllThreeDP?: Maybe<Array<Maybe<ThreeDp>>>;
-  AllTools?: Maybe<Array<Maybe<Tool>>>;
   CheckSignupAuthCode?: Maybe<Scalars['Boolean']['output']>;
   GetAdminScheduleByDay?: Maybe<Array<Maybe<AdminSchedule>>>;
   GetAdminScheduleByPeriod?: Maybe<Array<Maybe<AdminSchedule>>>;
+  GetAllAdminSchedules?: Maybe<Array<Maybe<Array<Maybe<AdminSchedule>>>>>;
+  GetAllAnnouncements?: Maybe<GetAllAnnouncements>;
+  GetAllArticles?: Maybe<GetAllArticles>;
+  GetAllDisposableMaterials?: Maybe<GetAllDisposableMaterials>;
+  GetAllMachines?: Maybe<GetAllMachines>;
+  GetAllMaterials?: Maybe<GetAllMaterials>;
   GetAllSignupAuthCodes?: Maybe<Array<Maybe<SignupAuthCode>>>;
+  GetAllThreeDPs?: Maybe<GetAllThreeDPs>;
+  GetAllTools?: Maybe<GetAllTools>;
   GetAllUserBorrowMaterials?: Maybe<Array<Maybe<UserBorrowMaterial>>>;
   GetAllUserBorrowMaterialsByStatus?: Maybe<Array<Maybe<UserBorrowMaterial>>>;
   GetAllUserBorrowTools?: Maybe<Array<Maybe<UserBorrowTool>>>;
   GetAllUserBorrowToolsByStatus?: Maybe<Array<Maybe<UserBorrowTool>>>;
-  GetAllUsers?: Maybe<Array<Maybe<SimpleUser>>>;
+  GetAllUsers?: Maybe<GetAllUsers>;
+  GetAnnouncementById?: Maybe<Announcement>;
+  GetArticleById?: Maybe<Article>;
   GetAuthorizedCode?: Maybe<AuthorizedCode>;
   GetLikedMaterialsByUserId?: Maybe<Array<Maybe<Material>>>;
   GetLikedToolsByUserId?: Maybe<Array<Maybe<Tool>>>;
@@ -562,20 +612,21 @@ export type Query = {
   GetUserBorrowToolsByUserId?: Maybe<Array<Maybe<UserBorrowTool>>>;
   GetUserByStudentID?: Maybe<User>;
   LogIn?: Maybe<LogInRet>;
-  SearchDisposableMaterialsByCategory?: Maybe<Array<Maybe<DisposableMaterial>>>;
-  SearchDisposableMaterialsByName?: Maybe<Array<Maybe<DisposableMaterial>>>;
-  SearchDisposableMaterialsByPosition?: Maybe<Array<Maybe<DisposableMaterial>>>;
+  SearchAnnouncementByTitle?: Maybe<Array<Maybe<Announcement>>>;
+  SearchDisposableMaterialByCategory?: Maybe<Array<Maybe<DisposableMaterial>>>;
+  SearchDisposableMaterialByName?: Maybe<Array<Maybe<DisposableMaterial>>>;
+  SearchDisposableMaterialByPosition?: Maybe<Array<Maybe<DisposableMaterial>>>;
+  SearchMachineByCategory?: Maybe<Array<Maybe<Machine>>>;
   SearchMachineByName?: Maybe<Array<Maybe<Machine>>>;
-  SearchMachinesByCategory?: Maybe<Array<Maybe<Machine>>>;
-  SearchMachinesByPosition?: Maybe<Array<Maybe<Machine>>>;
+  SearchMachineByPosition?: Maybe<Array<Maybe<Machine>>>;
+  SearchMaterialByCategory?: Maybe<Array<Maybe<Material>>>;
   SearchMaterialByName?: Maybe<Array<Maybe<Material>>>;
-  SearchMaterialsByCategory?: Maybe<Array<Maybe<Material>>>;
-  SearchMaterialsByPosition?: Maybe<Array<Maybe<Material>>>;
+  SearchMaterialByPosition?: Maybe<Array<Maybe<Material>>>;
   SearchThreeDPByCategory?: Maybe<Array<Maybe<ThreeDp>>>;
   SearchThreeDPByPosition?: Maybe<Array<Maybe<ThreeDp>>>;
-  SearchToolsByCategory?: Maybe<Array<Maybe<Tool>>>;
-  SearchToolsByName?: Maybe<Array<Maybe<Tool>>>;
-  SearchToolsByPosition?: Maybe<Array<Maybe<Tool>>>;
+  SearchToolByCategory?: Maybe<Array<Maybe<Tool>>>;
+  SearchToolByName?: Maybe<Array<Maybe<Tool>>>;
+  SearchToolByPosition?: Maybe<Array<Maybe<Tool>>>;
   SearchUserByName?: Maybe<Array<Maybe<SimpleUser>>>;
 };
 
@@ -596,6 +647,48 @@ export type QueryGetAdminScheduleByPeriodArgs = {
 };
 
 
+export type QueryGetAllAnnouncementsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllArticlesArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllDisposableMaterialsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllMachinesArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllMaterialsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllThreeDPsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAllToolsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryGetAllUserBorrowMaterialsByStatusArgs = {
   status: Array<InputMaybe<Scalars['String']['input']>>;
 };
@@ -603,6 +696,22 @@ export type QueryGetAllUserBorrowMaterialsByStatusArgs = {
 
 export type QueryGetAllUserBorrowToolsByStatusArgs = {
   status: Array<InputMaybe<Scalars['String']['input']>>;
+};
+
+
+export type QueryGetAllUsersArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetAnnouncementByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryGetArticleByIdArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -683,18 +792,28 @@ export type QueryLogInArgs = {
 };
 
 
-export type QuerySearchDisposableMaterialsByCategoryArgs = {
+export type QuerySearchAnnouncementByTitleArgs = {
+  title: Scalars['String']['input'];
+};
+
+
+export type QuerySearchDisposableMaterialByCategoryArgs = {
   category: Scalars['String']['input'];
 };
 
 
-export type QuerySearchDisposableMaterialsByNameArgs = {
+export type QuerySearchDisposableMaterialByNameArgs = {
   name: Scalars['String']['input'];
 };
 
 
-export type QuerySearchDisposableMaterialsByPositionArgs = {
+export type QuerySearchDisposableMaterialByPositionArgs = {
   position: Scalars['String']['input'];
+};
+
+
+export type QuerySearchMachineByCategoryArgs = {
+  category: Scalars['String']['input'];
 };
 
 
@@ -703,13 +822,13 @@ export type QuerySearchMachineByNameArgs = {
 };
 
 
-export type QuerySearchMachinesByCategoryArgs = {
-  category: Scalars['String']['input'];
+export type QuerySearchMachineByPositionArgs = {
+  position: Scalars['String']['input'];
 };
 
 
-export type QuerySearchMachinesByPositionArgs = {
-  position: Scalars['String']['input'];
+export type QuerySearchMaterialByCategoryArgs = {
+  category: Scalars['String']['input'];
 };
 
 
@@ -718,12 +837,7 @@ export type QuerySearchMaterialByNameArgs = {
 };
 
 
-export type QuerySearchMaterialsByCategoryArgs = {
-  category: Scalars['String']['input'];
-};
-
-
-export type QuerySearchMaterialsByPositionArgs = {
+export type QuerySearchMaterialByPositionArgs = {
   position: Scalars['String']['input'];
 };
 
@@ -738,17 +852,17 @@ export type QuerySearchThreeDpByPositionArgs = {
 };
 
 
-export type QuerySearchToolsByCategoryArgs = {
+export type QuerySearchToolByCategoryArgs = {
   category: Scalars['String']['input'];
 };
 
 
-export type QuerySearchToolsByNameArgs = {
+export type QuerySearchToolByNameArgs = {
   name: Scalars['String']['input'];
 };
 
 
-export type QuerySearchToolsByPositionArgs = {
+export type QuerySearchToolByPositionArgs = {
   position: Scalars['String']['input'];
 };
 
@@ -1355,46 +1469,122 @@ export type EditAdminScheduleMutationVariables = Exact<{
 
 export type EditAdminScheduleMutation = { __typename?: 'Mutation', EditAdminSchedule?: { __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null };
 
-export type AllAnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllAnnouncementsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
 
 
-export type AllAnnouncementsQuery = { __typename?: 'Query', AllAnnouncements?: Array<{ __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null> | null };
+export type GetAllAnnouncementsQuery = { __typename?: 'Query', GetAllAnnouncements?: { __typename?: 'GetAllAnnouncements', cursor?: number | null, announcements?: Array<{ __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null> | null } | null };
 
-export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllArticlesQuery = { __typename?: 'Query', AllArticles?: Array<{ __typename?: 'Article', id: number, writerId: number, description: string, imageURL?: string | null, time: string, title: string, headline: boolean, content: string, userpic?: string | null } | null> | null };
-
-export type AllDisposableMaterialsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAnnouncementByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
 
 
-export type AllDisposableMaterialsQuery = { __typename?: 'Query', AllDisposableMaterials?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+export type GetAnnouncementByIdQuery = { __typename?: 'Query', GetAnnouncementById?: { __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null };
 
-export type SearchDisposableMaterialsByCategoryQueryVariables = Exact<{
+export type SearchAnnouncementByTitleQueryVariables = Exact<{
+  title: Scalars['String']['input'];
+}>;
+
+
+export type SearchAnnouncementByTitleQuery = { __typename?: 'Query', SearchAnnouncementByTitle?: Array<{ __typename?: 'Announcement', id: number, title: string, date: string, content: string } | null> | null };
+
+export type GetAllToolsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAllToolsQuery = { __typename?: 'Query', GetAllTools?: { __typename?: 'GetAllTools', cursor?: number | null, tools?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null } | null };
+
+export type GetToolByIdQueryVariables = Exact<{
+  getToolByIdId: Scalars['Int']['input'];
+}>;
+
+
+export type GetToolByIdQuery = { __typename?: 'Query', GetToolById?: { __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null };
+
+export type SearchToolByCategoryQueryVariables = Exact<{
   category: Scalars['String']['input'];
 }>;
 
 
-export type SearchDisposableMaterialsByCategoryQuery = { __typename?: 'Query', SearchDisposableMaterialsByCategory?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+export type SearchToolByCategoryQuery = { __typename?: 'Query', SearchToolByCategory?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
 
-export type SearchDisposableMaterialsByNameQueryVariables = Exact<{
-  name: Scalars['String']['input'];
-}>;
-
-
-export type SearchDisposableMaterialsByNameQuery = { __typename?: 'Query', SearchDisposableMaterialsByName?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
-
-export type SearchDisposableMaterialsByPositionQueryVariables = Exact<{
+export type SearchToolByPositionQueryVariables = Exact<{
   position: Scalars['String']['input'];
 }>;
 
 
-export type SearchDisposableMaterialsByPositionQuery = { __typename?: 'Query', SearchDisposableMaterialsByPosition?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+export type SearchToolByPositionQuery = { __typename?: 'Query', SearchToolByPosition?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
 
-export type AllMachinesQueryVariables = Exact<{ [key: string]: never; }>;
+export type SearchToolByNameQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
 
 
-export type AllMachinesQuery = { __typename?: 'Query', AllMachines?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
+export type SearchToolByNameQuery = { __typename?: 'Query', SearchToolByName?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
+
+export type GetAllArticlesQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAllArticlesQuery = { __typename?: 'Query', GetAllArticles?: { __typename?: 'GetAllArticles', cursor?: number | null, articles?: Array<{ __typename?: 'Article', id: number, writerId: number, description: string, imageURL?: string | null, time: string, title: string, headline: boolean, content: string, userpic?: string | null } | null> | null } | null };
+
+export type GetAllDisposableMaterialsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAllDisposableMaterialsQuery = { __typename?: 'Query', GetAllDisposableMaterials?: { __typename?: 'GetAllDisposableMaterials', cursor?: number | null, disposableMaterials?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null } | null };
+
+export type SearchDisposableMaterialByCategoryQueryVariables = Exact<{
+  category: Scalars['String']['input'];
+}>;
+
+
+export type SearchDisposableMaterialByCategoryQuery = { __typename?: 'Query', SearchDisposableMaterialByCategory?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+
+export type SearchDisposableMaterialByPositionQueryVariables = Exact<{
+  position: Scalars['String']['input'];
+}>;
+
+
+export type SearchDisposableMaterialByPositionQuery = { __typename?: 'Query', SearchDisposableMaterialByPosition?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+
+export type SearchDisposableMaterialByNameQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type SearchDisposableMaterialByNameQuery = { __typename?: 'Query', SearchDisposableMaterialByName?: Array<{ __typename?: 'DisposableMaterial', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, fee?: number | null, remain: boolean } | null> | null };
+
+export type GetAllMachinesQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetAllMachinesQuery = { __typename?: 'Query', GetAllMachines?: { __typename?: 'GetAllMachines', cursor?: number | null, machines?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null } | null };
+
+export type SearchMachineByCategoryQueryVariables = Exact<{
+  category: Scalars['String']['input'];
+}>;
+
+
+export type SearchMachineByCategoryQuery = { __typename?: 'Query', SearchMachineByCategory?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
+
+export type SearchMachineByPositionQueryVariables = Exact<{
+  position: Scalars['String']['input'];
+}>;
+
+
+export type SearchMachineByPositionQuery = { __typename?: 'Query', SearchMachineByPosition?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
 
 export type SearchMachineByNameQueryVariables = Exact<{
   input: Scalars['String']['input'];
@@ -1403,24 +1593,13 @@ export type SearchMachineByNameQueryVariables = Exact<{
 
 export type SearchMachineByNameQuery = { __typename?: 'Query', SearchMachineByName?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
 
-export type SearchMachinesByCategoryQueryVariables = Exact<{
-  category: Scalars['String']['input'];
+export type GetAllMaterialsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type SearchMachinesByCategoryQuery = { __typename?: 'Query', SearchMachinesByCategory?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
-
-export type SearchMachinesByPositionQueryVariables = Exact<{
-  position: Scalars['String']['input'];
-}>;
-
-
-export type SearchMachinesByPositionQuery = { __typename?: 'Query', SearchMachinesByPosition?: Array<{ __typename?: 'Machine', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string } | null> | null };
-
-export type AllMaterialsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllMaterialsQuery = { __typename?: 'Query', AllMaterials?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
+export type GetAllMaterialsQuery = { __typename?: 'Query', GetAllMaterials?: { __typename?: 'GetAllMaterials', cursor?: number | null, materials?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null } | null };
 
 export type GetMaterialByIdQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -1429,6 +1608,20 @@ export type GetMaterialByIdQueryVariables = Exact<{
 
 export type GetMaterialByIdQuery = { __typename?: 'Query', GetMaterialById?: { __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null };
 
+export type SearchMaterialByCategoryQueryVariables = Exact<{
+  category: Scalars['String']['input'];
+}>;
+
+
+export type SearchMaterialByCategoryQuery = { __typename?: 'Query', SearchMaterialByCategory?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
+
+export type SearchMaterialByPositionQueryVariables = Exact<{
+  position: Scalars['String']['input'];
+}>;
+
+
+export type SearchMaterialByPositionQuery = { __typename?: 'Query', SearchMaterialByPosition?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
+
 export type SearchMaterialByNameQueryVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
@@ -1436,24 +1629,13 @@ export type SearchMaterialByNameQueryVariables = Exact<{
 
 export type SearchMaterialByNameQuery = { __typename?: 'Query', SearchMaterialByName?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
 
-export type SearchMaterialsByCategoryQueryVariables = Exact<{
-  category: Scalars['String']['input'];
+export type GetAllThreeDPsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type SearchMaterialsByCategoryQuery = { __typename?: 'Query', SearchMaterialsByCategory?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
-
-export type SearchMaterialsByPositionQueryVariables = Exact<{
-  position: Scalars['String']['input'];
-}>;
-
-
-export type SearchMaterialsByPositionQuery = { __typename?: 'Query', SearchMaterialsByPosition?: Array<{ __typename?: 'Material', id: number, name: string, partName?: string | null, category: string, valuable: boolean, position: string, description: string, photoLink: string, usage: number, tutorialLink?: string | null, fee: number, remain: number, materialLikeIds?: Array<number | null> | null, userBorrowMaterialIds?: Array<number | null> | null } | null> | null };
-
-export type AllThreeDpQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllThreeDpQuery = { __typename?: 'Query', AllThreeDP?: Array<{ __typename?: 'ThreeDP', id: number, name: string, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, waitingId?: Array<number | null> | null, broken: boolean } | null> | null };
+export type GetAllThreeDPsQuery = { __typename?: 'Query', GetAllThreeDPs?: { __typename?: 'GetAllThreeDPs', cursor?: number | null, threeDPs?: Array<{ __typename?: 'ThreeDP', id: number, name: string, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, waitingId?: Array<number | null> | null, broken: boolean } | null> | null } | null };
 
 export type SearchThreeDpByCategoryQueryVariables = Exact<{
   category: Scalars['String']['input'];
@@ -1469,43 +1651,13 @@ export type SearchThreeDpByPositionQueryVariables = Exact<{
 
 export type SearchThreeDpByPositionQuery = { __typename?: 'Query', SearchThreeDPByPosition?: Array<{ __typename?: 'ThreeDP', id: number, name: string, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, waitingId?: Array<number | null> | null, broken: boolean } | null> | null };
 
-export type AllToolsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllToolsQuery = { __typename?: 'Query', AllTools?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
-
-export type GetToolByIdQueryVariables = Exact<{
-  getToolByIdId: Scalars['Int']['input'];
+export type GetAllUsersQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetToolByIdQuery = { __typename?: 'Query', GetToolById?: { __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null };
-
-export type SearchToolsByCategoryQueryVariables = Exact<{
-  category: Scalars['String']['input'];
-}>;
-
-
-export type SearchToolsByCategoryQuery = { __typename?: 'Query', SearchToolsByCategory?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
-
-export type SearchToolsByNameQueryVariables = Exact<{
-  name: Scalars['String']['input'];
-}>;
-
-
-export type SearchToolsByNameQuery = { __typename?: 'Query', SearchToolsByName?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
-
-export type SearchToolsByPositionQueryVariables = Exact<{
-  position: Scalars['String']['input'];
-}>;
-
-
-export type SearchToolsByPositionQuery = { __typename?: 'Query', SearchToolsByPosition?: Array<{ __typename?: 'Tool', id: number, name: string, partName?: string | null, category: string, position: string, description: string, photoLink: string, usage: number, tutorialLink: string, remain: number, toolLikeIds?: Array<number | null> | null, userBorrowToolIds?: Array<number | null> | null } | null> | null };
-
-export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: Array<{ __typename?: 'SimpleUser', id: number, name: string, studentID: string, photoLink?: string | null, laserCutAvailable: boolean, isAdmin: boolean, isMinister: boolean } | null> | null };
+export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', cursor?: number | null, users?: Array<{ __typename?: 'SimpleUser', id: number, name: string, studentID: string, photoLink?: string | null, laserCutAvailable: boolean, isAdmin: boolean, isMinister: boolean } | null> | null } | null };
 
 export type SearchUserByNameQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -1653,10 +1805,10 @@ export type GetAdminScheduleByPeriodQueryVariables = Exact<{
 
 export type GetAdminScheduleByPeriodQuery = { __typename?: 'Query', GetAdminScheduleByPeriod?: Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null };
 
-export type AllAdminSchedulesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllAdminSchedulesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllAdminSchedulesQuery = { __typename?: 'Query', AllAdminSchedules?: Array<Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null> | null };
+export type GetAllAdminSchedulesQuery = { __typename?: 'Query', GetAllAdminSchedules?: Array<Array<{ __typename?: 'AdminSchedule', id: number, admin: string, day: string, period: string } | null> | null> | null };
 
 export type GetAllSignupAuthCodesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1732,30 +1884,32 @@ export const DemoteUserDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const AddAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"adminScheduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminScheduleInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AddAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"adminScheduleInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"adminScheduleInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<AddAdminScheduleMutation, AddAdminScheduleMutationVariables>;
 export const DeleteAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deleteAdminScheduleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"DeleteAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deleteAdminScheduleId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<DeleteAdminScheduleMutation, DeleteAdminScheduleMutationVariables>;
 export const EditAdminScheduleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditAdminSchedule"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"editAdminScheduleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EditAdminSchedule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"editAdminScheduleId"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<EditAdminScheduleMutation, EditAdminScheduleMutationVariables>;
-export const AllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAnnouncements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AllAnnouncementsQuery, AllAnnouncementsQueryVariables>;
-export const AllArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllArticles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"writerId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"headline"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"userpic"}}]}}]}}]} as unknown as DocumentNode<AllArticlesQuery, AllArticlesQueryVariables>;
-export const AllDisposableMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDisposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllDisposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<AllDisposableMaterialsQuery, AllDisposableMaterialsQueryVariables>;
-export const SearchDisposableMaterialsByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialsByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialsByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialsByCategoryQuery, SearchDisposableMaterialsByCategoryQueryVariables>;
-export const SearchDisposableMaterialsByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialsByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialsByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialsByNameQuery, SearchDisposableMaterialsByNameQueryVariables>;
-export const SearchDisposableMaterialsByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialsByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialsByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialsByPositionQuery, SearchDisposableMaterialsByPositionQueryVariables>;
-export const AllMachinesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllMachines"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllMachines"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<AllMachinesQuery, AllMachinesQueryVariables>;
+export const GetAllAnnouncementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllAnnouncements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllAnnouncements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"announcements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllAnnouncementsQuery, GetAllAnnouncementsQueryVariables>;
+export const GetAnnouncementByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnnouncementById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAnnouncementById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<GetAnnouncementByIdQuery, GetAnnouncementByIdQueryVariables>;
+export const SearchAnnouncementByTitleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchAnnouncementByTitle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchAnnouncementByTitle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<SearchAnnouncementByTitleQuery, SearchAnnouncementByTitleQueryVariables>;
+export const GetAllToolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllTools"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllTools"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllToolsQuery, GetAllToolsQueryVariables>;
+export const GetToolByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetToolById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getToolByIdId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetToolById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getToolByIdId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<GetToolByIdQuery, GetToolByIdQueryVariables>;
+export const SearchToolByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolByCategoryQuery, SearchToolByCategoryQueryVariables>;
+export const SearchToolByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolByPositionQuery, SearchToolByPositionQueryVariables>;
+export const SearchToolByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolByNameQuery, SearchToolByNameQueryVariables>;
+export const GetAllArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllArticles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllArticles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"writerId"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageURL"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"headline"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"userpic"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllArticlesQuery, GetAllArticlesQueryVariables>;
+export const GetAllDisposableMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllDisposableMaterials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllDisposableMaterials"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"disposableMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllDisposableMaterialsQuery, GetAllDisposableMaterialsQueryVariables>;
+export const SearchDisposableMaterialByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialByCategoryQuery, SearchDisposableMaterialByCategoryQueryVariables>;
+export const SearchDisposableMaterialByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialByPositionQuery, SearchDisposableMaterialByPositionQueryVariables>;
+export const SearchDisposableMaterialByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchDisposableMaterialByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchDisposableMaterialByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}}]}}]}}]} as unknown as DocumentNode<SearchDisposableMaterialByNameQuery, SearchDisposableMaterialByNameQueryVariables>;
+export const GetAllMachinesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllMachines"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllMachines"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"machines"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllMachinesQuery, GetAllMachinesQueryVariables>;
+export const SearchMachineByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMachineByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMachineByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<SearchMachineByCategoryQuery, SearchMachineByCategoryQueryVariables>;
+export const SearchMachineByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMachineByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMachineByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<SearchMachineByPositionQuery, SearchMachineByPositionQueryVariables>;
 export const SearchMachineByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMachineByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMachineByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<SearchMachineByNameQuery, SearchMachineByNameQueryVariables>;
-export const SearchMachinesByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMachinesByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMachinesByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<SearchMachinesByCategoryQuery, SearchMachinesByCategoryQueryVariables>;
-export const SearchMachinesByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMachinesByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMachinesByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}}]}}]}}]} as unknown as DocumentNode<SearchMachinesByPositionQuery, SearchMachinesByPositionQueryVariables>;
-export const AllMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllMaterials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<AllMaterialsQuery, AllMaterialsQueryVariables>;
+export const GetAllMaterialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllMaterials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllMaterials"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"materials"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllMaterialsQuery, GetAllMaterialsQueryVariables>;
 export const GetMaterialByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMaterialById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetMaterialById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<GetMaterialByIdQuery, GetMaterialByIdQueryVariables>;
+export const SearchMaterialByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMaterialByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMaterialByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchMaterialByCategoryQuery, SearchMaterialByCategoryQueryVariables>;
+export const SearchMaterialByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMaterialByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMaterialByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchMaterialByPositionQuery, SearchMaterialByPositionQueryVariables>;
 export const SearchMaterialByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMaterialByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMaterialByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchMaterialByNameQuery, SearchMaterialByNameQueryVariables>;
-export const SearchMaterialsByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMaterialsByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMaterialsByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchMaterialsByCategoryQuery, SearchMaterialsByCategoryQueryVariables>;
-export const SearchMaterialsByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchMaterialsByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchMaterialsByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"valuable"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<SearchMaterialsByPositionQuery, SearchMaterialsByPositionQueryVariables>;
-export const AllThreeDpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllThreeDP"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllThreeDP"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"waitingId"}},{"kind":"Field","name":{"kind":"Name","value":"broken"}}]}}]}}]} as unknown as DocumentNode<AllThreeDpQuery, AllThreeDpQueryVariables>;
+export const GetAllThreeDPsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllThreeDPs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllThreeDPs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"threeDPs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"waitingId"}},{"kind":"Field","name":{"kind":"Name","value":"broken"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllThreeDPsQuery, GetAllThreeDPsQueryVariables>;
 export const SearchThreeDpByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchThreeDPByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchThreeDPByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"waitingId"}},{"kind":"Field","name":{"kind":"Name","value":"broken"}}]}}]}}]} as unknown as DocumentNode<SearchThreeDpByCategoryQuery, SearchThreeDpByCategoryQueryVariables>;
 export const SearchThreeDpByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchThreeDPByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchThreeDPByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"waitingId"}},{"kind":"Field","name":{"kind":"Name","value":"broken"}}]}}]}}]} as unknown as DocumentNode<SearchThreeDpByPositionQuery, SearchThreeDpByPositionQueryVariables>;
-export const AllToolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllTools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllTools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<AllToolsQuery, AllToolsQueryVariables>;
-export const GetToolByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetToolById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getToolByIdId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetToolById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getToolByIdId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<GetToolByIdQuery, GetToolByIdQueryVariables>;
-export const SearchToolsByCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolsByCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolsByCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolsByCategoryQuery, SearchToolsByCategoryQueryVariables>;
-export const SearchToolsByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolsByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolsByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolsByNameQuery, SearchToolsByNameQueryVariables>;
-export const SearchToolsByPositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchToolsByPosition"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"position"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchToolsByPosition"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"position"},"value":{"kind":"Variable","name":{"kind":"Name","value":"position"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"tutorialLink"}},{"kind":"Field","name":{"kind":"Name","value":"remain"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}}]}}]}}]} as unknown as DocumentNode<SearchToolsByPositionQuery, SearchToolsByPositionQueryVariables>;
-export const GetAllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}}]}}]}}]} as unknown as DocumentNode<GetAllUsersQuery, GetAllUsersQueryVariables>;
+export const GetAllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<GetAllUsersQuery, GetAllUsersQueryVariables>;
 export const SearchUserByNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchUserByName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SearchUserByName"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}}]}}]}}]} as unknown as DocumentNode<SearchUserByNameQuery, SearchUserByNameQueryVariables>;
 export const GetUserByStudentIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByStudentID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetUserByStudentID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"studentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}}]}}]} as unknown as DocumentNode<GetUserByStudentIdQuery, GetUserByStudentIdQueryVariables>;
 export const GetAuthorizedCodeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuthorizedCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAuthorizedCode"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"codeList"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetAuthorizedCodeQuery, GetAuthorizedCodeQueryVariables>;
@@ -1778,7 +1932,7 @@ export const GetUserBorrowMaterialsByStatusAndUserIdDocument = {"kind":"Document
 export const LogInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LogIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"logInInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LogInInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"LogIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"logInInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"logInInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"photoLink"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"threeDPId"}},{"kind":"Field","name":{"kind":"Name","value":"laserCutAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"articlesId"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isMinister"}},{"kind":"Field","name":{"kind":"Name","value":"toolLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowToolIds"}},{"kind":"Field","name":{"kind":"Name","value":"materialLikeIds"}},{"kind":"Field","name":{"kind":"Name","value":"userBorrowMaterialIds"}}]}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<LogInQuery, LogInQueryVariables>;
 export const GetAdminScheduleByDayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAdminScheduleByDay"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"day"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAdminScheduleByDay"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"day"},"value":{"kind":"Variable","name":{"kind":"Name","value":"day"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<GetAdminScheduleByDayQuery, GetAdminScheduleByDayQueryVariables>;
 export const GetAdminScheduleByPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAdminScheduleByPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"period"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAdminScheduleByPeriod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"period"},"value":{"kind":"Variable","name":{"kind":"Name","value":"period"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<GetAdminScheduleByPeriodQuery, GetAdminScheduleByPeriodQueryVariables>;
-export const AllAdminSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"AllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<AllAdminSchedulesQuery, AllAdminSchedulesQueryVariables>;
+export const GetAllAdminSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllAdminSchedules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admin"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"period"}}]}}]}}]} as unknown as DocumentNode<GetAllAdminSchedulesQuery, GetAllAdminSchedulesQueryVariables>;
 export const GetAllSignupAuthCodesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSignupAuthCodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetAllSignupAuthCodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<GetAllSignupAuthCodesQuery, GetAllSignupAuthCodesQueryVariables>;
 export const GetSignupAuthCodeByStudentIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSignupAuthCodeByStudentID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"GetSignupAuthCodeByStudentID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"studentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"studentID"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<GetSignupAuthCodeByStudentIdQuery, GetSignupAuthCodeByStudentIdQueryVariables>;
 export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"CheckSignupAuthCode"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"studentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"studentId"}}},{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}]}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;

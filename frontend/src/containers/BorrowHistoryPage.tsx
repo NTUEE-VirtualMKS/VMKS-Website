@@ -17,4 +17,4 @@ function BorrowHistoryPage() {
   );
 }
 
-export default BorrowHistoryPage;
+export { BorrowHistoryPage };

@@ -1,20 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { ALL_ANNOUNCEMENT_QUERY } from "../../graphql";
+import { GET_ALL_ANNOUNCEMENTS_QUERY } from "../../graphql";
 import { useQuery } from "@apollo/client";
 import LoaderSpinner from "../LoaderSpinner";
 import { useTranslation } from "react-i18next";
 import { Volume2 } from "lucide-react";
 import { useWindow } from "@/contexts/WindowContext";
+import { AnnouncementType } from "@/shared/type";
 
 function HomePageAnnouncement() {
   const navigate = useNavigate();
   const { windowWidth } = useWindow();
   const { t } = useTranslation();
-  const { loading, error, data } = useQuery(ALL_ANNOUNCEMENT_QUERY);
+  const { data, loading, error } = useQuery(GET_ALL_ANNOUNCEMENTS_QUERY);
   if (loading) return <LoaderSpinner />;
   if (error) throw new Error(`Error! ${error.message}`);
 
-  const announcements = data?.AllAnnouncements || [];
+  const announcements = data?.GetAllAnnouncements
+    ?.announcements as AnnouncementType[];
 
   return (
     <>
@@ -58,7 +60,7 @@ function HomePageAnnouncement() {
                   announcement && (
                     <div
                       key={announcement.id}
-                      className="flex flex-col gap-2 w-full rounded-lg border shadow dark:border-[#444444] p-4 text-xs dark:text-white dark:text-opacity-50 dark:hover:bg-opacity-70 max-md:flex-wrap max-md:max-w-full dark:bg-[#303030] bg-opacity-50 transform active:scale-[0.98] transition-transform duration-200 cursor-pointer"
+                      className="flex flex-col gap-2 w-full rounded-lg border shadow dark:border-[#444444] p-4 text-xs dark:text-white dark:text-opacity-50 dark:hover:bg-opacity-90 max-md:flex-wrap max-md:max-w-full dark:bg-[#303030] bg-opacity-50 transform active:scale-[0.98] transition-transform duration-200 cursor-pointer"
                       onClick={() => {}} // TODO: link to detailed page
                     >
                       <div className="flex flex-col justify-between">
@@ -66,7 +68,8 @@ function HomePageAnnouncement() {
                           <b>
                             {windowWidth > 600
                               ? announcement.title.slice(0, 25)
-                              : announcement.title.slice(0, 20) + " ..."}
+                              : announcement.title.slice(0, 20)}{" "}
+                            {announcement.title.length > 25 ? " ..." : ""}
                           </b>
                         </div>
                         <div className="self-start text-gray-500 dark:text-gray-400">
@@ -79,7 +82,9 @@ function HomePageAnnouncement() {
                             ? announcement.content.slice(0, 65)
                             : announcement.content.slice(0, 40)}{" "}
                           <span>
-                            <span> ...{t("more")}</span>
+                            {announcement.content.length > 65 && (
+                              <span> ...{t("more")}</span>
+                            )}
                           </span>
                         </div>
                       </div>

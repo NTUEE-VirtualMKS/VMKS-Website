@@ -27,9 +27,9 @@ function Searchbar({
   }, [navigate, pathname, debounceValue]);
 
   return (
-    <div className="relative block w-full">
+    <div className="relative block w-full rounded-[6px]">
       <Input
-        className="input-class py-6 pl-12 focus-visible:ring-offset-sky-300"
+        className="input-class py-6 pl-12"
         placeholder={placeholder}
         value={search}
         onChange={(e) => setSearchParams({ search: e.target.value })}
@@ -40,7 +40,7 @@ function Searchbar({
         <X
           size={50}
           strokeWidth={1}
-          className="absolute right-2 top-0 text-white hover:bg-zinc-500 hover:bg-opacity-50 cursor-pointer rounded-full p-1.5"
+          className="absolute right-2 top-0 dark:text-white hover:bg-zinc-500 dark:hover:bg-opacity-50 hover:bg-opacity-15 cursor-pointer rounded-full p-1.5"
           onClick={() => setSearchParams({ search: "" })}
         />
       )}

@@ -56,11 +56,32 @@ const splitLink = split(
   authLink.concat(httpLink) // Combine authLink and httpLink
 );
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        GetAllAnnouncements: {
+          keyArgs: false,
+        },
+        GetAllTools: {
+          keyArgs: false,
+        },
+        GetAllMaterials: {
+          keyArgs: false,
+        },
+        GetAllUsers: {
+          keyArgs: false,
+        },
+      },
+    },
+  },
+});
+
 // Apollo client setup
 const client = new ApolloClient({
   link: splitLink,
   uri: "http://localhost:5000/",
-  cache: new InMemoryCache(),
+  cache: cache,
 });
 
 // Rendering the root component

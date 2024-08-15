@@ -19,4 +19,4 @@ function SettingsPage() {
   );
 }
 
-export default SettingsPage;
+export { SettingsPage };

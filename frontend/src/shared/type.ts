@@ -280,3 +280,21 @@ export type AdminScheduleType = {
   day: string;
   period: string;
 };
+
+export type ToolImportButtonProps = {
+  setTools: (tools: ToolInput[]) => void;
+  setLength: (length: number) => void;
+  fileRef: RefObject<HTMLInputElement>;
+  file: File | null;
+  setFile: (file: File | null) => void;
+  isFileUploadLoading: boolean;
+};
+
+export type MaterialImportButtonProps = {
+  setMaterials: (tools: MaterialInput[]) => void;
+  setLength: (length: number) => void;
+  fileRef: RefObject<HTMLInputElement>;
+  file: File | null;
+  setFile: (file: File | null) => void;
+  isFileUploadLoading: boolean;
+};

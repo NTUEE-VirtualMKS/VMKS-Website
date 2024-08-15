@@ -60,7 +60,7 @@ function StudentIDCardUploadDialog() {
       <Dialog open={visible} onOpenChange={(visible) => setVisible(visible)}>
         <Button
           onClick={() => setVisible(true)}
-          className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+          className="submit-button  hover:bg-blue-500 hover:bg-opacity-90"
         >
           {t("uploadStudenetIDCard")}
         </Button>

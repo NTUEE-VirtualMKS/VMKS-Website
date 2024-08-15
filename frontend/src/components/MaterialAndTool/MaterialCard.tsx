@@ -335,7 +335,10 @@ function MaterialCard({
                         />
                       </AlertDialogTrigger>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-black bg-opacity-80">
+                    <TooltipContent
+                      className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                      side="bottom"
+                    >
                       <p className="text-white text-xs">{t("delete")}</p>
                     </TooltipContent>
                     <AlertDialogContent className="dark:text-white dark:bg-black">
@@ -351,11 +354,11 @@ function MaterialCard({
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md">
+                        <AlertDialogCancel className="submit-button  hover:bg-blue-500 hover:bg-opacity-90">
                           {t("cancel")}
                         </AlertDialogCancel>
                         <AlertDialogAction
-                          className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                          className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                           onClick={handleDelete}
                         >
                           {t("continue")}
@@ -411,18 +414,21 @@ function MaterialCard({
                     </>
                   ) : (
                     <Star
-                      className="p-1.5 transform active:scale-90 transition-transform duration-200 text-white text-opacity-50"
+                      className="p-1.5 transform active:scale-90 transition-transform duration-200 dark:text-white text-gray-300 dark:text-opacity-50"
                       size={35}
                       onClick={() =>
                         toast({
-                          title: "Please log in to star the material.",
+                          title: "Please log in to star the material!",
                           variant: "star",
                         })
                       }
                     />
                   )}
                 </TooltipTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
+                <TooltipContent
+                  className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                  side="bottom"
+                >
                   <p className="text-white text-xs">
                     {star ? t("unstar") : t("star")}
                   </p>
@@ -450,7 +456,10 @@ function MaterialCard({
                     onClick={handleAddToShoppingCart}
                   />
                 </TooltipTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
+                <TooltipContent
+                  className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                  side="bottom"
+                >
                   <p className="text-white text-xs">{t("addToShoppingCart")}</p>
                 </TooltipContent>
               </div>
@@ -469,7 +478,10 @@ function MaterialCard({
                     onClick={handleShare}
                   />
                 </TooltipTrigger>
-                <TooltipContent className="bg-black bg-opacity-80">
+                <TooltipContent
+                  className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                  side="bottom"
+                >
                   <p className="text-white text-xs">{t("share")}</p>
                 </TooltipContent>
               </div>

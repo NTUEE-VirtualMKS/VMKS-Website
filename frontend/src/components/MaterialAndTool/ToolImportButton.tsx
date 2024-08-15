@@ -3,14 +3,18 @@ import { read, utils } from "xlsx";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
 import { ChangeEvent } from "react";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import type { ToolImportButtonProps } from "@/shared/type";
 
-function MaterialImportButton({
+function ToolImportButton({
   setTools,
   setLength,
-}: {
-  setTools: (tools: ToolInput[]) => void;
-  setLength: (length: number) => void;
-}) {
+  fileRef,
+  file,
+  setFile,
+  isFileUploadLoading,
+}: ToolImportButtonProps) {
   const { toast } = useToast();
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -24,7 +28,9 @@ function MaterialImportButton({
         });
         setTools([]);
         setLength(0);
+        setFile(null);
       } else {
+        setFile(file);
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
           const wb = read(event.target?.result);
@@ -32,7 +38,7 @@ function MaterialImportButton({
 
           if (sheets.length) {
             const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-            const rowMaterials: ToolInput[] = rows.map((row: any) => {
+            const rowTools: ToolInput[] = rows.map((row: any) => {
               return {
                 name: row["name"],
                 partName: row["partName"],
@@ -45,8 +51,8 @@ function MaterialImportButton({
                 remain: row["remain"],
               };
             });
-            setTools(rowMaterials);
-            setLength(rowMaterials.length);
+            setTools(rowTools);
+            setLength(rowTools.length);
           }
         };
         reader.readAsArrayBuffer(file);
@@ -55,12 +61,25 @@ function MaterialImportButton({
   };
 
   return (
-    <Input
-      type="file"
-      className="my-3 dark:bg-[#15171C] text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 bg-transparent hover:bg-transparent transform active:scale-95 transition-transform duration-200 shadow"
-      onChange={(e) => handleImport(e)}
-    />
+    <div className="w-full" onClick={() => fileRef?.current?.click()}>
+      <Input
+        type="file"
+        accept=".csv"
+        className="hidden"
+        ref={fileRef}
+        onChange={handleImport}
+      />
+      <Button
+        className={cn(
+          "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded shadow-lg transform active:scale-95 transition-transform duration-200",
+          file && "rounded-r-none"
+        )}
+        disabled={isFileUploadLoading}
+      >
+        {file ? `${file.name}` : "select file"}
+      </Button>
+    </div>
   );
 }
 
-export default MaterialImportButton;
+export default ToolImportButton;
