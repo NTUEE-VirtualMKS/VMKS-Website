@@ -50,4 +50,4 @@ function ToolDetailPage() {
   );
 }
 
-export default ToolDetailPage;
+export { ToolDetailPage };

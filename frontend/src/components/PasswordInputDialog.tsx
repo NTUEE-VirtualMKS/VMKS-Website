@@ -52,13 +52,13 @@ function PasswordInputDialog({
         <div className="flex flex-row-reverse gap-2">
           <Button
             onClick={handleFunction}
-            className="text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+            className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
           >
             {t("submit")}
           </Button>
           <Button
             onClick={handleCancel}
-            className="text-red-400 border border-red-400 transform active:scale-90 transition-transform duration-200"
+            className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
           >
             {t("cancel")}
           </Button>

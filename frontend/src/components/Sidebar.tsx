@@ -74,10 +74,10 @@ function Sidebar() {
           </SheetTrigger>
         </TooltipTrigger>
         <TooltipContent
-          className="bg-black bg-opacity-80 text-white"
+          className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
           side="right"
         >
-          {t("sidebar")}
+          <p className="text-white text-xs">{t("sidebar")}</p>
         </TooltipContent>
       </Tooltip>
       <SheetContent side="left" className="dark:bg-[#111111] bg-gray-100">
@@ -114,10 +114,10 @@ function Sidebar() {
                         }
                       />
                       <TooltipContent
-                        className="bg-black bg-opacity-80 text-white"
+                        className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
                         side="right"
                       >
-                        {material?.name}
+                        <p className="text-white text-xs">{material?.name}</p>
                       </TooltipContent>
                     </TooltipTrigger>
                   </Tooltip>
@@ -139,10 +139,10 @@ function Sidebar() {
                         onClick={() => navigate(`/ToolPage/Tool/${tool?.id}`)}
                       />
                       <TooltipContent
-                        className="bg-black bg-opacity-80 dark:text-white"
+                        className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
                         side="right"
                       >
-                        {tool?.name}
+                        <p className="text-white text-xs">{tool?.name}</p>
                       </TooltipContent>
                     </TooltipTrigger>
                   </Tooltip>

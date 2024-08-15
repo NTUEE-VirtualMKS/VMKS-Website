@@ -17,4 +17,4 @@ function ShoppingCartPage() {
   );
 }
 
-export default ShoppingCartPage;
+export { ShoppingCartPage };

@@ -116,6 +116,14 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+
+  .submit-button {
+    @apply bg-blue-500 text-white rounded lowercase shadow-lg transform active:scale-90 transition-transform duration-200;
+  }
+
+  .cancel-button {
+    @apply bg-red-500 text-white rounded lowercase shadow-lg transform active:scale-90 transition-transform duration-200;
+  }
 }
 
 code {

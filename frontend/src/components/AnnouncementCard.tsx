@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import {
   EDIT_ANNOUNCEMENT_MUTATION,
-  ALL_ANNOUNCEMENT_QUERY,
+  GET_ALL_ANNOUNCEMENTS_QUERY,
   DELETE_ANNOUNCEMENT_MUTATION,
 } from "@/graphql";
 import {
@@ -51,7 +51,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
   const [announcementDate, _setAnnouncementDate] = useState(date);
   const [deleteAnnouncement, { loading: deleteLoading, error: deleteError }] =
     useMutation(DELETE_ANNOUNCEMENT_MUTATION, {
-      refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
+      refetchQueries: [{ query: GET_ALL_ANNOUNCEMENTS_QUERY }],
     });
 
   const handleDelete = async (id: number) => {
@@ -70,7 +70,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
 
   const [editAnnouncement, { loading: editLoading, error: editError }] =
     useMutation(EDIT_ANNOUNCEMENT_MUTATION, {
-      refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
+      refetchQueries: [{ query: GET_ALL_ANNOUNCEMENTS_QUERY }],
     });
 
   const handleUpdate = async ({
@@ -136,7 +136,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent
-                  className="bg-black bg-opacity-80"
+                  className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
                   side="bottom"
                 >
                   <p className="text-white text-xs">{t("edit")}</p>
@@ -184,13 +184,13 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                           content: announcementContent,
                         })
                       }
-                      className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={() => setVisible(false)}
-                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                      className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                     >
                       {t("cancel")}
                     </Button>
@@ -211,7 +211,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent
-                  className="bg-black bg-opacity-80"
+                  className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
                   side="bottom"
                 >
                   <p className="text-white text-xs">{t("delete")}</p>
@@ -227,11 +227,11 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md">
+                    <AlertDialogCancel className="submit-button hover:bg-blue-500 hover:bg-opacity-90">
                       {t("cancel")}
                     </AlertDialogCancel>
                     <AlertDialogAction
-                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                      className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                       onClick={() => handleDelete(announcementId)}
                     >
                       {t("continue")}

@@ -81,4 +81,4 @@ const MapPage = () => {
   );
 };
 
-export default MapPage;
+export { MapPage };

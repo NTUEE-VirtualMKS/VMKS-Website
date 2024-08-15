@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ALL_ANNOUNCEMENT_QUERY, ADD_ANNOUNCEMENT_MUTATION } from "@/graphql";
+import {
+  GET_ALL_ANNOUNCEMENTS_QUERY,
+  ADD_ANNOUNCEMENT_MUTATION,
+} from "@/graphql";
 import type { AnnouncementInput } from "../../../backend/src/types/types";
 import AnnouncementList from "@/components/AnnouncementList";
 import LoaderSpinner from "@/components/LoaderSpinner";
@@ -32,7 +35,7 @@ function AnnouncementPage() {
   const [addAnnouncement, { loading, error }] = useMutation(
     ADD_ANNOUNCEMENT_MUTATION,
     {
-      refetchQueries: [{ query: ALL_ANNOUNCEMENT_QUERY }],
+      refetchQueries: [{ query: GET_ALL_ANNOUNCEMENTS_QUERY }],
     }
   );
 
@@ -67,7 +70,7 @@ function AnnouncementPage() {
           <DialogTrigger asChild>
             <div className="flex flex-row-reverse">
               <Button
-                className="bg-white dark:bg-black m-3 dark:text-sky-300 text-blue-500 hover:bg-transparent shadow-md border dark:border-sky-300 border-blue-500 transform active:scale-90 transition-transform duration-200 cursor-pointer lowercase"
+                className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
                 onClick={() => setVisible(true)}
               >
                 {t("newAnnouncement")}
@@ -113,13 +116,13 @@ function AnnouncementPage() {
           <div className="flex flex-row-reverse gap-2">
             <Button
               onClick={() => handleSubmit({ title, content })}
-              className="bg-white dark:bg-black dark:text-sky-300 text-blue-500 border dark:border-sky-300 border-blue-500 transform active:scale-90 transition-transform duration-200 hover:bg-transparent shadow-md"
+              className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
             >
               {t("submit")}
             </Button>
             <Button
               onClick={() => setVisible(false)}
-              className="bg-white dark:bg-black dark:text-red-400 text-red-500 border dark:border-red-400 border-red-500 transform active:scale-90 transition-transform duration-200 hover:bg-transparent shadow-md"
+              className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
             >
               {t("cancel")}
             </Button>
@@ -133,4 +136,4 @@ function AnnouncementPage() {
   );
 }
 
-export default AnnouncementPage;
+export { AnnouncementPage };

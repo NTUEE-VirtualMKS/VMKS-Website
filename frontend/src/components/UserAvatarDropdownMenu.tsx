@@ -1,4 +1,11 @@
-import { LogOut, UserRound, History, ShoppingCart } from "lucide-react";
+// TODO: optional: settings page
+import {
+  LogOut,
+  UserRound,
+  History,
+  ShoppingCart,
+  MessageSquareWarning,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,30 +45,44 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
-        align="center"
-        className="bg-black bg-opacity-90 border border-[#444444] text-white mt-1.5"
+        align="end"
+        side="bottom"
+        sideOffset={5}
+        className="dark:bg-[#2c2c2c] dark:border dark:border-[#444444] dark:text-white w-48"
       >
-        <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-base">
+          {t("myAccount")}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => navigate(`/UserProfilePage/${user?.id}`)}
+          className="text-base"
+          onClick={() => navigate(`/UserProfilePage`)}
         >
-          <UserRound className="mr-2 h-4 w-4" />
+          <UserRound className="mr-2 h-5 w-5" />
           <span>{t("profile")}</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate("/ShoppingCartPage")}>
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          <span>{t("shoppingCart")}</span>
+        <DropdownMenuItem className="text-base" onClick={handleLogout}>
+          <LogOut className="mr-2 h-5 w-5" />
+          <span>{t("logout")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {/* <DropdownMenuItem onClick={() => navigate("/SettingsPage")}>
-          <Settings className="mr-2 h-4 w-4" />
+        <DropdownMenuItem
+          className="text-base"
+          onClick={() => navigate("/ShoppingCartPage")}
+        >
+          <ShoppingCart className="mr-2 h-5 w-5" />
+          <span>{t("shoppingCart")}</span>
+        </DropdownMenuItem>
+        {/* <DropdownMenuItem className="text-base" onClick={() => navigate("/SettingsPage")}>
+          <Settings className="mr-2 h-5 w-5" />
           <span>{t("settings")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />*/}
-        <DropdownMenuItem onClick={() => navigate("/BorrowHistoryPage")}>
-          <History className="mr-2 h-4 w-4" />
+        <DropdownMenuItem
+          className="text-base"
+          onClick={() => navigate("/BorrowHistoryPage")}
+        >
+          <History className="mr-2 h-5 w-5" />
           <span>{t("borrowHistory")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -74,7 +95,9 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
                 className="w-3 h-3 mr-2"
                 onClick={() => changeLanguage("en")}
               />
-              <Label htmlFor="en">English</Label>
+              <Label htmlFor="en" className="text-base">
+                English
+              </Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
@@ -84,14 +107,19 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
                 className="w-3 h-3 mr-2"
                 onClick={() => changeLanguage("zh")}
               />
-              <Label htmlFor="zh">中文 (繁體)</Label>
+              <Label htmlFor="zh" className="text-base">
+                中文 (繁體)
+              </Label>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </RadioGroup>
         )}
-        <DropdownMenuItem onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>{t("logout")}</span>
+        <DropdownMenuItem
+          className="text-base"
+          onClick={() => navigate("/FeedbackPage")}
+        >
+          <MessageSquareWarning className="mr-2 h-5 w-5" />
+          <span>{t("feedback")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

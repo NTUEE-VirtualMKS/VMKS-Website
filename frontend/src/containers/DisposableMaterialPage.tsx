@@ -19,4 +19,4 @@ function DisposableMaterialPage() {
   );
 }
 
-export default DisposableMaterialPage;
+export { DisposableMaterialPage };

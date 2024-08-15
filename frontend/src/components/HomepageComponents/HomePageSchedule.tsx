@@ -59,7 +59,7 @@ function HomePageSchedule() {
         <div className="flex mx-4 mt-2 justify-between self-center w-[16.5rem] dark:text-white dark:bg-[#303030] bg-gray-50  shadow bg-opacity-50 hover:bg-opacity-70 border dark:border-[#444444] rounded-xl">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-transparent rounded-t-2xl">
+              <TableRow className="rounded-t-2xl hover:bg-transparent">
                 <TableHead className="dark:text-white text-center font-semibold">
                   {t("period")}
                 </TableHead>

@@ -18,4 +18,4 @@ function MachinePage() {
   );
 }
 
-export default MachinePage;
+export { MachinePage };

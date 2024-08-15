@@ -51,4 +51,4 @@ function MaterialDetailPage() {
   );
 }
 
-export default MaterialDetailPage;
+export { MaterialDetailPage };

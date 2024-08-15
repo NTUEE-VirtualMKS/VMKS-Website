@@ -229,13 +229,13 @@ function AuthorizedCodePage() {
             <div className="flex flex-row-reverse gap-2">
               <Button
                 onClick={handleGenerate}
-                className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+                className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
               >
                 {t("submit")}
               </Button>
               <Button
                 onClick={() => setVisible(false)}
-                className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+                className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
               >
                 {t("cancel")}
               </Button>
@@ -270,4 +270,4 @@ function AuthorizedCodePage() {
   );
 }
 
-export default AuthorizedCodePage;
+export { AuthorizedCodePage };

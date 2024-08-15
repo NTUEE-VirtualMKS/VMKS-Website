@@ -11,7 +11,10 @@ function IconButton({ onClick, Icon, ariaLabel }: NavButtonProps) {
       >
         <Icon className="dark:text-white" />
       </TooltipTrigger>
-      <TooltipContent className="bg-black bg-opacity-75">
+      <TooltipContent
+        className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+        side="bottom"
+      >
         <p className="text-white text-xs">{ariaLabel}</p>
       </TooltipContent>
     </Tooltip>

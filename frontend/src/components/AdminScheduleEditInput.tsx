@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import {
   EDIT_ADMIN_SCHEDULE_MUTATION,
-  ALL_ADMIN_SCHEDULES_QUERY,
+  GET_ALL_ADMIN_SCHEDULES_QUERY,
 } from "@/graphql";
 import { AdminScheduleType } from "@/shared/type";
 import { Input } from "./ui/input";
@@ -24,7 +24,7 @@ function AdminScheduleEditInput({
   const [editAdminSchedule, { loading, error }] = useMutation(
     EDIT_ADMIN_SCHEDULE_MUTATION,
     {
-      refetchQueries: [{ query: ALL_ADMIN_SCHEDULES_QUERY }],
+      refetchQueries: [{ query: GET_ALL_ADMIN_SCHEDULES_QUERY }],
     }
   );
 

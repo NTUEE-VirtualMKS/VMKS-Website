@@ -18,4 +18,4 @@ function AllUsersBorrowingDataPage() {
   );
 }
 
-export default AllUsersBorrowingDataPage;
+export { AllUsersBorrowingDataPage };

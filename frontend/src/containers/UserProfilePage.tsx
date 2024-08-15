@@ -31,4 +31,4 @@ function UserProfilePage() {
   );
 }
 
-export default UserProfilePage;
+export { UserProfilePage };

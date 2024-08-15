@@ -19,4 +19,4 @@ function FakeLoginPage() {
   return <></>;
 }
 
-export default FakeLoginPage;
+export { FakeLoginPage };

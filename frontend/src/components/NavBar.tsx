@@ -29,15 +29,6 @@ function NavBar() {
   const { toggleDarkMode, isDarkMode } = useDarkMode();
   const { user, setPushToLoginPage } = useUser();
   const { windowWidth } = useWindow();
-  // const [isDarkMode, setIsDarkMode] = useState(() => {
-  //   if (localStorage.theme === "dark") {
-  //     document.documentElement.classList.add("dark");
-  //     return true;
-  //   } else {
-  //     document.documentElement.classList.remove("dark");
-  //     return false;
-  //   }
-  // });
   const [imgUrl, setImgUrl] = useState<string>(() => {
     const storedImgUrl = localStorage.getItem("imgUrl");
     if (storedImgUrl) return JSON.parse(storedImgUrl);
@@ -55,24 +46,10 @@ function NavBar() {
     navigate("/login");
   };
 
-  // const toggleTheme = () => {
-  //   if (localStorage.theme === "dark") {
-  //     document.documentElement.classList.remove("dark");
-  //     localStorage.theme = "light";
-  //     setIsDarkMode(false);
-  //     console.log(isDarkMode);
-  //   } else {
-  //     document.documentElement.classList.add("dark");
-  //     localStorage.theme = "dark";
-  //     setIsDarkMode(true);
-  //     console.log(isDarkMode);
-  //   }
-  // };
-
   return (
     <nav
       className={cn(
-        "flex-1 px-3 flex flex-row justify-between bg-gray-50 dark:bg-black bg-opacity-95 fixed top-0 w-full border-b dark:border-[#444444]",
+        "flex-1 px-3 flex flex-row justify-between bg-gray-50 dark:bg-black bg-opacity-95 dark:bg-opacity-95 fixed top-0 w-full border-b dark:border-[#444444]",
         windowWidth > 600 ? "py-0.5" : "py-2"
       )}
     >
@@ -161,7 +138,10 @@ function NavBar() {
                       />
                     </TooltipTrigger>
                   </UserAvatarDropdownMenu>
-                  <TooltipContent className="bg-black bg-opacity-80">
+                  <TooltipContent
+                    className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                    side="bottom"
+                  >
                     <p className="text-white text-xs">{t("myAccount")}</p>
                   </TooltipContent>
                 </Tooltip>

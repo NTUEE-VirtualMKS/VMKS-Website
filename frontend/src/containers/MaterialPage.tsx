@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import MaterialList from "@/components/MaterialAndTool/MaterialList";
 import {
-  ALL_MATERIAL_QUERY,
+  GET_ALL_MATERIALS_QUERY,
   ADD_MATERIAL_MUTATION,
   SEARCH_MATERIAL_BY_NAME_QUERY,
 } from "@/graphql";
@@ -34,9 +34,12 @@ function MaterialPage() {
   const { toast } = useToast();
   const { user } = useUser();
   const { t } = useTranslation();
+  const ref = useRef<HTMLInputElement>(null);
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const debounceValue = useDebounce(search, 500);
+  const [file, setFile] = useState<File | null>(null);
+  const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -54,7 +57,7 @@ function MaterialPage() {
 
   const [addMaterial, { loading, error }] = useMutation(ADD_MATERIAL_MUTATION, {
     refetchQueries: [
-      { query: ALL_MATERIAL_QUERY },
+      { query: GET_ALL_MATERIALS_QUERY },
       { query: SEARCH_MATERIAL_BY_NAME_QUERY, variables: { name: "" } },
     ],
   });
@@ -110,6 +113,7 @@ function MaterialPage() {
   };
 
   const handleAddMaterials = async (materials: MaterialInput[]) => {
+    setIsFileUploadLoading(true);
     materials.map(async (material) => {
       await addMaterial({
         variables: {
@@ -129,13 +133,17 @@ function MaterialPage() {
         },
       });
     });
-    if (loading) return <SkeletonList />;
+    if (loading) {
+      toast({ title: "Uploading tools..." });
+    }
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
       setMaterials([]);
       setLength(0);
       toast({ title: "Materials added successfully!" });
+      setFile(null);
+      setIsFileUploadLoading(false);
     }
   };
 
@@ -157,9 +165,9 @@ function MaterialPage() {
                 onOpenChange={(visible) => setVisible(visible)}
               >
                 <DialogTrigger asChild>
-                  <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
+                  <div className="hidden sm:flex sm:flex-row sm:justify-end sm:space-x-2">
                     <Button
-                      className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md lowercase"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90 m-3"
                       onClick={() => setVisible(true)}
                     >
                       {t("newMaterial")}
@@ -331,42 +339,49 @@ function MaterialPage() {
                           partName,
                         })
                       }
-                      className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={() => setVisible(false)}
-                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                      className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                     >
                       {t("cancel")}
                     </Button>
                   </div>
                 </DialogContent>
               </Dialog>
-              <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
+              <div className="hidden sm:flex sm:flex-row sm:justify-end">
                 <MaterialImportButton
                   setMaterials={setMaterials}
                   setLength={setLength}
+                  fileRef={ref}
+                  file={file}
+                  setFile={setFile}
+                  isFileUploadLoading={isFileUploadLoading}
                 />
+                {length !== 0 && (
+                  <Button
+                    onClick={() => handleAddMaterials(materials)}
+                    className={
+                      "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
+                    }
+                    disabled={isFileUploadLoading}
+                  >
+                    {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
+                  </Button>
+                )}
               </div>
-              {length !== 0 && (
-                <Button
-                  onClick={() => handleAddMaterials(materials)}
-                  className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
-                >
-                  {t("upload")}
-                </Button>
-              )}
             </>
           )}
         </div>
         <div className="mt-2">
-          <MaterialList search={debounceValue} />
+          <MaterialList search={debounceValue} /> {/* TODO */}
         </div>
       </div>
     </>
   );
 }
 
-export default MaterialPage;
+export { MaterialPage };

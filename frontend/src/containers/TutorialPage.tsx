@@ -153,4 +153,4 @@ function TutorialPage() {
   );
 }
 
-export default TutorialPage;
+export { TutorialPage };

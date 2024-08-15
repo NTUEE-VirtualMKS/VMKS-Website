@@ -191,7 +191,7 @@ function ProfileCard({
               >
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="p-2 aspect-square dark:text-white dark:hover:text-sky-300 hover:text-blue-500 rounded-full hover:bg-blue-500 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
+                    <div className="ml-2 p-2 aspect-square dark:text-white dark:hover:text-sky-300 hover:text-blue-500 rounded-full hover:bg-blue-500 hover:bg-opacity-20 bg-transparent w-10 h-10 flex justify-center items-center cursor-pointer">
                       <DialogTrigger
                         asChild
                         onClick={() => setVisible(true)}
@@ -201,8 +201,11 @@ function ProfileCard({
                       </DialogTrigger>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent className="text-white bg-black bg-opacity-80">
-                    <p className="dark:text-white text-xs">{t("edit")}</p>
+                  <TooltipContent
+                    className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
+                    side="bottom"
+                  >
+                    <p className="text-white text-xs">{t("edit")}</p>
                   </TooltipContent>
                 </Tooltip>
                 <DialogContent className="dark:text-white dark:bg-black rounded-xl w-11/12 sm:w-11/12">
@@ -238,13 +241,13 @@ function ProfileCard({
                       onClick={() =>
                         setEnterPasswordForEdittingUserProfile(true)
                       }
-                      className="text-blue-500 dark:text-sky-300 border border-blue-500 dark:border-sky-300 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={handleCancel}
-                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 shadow-md bg-transparent hover:bg-transparent transform active:scale-90 transition-transform duration-200"
+                      className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                     >
                       {t("cancel")}
                     </Button>
@@ -293,7 +296,7 @@ function ProfileCard({
                   onChange={(e) => setAuthorizedCode(e.target.value)}
                 />
                 <Button
-                  className="ml-2 text-sky-300 border border-sky-300 transform active:scale-90 transition-transform duration-200"
+                  className="ml-2 submit-button hover:bg-blue-500 hover:bg-opacity-90"
                   onClick={() => setEnterPasswordForPromotingUser(true)}
                 >
                   {t("submit")}

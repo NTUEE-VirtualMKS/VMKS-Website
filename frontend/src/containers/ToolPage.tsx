@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
-  ALL_TOOL_QUERY,
+  GET_ALL_TOOLS_QUERY,
   ADD_TOOL_MUTATION,
   SEARCH_TOOL_BY_NAME_QUERY,
   GET_LIKED_TOOLS_BY_USER_ID_QUERY,
@@ -29,14 +29,18 @@ import { useDebounce } from "@/hooks/useDebounce";
 import SkeletonList from "@/components/SkeletonList";
 import { Hammer } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import SearchToolList from "@/components/MaterialAndTool/SearchToolList";
 
 function ToolPage() {
   const { toast } = useToast();
   const { user } = useUser();
   const { t } = useTranslation();
+  const ref = useRef<HTMLInputElement>(null);
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const debounceValue = useDebounce(search, 500);
+  const [file, setFile] = useState<File | null>(null);
+  const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -52,7 +56,7 @@ function ToolPage() {
 
   const [addTool, { loading, error }] = useMutation(ADD_TOOL_MUTATION, {
     refetchQueries: [
-      { query: ALL_TOOL_QUERY },
+      { query: GET_ALL_TOOLS_QUERY },
       { query: SEARCH_TOOL_BY_NAME_QUERY, variables: { name: "" } },
       {
         query: GET_LIKED_TOOLS_BY_USER_ID_QUERY,
@@ -106,32 +110,35 @@ function ToolPage() {
   };
 
   const handleAddTools = async (tools: ToolInput[]) => {
-    Promise.all(
-      tools.map(async (material) => {
-        await addTool({
-          variables: {
-            toolInput: {
-              name: material.name,
-              partName: material.partName,
-              category: material.category,
-              position: material.position,
-              description: material.description,
-              photoLink: material.photoLink,
-              usage: parseInt(`${material.usage}`),
-              tutorialLink: material.tutorialLink,
-              remain: parseInt(`${material.remain}`),
-            },
+    setIsFileUploadLoading(true);
+    tools.map(async (material) => {
+      await addTool({
+        variables: {
+          toolInput: {
+            name: material.name,
+            partName: material.partName,
+            category: material.category,
+            position: material.position,
+            description: material.description,
+            photoLink: material.photoLink,
+            usage: parseInt(`${material.usage}`),
+            tutorialLink: material.tutorialLink,
+            remain: parseInt(`${material.remain}`),
           },
-        });
-      })
-    );
-    if (loading) return <SkeletonList />;
+        },
+      });
+    });
+    if (loading) {
+      toast({ title: "Uploading tools..." });
+    }
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
       setTools([]);
       setLength(0);
       toast({ title: "Tools added successfully!" });
+      setFile(null);
+      setIsFileUploadLoading(false);
     }
   };
 
@@ -153,9 +160,9 @@ function ToolPage() {
                 onOpenChange={(visible) => setVisible(visible)}
               >
                 <DialogTrigger asChild>
-                  <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
+                  <div className="hidden sm:flex sm:flex-row sm:justify-end">
                     <Button
-                      className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md lowercase"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90 m-3"
                       onClick={() => setVisible(true)}
                     >
                       {t("newTool")}
@@ -299,39 +306,53 @@ function ToolPage() {
                           partName,
                         })
                       }
-                      className="text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
+                      className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
                     >
                       {t("submit")}
                     </Button>
                     <Button
                       onClick={() => setVisible(false)}
-                      className="text-red-500 dark:text-red-400 border border-red-500 dark:border-red-400 transform active:scale-90 transition-transform duration-200 bg-transparent dark:hover:bg-primary/90 hover:bg-transparent shadow-md"
+                      className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
                     >
                       {t("cancel")}
                     </Button>
                   </div>
                 </DialogContent>
               </Dialog>
-              <div className="hidden md:flex md:flex-row md:justify-end md:space-x-2">
-                <ToolImportButton setTools={setTools} setLength={setLength} />
+              <div className="hidden sm:flex sm:flex-row sm:justify-end">
+                <ToolImportButton
+                  setTools={setTools}
+                  setLength={setLength}
+                  fileRef={ref}
+                  file={file}
+                  setFile={setFile}
+                  isFileUploadLoading={isFileUploadLoading}
+                />
+                {length !== 0 && (
+                  <Button
+                    onClick={() => handleAddTools(tools)}
+                    className={
+                      "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
+                    }
+                    disabled={isFileUploadLoading}
+                  >
+                    {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
+                  </Button>
+                )}
               </div>
-              {length !== 0 && (
-                <Button
-                  onClick={() => handleAddTools(tools)}
-                  className="m-3 text-blue-500 dark:text-sky-300 border border-blue-400 dark:border-sky-300 transform active:scale-90 transition-transform duration-200 bg-transparent hover:bg-transparent dark:hover:text-sky-300 hover:text-blue-500 shadow-md"
-                >
-                  {t("upload")}
-                </Button>
-              )}
             </>
           )}
         </div>
         <div className="mt-2">
-          <ToolList search={debounceValue} />
+          {debounceValue ? (
+            <SearchToolList search={debounceValue} />
+          ) : (
+            <ToolList />
+          )}
         </div>
       </div>
     </>
   );
 }
 
-export default ToolPage;
+export { ToolPage };
