@@ -136,12 +136,12 @@ interface UserPasswordEditInput {
 }
 
 interface UserMachineUpdateInput {
-  threeDPId: number;
+  threeDPId: string;
   laserCutAvailable: boolean;
 }
 
 interface ArticleInput {
-  writerId: number;
+  writerId: string;
   description: string;
   imageURL: string;
   title: string;
@@ -155,24 +155,24 @@ interface AuthorizedCodeInput {
 }
 
 interface ToolLikeInput {
-  userId: number;
-  toolId: number;
+  userId: string;
+  toolId: string;
 }
 
 interface UserBorrowToolInput {
-  userId: number;
-  toolId: number;
+  userId: string;
+  toolId: string;
   quantity: number;
 }
 
 interface MaterialLikeInput {
-  userId: number;
-  materialId: number;
+  userId: string;
+  materialId: string;
 }
 
 interface UserBorrowMaterialInput {
-  userId: number;
-  materialId: number;
+  userId: string;
+  materialId: string;
   quantity: number;
 }
 

@@ -39,7 +39,7 @@ const authLink = setContext((_, { headers }) => {
 // WebSocket link for subscriptions
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://localhost:5000/",
+    url: "ws://localhost:/",
   })
 );
 

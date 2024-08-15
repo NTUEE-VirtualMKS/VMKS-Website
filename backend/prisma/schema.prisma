@@ -9,14 +9,14 @@ datasource db {
 }
 
 model Announcement {
-  id      Int    @id @default(autoincrement()) // TODO: string & uuid()
+  id      String    @id @default(uuid()) // TODO: string & uuid()
   title   String
   date    String
   content String
 }
 
 model DisposableMaterial {
-  id           Int     @id @default(autoincrement())
+  id           String     @id @default(uuid())
   name         String
   partName     String?
   category     String
@@ -30,7 +30,7 @@ model DisposableMaterial {
 }
 
 model Material {
-  id                    Int                  @id @default(autoincrement())
+  id                    String                  @id @default(uuid())
   name                  String
   partName              String?
   category              String
@@ -43,13 +43,13 @@ model Material {
   fee                   Int
   remain                Int
   materialLikes         MaterialLike[]
-  materialLikeIds       Int[]
+  materialLikeIds       String[]
   userBorrowMaterials   UserBorrowMaterial[]
-  userBorrowMaterialIds Int[]
+  userBorrowMaterialIds String[]
 }
 
 model Tool {
-  id                Int              @id @default(autoincrement())
+  id                String              @id @default(uuid())
   name              String
   partName          String?
   category          String
@@ -60,13 +60,13 @@ model Tool {
   tutorialLink      String
   remain            Int
   toolLikes         ToolLike[]
-  toolLikeIds       Int[]
+  toolLikeIds       String[]
   userBorrowTools   UserBorrowTool[]
-  userBorrowToolIds Int[]
+  userBorrowToolIds String[]
 }
 
 model Machine {
-  id           Int     @id @default(autoincrement())
+  id           String     @id @default(uuid())
   name         String
   partName     String?
   category     String
@@ -78,7 +78,7 @@ model Machine {
 }
 
 model ThreeDP {
-  id           Int     @id @default(autoincrement())
+  id           String     @id @default(uuid())
   name         String
   category     String
   position     String
@@ -87,44 +87,44 @@ model ThreeDP {
   usage        Int
   tutorialLink String
   waiting      User[]
-  waitingId    Int[]
+  waitingId    String[]
   broken       Boolean
 }
 
 model User {
-  id                    Int                  @id @default(autoincrement())
+  id                    String                 @id @default(uuid())
   name                  String
   studentID             String               @unique
   password              String
   photoLink             String?
   language              String               @default("en")
   threeDPUse            ThreeDP?             @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  threeDPId             Int?
+  threeDPId             String?
   laserCutAvailable     Boolean              @default(false)
   articles              Article[]
-  articlesId            Int[]
+  articlesId            String[]
   isAdmin               Boolean              @default(false)
   isMinister            Boolean              @default(false)
   toolLikes             ToolLike[]
-  toolLikeIds           Int[]
+  toolLikeIds           String[]
   userBorrowTools       UserBorrowTool[]
-  userBorrowToolIds     Int[]
+  userBorrowToolIds     String[]
   materialLikes         MaterialLike[]
-  materialLikeIds       Int[]
+  materialLikeIds       String[]
   userBorrowMaterials   UserBorrowMaterial[]
-  userBorrowMaterialIds Int[]
+  userBorrowMaterialIds String[]
 }
 
 model AuthorizedCode {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   codeList  String[]
   updatedAt String
 }
 
 model Article {
-  id          Int     @id @default(autoincrement())
+  id          String     @id @default(uuid())
   writer      User    @relation(fields: [writerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  writerId    Int
+  writerId    String
   description String
   imageURL    String?
   time        String
@@ -135,19 +135,19 @@ model Article {
 }
 
 model ToolLike {
-  id     Int  @id @default(autoincrement())
+  id     String  @id @default(uuid())
   tool   Tool @relation(fields: [toolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  toolId Int
+  toolId String
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId Int
+  userId String
 }
 
 model UserBorrowTool {
-  id         Int     @id @default(autoincrement())
+  id         String     @id @default(uuid())
   user       User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId     Int
+  userId     String
   tool       Tool    @relation(fields: [toolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  toolId     Int
+  toolId     String
   borrower   String
   studentId  String
   figure     String
@@ -163,19 +163,19 @@ model UserBorrowTool {
 }
 
 model MaterialLike {
-  id         Int      @id @default(autoincrement())
+  id         String      @id @default(uuid())
   material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  materialId Int
+  materialId String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId     Int
+  userId     String
 }
 
 model UserBorrowMaterial {
-  id         Int      @id @default(autoincrement())
+  id         String      @id @default(uuid())
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId     Int
+  userId     String
   material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  materialId Int
+  materialId String
   borrower   String
   studentId  String
   figure     String
@@ -191,14 +191,14 @@ model UserBorrowMaterial {
 }
 
 model AdminSchedule {
-  id     Int    @id @default(autoincrement())
+  id     String    @id @default(uuid())
   admin  String
   day    String
   period String
 }
 
 model SignupAuthCode {
-  id        Int    @id @default(autoincrement())
+  id        String    @id @default(uuid())
   code      String
   studentID String
 }
