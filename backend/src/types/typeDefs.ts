@@ -423,56 +423,116 @@ const typeDefs = `#graphql
     day: String!,
     period: String!,
   }
+
+  type GetAllAnnouncements {
+    announcements: [Announcement]
+    cursor: Int
+  }
+
+  type GetAllTools {
+    tools: [Tool]
+    cursor: Int
+  }
+
+  type GetAllDisposableMaterials {
+    disposableMaterials: [DisposableMaterial]
+    cursor: Int
+  }
+
+  type GetAllMaterials {
+    materials: [Material]
+    cursor: Int
+  }
+
+  type GetAllMachines {
+    machines: [Machine]
+    cursor: Int
+  }
+
+  type GetAllThreeDPs {
+    threeDPs: [ThreeDP]
+    cursor: Int
+  }
+
+  type GetAllUsers {
+    users: [SimpleUser]
+    cursor: Int
+  }
+
+  type GetAllArticles {
+    articles: [Article]
+    cursor: Int
+  }
+
   ### Define Resolvers ###
 
   type Query {
-    AllAnnouncements: [Announcement]
-    AllDisposableMaterials: [DisposableMaterial]
-    SearchDisposableMaterialsByCategory(category: String!): [DisposableMaterial]
-    SearchDisposableMaterialsByPosition(position: String!): [DisposableMaterial]
-    SearchDisposableMaterialsByName(name: String!): [DisposableMaterial]
-    AllMaterials: [Material]
-    GetMaterialById(id: Int!): Material
-    SearchMaterialsByCategory(category: String!): [Material]
-    SearchMaterialsByPosition(position: String!): [Material]
-    SearchMaterialByName(name: String!): [Material]
-    AllTools: [Tool]
+    # Announcement
+    GetAllAnnouncements(cursor: Int, limit: Int): GetAllAnnouncements
+    GetAnnouncementById(id: Int!): Announcement
+    SearchAnnouncementByTitle(title: String!): [Announcement]
+    # Tool
+    GetAllTools(cursor: Int, limit: Int): GetAllTools
     GetToolById(id: Int!): Tool
-    SearchToolsByCategory(category: String!): [Tool]
-    SearchToolsByPosition(position: String!): [Tool]
-    SearchToolsByName(name: String!): [Tool]
-    AllMachines: [Machine]
-    SearchMachinesByCategory(category: String!): [Machine]
-    SearchMachinesByPosition(position: String!): [Machine]
-    GetAllUsers: [SimpleUser]
+    SearchToolByCategory(category: String!): [Tool]
+    SearchToolByPosition(position: String!): [Tool]
+    SearchToolByName(name: String!): [Tool]
+    # DisposableMaterial
+    GetAllDisposableMaterials(cursor: Int, limit: Int): GetAllDisposableMaterials
+    SearchDisposableMaterialByCategory(category: String!): [DisposableMaterial]
+    SearchDisposableMaterialByPosition(position: String!): [DisposableMaterial]
+    SearchDisposableMaterialByName(name: String!): [DisposableMaterial]
+    # Material
+    GetAllMaterials(cursor: Int, limit: Int): GetAllMaterials
+    GetMaterialById(id: Int!): Material
+    SearchMaterialByCategory(category: String!): [Material]
+    SearchMaterialByPosition(position: String!): [Material]
+    SearchMaterialByName(name: String!): [Material]
+    # Machine
+    GetAllMachines(cursor: Int, limit: Int): GetAllMachines 
+    SearchMachineByCategory(category: String!): [Machine]
+    SearchMachineByPosition(position: String!): [Machine]
+    SearchMachineByName(input: String!): [Machine]
+    # User
+    GetAllUsers(cursor: Int, limit: Int): GetAllUsers
     SearchUserByName(name: String!): [SimpleUser]
     GetUserByStudentID(studentID: String!): User
-    AllThreeDP: [ThreeDP]
+    # ThreeDP
+    GetAllThreeDPs(cursor: Int, limit: Int): GetAllThreeDPs
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
-    AllArticles: [Article]
-    SearchMachineByName(input: String!): [Machine]
+    # Article
+    GetAllArticles(cursor: Int, limit: Int): GetAllArticles 
+    GetArticleById(id: Int!): Article
+    # AuthorizedCode
     GetAuthorizedCode: AuthorizedCode
+    # LogIn
     LogIn(logInInput: LogInInput!): LogInRet
+    # ToolLike
     GetToolLikes: [ToolLike]
     GetToolLikeById(id: Int!): ToolLike
     GetLikedToolsByUserId(userId: Int!): [Tool]
+    # UserBorrowTool
     GetAllUserBorrowTools: [UserBorrowTool]
     GetAllUserBorrowToolsByStatus(status: [String]!): [UserBorrowTool]
     GetUserBorrowToolById(id: Int!): UserBorrowTool
     GetUserBorrowToolsByUserId(userId: Int!): [UserBorrowTool]
     GetUserBorrowToolsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowTool]
+    # MaterialLike
     GetMaterialLikes: [MaterialLike]
     GetMaterialLikeById(id: Int!): MaterialLike
     GetLikedMaterialsByUserId(userId: Int!): [Material]
+    # UserBorrowMaterial
     GetAllUserBorrowMaterials: [UserBorrowMaterial]
     GetAllUserBorrowMaterialsByStatus(status: [String]!): [UserBorrowMaterial]
     GetUserBorrowMaterialById(id: Int!): UserBorrowMaterial
     GetUserBorrowMaterialsByUserId(userId: Int!): [UserBorrowMaterial]
     GetUserBorrowMaterialsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowMaterial]
-    AllAdminSchedules: [[AdminSchedule]]
+    # AdminSchedule
+    GetAllAdminSchedules: [[AdminSchedule]]
     GetAdminScheduleByDay(day: String!): [AdminSchedule]
     GetAdminScheduleByPeriod(period: String!): [AdminSchedule]
+    # SignupAuthCode
     GetAllSignupAuthCodes: [SignupAuthCode]
     GetSignupAuthCodeByStudentID(studentID: String!): SignupAuthCode
     CheckSignupAuthCode(studentID: String!, code: String!): Boolean

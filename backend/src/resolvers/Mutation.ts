@@ -36,7 +36,7 @@ const Mutation = {
   AddAnnouncement: async (
     _parents,
     args: { announcementInput: AnnouncementInput },
-    _context,
+    _contexts,
   ) => {
     const { title, content } = args.announcementInput;
     const date = new Date().toLocaleString();
@@ -53,7 +53,7 @@ const Mutation = {
     return newAnnouncement;
   },
 
-  DeleteAnnouncement: async (_parents, args: { id: number }, _context) => {
+  DeleteAnnouncement: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findAnnouncement = await prisma.announcement.findFirst({
       where: {
@@ -78,7 +78,7 @@ const Mutation = {
   EditAnnouncement: async (
     _parents,
     args: { id: number; announcementInput: AnnouncementInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const { title, content } = args.announcementInput;
@@ -106,7 +106,7 @@ const Mutation = {
     return editAnnouncement;
   },
 
-  AddTool: async (_parents, args: { toolInput: ToolInput }, _context) => {
+  AddTool: async (_parents, args: { toolInput: ToolInput }, _contexts) => {
     const {
       name,
       partName,
@@ -136,7 +136,7 @@ const Mutation = {
     return newTool;
   },
 
-  DeleteTool: async (_parents, args: { id: number }, _context) => {
+  DeleteTool: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findTool = await prisma.tool.findFirst({
       where: {
@@ -160,7 +160,7 @@ const Mutation = {
   EditTool: async (
     _parents,
     args: { id: number; toolInput: ToolInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const {
@@ -225,7 +225,7 @@ const Mutation = {
   ToolUsageUpdate: async (
     _parents,
     args: { id: number; toolUsageUpdateInput: ToolUsageUpdateInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const { usage, remain } = args.toolUsageUpdateInput;
@@ -255,7 +255,7 @@ const Mutation = {
   AddDisposableMaterial: async (
     _parents,
     args: { disposableMaterialInput: DisposableMaterialInput },
-    _context,
+    _contexts,
   ) => {
     const {
       name,
@@ -292,7 +292,7 @@ const Mutation = {
   DeleteDisposableMaterial: async (
     _parents,
     args: { id: number },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const findDisposableMaterial = await prisma.disposableMaterial.findFirst({
@@ -317,7 +317,7 @@ const Mutation = {
   EditDisposableMaterial: async (
     _parents,
     args: { id: number; disposableMaterialInput: DisposableMaterialInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const {
@@ -429,7 +429,7 @@ const Mutation = {
     return newMachine;
   },
 
-  DeleteMachine: async (_parents, args: { id: number }, _context) => {
+  DeleteMachine: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findMachine = await prisma.machine.findFirst({
       where: {
@@ -451,7 +451,7 @@ const Mutation = {
   EditMachine: async (
     _parents,
     args: { id: number; machineInput: MachineInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const {
@@ -494,7 +494,7 @@ const Mutation = {
   AddMaterial: async (
     _parents,
     args: { materialInput: MaterialInput },
-    _context,
+    _contexts,
   ) => {
     const {
       name,
@@ -530,7 +530,7 @@ const Mutation = {
     return newMaterial;
   },
 
-  DeleteMaterial: async (_parents, args: { id: number }, _context) => {
+  DeleteMaterial: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findMaterial = await prisma.material.findFirst({
       where: {
@@ -553,7 +553,7 @@ const Mutation = {
   EditMaterial: async (
     _parents,
     args: { id: number; materialInput: MaterialInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const {
@@ -622,7 +622,7 @@ const Mutation = {
   MaterialUsageUpdate: async (
     _parents,
     args: { id: number; materialUsageUpdateInput: MaterialUsageUpdateInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const { usage, remain } = args.materialUsageUpdateInput;
@@ -653,7 +653,7 @@ const Mutation = {
   AddThreeDP: async (
     _parents,
     args: { threeDPInput: ThreeDPInput },
-    _context,
+    _contexts,
   ) => {
     const {
       name,
@@ -682,7 +682,7 @@ const Mutation = {
     return newThreeDP;
   },
 
-  DeleteThreeDP: async (_parents, args: { id: number }, _context) => {
+  DeleteThreeDP: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findThreeDP = await prisma.threeDP.findFirst({
       where: {
@@ -717,7 +717,7 @@ const Mutation = {
   EditThreeDP: async (
     _parents,
     args: { id: number; threeDPInput: ThreeDPInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const {
@@ -758,7 +758,7 @@ const Mutation = {
     return updateThreeDP;
   },
 
-  AddUser: async (_parents, args: { userInput: UserInput }, _context) => {
+  AddUser: async (_parents, args: { userInput: UserInput }, _contexts) => {
     const {
       name,
       studentID,
@@ -800,7 +800,7 @@ const Mutation = {
     return newUser;
   },
 
-  DeleteUser: async (_parents, args: { id: number }, _context) => {
+  DeleteUser: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const findUser = await prisma.user.findFirst({
       where: {
@@ -843,7 +843,7 @@ const Mutation = {
   EditUser: async (
     _parents,
     args: { id: number; userEditInput: UserEditInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const { name, studentID, photoLink, language, password } =
@@ -911,7 +911,7 @@ const Mutation = {
   EditUserPassword: async (
     _parents,
     args: { id: number; userPasswordEditInput: UserPasswordEditInput },
-    _context,
+    _contexts,
   ) => {
     const costFactor = 12;
     const { id, userPasswordEditInput } = args;
@@ -948,7 +948,7 @@ const Mutation = {
   PromoteUser: async (
     _parents,
     args: { id: number; promoteUserInput: PromoteUserInput },
-    _context,
+    _contexts,
   ) => {
     const { id, promoteUserInput } = args;
     const { authorizedCode, password, isAdmin } = promoteUserInput;
@@ -1006,7 +1006,7 @@ const Mutation = {
   DemoteUser: async (
     _parents,
     args: { id: number; demoteUserInput: DemoteUserInput },
-    _context,
+    _contexts,
   ) => {
     const { id, demoteUserInput } = args;
     const { studentID, password, isMinister } = demoteUserInput;
@@ -1067,7 +1067,7 @@ const Mutation = {
   UserMachineUsageUpdate: async (
     _parents,
     args: { id: number; userMachineUpdateInput: UserMachineUpdateInput },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const { threeDPId, laserCutAvailable } = args.userMachineUpdateInput;
@@ -1149,7 +1149,7 @@ const Mutation = {
   AddArticle: async (
     _parents,
     args: { articleInput: ArticleInput },
-    _context,
+    _contexts,
   ) => {
     const {
       writerId,
@@ -1198,7 +1198,7 @@ const Mutation = {
   UpdateAuthorizedCode: async (
     _parents,
     args: { authorizedCodeInput: AuthorizedCodeInput },
-    _context,
+    _contexts,
   ) => {
     const existence = await prisma.authorizedCode.findFirst();
     const { codeList } = args.authorizedCodeInput;
@@ -1230,7 +1230,7 @@ const Mutation = {
     return updateAuthorizedCode;
   },
 
-  SignUp: async (_parents, args: { signUpInput: SignUpInput }, _context) => {
+  SignUp: async (_parents, args: { signUpInput: SignUpInput }, _contexts) => {
     const costFactor = 12;
     const {
       name,
@@ -1303,7 +1303,7 @@ const Mutation = {
   AddSignupAuthCode: async (
     _parents,
     args: { signupAuthCodeInput: SignupAuthCodeInput },
-    _context,
+    _contexts,
   ) => {
     const { studentID, browser, os, time, timeZone, date } =
       args.signupAuthCodeInput;
@@ -1436,7 +1436,7 @@ const Mutation = {
   AddToolLike: async (
     _parents,
     args: { toolLikeInput: ToolLikeInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, toolId } = args.toolLikeInput;
     const user = await prisma.user.findUnique({
@@ -1491,7 +1491,7 @@ const Mutation = {
   DeleteToolLike: async (
     _parents,
     args: { toolLikeInput: ToolLikeInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, toolId } = args.toolLikeInput;
     const user = await prisma.user.findUnique({
@@ -1547,7 +1547,7 @@ const Mutation = {
   EditUserLanguage: async (
     _parents,
     args: { id: number; language: string },
-    _context,
+    _contexts,
   ) => {
     const { id, language } = args;
     const findUser = await prisma.user.findFirst({
@@ -1573,7 +1573,7 @@ const Mutation = {
   AddUserBorrowTool: async (
     _parents,
     args: { userBorrowToolInput: UserBorrowToolInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, toolId, quantity } = args.userBorrowToolInput;
     const user = await prisma.user.findUnique({
@@ -1645,7 +1645,7 @@ const Mutation = {
     return newUserBorrowTool;
   },
 
-  DeleteUserBorrowTool: async (_parents, args: { id: number }, _context) => {
+  DeleteUserBorrowTool: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const userBorrowTool = await prisma.userBorrowTool.findFirst({
       where: {
@@ -1713,7 +1713,7 @@ const Mutation = {
   EditUserBorrowToolQuantity: async (
     _parents,
     args: { id: number; userBorrowToolInput: UserBorrowToolInput },
-    _context,
+    _contexts,
   ) => {
     const { id, userBorrowToolInput } = args;
     const { toolId, quantity } = userBorrowToolInput;
@@ -1762,7 +1762,7 @@ const Mutation = {
   EditUserBorrowToolStatus: async (
     _parents,
     args: { id: number; status: string },
-    _context,
+    _contexts,
   ) => {
     const { id, status } = args;
     const userBorrowTool = await prisma.userBorrowTool.findFirst({
@@ -1821,7 +1821,7 @@ const Mutation = {
   AddMaterialLike: async (
     _parents,
     args: { materialLikeInput: MaterialLikeInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, materialId } = args.materialLikeInput;
     const user = await prisma.user.findUnique({
@@ -1876,7 +1876,7 @@ const Mutation = {
   DeleteMaterialLike: async (
     _parents,
     args: { materialLikeInput: MaterialLikeInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, materialId } = args.materialLikeInput;
     const user = await prisma.user.findUnique({
@@ -1933,7 +1933,7 @@ const Mutation = {
   AddUserBorrowMaterial: async (
     _parents,
     args: { userBorrowMaterialInput: UserBorrowMaterialInput },
-    _context,
+    _contexts,
   ) => {
     const { userId, materialId, quantity } = args.userBorrowMaterialInput;
     const user = await prisma.user.findUnique({
@@ -2014,7 +2014,7 @@ const Mutation = {
   DeleteUserBorrowMaterial: async (
     _parents,
     args: { id: number },
-    _context,
+    _contexts,
   ) => {
     const id = args.id;
     const userBorrowMaterial = await prisma.userBorrowMaterial.findFirst({
@@ -2087,7 +2087,7 @@ const Mutation = {
   EditUserBorrowMaterialQuantity: async (
     _parents,
     args: { id: number; userBorrowMaterialInput: UserBorrowMaterialInput },
-    _context,
+    _contexts,
   ) => {
     const { id, userBorrowMaterialInput } = args;
     const { materialId, quantity } = userBorrowMaterialInput;
@@ -2136,7 +2136,7 @@ const Mutation = {
   EditUserBorrowMaterialStatus: async (
     _parents,
     args: { id: number; status: string },
-    _context,
+    _contexts,
   ) => {
     const { id, status } = args;
     const userBorrowMaterial = await prisma.userBorrowMaterial.findFirst({
@@ -2195,7 +2195,7 @@ const Mutation = {
   AddAdminSchedule: async (
     _parents,
     args: { adminScheduleInput: AdminScheduleInput },
-    _context,
+    _contexts,
   ) => {
     const { admin, day, period } = args.adminScheduleInput;
     const newAdminSchedule = await prisma.adminSchedule.create({
@@ -2209,7 +2209,7 @@ const Mutation = {
     return newAdminSchedule;
   },
 
-  DeleteAdminSchedule: async (_parents, args: { id: number }, _context) => {
+  DeleteAdminSchedule: async (_parents, args: { id: number }, _contexts) => {
     const id = args.id;
     const deleteAdminSchedule = await prisma.adminSchedule.delete({
       where: {
@@ -2223,7 +2223,7 @@ const Mutation = {
   EditAdminSchedule: async (
     _parents,
     args: { id: number; name: string },
-    _context,
+    _contexts,
   ) => {
     const { id, name } = args;
     const findAdminSchedule = await prisma.adminSchedule.findFirst({
