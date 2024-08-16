@@ -51,46 +51,42 @@ function HomePageAnnouncement() {
           </>
         ) : (
           <div className="flex flex-col gap-3 justify-between mt-3 w-full text-xs dark:text-white text-opacity-50 max-md:flex-wrap max-md:max-w-full">
-            {announcements
-              .filter((announcement) => announcement !== null)
-              .sort((a, b) => (b?.id || 0) - (a?.id || 0))
-              .slice(0, 2)
-              .map(
-                (announcement) =>
-                  announcement && (
-                    <div
-                      key={announcement.id}
-                      className="flex flex-col gap-2 w-full rounded-lg border shadow dark:border-[#444444] p-4 text-xs dark:text-white dark:text-opacity-50 dark:hover:bg-opacity-90 max-md:flex-wrap max-md:max-w-full dark:bg-[#303030] bg-opacity-50 transform active:scale-[0.98] transition-transform duration-200 cursor-pointer"
-                      onClick={() => {}} // TODO: link to detailed page
-                    >
-                      <div className="flex flex-col justify-between">
-                        <div className="self-start dark:text-white text-lg">
-                          <b>
-                            {windowWidth > 600
-                              ? announcement.title.slice(0, 25)
-                              : announcement.title.slice(0, 20)}{" "}
-                            {announcement.title.length > 25 ? " ..." : ""}
-                          </b>
-                        </div>
-                        <div className="self-start text-gray-500 dark:text-gray-400">
-                          {announcement.date}
-                        </div>
+            {announcements.slice(0, 2).map(
+              (announcement) =>
+                announcement && (
+                  <div
+                    key={announcement.id}
+                    className="flex flex-col gap-2 w-full rounded-lg border shadow dark:border-[#444444] p-4 text-xs dark:text-white dark:text-opacity-50 dark:hover:bg-opacity-90 max-md:flex-wrap max-md:max-w-full dark:bg-[#303030] bg-opacity-50 transform active:scale-[0.98] transition-transform duration-200 cursor-pointer"
+                    onClick={() => {}} // TODO: link to detailed page
+                  >
+                    <div className="flex flex-col justify-between">
+                      <div className="self-start dark:text-white text-lg">
+                        <b>
+                          {windowWidth > 600
+                            ? announcement.title.slice(0, 25)
+                            : announcement.title.slice(0, 20)}{" "}
+                          {announcement.title.length > 25 ? " ..." : ""}
+                        </b>
                       </div>
-                      <div className="flex justify-between items-start text-sm dark:text-slate-200">
-                        <div>
-                          {windowWidth > 458
-                            ? announcement.content.slice(0, 65)
-                            : announcement.content.slice(0, 40)}{" "}
-                          <span>
-                            {announcement.content.length > 65 && (
-                              <span> ...{t("more")}</span>
-                            )}
-                          </span>
-                        </div>
+                      <div className="self-start text-gray-500 dark:text-gray-400">
+                        {announcement.date}
                       </div>
                     </div>
-                  )
-              )}
+                    <div className="flex justify-between items-start text-sm dark:text-slate-200">
+                      <div>
+                        {windowWidth > 458
+                          ? announcement.content.slice(0, 65)
+                          : announcement.content.slice(0, 40)}{" "}
+                        <span>
+                          {announcement.content.length > 65 && (
+                            <span> ...{t("more")}</span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )
+            )}
           </div>
         )}
       </div>

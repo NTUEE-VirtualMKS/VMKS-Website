@@ -2,7 +2,7 @@ import { gql } from "../__generated__";
 
 // Announcement
 const GET_ALL_ANNOUNCEMENTS_QUERY = gql(`
-  query GetAllAnnouncements($cursor: Int, $limit: Int) {
+  query GetAllAnnouncements($cursor: String, $limit: Int) {
     GetAllAnnouncements(cursor: $cursor, limit: $limit) {
       announcements {
         id
@@ -16,7 +16,7 @@ const GET_ALL_ANNOUNCEMENTS_QUERY = gql(`
 `);
 
 const GET_ANNOUNCEMENT_BY_ID_QUERY = gql(`
-  query GetAnnouncementById($id: Int!) {
+  query GetAnnouncementById($id: String!) {
     GetAnnouncementById(id: $id) {
       id
       title
@@ -39,7 +39,7 @@ const SEARCH_ANNOUNCEMENT_BY_TITLE_QUERY = gql(`
 
 // Tool
 const GET_ALL_TOOLS_QUERY = gql(`
-  query GetAllTools($cursor: Int, $limit: Int) {
+  query GetAllTools($cursor: String, $limit: Int) {
     GetAllTools(cursor: $cursor, limit: $limit) {
       tools {
         id
@@ -61,7 +61,7 @@ const GET_ALL_TOOLS_QUERY = gql(`
 `);
 
 const GET_TOOL_BY_ID_QUERY = gql(`
-  query GetToolById($getToolByIdId: Int!) {
+  query GetToolById($getToolByIdId: String!) {
     GetToolById(id: $getToolByIdId) {
       id
       name
@@ -138,7 +138,7 @@ const SEARCH_TOOL_BY_NAME_QUERY = gql(`
 
 // Article
 const GET_ALL_ARTICLES_QUERY = gql(`
-  query GetAllArticles($cursor: Int, $limit: Int) {
+  query GetAllArticles($cursor: String, $limit: Int) {
     GetAllArticles(cursor: $cursor, limit: $limit) {
       articles {
         id
@@ -157,7 +157,7 @@ const GET_ALL_ARTICLES_QUERY = gql(`
 `);
 
 const GET_ALL_DISPOSIABLE_MATERIALS_QUERY = gql(`
-  query GetAllDisposableMaterials($cursor: Int, $limit: Int) {
+  query GetAllDisposableMaterials($cursor: String, $limit: Int) {
     GetAllDisposableMaterials(cursor: $cursor, limit: $limit) {
       disposableMaterials {
         id
@@ -233,7 +233,7 @@ const SEARCH_DISPOSIABLE_MATERIAL_BY_NAME_QUERY = gql(`
 
 // Machine
 const GET_ALL_MACHINES_QUERY = gql(`
-  query GetAllMachines($cursor: Int, $limit: Int) {
+  query GetAllMachines($cursor: String, $limit: Int) {
     GetAllMachines(cursor: $cursor, limit: $limit) {
       machines {
         id
@@ -301,7 +301,7 @@ const SEARCH_MACHINE_BY_NAME_QUERY = gql(`
 
 // Material
 const GET_ALL_MATERIALS_QUERY = gql(`
-  query GetAllMaterials($cursor: Int, $limit: Int) {
+  query GetAllMaterials($cursor: String, $limit: Int) {
     GetAllMaterials(cursor: $cursor, limit: $limit) {
       materials {
         id
@@ -325,7 +325,7 @@ const GET_ALL_MATERIALS_QUERY = gql(`
 `);
 
 const GET_MATERIAL_BY_ID_QUERY = gql(`
-  query GetMaterialById($id: Int!) {
+  query GetMaterialById($id: String!) {
     GetMaterialById(id: $id) {
       id
       name
@@ -410,7 +410,7 @@ const SEARCH_MATERIAL_BY_NAME_QUERY = gql(`
 
 // ThreeDP
 const GET_ALL_THREEDPS_QUERY = gql(`
-  query GetAllThreeDPs($cursor: Int, $limit: Int) {
+  query GetAllThreeDPs($cursor: String, $limit: Int) {
     GetAllThreeDPs(cursor: $cursor, limit: $limit) {
       threeDPs {
         id
@@ -465,7 +465,7 @@ const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
 
 // User
 const GET_ALL_USERS_QUERY = gql(`
-  query GetAllUsers($cursor: Int, $limit: Int) {
+  query GetAllUsers($cursor: String, $limit: Int) {
     GetAllUsers(cursor: $cursor, limit: $limit) {
       users {
         id
@@ -540,7 +540,7 @@ const GET_TOOL_LIKES_QUERY = gql(`
 `);
 
 const GET_TOOL_LIKE_BY_ID_QUERY = gql(`
-  query GetToolLikeById($getToolLikeByIdId: Int!) {
+  query GetToolLikeById($getToolLikeByIdId: String!) {
     GetToolLikeById(id: $getToolLikeByIdId) {
       id
       userId
@@ -550,7 +550,7 @@ const GET_TOOL_LIKE_BY_ID_QUERY = gql(`
 `);
 
 const GET_LIKED_TOOLS_BY_USER_ID_QUERY = gql(`
-  query GetLikedToolsByUserId($userId: Int!) {
+  query GetLikedToolsByUserId($userId: String!) {
     GetLikedToolsByUserId(userId: $userId) {
       id
       name
@@ -614,7 +614,7 @@ const GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_TOOL_BY_ID_QUERY = gql(`
-  query GetUserBorrowToolById($getUserBorrowToolByIdId: Int!) {
+  query GetUserBorrowToolById($getUserBorrowToolByIdId: String!) {
     GetUserBorrowToolById(id: $getUserBorrowToolByIdId) {
       id
       userId
@@ -636,7 +636,7 @@ const GET_USER_BORROW_TOOL_BY_ID_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_TOOLS_BY_USER_ID_QUERY = gql(`
-  query GetUserBorrowToolsByUserId($userId: Int!) {
+  query GetUserBorrowToolsByUserId($userId: String!) {
     GetUserBorrowToolsByUserId(userId: $userId) {
       id
       userId
@@ -658,7 +658,7 @@ const GET_USER_BORROW_TOOLS_BY_USER_ID_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY = gql(`
-  query GetUserBorrowToolsByStatusAndUserId($userId: Int!, $status: [String]!) {
+  query GetUserBorrowToolsByStatusAndUserId($userId: String!, $status: [String]!) {
     GetUserBorrowToolsByStatusAndUserId(userId: $userId, status: $status) {
       id
       userId
@@ -691,7 +691,7 @@ const GET_MATERIAL_LIKES_QUERY = gql(`
 `);
 
 const GET_MATERIAL_LIKE_BY_ID_QUERY = gql(`
-  query GetMaterialLikeById($getMaterialLikeByIdId: Int!) {
+  query GetMaterialLikeById($getMaterialLikeByIdId: String!) {
     GetMaterialLikeById(id: $getMaterialLikeByIdId) {
       id
       userId
@@ -701,7 +701,7 @@ const GET_MATERIAL_LIKE_BY_ID_QUERY = gql(`
 `);
 
 const GET_LIKED_MATERIALS_BY_USER_ID_QUERY = gql(`
-  query GetLikedMaterialsByUserId($userId: Int!) {
+  query GetLikedMaterialsByUserId($userId: String!) {
     GetLikedMaterialsByUserId(userId: $userId) {
       id
       name
@@ -766,7 +766,7 @@ const GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_MATERIAL_BY_ID_QUERY = gql(`
-  query GetUserBorrowMaterialById($getUserBorrowMaterialByIdId: Int!) {
+  query GetUserBorrowMaterialById($getUserBorrowMaterialByIdId: String!) {
     GetUserBorrowMaterialById(id: $getUserBorrowMaterialByIdId) {
       id
       userId
@@ -788,7 +788,7 @@ const GET_USER_BORROW_MATERIAL_BY_ID_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY = gql(`
-  query GetUserBorrowMaterialsByUserId($userId: Int!) {
+  query GetUserBorrowMaterialsByUserId($userId: String!) {
     GetUserBorrowMaterialsByUserId(userId: $userId) {
       id
       userId
@@ -810,7 +810,7 @@ const GET_USER_BORROW_MATERIALS_BY_USER_ID_QUERY = gql(`
 `);
 
 const GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY = gql(`
-  query GetUserBorrowMaterialsByStatusAndUserId($userId: Int!, $status: [String]!) {
+  query GetUserBorrowMaterialsByStatusAndUserId($userId: String!, $status: [String]!) {
     GetUserBorrowMaterialsByStatusAndUserId(userId: $userId, status: $status) {
       id
       userId

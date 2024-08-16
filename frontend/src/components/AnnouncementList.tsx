@@ -11,7 +11,7 @@ import { Loader } from "lucide-react";
 function AnnouncementList() {
   const { toast } = useToast();
   const { t } = useTranslation();
-  const [cursor, setCursor] = useState<number | null>(null);
+  const [cursor, setCursor] = useState<string | null>(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
   const limit = 6;
   const observerTarget = useRef(null);
@@ -33,7 +33,7 @@ function AnnouncementList() {
 
   const announcements = data?.GetAllAnnouncements
     ?.announcements as AnnouncementType[];
-  const nextCursor = data?.GetAllAnnouncements?.cursor as number | null;
+  const nextCursor = data?.GetAllAnnouncements?.cursor as string | null;
 
   const handleLoadMore = useCallback(async () => {
     if (!nextCursor) return;

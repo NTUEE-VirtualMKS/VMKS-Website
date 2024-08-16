@@ -11,7 +11,7 @@ import { useToast } from "../ui/use-toast";
 function MaterialList() {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const [cursor, setCursor] = useState<number | null>(null);
+  const [cursor, setCursor] = useState<string | null>(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
   const limit = 12;
   const observerTarget = useRef(null);
@@ -27,7 +27,7 @@ function MaterialList() {
   );
 
   const materials = data?.GetAllMaterials?.materials as MaterialType[];
-  const nextCursor = data?.GetAllMaterials?.cursor as number | null;
+  const nextCursor = data?.GetAllMaterials?.cursor as string | null;
 
   const handleLoadMore = useCallback(async () => {
     if (!nextCursor) return;
@@ -110,7 +110,13 @@ function MaterialList() {
             size={50}
           />
         ) : (
-          <p className="text-gray-500 text-xl mt-3">{t("noMoreMaterial")}</p>
+          <>
+            {materials?.length >= 12 && (
+              <p className="text-gray-500 text-xl mt-3">
+                {t("noMoreMaterial")}
+              </p>
+            )}
+          </>
         )}
       </div>
     </>

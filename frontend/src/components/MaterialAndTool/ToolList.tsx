@@ -11,7 +11,7 @@ import { useToast } from "../ui/use-toast";
 function ToolList() {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const [cursor, setCursor] = useState<number | null>(null);
+  const [cursor, setCursor] = useState<string | null>(null);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
   const limit = 12;
   const observerTarget = useRef(null);
@@ -24,7 +24,7 @@ function ToolList() {
   });
 
   const tools = data?.GetAllTools?.tools as ToolType[];
-  const nextCursor = data?.GetAllTools?.cursor as number | null;
+  const nextCursor = data?.GetAllTools?.cursor as string | null;
 
   const handleLoadMore = useCallback(async () => {
     if (!nextCursor) return;
@@ -107,7 +107,11 @@ function ToolList() {
             size={50}
           />
         ) : (
-          <p className="text-gray-500 text-xl mt-3">{t("noMoreTool")}</p>
+          <>
+            {tools?.length >= 12 && (
+              <p className="text-gray-500 text-xl mt-3">{t("noMoreTool")}</p>
+            )}
+          </>
         )}
       </div>
     </>

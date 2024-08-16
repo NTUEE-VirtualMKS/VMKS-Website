@@ -13,7 +13,7 @@ const ADD_ANNOUNCEMENT_MUTATION = gql(`
 `);
 
 const DELETE_ANNOUNCEMENT_MUTATION = gql(`
-  mutation DeleteAnnouncement($deleteAnnouncementId: Int!) {
+  mutation DeleteAnnouncement($deleteAnnouncementId: String!) {
     DeleteAnnouncement(id: $deleteAnnouncementId) {
       id
       title
@@ -24,7 +24,7 @@ const DELETE_ANNOUNCEMENT_MUTATION = gql(`
 `);
 
 const EDIT_ANNOUNCEMENT_MUTATION = gql(`
-  mutation EditAnnouncement($editAnnouncementId: Int!, $announcementInput: AnnouncementInput!) {
+  mutation EditAnnouncement($editAnnouncementId: String!, $announcementInput: AnnouncementInput!) {
     EditAnnouncement(id: $editAnnouncementId, announcementInput: $announcementInput) {
       id
       title
@@ -71,7 +71,7 @@ const ADD_DISPOSABLE_MATERIAL_MUTATION = gql(`
 `);
 
 const DELETE_DISPOSABLE_MATERIAL_MUTATION = gql(`
-  mutation DeleteDisposableMaterial($deleteDisposableMaterialId: Int!) {
+  mutation DeleteDisposableMaterial($deleteDisposableMaterialId: String!) {
     DeleteDisposableMaterial(id: $deleteDisposableMaterialId) {
       id
       name
@@ -89,7 +89,7 @@ const DELETE_DISPOSABLE_MATERIAL_MUTATION = gql(`
 `);
 
 const EDIT_DISPOSABLE_MATERIAL_MUTATION = gql(`
-  mutation EditDisposableMaterial($editDisposableMaterialId: Int!, $disposableMaterialInput: DisposableMaterialInput!) {
+  mutation EditDisposableMaterial($editDisposableMaterialId: String!, $disposableMaterialInput: DisposableMaterialInput!) {
     EditDisposableMaterial(id: $editDisposableMaterialId, disposableMaterialInput: $disposableMaterialInput) {
       id
       name
@@ -124,7 +124,7 @@ const ADD_MACHINE_MUTATION = gql(`
 `);
 
 const DELETE_MACHINE_MUTATION = gql(`
-  mutation DeleteMachine($deleteMachineId: Int!) {
+  mutation DeleteMachine($deleteMachineId: String!) {
     DeleteMachine(id: $deleteMachineId) {
       id
       name
@@ -140,7 +140,7 @@ const DELETE_MACHINE_MUTATION = gql(`
 `);
 
 const EDIT_MACHINE_MUTATION = gql(`
-  mutation EditMachine($editMachineId: Int!, $machineInput: MachineInput!) {
+  mutation EditMachine($editMachineId: String!, $machineInput: MachineInput!) {
     EditMachine(id: $editMachineId, machineInput: $machineInput) {
       id
       name
@@ -178,7 +178,7 @@ const ADD_MATERIAL_MUTATION = gql(`
 `);
 
 const DELETE_MATERIAL_MUTATION = gql(`
-  mutation DeleteMaterial($deleteMaterialId: Int!) {
+  mutation DeleteMaterial($deleteMaterialId: String!) {
     DeleteMaterial(id: $deleteMaterialId) {
       id
       name
@@ -199,7 +199,7 @@ const DELETE_MATERIAL_MUTATION = gql(`
 `);
 
 const EDIT_MATERIAL_MUTATION = gql(`
-  mutation EditMaterial($editMaterialId: Int!, $materialInput: MaterialInput!) {
+  mutation EditMaterial($editMaterialId: String!, $materialInput: MaterialInput!) {
     EditMaterial(id: $editMaterialId, materialInput: $materialInput) {
       id
       name
@@ -238,7 +238,7 @@ const ADD_THREE_DP_MUTATION = gql(`
 `);
 
 const DELETE_THREE_DP_MUTATION = gql(`
-  mutation DeleteThreeDP($deleteThreeDpId: Int!) {
+  mutation DeleteThreeDP($deleteThreeDpId: String!) {
     DeleteThreeDP(id: $deleteThreeDpId) {
       id
       name
@@ -255,7 +255,7 @@ const DELETE_THREE_DP_MUTATION = gql(`
 `);
 
 const EDIT_THREE_DP_MUTATION = gql(`
-  mutation EditThreeDP($editThreeDpId: Int!, $threeDpInput: ThreeDPInput!) {
+  mutation EditThreeDP($editThreeDpId: String!, $threeDpInput: ThreeDPInput!) {
     EditThreeDP(id: $editThreeDpId, threeDPInput: $threeDpInput) {
       id
       name
@@ -292,7 +292,7 @@ const ADD_TOOL_MUTATION = gql(`
 `);
 
 const DELETE_TOOL_MUTATION = gql(`
-  mutation DeleteTool($deleteToolId: Int!) {
+  mutation DeleteTool($deleteToolId: String!) {
     DeleteTool(id: $deleteToolId) {
       id
       name
@@ -311,7 +311,7 @@ const DELETE_TOOL_MUTATION = gql(`
 `);
 
 const EDIT_TOOL_MUTATION = gql(`
-  mutation EditTool($editToolId: Int!, $toolInput: ToolInput!) {
+  mutation EditTool($editToolId: String!, $toolInput: ToolInput!) {
     EditTool(id: $editToolId, toolInput: $toolInput) {
       id
       name
@@ -353,7 +353,7 @@ const ADD_USER_MUTATION = gql(`
 `);
 
 const DELETE_USER_MUTATION = gql(`
-  mutation DeleteUser($deleteUserId: Int!) {
+  mutation DeleteUser($deleteUserId: String!) {
     DeleteUser(id: $deleteUserId) {
       id
       name
@@ -375,7 +375,7 @@ const DELETE_USER_MUTATION = gql(`
 `);
 
 const EDIT_USER_MUTATION = gql(`
-  mutation EditUser($editUserId: Int!, $userEditInput: UserEditInput!) {
+  mutation EditUser($editUserId: String!, $userEditInput: UserEditInput!) {
     EditUser(id: $editUserId, userEditInput: $userEditInput) {
       id
       name
@@ -398,7 +398,7 @@ const EDIT_USER_MUTATION = gql(`
 
 // DisposableMaterialUsageUpdate
 const DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION = gql(`
-  mutation DisposableMaterialUsageUpdate($disposableMaterialUsageUpdateId: Int!, $disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput!) {
+  mutation DisposableMaterialUsageUpdate($disposableMaterialUsageUpdateId: String!, $disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput!) {
     DisposableMaterialUsageUpdate(id: $disposableMaterialUsageUpdateId, disposableMaterialUsageUpdateInput: $disposableMaterialUsageUpdateInput) {
       id
       name
@@ -417,7 +417,7 @@ const DISPOSABLE_MATERIAL_USAGE_UPDATE_MUTATION = gql(`
 
 // MaterialUsageUpdate
 const MATERIAL_USAGE_UPDATE_MUTATION = gql(`
-  mutation MaterialUsageUpdate($materialUsageUpdateId: Int!, $materialUsageUpdateInput: MaterialUsageUpdateInput!) {
+  mutation MaterialUsageUpdate($materialUsageUpdateId: String!, $materialUsageUpdateInput: MaterialUsageUpdateInput!) {
     MaterialUsageUpdate(id: $materialUsageUpdateId, materialUsageUpdateInput: $materialUsageUpdateInput) {
       id
       name
@@ -439,7 +439,7 @@ const MATERIAL_USAGE_UPDATE_MUTATION = gql(`
 
 // ToolUsageUpdate
 const TOOL_USAGE_UPDATE_MUTATION = gql(`
-  mutation ToolUsageUpdate($toolUsageUpdateId: Int!, $toolUsageUpdateInput: ToolUsageUpdateInput!) {
+  mutation ToolUsageUpdate($toolUsageUpdateId: String!, $toolUsageUpdateInput: ToolUsageUpdateInput!) {
     ToolUsageUpdate(id: $toolUsageUpdateId, toolUsageUpdateInput: $toolUsageUpdateInput) {
       id
       name
@@ -459,7 +459,7 @@ const TOOL_USAGE_UPDATE_MUTATION = gql(`
 
 // UserMachineUsageUpdate
 const USER_MACHINE_USAGE_UPDATE_MUTATION = gql(`
-  mutation UserMachineUsageUpdate($userMachineUsageUpdateId: Int!, $userMachineUpdateInput: UserMachineUpdateInput!) {
+  mutation UserMachineUsageUpdate($userMachineUsageUpdateId: String!, $userMachineUpdateInput: UserMachineUpdateInput!) {
     UserMachineUsageUpdate(id: $userMachineUsageUpdateId, userMachineUpdateInput: $userMachineUpdateInput) {
       id
       name
@@ -510,7 +510,7 @@ const DELETE_TOOL_LIKE_MUTATION = gql(`
 
 // language
 const EDIT_USER_LANGUAGE_MUTATION = gql(`
-  mutation EditUserLanguage($editUserLanguageId: Int!, $language: String!) {
+  mutation EditUserLanguage($editUserLanguageId: String!, $language: String!) {
     EditUserLanguage(id: $editUserLanguageId, language: $language) {
       id
       name
@@ -554,7 +554,7 @@ const ADD_USER_BORROW_TOOL_MUTATION = gql(`
 `);
 
 const DELETE_USER_BORROW_TOOL_MUTATION = gql(`
-  mutation DeleteUserBorrowTool($deleteUserBorrowToolId: Int!) {
+  mutation DeleteUserBorrowTool($deleteUserBorrowToolId: String!) {
     DeleteUserBorrowTool(id: $deleteUserBorrowToolId) {
       id
       userId
@@ -576,7 +576,7 @@ const DELETE_USER_BORROW_TOOL_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION = gql(`
-  mutation EditUserBorrowToolQuantity($editUserBorrowToolQuantityId: Int!, $userBorrowToolInput: UserBorrowToolInput!) {
+  mutation EditUserBorrowToolQuantity($editUserBorrowToolQuantityId: String!, $userBorrowToolInput: UserBorrowToolInput!) {
     EditUserBorrowToolQuantity(id: $editUserBorrowToolQuantityId, userBorrowToolInput: $userBorrowToolInput) {
       id
       userId
@@ -598,7 +598,7 @@ const EDIT_USER_BORROW_TOOL_QUANTITY_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_TOOL_STATUS_MUTATION = gql(`
-  mutation EditUserBorrowToolStatus($editUserBorrowToolStatusId: Int!, $status: String!) {
+  mutation EditUserBorrowToolStatus($editUserBorrowToolStatusId: String!, $status: String!) {
     EditUserBorrowToolStatus(id: $editUserBorrowToolStatusId, status: $status) {
       id
       userId
@@ -664,7 +664,7 @@ const ADD_USER_BORROW_MATERIAL_MUTATION = gql(`
 `);
 
 const DELETE_USER_BORROW_MATERIAL_MUTATION = gql(`
-  mutation DeleteUserBorrowMaterial($deleteUserBorrowMaterialId: Int!) {
+  mutation DeleteUserBorrowMaterial($deleteUserBorrowMaterialId: String!) {
     DeleteUserBorrowMaterial(id: $deleteUserBorrowMaterialId) {
       id
       userId
@@ -686,7 +686,7 @@ const DELETE_USER_BORROW_MATERIAL_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION = gql(`
-  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: Int!, $userBorrowMaterialInput: UserBorrowMaterialInput!) {
+  mutation EditUserBorrowMaterialQuantity($editUserBorrowMaterialQuantityId: String!, $userBorrowMaterialInput: UserBorrowMaterialInput!) {
     EditUserBorrowMaterialQuantity(id: $editUserBorrowMaterialQuantityId, userBorrowMaterialInput: $userBorrowMaterialInput) {
       id
       userId
@@ -708,7 +708,7 @@ const EDIT_USER_BORROW_MATERIAL_QUANTITY_MUTATION = gql(`
 `);
 
 const EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION = gql(`
-  mutation EditUserBorrowMaterialStatus($editUserBorrowMaterialStatusId: Int!, $status: String!) {
+  mutation EditUserBorrowMaterialStatus($editUserBorrowMaterialStatusId: String!, $status: String!) {
     EditUserBorrowMaterialStatus(id: $editUserBorrowMaterialStatusId, status: $status) {
       id
       userId
@@ -764,7 +764,7 @@ const ADD_SIGNUP_AUTH_CODE_MUTATION = gql(`
 `);
 
 const EDIT_USER_PASSWORD_MUTATION = gql(`
-  mutation EditUserPassword($editUserPasswordId: Int!, $userPasswordEditInput: UserPasswordEditInput!) {
+  mutation EditUserPassword($editUserPasswordId: String!, $userPasswordEditInput: UserPasswordEditInput!) {
     EditUserPassword(id: $editUserPasswordId, userPasswordEditInput: $userPasswordEditInput) {
       id
       name
@@ -786,7 +786,7 @@ const EDIT_USER_PASSWORD_MUTATION = gql(`
 `);
 
 const PROMOTE_USER_MUTATION = gql(`
-  mutation PromoteUser($promoteUserId: Int!, $promoteUserInput: PromoteUserInput!) {
+  mutation PromoteUser($promoteUserId: String!, $promoteUserInput: PromoteUserInput!) {
     PromoteUser(id: $promoteUserId, promoteUserInput: $promoteUserInput) {
       id
       name
@@ -808,7 +808,7 @@ const PROMOTE_USER_MUTATION = gql(`
 `);
 
 const DEMOTE_USER_MUTATION = gql(`
-  mutation DemoteUser($demoteUserId: Int!, $demoteUserInput: DemoteUserInput!) {
+  mutation DemoteUser($demoteUserId: String!, $demoteUserInput: DemoteUserInput!) {
     DemoteUser(id: $demoteUserId, demoteUserInput: $demoteUserInput) {
       id
       name
@@ -841,7 +841,7 @@ const ADD_ADMIN_SCHEDULE_MUTATION = gql(`
 `);
 
 const DELETE_ADMIN_SCHEDULE_MUTATION = gql(`
-  mutation DeleteAdminSchedule($deleteAdminScheduleId: Int!) {
+  mutation DeleteAdminSchedule($deleteAdminScheduleId: String!) {
     DeleteAdminSchedule(id: $deleteAdminScheduleId) {
       id
       admin
@@ -852,7 +852,7 @@ const DELETE_ADMIN_SCHEDULE_MUTATION = gql(`
 `);
 
 const EDIT_ADMIN_SCHEDULE_MUTATION = gql(`
-  mutation EditAdminSchedule($editAdminScheduleId: Int!, $name: String!) {
+  mutation EditAdminSchedule($editAdminScheduleId: String!, $name: String!) {
     EditAdminSchedule(id: $editAdminScheduleId, name: $name) {
       id
       admin

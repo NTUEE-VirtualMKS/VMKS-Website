@@ -426,83 +426,83 @@ const typeDefs = `#graphql
 
   type GetAllAnnouncements {
     announcements: [Announcement]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllTools {
     tools: [Tool]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllDisposableMaterials {
     disposableMaterials: [DisposableMaterial]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllMaterials {
     materials: [Material]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllMachines {
     machines: [Machine]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllThreeDPs {
     threeDPs: [ThreeDP]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllUsers {
     users: [SimpleUser]
-    cursor: Int
+    cursor: String
   }
 
   type GetAllArticles {
     articles: [Article]
-    cursor: Int
+    cursor: String
   }
 
   ### Define Resolvers ###
 
   type Query {
     # Announcement
-    GetAllAnnouncements(cursor: Int, limit: Int): GetAllAnnouncements
+    GetAllAnnouncements(cursor: String, limit: Int): GetAllAnnouncements
     GetAnnouncementById(id: String!): Announcement
     SearchAnnouncementByTitle(title: String!): [Announcement]
     # Tool
-    GetAllTools(cursor: Int, limit: Int): GetAllTools
+    GetAllTools(cursor: String, limit: Int): GetAllTools
     GetToolById(id: String!): Tool
     SearchToolByCategory(category: String!): [Tool]
     SearchToolByPosition(position: String!): [Tool]
     SearchToolByName(name: String!): [Tool]
     # DisposableMaterial
-    GetAllDisposableMaterials(cursor: Int, limit: Int): GetAllDisposableMaterials
+    GetAllDisposableMaterials(cursor: String, limit: Int): GetAllDisposableMaterials
     SearchDisposableMaterialByCategory(category: String!): [DisposableMaterial]
     SearchDisposableMaterialByPosition(position: String!): [DisposableMaterial]
     SearchDisposableMaterialByName(name: String!): [DisposableMaterial]
     # Material
-    GetAllMaterials(cursor: Int, limit: Int): GetAllMaterials
+    GetAllMaterials(cursor: String, limit: Int): GetAllMaterials
     GetMaterialById(id: String!): Material
     SearchMaterialByCategory(category: String!): [Material]
     SearchMaterialByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]
     # Machine
-    GetAllMachines(cursor: Int, limit: Int): GetAllMachines 
+    GetAllMachines(cursor: String, limit: Int): GetAllMachines 
     SearchMachineByCategory(category: String!): [Machine]
     SearchMachineByPosition(position: String!): [Machine]
     SearchMachineByName(input: String!): [Machine]
     # User
-    GetAllUsers(cursor: Int, limit: Int): GetAllUsers
+    GetAllUsers(cursor: String, limit: Int): GetAllUsers
     SearchUserByName(name: String!): [SimpleUser]
     GetUserByStudentID(studentID: String!): User
     # ThreeDP
-    GetAllThreeDPs(cursor: Int, limit: Int): GetAllThreeDPs
+    GetAllThreeDPs(cursor: String, limit: Int): GetAllThreeDPs
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     # Article
-    GetAllArticles(cursor: Int, limit: Int): GetAllArticles 
+    GetAllArticles(cursor: String, limit: Int): GetAllArticles 
     GetArticleById(id: String!): Article
     # AuthorizedCode
     GetAuthorizedCode: AuthorizedCode
