@@ -660,7 +660,13 @@ const Query = {
       skip: cursor ? 1 : 0, // Skip the cursor itself if provided
     });
 
-    return allUsers;
+    return {
+      users: allUsers,
+      cursor:
+        allUsers.length === limit
+          ? allUsers[allUsers.length - 1].id
+          : null,
+    };
   },
 
   SearchUserByName: async (
