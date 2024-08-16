@@ -11,7 +11,7 @@ function ToolDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useQuery(GET_TOOL_BY_ID_QUERY, {
-    variables: { getToolByIdId: parseInt(id as string) },
+    variables: { getToolByIdId: id as string },
   });
 
   useEffect(() => {

@@ -96,7 +96,7 @@ function MaterialDetailCard({
       try {
         await editMaterial({
           variables: {
-            editMaterialId: parseInt(id),
+            editMaterialId: id,
             materialInput: {
               name,
               description,
@@ -167,7 +167,7 @@ function MaterialDetailCard({
       variables: {
         userBorrowMaterialInput: {
           userId: user?.id!,
-          materialId: parseInt(id),
+          materialId: id,
           quantity: 0,
         },
       },

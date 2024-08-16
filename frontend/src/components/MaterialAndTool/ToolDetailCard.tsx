@@ -82,7 +82,7 @@ function ToolDetailCard({
       try {
         await editTool({
           variables: {
-            editToolId: parseInt(id),
+            editToolId: id,
             toolInput: {
               name,
               description,
@@ -132,7 +132,7 @@ function ToolDetailCard({
       variables: {
         userBorrowToolInput: {
           userId: user?.id!,
-          toolId: parseInt(id),
+          toolId: id,
           quantity: 0,
         },
       },
