@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 
 export type AnnouncementType = {
-  id: number;
+  id: string;
   title: string;
   content: string;
   date: string;
@@ -14,26 +14,26 @@ export type AnnouncementInputType = {
 
 export type UserType = {
   __typename?: "User";
-  id: number;
+  id: string;
   name: string;
   studentID: string;
   password: string;
   photoLink?: string | null;
   language: string;
-  threeDPId?: number | null;
+  threeDPId?: string | null;
   laserCutAvailable: boolean;
-  articlesId?: Array<number | null> | null;
+  articlesId?: Array<string | null> | null;
   isAdmin: boolean;
   isMinister: boolean;
-  toolLikeIds?: Array<number | null> | null;
-  userBorrowToolIds?: Array<number | null> | null;
-  materialLikeIds?: Array<number | null> | null;
-  userBorrowMaterialIds?: Array<number | null> | null;
+  toolLikeIds?: Array<string | null> | null;
+  userBorrowToolIds?: Array<string | null> | null;
+  materialLikeIds?: Array<string | null> | null;
+  userBorrowMaterialIds?: Array<string | null> | null;
 };
 
 export type MaterialType = {
   __typename?: "Material";
-  id: number;
+  id: string;
   name: string;
   partName?: string | null;
   category: string;
@@ -45,13 +45,13 @@ export type MaterialType = {
   tutorialLink?: string | null;
   fee: number;
   remain: number;
-  materialLikeIds?: Array<number | null> | null;
-  userBorrowMaterialIds?: Array<number | null> | null;
+  materialLikeIds?: Array<string | null> | null;
+  userBorrowMaterialIds?: Array<string | null> | null;
 };
 
 export type ToolType = {
   __typename?: "Tool";
-  id: number;
+  id: string;
   name: string;
   partName?: string | null;
   category: string;
@@ -61,13 +61,13 @@ export type ToolType = {
   usage: number;
   tutorialLink: string;
   remain: number;
-  toolLikeIds?: Array<number | null> | null;
-  userBorrowToolIds?: Array<number | null> | null;
+  toolLikeIds?: Array<string | null> | null;
+  userBorrowToolIds?: Array<string | null> | null;
 };
 
 export type AuthorizedCodeType = {
   __typename?: "AuthorizedCode" | undefined;
-  id: number;
+  id: string;
   codeList?: Array<string | null> | null;
   updatedAt: string;
 };
@@ -125,7 +125,7 @@ export type LoginProps = {
 };
 
 export type ProfileCardProps = {
-  id: number;
+  id: string;
   name: string;
   studentID: string;
   password: string;
@@ -144,7 +144,7 @@ export type UserEditInput = {
 };
 
 export type BorrowType = {
-  id: number;
+  id: string;
   borrower: string;
   figure: string;
   name: string;
@@ -187,7 +187,7 @@ export type MaterialDetailCardProps = {
 };
 
 export type AnnouncementCardProps = {
-  id: number;
+  id: string;
   title: string;
   content: string;
   date: string;
@@ -195,9 +195,9 @@ export type AnnouncementCardProps = {
 
 export type UserBorrowToolType = {
   __typename?: "UserBorrowTool";
-  id: number;
-  userId: number;
-  toolId: number;
+  id: string;
+  userId: string;
+  toolId: string;
   borrower: string;
   studentId: string;
   figure: string;
@@ -214,9 +214,9 @@ export type UserBorrowToolType = {
 
 export type UserBorrowMaterialType = {
   __typename?: "UserBorrowMaterial";
-  id: number;
-  userId: number;
-  materialId: number;
+  id: string;
+  userId: string;
+  materialId: string;
   borrower: string;
   studentId: string;
   figure: string;
@@ -275,7 +275,7 @@ export type UserToolDataTableProps = {
 
 export type AdminScheduleType = {
   __typename?: "AdminSchedule";
-  id: number;
+  id: string;
   admin: string;
   day: string;
   period: string;
