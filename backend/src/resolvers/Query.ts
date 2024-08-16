@@ -10,7 +10,7 @@ const Query = {
   // Announcement
   GetAllAnnouncements: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -32,7 +32,7 @@ const Query = {
     };
   },
 
-  GetAnnouncementById: async (_parents, args: { id: number }, _contexts) => {
+  GetAnnouncementById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const announcement = await prisma.announcement.findUnique({
       where: {
@@ -69,7 +69,7 @@ const Query = {
   // Tool
   GetAllTools: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -93,7 +93,7 @@ const Query = {
     };
   },
 
-  GetToolById: async (_parents, args: { id: number }, _contexts) => {
+  GetToolById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const tool = await prisma.tool.findUnique({
       where: {
@@ -202,7 +202,7 @@ const Query = {
   // DisposableMaterial
   GetAllDisposableMaterials: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -319,7 +319,7 @@ const Query = {
   // Machine
   GetAllMachines: async (
     _parents,
-    args: { cursor?: number; limit?: number },
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -427,7 +427,7 @@ const Query = {
   // Material
   GetAllMaterials: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -453,7 +453,7 @@ const Query = {
     };
   },
 
-  GetMaterialById: async (_parents, args: { id: number }, _contexts) => {
+  GetMaterialById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const material = await prisma.material.findUnique({
       where: {
@@ -551,7 +551,7 @@ const Query = {
   // ThreeDP
   GetAllThreeDPs: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -637,7 +637,7 @@ const Query = {
   // User
   GetAllUsers: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -660,7 +660,13 @@ const Query = {
       skip: cursor ? 1 : 0, // Skip the cursor itself if provided
     });
 
-    return allUsers;
+    return {
+      users: allUsers,
+      cursor:
+        allUsers.length === limit
+          ? allUsers[allUsers.length - 1].id
+          : null,
+    };
   },
 
   SearchUserByName: async (
@@ -713,7 +719,7 @@ const Query = {
   // Article
   GetAllArticles: async (
     _parents,
-    args: { cursor?: number; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -735,7 +741,7 @@ const Query = {
     };
   },
 
-  GetArticleById: async (_parents, args: { id: number }, _contexts) => {
+  GetArticleById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const article = await prisma.article.findUnique({
       where: {
@@ -924,7 +930,7 @@ const Query = {
     return toolLikes;
   },
 
-  GetToolLikeById: async (_parents, args: { id: number }, _contexts) => {
+  GetToolLikeById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const toolLike = await prisma.toolLike.findUnique({
       where: {
@@ -937,7 +943,7 @@ const Query = {
 
   GetLikedToolsByUserId: async (
     _parents,
-    args: { userId: number },
+    args: { userId: string },
     _contexts,
   ) => {
     const userId = args.userId;
@@ -1000,7 +1006,7 @@ const Query = {
     return allUserBorrowTools;
   },
 
-  GetUserBorrowToolById: async (_parents, args: { id: number }, _contexts) => {
+  GetUserBorrowToolById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const userBorrowTool = await prisma.userBorrowTool.findUnique({
       where: {
@@ -1013,7 +1019,7 @@ const Query = {
 
   GetUserBorrowToolsByUserId: async (
     _parents,
-    args: { userId: number },
+    args: { userId: string },
     _contexts,
   ) => {
     const userId = args.userId;
@@ -1040,7 +1046,7 @@ const Query = {
   GetUserBorrowToolsByStatusAndUserId: async (
     _parents,
     args: {
-      userId: number;
+      userId: string;
       status: string[];
     },
     _contexts,
@@ -1079,7 +1085,7 @@ const Query = {
     return materialLikes;
   },
 
-  GetMaterialLikeById: async (_parents, args: { id: number }, _contexts) => {
+  GetMaterialLikeById: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const materialLike = await prisma.materialLike.findUnique({
       where: {
@@ -1092,7 +1098,7 @@ const Query = {
 
   GetLikedMaterialsByUserId: async (
     _parents,
-    args: { userId: number },
+    args: { userId: string },
     _contexts,
   ) => {
     const userId = args.userId;
@@ -1157,7 +1163,7 @@ const Query = {
 
   GetUserBorrowMaterialById: async (
     _parents,
-    args: { id: number },
+    args: { id: string },
     _contexts,
   ) => {
     const id = args.id;
@@ -1172,7 +1178,7 @@ const Query = {
 
   GetUserBorrowMaterialsByUserId: async (
     _parents,
-    args: { userId: number },
+    args: { userId: string },
     _contexts,
   ) => {
     const userId = args.userId;
@@ -1199,7 +1205,7 @@ const Query = {
   GetUserBorrowMaterialsByStatusAndUserId: async (
     _parents,
     args: {
-      userId: number;
+      userId: string;
       status: string[];
     },
     _contexts,

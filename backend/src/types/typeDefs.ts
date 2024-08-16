@@ -102,7 +102,7 @@ const typeDefs = `#graphql
     password: String!
     photoLink: String!
     language: String!
-    threeDPId: Int
+    threeDPId: String
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
     isMinister: Boolean!
@@ -122,12 +122,12 @@ const typeDefs = `#graphql
   }
 
   input UserMachineUpdateInput {
-    threeDPId: Int
+    threeDPId: String
     laserCutAvailable: Boolean!
   }
 
   type Announcement {
-    id: Int!
+    id: String!
     title: String!
     date: String!
     content: String!
@@ -147,7 +147,7 @@ const typeDefs = `#graphql
   }
 
   type DisposableMaterial {
-    id: Int!
+    id: String!
     name: String!
     partName: String
     category: String!
@@ -166,7 +166,7 @@ const typeDefs = `#graphql
   }
 
   input ArticleInput {
-    writerId: Int!,
+    writerId: String!,
     description: String!,
     imageURL: String,
     title: String!,
@@ -176,7 +176,7 @@ const typeDefs = `#graphql
   }
 
   type Material {
-    id: Int!
+    id: String!
     name: String!
     partName: String
     category: String!
@@ -188,12 +188,12 @@ const typeDefs = `#graphql
     tutorialLink: String
     fee: Int!
     remain: Int!
-    materialLikeIds: [Int]
-    userBorrowMaterialIds: [Int]
+    materialLikeIds: [String]
+    userBorrowMaterialIds: [String]
   }
 
   type Tool {
-    id: Int!
+    id: String!
     name: String!
     partName: String
     category: String!
@@ -203,12 +203,12 @@ const typeDefs = `#graphql
     usage: Int!
     tutorialLink: String!
     remain: Int!
-    toolLikeIds: [Int]
-    userBorrowToolIds: [Int]
+    toolLikeIds: [String]
+    userBorrowToolIds: [String]
   }
 
   type Machine {
-    id: Int!
+    id: String!
     name: String!
     partName: String
     category: String!
@@ -220,7 +220,7 @@ const typeDefs = `#graphql
   }
 
   type ThreeDP {
-    id:           Int!
+    id:           String!
     name:         String!
     category:     String!
     position:     String!
@@ -228,30 +228,30 @@ const typeDefs = `#graphql
     photoLink:    String!
     usage:        Int!
     tutorialLink: String!
-    waitingId:    [Int]
+    waitingId:    [String]
     broken:       Boolean!
   }
 
   type User {
-    id: Int!
+    id: String!
     name: String!
     studentID: String!
     password: String!
     photoLink: String
     language: String!
-    threeDPId: Int
+    threeDPId: String
     laserCutAvailable: Boolean!
-    articlesId: [Int]
+    articlesId: [String]
     isAdmin: Boolean!
     isMinister: Boolean!
-    toolLikeIds: [Int]
-    userBorrowToolIds: [Int]
-    materialLikeIds: [Int]
-    userBorrowMaterialIds: [Int]
+    toolLikeIds: [String]
+    userBorrowToolIds: [String]
+    materialLikeIds: [String]
+    userBorrowMaterialIds: [String]
   }
 
   type SimpleUser {
-    id: Int!
+    id: String!
     name: String!
     studentID: String!
     photoLink: String
@@ -271,7 +271,7 @@ const typeDefs = `#graphql
     password: String!
     photoLink: String!
     language: String!
-    threeDPId: Int
+    threeDPId: String
     laserCutAvailable: Boolean!
     isAdmin: Boolean!
     isMinister: Boolean!
@@ -308,8 +308,8 @@ const typeDefs = `#graphql
   }
 
   type Article {
-    id: Int!
-    writerId: Int!,
+    id: String!
+    writerId: String!,
     description: String!,
     imageURL: String,
     time: String!,
@@ -320,7 +320,7 @@ const typeDefs = `#graphql
   }
 
   type AuthorizedCode {
-    id: Int!,
+    id: String!,
     codeList: [String],
     updatedAt: String!
   }
@@ -330,20 +330,20 @@ const typeDefs = `#graphql
   }
 
   type ToolLike {
-    id: Int!,
-    userId: Int!,
-    toolId: Int!,
+    id: String!,
+    userId: String!,
+    toolId: String!,
   }
 
   input ToolLikeInput {
-    userId: Int!,
-    toolId: Int!,
+    userId: String!,
+    toolId: String!,
   }
 
   type UserBorrowTool {
-    id: Int!,
-    userId: Int!,
-    toolId: Int!,
+    id: String!,
+    userId: String!,
+    toolId: String!,
     borrower: String!,
     studentId: String!,
     figure: String!,
@@ -359,26 +359,26 @@ const typeDefs = `#graphql
   }
 
   input UserBorrowToolInput {
-    userId: Int!,
-    toolId: Int!,
+    userId: String!,
+    toolId: String!,
     quantity: Int!,
   }
 
   type MaterialLike {
-    id: Int!,
-    userId: Int!,
-    materialId: Int!,
+    id: String!,
+    userId: String!,
+    materialId: String!,
   }
 
   input MaterialLikeInput {
-    userId: Int!,
-    materialId: Int!,
+    userId: String!,
+    materialId: String!,
   }
 
   type UserBorrowMaterial {
-    id: Int!,
-    userId: Int!,
-    materialId: Int!,
+    id: String!,
+    userId: String!,
+    materialId: String!,
     borrower: String!,
     studentId: String!,
     figure: String!,
@@ -394,8 +394,8 @@ const typeDefs = `#graphql
   }
 
   input UserBorrowMaterialInput {
-    userId: Int!,
-    materialId: Int!,
+    userId: String!,
+    materialId: String!,
     quantity: Int!,
   }
 
@@ -412,7 +412,7 @@ const typeDefs = `#graphql
   }
 
   type AdminSchedule {
-    id: Int!,
+    id: String!,
     admin: String!,
     day: String!,
     period: String!,
@@ -469,11 +469,11 @@ const typeDefs = `#graphql
   type Query {
     # Announcement
     GetAllAnnouncements(cursor: Int, limit: Int): GetAllAnnouncements
-    GetAnnouncementById(id: Int!): Announcement
+    GetAnnouncementById(id: String!): Announcement
     SearchAnnouncementByTitle(title: String!): [Announcement]
     # Tool
     GetAllTools(cursor: Int, limit: Int): GetAllTools
-    GetToolById(id: Int!): Tool
+    GetToolById(id: String!): Tool
     SearchToolByCategory(category: String!): [Tool]
     SearchToolByPosition(position: String!): [Tool]
     SearchToolByName(name: String!): [Tool]
@@ -484,7 +484,7 @@ const typeDefs = `#graphql
     SearchDisposableMaterialByName(name: String!): [DisposableMaterial]
     # Material
     GetAllMaterials(cursor: Int, limit: Int): GetAllMaterials
-    GetMaterialById(id: Int!): Material
+    GetMaterialById(id: String!): Material
     SearchMaterialByCategory(category: String!): [Material]
     SearchMaterialByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]
@@ -503,31 +503,31 @@ const typeDefs = `#graphql
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     # Article
     GetAllArticles(cursor: Int, limit: Int): GetAllArticles 
-    GetArticleById(id: Int!): Article
+    GetArticleById(id: String!): Article
     # AuthorizedCode
     GetAuthorizedCode: AuthorizedCode
     # LogIn
     LogIn(logInInput: LogInInput!): LogInRet
     # ToolLike
     GetToolLikes: [ToolLike]
-    GetToolLikeById(id: Int!): ToolLike
-    GetLikedToolsByUserId(userId: Int!): [Tool]
+    GetToolLikeById(id: String!): ToolLike
+    GetLikedToolsByUserId(userId: String!): [Tool]
     # UserBorrowTool
     GetAllUserBorrowTools: [UserBorrowTool]
     GetAllUserBorrowToolsByStatus(status: [String]!): [UserBorrowTool]
-    GetUserBorrowToolById(id: Int!): UserBorrowTool
-    GetUserBorrowToolsByUserId(userId: Int!): [UserBorrowTool]
-    GetUserBorrowToolsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowTool]
+    GetUserBorrowToolById(id: String!): UserBorrowTool
+    GetUserBorrowToolsByUserId(userId: String!): [UserBorrowTool]
+    GetUserBorrowToolsByStatusAndUserId(userId: String!, status: [String]!): [UserBorrowTool]
     # MaterialLike
     GetMaterialLikes: [MaterialLike]
-    GetMaterialLikeById(id: Int!): MaterialLike
-    GetLikedMaterialsByUserId(userId: Int!): [Material]
+    GetMaterialLikeById(id: String!): MaterialLike
+    GetLikedMaterialsByUserId(userId: String!): [Material]
     # UserBorrowMaterial
     GetAllUserBorrowMaterials: [UserBorrowMaterial]
     GetAllUserBorrowMaterialsByStatus(status: [String]!): [UserBorrowMaterial]
-    GetUserBorrowMaterialById(id: Int!): UserBorrowMaterial
-    GetUserBorrowMaterialsByUserId(userId: Int!): [UserBorrowMaterial]
-    GetUserBorrowMaterialsByStatusAndUserId(userId: Int!, status: [String]!): [UserBorrowMaterial]
+    GetUserBorrowMaterialById(id: String!): UserBorrowMaterial
+    GetUserBorrowMaterialsByUserId(userId: String!): [UserBorrowMaterial]
+    GetUserBorrowMaterialsByStatusAndUserId(userId: String!, status: [String]!): [UserBorrowMaterial]
     # AdminSchedule
     GetAllAdminSchedules: [[AdminSchedule]]
     GetAdminScheduleByDay(day: String!): [AdminSchedule]
@@ -540,53 +540,53 @@ const typeDefs = `#graphql
 
   type Mutation {
     AddAnnouncement(announcementInput: AnnouncementInput!): Announcement
-    DeleteAnnouncement(id: Int!): Announcement
-    EditAnnouncement(id: Int!, announcementInput: AnnouncementInput!): Announcement
+    DeleteAnnouncement(id: String!): Announcement
+    EditAnnouncement(id: String!, announcementInput: AnnouncementInput!): Announcement
     AddTool(toolInput: ToolInput!): Tool
-    DeleteTool(id: Int!): Tool
-    EditTool(id: Int!, toolInput: ToolInput!): Tool
-    ToolUsageUpdate(id: Int!, toolUsageUpdateInput: ToolUsageUpdateInput!): Tool # update usage & remain
+    DeleteTool(id: String!): Tool
+    EditTool(id: String!, toolInput: ToolInput!): Tool
+    ToolUsageUpdate(id: String!, toolUsageUpdateInput: ToolUsageUpdateInput!): Tool # update usage & remain
     AddDisposableMaterial(disposableMaterialInput: DisposableMaterialInput!): DisposableMaterial
-    DeleteDisposableMaterial(id: Int!): DisposableMaterial
-    EditDisposableMaterial(id: Int!, disposableMaterialInput: DisposableMaterialInput!): DisposableMaterial
-    DisposableMaterialUsageUpdate(id: Int!, disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput!): DisposableMaterial
+    DeleteDisposableMaterial(id: String!): DisposableMaterial
+    EditDisposableMaterial(id: String!, disposableMaterialInput: DisposableMaterialInput!): DisposableMaterial
+    DisposableMaterialUsageUpdate(id: String!, disposableMaterialUsageUpdateInput: DisposableMaterialUsageUpdateInput!): DisposableMaterial
     AddMachine(machineInput: MachineInput!): Machine
-    DeleteMachine(id: Int!): Machine
-    EditMachine(id: Int!, machineInput: MachineInput!): Machine
+    DeleteMachine(id: String!): Machine
+    EditMachine(id: String!, machineInput: MachineInput!): Machine
     AddMaterial(materialInput: MaterialInput!): Material
-    DeleteMaterial(id: Int!): Material
-    EditMaterial(id: Int!, materialInput: MaterialInput!): Material
-    MaterialUsageUpdate(id: Int!, materialUsageUpdateInput: MaterialUsageUpdateInput!): Material
+    DeleteMaterial(id: String!): Material
+    EditMaterial(id: String!, materialInput: MaterialInput!): Material
+    MaterialUsageUpdate(id: String!, materialUsageUpdateInput: MaterialUsageUpdateInput!): Material
     AddThreeDP(threeDPInput: ThreeDPInput!): ThreeDP
-    DeleteThreeDP(id: Int!): ThreeDP
-    EditThreeDP(id: Int!, threeDPInput: ThreeDPInput!): ThreeDP
+    DeleteThreeDP(id: String!): ThreeDP
+    EditThreeDP(id: String!, threeDPInput: ThreeDPInput!): ThreeDP
     AddUser(userInput: UserInput!) : User
-    DeleteUser(id: Int!): User
-    EditUser(id: Int!, userEditInput: UserEditInput!): User
-    EditUserPassword(id: Int!, userPasswordEditInput: UserPasswordEditInput!): User
-    PromoteUser(id: Int!, promoteUserInput: PromoteUserInput!): User
-    DemoteUser(id: Int!, demoteUserInput: DemoteUserInput!): User
-    UserMachineUsageUpdate(id: Int!, userMachineUpdateInput: UserMachineUpdateInput!): User
+    DeleteUser(id: String!): User
+    EditUser(id: String!, userEditInput: UserEditInput!): User
+    EditUserPassword(id: String!, userPasswordEditInput: UserPasswordEditInput!): User
+    PromoteUser(id: String!, promoteUserInput: PromoteUserInput!): User
+    DemoteUser(id: String!, demoteUserInput: DemoteUserInput!): User
+    UserMachineUsageUpdate(id: String!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: SignUpInput!): SignUpRet
     AddSignupAuthCode(signupAuthCodeInput: SignupAuthCodeInput!): SignupAuthCode
     AddToolLike(toolLikeInput: ToolLikeInput!): ToolLike
     DeleteToolLike(toolLikeInput: ToolLikeInput!): ToolLike
-    EditUserLanguage(id: Int!, language: String!): User
+    EditUserLanguage(id: String!, language: String!): User
     AddUserBorrowTool(userBorrowToolInput: UserBorrowToolInput!): UserBorrowTool
-    DeleteUserBorrowTool(id: Int!): UserBorrowTool
-    EditUserBorrowToolQuantity(id: Int!, userBorrowToolInput: UserBorrowToolInput!): UserBorrowTool
-    EditUserBorrowToolStatus(id: Int!, status: String!): UserBorrowTool
+    DeleteUserBorrowTool(id: String!): UserBorrowTool
+    EditUserBorrowToolQuantity(id: String!, userBorrowToolInput: UserBorrowToolInput!): UserBorrowTool
+    EditUserBorrowToolStatus(id: String!, status: String!): UserBorrowTool
     AddMaterialLike(materialLikeInput: MaterialLikeInput!): MaterialLike
     DeleteMaterialLike(materialLikeInput: MaterialLikeInput!): MaterialLike
     AddUserBorrowMaterial(userBorrowMaterialInput: UserBorrowMaterialInput!): UserBorrowMaterial
-    DeleteUserBorrowMaterial(id: Int!): UserBorrowMaterial
-    EditUserBorrowMaterialQuantity(id: Int!, userBorrowMaterialInput: UserBorrowMaterialInput!): UserBorrowMaterial
-    EditUserBorrowMaterialStatus(id: Int!, status: String!): UserBorrowMaterial
+    DeleteUserBorrowMaterial(id: String!): UserBorrowMaterial
+    EditUserBorrowMaterialQuantity(id: String!, userBorrowMaterialInput: UserBorrowMaterialInput!): UserBorrowMaterial
+    EditUserBorrowMaterialStatus(id: String!, status: String!): UserBorrowMaterial
     AddAdminSchedule(adminScheduleInput: AdminScheduleInput!): AdminSchedule
-    DeleteAdminSchedule(id: Int!): AdminSchedule
-    EditAdminSchedule(id: Int!, name: String!): AdminSchedule
+    DeleteAdminSchedule(id: String!): AdminSchedule
+    EditAdminSchedule(id: String!, name: String!): AdminSchedule
   }
 
   type Subscription {
