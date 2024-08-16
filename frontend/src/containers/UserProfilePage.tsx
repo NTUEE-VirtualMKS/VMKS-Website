@@ -16,7 +16,7 @@ function UserProfilePage() {
       </h1>
       <div className="flex flex-row gap-x-5">
         <ProfileCard
-          id={parseInt(id!)}
+          id={id!}
           name={user?.name!}
           studentID={user?.studentID!}
           password={user?.password!}

@@ -10,7 +10,7 @@ function MaterialDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, loading, error } = useQuery(GET_MATERIAL_BY_ID_QUERY, {
-    variables: { id: parseInt(id as string) },
+    variables: { id: id as string },
   });
 
   useEffect(() => {
