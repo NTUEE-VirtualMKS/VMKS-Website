@@ -223,16 +223,13 @@ const EDIT_MATERIAL_MUTATION = gql(`
 const ADD_THREE_DP_MUTATION = gql(`
   mutation AddThreeDP($threeDpInput: ThreeDPInput!) {
     AddThreeDP(threeDPInput: $threeDpInput) {
+      broken
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
-      broken
     }
   }
 `);

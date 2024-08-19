@@ -86,6 +86,15 @@ export type MaterialInput = {
   remain: number | string;
 };
 
+export type ThreeDPInput = {
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  broken: boolean;
+}
+
 export type ToolInput = {
   name: string;
   partName: string | null;

@@ -87,11 +87,9 @@ const typeDefs = `#graphql
 
   input ThreeDPInput{
     name:         String!
-    category:     String!
     position:     String!
     description:  String!
     photoLink:    String!
-    usage:        Int!
     tutorialLink: String!
     broken:       Boolean!
   }

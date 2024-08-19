@@ -71,11 +71,9 @@ interface MachineInput {
 
 interface ThreeDPInput {
   name: string;
-  category: string;
   position: string;
   description: string;
   photoLink: string;
-  usage: number;
   tutorialLink: string;
   broken: boolean;
 }

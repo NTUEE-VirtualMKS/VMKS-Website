@@ -657,24 +657,20 @@ const Mutation = {
   ) => {
     const {
       name,
-      category,
       position,
       description,
       photoLink,
-      usage,
       tutorialLink,
       broken,
     } = args.threeDPInput;
     const newThreeDP = await prisma.threeDP.create({
       data: {
         name: name,
-        category: category,
         position: position,
         description: description,
         photoLink: photoLink,
-        usage: usage,
         tutorialLink: tutorialLink,
-        waitingId: [],
+        threeDPIds: [],
         broken: broken,
       },
     });
@@ -722,11 +718,9 @@ const Mutation = {
     const id = args.id;
     const {
       name,
-      category,
       position,
       description,
       photoLink,
-      usage,
       tutorialLink,
       broken,
     } = args.threeDPInput;
@@ -745,11 +739,9 @@ const Mutation = {
       },
       data: {
         name: name,
-        category: category,
         position: position,
         description: description,
         photoLink: photoLink,
-        usage: usage,
         tutorialLink: tutorialLink,
         broken: broken,
       },
@@ -818,17 +810,17 @@ const Mutation = {
           id: threeDPID,
         },
       });
-      const waitingID = findThreeDP.waitingId;
-      const index = waitingID.indexOf(id);
-      waitingID.splice(index, 1);
-      await prisma.threeDP.update({
-        where: {
-          id: threeDPID,
-        },
-        data: {
-          waitingId: waitingID,
-        },
-      });
+      // const waitingID = findThreeDP.waitingId;
+      // const index = waitingID.indexOf(id);
+      // waitingID.splice(index, 1);
+      // await prisma.threeDP.update({
+      //   where: {
+      //     id: threeDPID,
+      //   },
+      //   data: {
+      //     waitingId: waitingID,
+      //   },
+      // });
     }
 
     const DeleteUser = await prisma.user.delete({
@@ -1092,20 +1084,20 @@ const Mutation = {
         if (!oldThreeDP) {
           throw new Error("Old threeDP not found!");
         }
-        const oldWaitingID = oldThreeDP.waitingId;
-        const index = oldWaitingID.indexOf(id);
-        oldWaitingID.splice(index, 1);
-        const updateOldThreeDP = await prisma.threeDP.update({
-          where: {
-            id: oldThreeDPId,
-          },
-          data: {
-            waitingId: oldWaitingID,
-          },
-        });
-        if (!updateOldThreeDP) {
-          throw new Error("Update old threeDP failed!");
-        }
+        // const oldWaitingID = oldThreeDP.waitingId;
+        // const index = oldWaitingID.indexOf(id);
+        // oldWaitingID.splice(index, 1);
+        // const updateOldThreeDP = await prisma.threeDP.update({
+        //   where: {
+        //     id: oldThreeDPId,
+        //   },
+        //   data: {
+        //     waitingId: oldWaitingID,
+        //   },
+        // });
+        // if (!updateOldThreeDP) {
+        //   throw new Error("Update old threeDP failed!");
+        // }
       }
 
       if (threeDPId !== null) {
@@ -1117,19 +1109,19 @@ const Mutation = {
         if (!newThreeDP) {
           throw new Error("New threeDP not found!");
         }
-        const newWaitingID = newThreeDP.waitingId;
-        newWaitingID.push(id);
-        const updateNewThreeDP = await prisma.threeDP.update({
-          where: {
-            id: threeDPId,
-          },
-          data: {
-            waitingId: newWaitingID,
-          },
-        });
-        if (!updateNewThreeDP) {
-          throw new Error("Update new threeDP failed!");
-        }
+        // const newWaitingID = newThreeDP.waitingId;
+        // newWaitingID.push(id);
+        // const updateNewThreeDP = await prisma.threeDP.update({
+        //   where: {
+        //     id: threeDPId,
+        //   },
+        //   data: {
+        //     waitingId: newWaitingID,
+        //   },
+        // });
+        // if (!updateNewThreeDP) {
+        //   throw new Error("Update new threeDP failed!");
+        // }
       }
     }
 
