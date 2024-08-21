@@ -558,9 +558,6 @@ const Query = {
     const allThreeDPs = await prisma.threeDP.findMany({
       orderBy: [
         {
-          usage: "desc",
-        },
-        {
           id: "desc",
         },
       ],

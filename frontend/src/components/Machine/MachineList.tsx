@@ -1,14 +1,14 @@
 import { useQuery } from "@apollo/client";
-import { GET_ALL_MATERIALS_QUERY } from "@/graphql/queries";
-import type { MaterialType } from "@/shared/type.ts";
-import MaterialCard from "./MachineCard";
+import { GET_ALL_THREEDPS_QUERY } from "@/graphql/queries";
+import type { ThreeDPType } from "@/shared/type.ts";
+import MachineCard from "./MachineCard";
 import Suggestion from "../Suggestion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../ui/use-toast";
 
-function MaterialList() {
+function MachineList() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [cursor, setCursor] = useState<string | null>(null);
@@ -17,7 +17,7 @@ function MaterialList() {
   const observerTarget = useRef(null);
 
   const { data, loading, error, fetchMore } = useQuery(
-    GET_ALL_MATERIALS_QUERY,
+    GET_ALL_THREEDPS_QUERY,
     {
       variables: {
         cursor,
@@ -26,8 +26,8 @@ function MaterialList() {
     }
   );
 
-  const materials = data?.GetAllMaterials?.materials as MaterialType[];
-  const nextCursor = data?.GetAllMaterials?.cursor as string | null;
+  const threeDPs = data?.GetAllThreeDPs?.threeDPs as ThreeDPType[];
+  const nextCursor = data?.GetAllThreeDPs?.cursor as string | null;
 
   const handleLoadMore = useCallback(async () => {
     if (!nextCursor) return;
@@ -42,12 +42,12 @@ function MaterialList() {
           return {
             ...prev,
             GetAllMaterials: {
-              ...prev.GetAllMaterials,
+              ...prev.GetAllThreeDPs,
               materials: [
-                ...prev.GetAllMaterials?.materials!,
-                ...fetchMoreResult.GetAllMaterials?.materials!,
+                ...prev.GetAllThreeDPs?.threeDPs!,
+                ...fetchMoreResult.GetAllThreeDPs?.threeDPs!,
               ],
-              cursor: fetchMoreResult.GetAllMaterials?.cursor,
+              cursor: fetchMoreResult.GetAllThreeDPs?.cursor,
             },
           };
         },
@@ -95,9 +95,9 @@ function MaterialList() {
   return (
     <>
       <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
-        {materials && materials.length !== 0 ? (
-          materials.map((material: MaterialType, index: number) => {
-            return <MaterialCard key={index} material={material} search="" />;
+        {threeDPs && threeDPs.length !== 0 ? (
+          threeDPs.map((threeDP: ThreeDPType, index: number) => {
+            return <MachineCard key={index} threedp={threeDP} search="" />;
           })
         ) : (
           <Suggestion search="" name="Material" />
@@ -111,7 +111,7 @@ function MaterialList() {
           />
         ) : (
           <>
-            {materials?.length >= 12 && (
+            {threeDPs?.length >= 12 && (
               <p className="text-gray-500 text-xl mt-3">
                 {t("noMoreMaterial")}
               </p>
@@ -123,4 +123,4 @@ function MaterialList() {
   );
 }
 
-export default MaterialList;
+export default MachineList;

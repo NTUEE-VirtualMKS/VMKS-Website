@@ -239,11 +239,9 @@ const DELETE_THREE_DP_MUTATION = gql(`
     DeleteThreeDP(id: $deleteThreeDpId) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
       waitingId
       broken

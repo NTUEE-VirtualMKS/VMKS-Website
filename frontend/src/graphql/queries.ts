@@ -413,16 +413,14 @@ const GET_ALL_THREEDPS_QUERY = gql(`
   query GetAllThreeDPs($cursor: String, $limit: Int) {
     GetAllThreeDPs(cursor: $cursor, limit: $limit) {
       threeDPs {
+        broken
+        description
         id
         name
-        category
-        position
-        description
         photoLink
-        usage
+        position
         tutorialLink
         waitingId
-        broken
       }
       cursor
     }

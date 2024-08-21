@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import SkeletonList from "@/components/SkeletonList";
-
+import MachineList from "@/components/Machine/MachineList";
 function MachinePage() {
   const { toast } = useToast();
   const { user } = useUser();
@@ -264,6 +264,9 @@ function MachinePage() {
               </div> */}
             </>
           )}
+        </div>
+        <div className="mt-2">
+          <MachineList/>
         </div>  
         </TabsContent>
         <TabsContent value="others">

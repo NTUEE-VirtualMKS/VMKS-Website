@@ -220,11 +220,9 @@ const typeDefs = `#graphql
   type ThreeDP {
     id:           String!
     name:         String!
-    category:     String!
     position:     String!
     description:  String!
     photoLink:    String!
-    usage:        Int!
     tutorialLink: String!
     waitingId:    [String]
     broken:       Boolean!

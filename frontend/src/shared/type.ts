@@ -72,6 +72,18 @@ export type AuthorizedCodeType = {
   updatedAt: string;
 };
 
+export type ThreeDPType = {
+  __typename?: "ThreeDP";
+  id: string;
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  threeDPIds: Array<string | null> | null;
+  broken: boolean;
+}
+
 export type MaterialInput = {
   name: string;
   partName: string | null;
