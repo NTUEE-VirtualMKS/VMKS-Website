@@ -30,6 +30,7 @@ import {
   NotFound,
   DisposableMaterialPage,
   MachinePage,
+  ThreeDPDetailPage,
 } from "@/containers";
 
 const routes: Array<{
@@ -60,6 +61,7 @@ const routes: Array<{
   { path: "/DisposableMaterialPage", element: <DisposableMaterialPage /> },
   { path: "/Login", element: <FakeLoginPage /> },
   { path: "/IntroductionPage", element: <IntroductionPage /> },
+  { path: "/MachinePage/ThreeDP/:id", element: <ThreeDPDetailPage /> },
   { path: "/MachinePage", element: <MachinePage /> },
   { path: "/MapPage", element: <MapPage /> },
   { path: "/MaterialPage/Material/:id", element: <MaterialDetailPage /> },

@@ -575,33 +575,44 @@ const Query = {
     };
   },
 
-  SearchThreeDPByCategory: async (
-    _parents,
-    args: {
-      category: string;
-    },
-    _contexts,
-  ) => {
-    const { category } = args;
-    const searchThreeDPByCategory = await prisma.threeDP.findMany({
+  GetThreeDPById: async (_parents, args: { id: string }, _contexts) => {
+    const id = args.id;
+    const threeDP = await prisma.threeDP.findUnique({
       where: {
-        category: {
-          contains: category,
-          mode: "insensitive",
-        },
+        id: id,
       },
-      orderBy: [
-        {
-          usage: "desc",
-        },
-        {
-          id: "desc",
-        },
-      ],
     });
-
-    return searchThreeDPByCategory;
+    if (!threeDP) throw new Error("Material not found!");
+    return threeDP;
   },
+
+  // SearchThreeDPByCategory: async (
+  //   _parents,
+  //   args: {
+  //     category: string;
+  //   },
+  //   _contexts,
+  // ) => {
+  //   const { category } = args;
+  //   const searchThreeDPByCategory = await prisma.threeDP.findMany({
+  //     where: {
+  //       category: {
+  //         contains: category,
+  //         mode: "insensitive",
+  //       },
+  //     },
+  //     orderBy: [
+  //       {
+  //         usage: "desc",
+  //       },
+  //       {
+  //         id: "desc",
+  //       },
+  //     ],
+  //   });
+
+  //   return searchThreeDPByCategory;
+  // },
 
   SearchThreeDPByPosition: async (
     _parents,
@@ -619,9 +630,6 @@ const Query = {
         },
       },
       orderBy: [
-        {
-          usage: "desc",
-        },
         {
           id: "desc",
         },

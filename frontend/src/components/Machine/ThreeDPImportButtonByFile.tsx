@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import type { MaterialImportButtonProps } from "@/shared/type";
 
-function MaterialImportButton({
+function ThreeDPImportButtonByFile({
   setMaterials,
   setLength,
   fileRef,
@@ -84,4 +84,26 @@ function MaterialImportButton({
   );
 }
 
-export default MaterialImportButton;
+export default ThreeDPImportButtonByFile;
+
+{/* <div className="hidden sm:flex sm:flex-row sm:justify-end">
+                <MaterialImportButton
+                  setMaterials={setMaterials}
+                  setLength={setLength}
+                  fileRef={ref}
+                  file={file}
+                  setFile={setFile}
+                  isFileUploadLoading={isFileUploadLoading}
+                />
+                {length !== 0 && (
+                  <Button
+                    onClick={() => handleAddMaterials(materials)}
+                    className={
+                      "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
+                    }
+                    disabled={isFileUploadLoading}
+                  >
+                    {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
+                  </Button>
+                )}
+              </div> */}

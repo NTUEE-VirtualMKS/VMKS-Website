@@ -495,6 +495,7 @@ const typeDefs = `#graphql
     GetUserByStudentID(studentID: String!): User
     # ThreeDP
     GetAllThreeDPs(cursor: String, limit: Int): GetAllThreeDPs
+    GetThreeDPById(id: String!): ThreeDP
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     # Article

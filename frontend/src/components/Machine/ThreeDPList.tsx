@@ -1,14 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { GET_ALL_THREEDPS_QUERY } from "@/graphql/queries";
 import type { ThreeDPType } from "@/shared/type.ts";
-import MachineCard from "./MachineCard";
+import ThreeDPCard from "./ThreeDPCard"; 
 import Suggestion from "../Suggestion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../ui/use-toast";
 
-function MachineList() {
+function ThreeDPList() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [cursor, setCursor] = useState<string | null>(null);
@@ -97,7 +97,7 @@ function MachineList() {
       <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
         {threeDPs && threeDPs.length !== 0 ? (
           threeDPs.map((threeDP: ThreeDPType, index: number) => {
-            return <MachineCard key={index} threedp={threeDP} search="" />;
+            return <ThreeDPCard key={index} threedp={threeDP} search="" />;
           })
         ) : (
           <Suggestion search="" name="Material" />
@@ -123,4 +123,4 @@ function MachineList() {
   );
 }
 
-export default MachineList;
+export default ThreeDPList;

@@ -207,6 +207,17 @@ export type MaterialDetailCardProps = {
   valuable: boolean;
 };
 
+
+export type ThreeDPDetailCardProps = {
+  id: string;
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  broken: boolean;
+}
+
 export type AnnouncementCardProps = {
   id: string;
   title: string;

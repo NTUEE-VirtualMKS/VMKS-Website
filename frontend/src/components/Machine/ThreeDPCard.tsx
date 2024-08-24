@@ -3,6 +3,7 @@ import type { ThreeDPType } from "@/shared/type.ts";
 import {
   DELETE_THREE_DP_MUTATION,
 } from "@/graphql";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { useMutation } from "@apollo/client";
@@ -29,11 +30,11 @@ import { useTranslation } from "react-i18next";
 import LoaderSpinner from "../LoaderSpinner";
 import {
   borrowingStatus,
-  machineBaseUrl,
+  threedpBaseUrl,
   unborrowedStatus,
 } from "@/constants/index";
 
-function MachineCard({
+function ThreeDPCard({
   threedp,
   search,
 }: {
@@ -69,7 +70,7 @@ function MachineCard({
   // Load the star state from local storage
   
   const handleShare = () => {
-    const shareableLink = `${window.location.origin}${machineBaseUrl}/${threedp.id}`;
+    const shareableLink = `${window.location.origin}${threedpBaseUrl}/${threedp.id}`;
     navigator.clipboard
       .writeText(shareableLink)
       .then(() => {
@@ -89,7 +90,9 @@ function MachineCard({
       className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
       key={threedp.id}
     >
-      <div className="flex flex-col justify-between h-full p-3 dark:bg-[#181b20] w-11/12 mx-auto rounded-lg border dark:border-[#444444] shadow-md bg-white">
+      <div className={cn("flex flex-col justify-between h-full p-3 dark:bg-[#181b20] w-11/12 mx-auto rounded-lg border dark:border-[#444444] shadow-md bg-white", 
+        threedp.broken && "border-red-500"
+      )}>
         <Link to={`/MachinePage/ThreeDP/${threedp.id}`}>
           <img
             src={threedp.photoLink}
@@ -159,10 +162,8 @@ function MachineCard({
             <div className="rounded-full hover:bg-blue-400 hover:bg-opacity-20">
               <div className="w-[35px] h-[35px]">
               <Link to={`/MachinePage/Threedp/${threedp.id}`}>
-              </Link>
                 <TooltipTrigger
                   className="rounded-full transform active:scale-90 transition-transform duration-200"
-                  // onClick={handleShare}
                 >
                   <Pencil
                     className="p-1.5 dark:hover:text-blue-300 hover:text-blue-500"
@@ -175,6 +176,7 @@ function MachineCard({
                 >
                   <p className="text-white text-xs">{t("edit")}</p>
                 </TooltipContent>
+                </Link>
               </div>
             </div>
           </Tooltip>
@@ -208,4 +210,4 @@ function MachineCard({
   );
 }
 
-export default MachineCard;
+export default ThreeDPCard;

@@ -427,33 +427,46 @@ const GET_ALL_THREEDPS_QUERY = gql(`
   }
 `);
 
-const SEARCH_THREEDP_BY_CATEGORY_QUERY = gql(`
-  query SearchThreeDPByCategory($category: String!) {
-    SearchThreeDPByCategory(category: $category) {
+const GET_THREEDP_BY_ID_QUERY = gql(`
+  query GetThreeDPById($getThreeDpByIdId: String!) {
+    GetThreeDPById(id: $getThreeDpByIdId) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
       waitingId
       broken
     }
-  }
+  }  
 `);
+
+// const SEARCH_THREEDP_BY_CATEGORY_QUERY = gql(`
+//   query SearchThreeDPByCategory($category: String!) {
+//     SearchThreeDPByCategory(category: $category) {
+//       id
+//       name
+//       category
+//       position
+//       description
+//       photoLink
+//       usage
+//       tutorialLink
+//       waitingId
+//       broken
+//     }
+//   }
+// `);
 
 const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
   query SearchThreeDPByPosition($position: String!) {
     SearchThreeDPByPosition(position: $position) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
       waitingId
       broken
@@ -945,7 +958,8 @@ export {
   SEARCH_MATERIAL_BY_POSITION_QUERY,
   // ThreeDP
   GET_ALL_THREEDPS_QUERY,
-  SEARCH_THREEDP_BY_CATEGORY_QUERY,
+  GET_THREEDP_BY_ID_QUERY,
+  // SEARCH_THREEDP_BY_CATEGORY_QUERY,
   SEARCH_THREEDP_BY_POSITION_QUERY,
   // User
   GET_ALL_USERS_QUERY,

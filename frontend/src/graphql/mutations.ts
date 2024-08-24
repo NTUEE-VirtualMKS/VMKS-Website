@@ -254,11 +254,9 @@ const EDIT_THREE_DP_MUTATION = gql(`
     EditThreeDP(id: $editThreeDpId, threeDPInput: $threeDpInput) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
       waitingId
       broken
