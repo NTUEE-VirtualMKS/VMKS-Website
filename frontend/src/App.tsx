@@ -30,6 +30,9 @@ import {
   NotFound,
   DisposableMaterialPage,
   MachinePage,
+  BlogDashboard,
+  CreatePost,
+  EditPost
 } from "@/containers";
 
 const routes: Array<{
@@ -70,7 +73,9 @@ const routes: Array<{
   { path: "/ToolPage", element: <ToolPage /> },
   { path: "/TutorialPage", element: <TutorialPage /> },
   { path: "/UserProfilePage", element: <UserProfilePage />, protected: true },
-  { path: "/advanced/*", element: <Advanced /> },
+  { path: "/BlogDashboard", element: <BlogDashboard /> },
+  { path: "/create-post", element: <CreatePost />},
+  { path: "/edit-post/:id", element: <EditPost />}
 ];
 
 function App() {

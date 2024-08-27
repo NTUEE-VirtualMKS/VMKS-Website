@@ -1146,53 +1146,86 @@ const Mutation = {
     return editUser;
   },
 
-  AddArticle: async (
-    _parents,
-    args: { articleInput: ArticleInput },
-    _contexts,
-  ) => {
-    const {
-      writerId,
-      description,
-      imageURL,
-      title,
-      headline,
-      content,
-      userpic,
-    } = args.articleInput;
-    const findWriter = await prisma.user.findFirst({
-      where: {
-        id: writerId,
-      },
-    });
-    if (!findWriter) {
-      throw new Error("Writer not found!");
-    }
+  AddArticle: async (_, args: { articleInput: ArticleInput }) => {
+    const { writerId, description, imageURL, title, headline, content, userpic } = args.articleInput;
 
-    const date = new Date().toLocaleString();
+    const writer = await prisma.user.findUnique({ where: { id: writerId } });
+    if (!writer) throw new Error("Writer not found");
+
     const newArticle = await prisma.article.create({
       data: {
-        writerId: writerId,
-        description: description,
-        imageURL: imageURL,
-        time: date,
-        title: title,
-        headline: headline,
-        content: content,
-        userpic: userpic,
+        writerId,
+        description,
+        imageURL,
+        title,
+        headline,
+        content,
+        userpic,
+        time: new Date().toLocaleString(),
       },
+      include: { writer: true },
     });
 
     await prisma.user.update({
-      where: {
-        id: writerId,
-      },
-      data: {
-        articlesId: { push: newArticle.id },
-      },
+      where: { id: writerId },
+      data: { articlesId: { push: newArticle.id } },
     });
+
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
+  },
+
+  UpdateArticle: async (
+    _parents,
+    args: { id: string; articleInput: ArticleInput },
+    _contexts,
+  ) => {
+    const { id, articleInput } = args;
+    const { writerId, description, imageURL, title, headline, content, userpic } = articleInput;
+
+    // Check if the article exists
+    const existingArticle = await prisma.article.findUnique({
+      where: { id },
+    });
+
+    if (!existingArticle) {
+      throw new Error("Article not found");
+    }
+
+    // Check if the writer exists
+    const existingWriter = await prisma.user.findUnique({
+      where: { id: writerId },
+    });
+
+    if (!existingWriter) {
+      throw new Error(`#2 Writer with ID ${writerId} not found`);
+    }
+
+    // Update the article
+    const updatedArticle = await prisma.article.update({
+      where: { id },
+      data: {
+        writerId,
+        description,
+        imageURL,
+        time: new Date().toLocaleString(),
+        title,
+        headline,
+        content,
+        userpic,
+      },
+    });
+
+    return updatedArticle;
+  },
+
+  DeleteArticle: async (_, args: { id: string }) => {
+    const deletedArticle = await prisma.article.delete({
+      where: { id: args.id },
+      include: { writer: true },
+    });
+    pubsub.publish("ARTICLE_DELETED", { ArticleDeleted: deletedArticle });
+    return deletedArticle;
   },
 
   UpdateAuthorizedCode: async (

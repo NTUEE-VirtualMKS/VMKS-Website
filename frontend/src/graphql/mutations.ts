@@ -51,6 +51,31 @@ const ADD_ARTICLE_MUTATION = gql(`
   }
 `);
 
+const UPDATE_ARTICLE_MUTATION = gql(`
+  mutation UpdateArticle($updateArticleId: String!, $articleInput: ArticleInput!) {
+    UpdateArticle(id: $updateArticleId, articleInput: $articleInput) {
+      id
+      writerId
+      description
+      imageURL
+      time
+      title
+      headline
+      content
+      userpic
+    }
+  }
+`);
+
+const DELETE_ARTICLE_MUTATION = gql(`
+  mutation DeleteArticle($deleteArticleId: String!) {
+    DeleteArticle(id: $deleteArticleId) {
+      id
+    }
+  }
+`);
+
+
 // DisposableMaterial
 const ADD_DISPOSABLE_MATERIAL_MUTATION = gql(`
   mutation AddDisposableMaterial($disposableMaterialInput: DisposableMaterialInput!) {
@@ -867,6 +892,8 @@ export {
   DELETE_ANNOUNCEMENT_MUTATION,
   EDIT_ANNOUNCEMENT_MUTATION,
   ADD_ARTICLE_MUTATION,
+  UPDATE_ARTICLE_MUTATION,
+  DELETE_ARTICLE_MUTATION,
   ADD_DISPOSABLE_MATERIAL_MUTATION,
   DELETE_DISPOSABLE_MATERIAL_MUTATION,
   EDIT_DISPOSABLE_MATERIAL_MUTATION,

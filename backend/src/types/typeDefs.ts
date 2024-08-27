@@ -276,7 +276,7 @@ const typeDefs = `#graphql
     isAdmin: Boolean!
     isMinister: Boolean!
   }
-  
+
   input SignupAuthCodeInput {
     studentID: String!
     browser: String!
@@ -489,7 +489,7 @@ const typeDefs = `#graphql
     SearchMaterialByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]
     # Machine
-    GetAllMachines(cursor: String, limit: Int): GetAllMachines 
+    GetAllMachines(cursor: String, limit: Int): GetAllMachines
     SearchMachineByCategory(category: String!): [Machine]
     SearchMachineByPosition(position: String!): [Machine]
     SearchMachineByName(input: String!): [Machine]
@@ -502,7 +502,7 @@ const typeDefs = `#graphql
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
     # Article
-    GetAllArticles(cursor: String, limit: Int): GetAllArticles 
+    GetAllArticles(cursor: String, limit: Int): GetAllArticles
     GetArticleById(id: String!): Article
     # AuthorizedCode
     GetAuthorizedCode: AuthorizedCode
@@ -568,6 +568,8 @@ const typeDefs = `#graphql
     DemoteUser(id: String!, demoteUserInput: DemoteUserInput!): User
     UserMachineUsageUpdate(id: String!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
+    UpdateArticle(id: String!, articleInput: ArticleInput!): Article
+    DeleteArticle(id: String!): Article
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: SignUpInput!): SignUpRet
     AddSignupAuthCode(signupAuthCodeInput: SignupAuthCodeInput!): SignupAuthCode
@@ -613,6 +615,8 @@ const typeDefs = `#graphql
     UserUpdated: User
     UserMachineUpdate: User
     ArticleCreated: Article
+    ArticleUpdated: Article
+    ArticleDeleted: Article
     UserSignedUp: User
     UserLoggedIn: User
   }
