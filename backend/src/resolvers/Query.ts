@@ -638,7 +638,65 @@ const Query = {
 
     return searchThreeDPByPosition;
   },
+  //ThreeDPRequest
+  GetAllThreeDPRequests: async () => {
+    const allThreeDPRequests = await prisma.threeDPRequest.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
 
+    return allThreeDPRequests;
+  },
+
+  GetThreeDPRequestsByThreeDPId: async (
+    _parents,
+    args: { threeDPId: string },
+    _contexts,
+  ) => {
+    const threeDPId = args.threeDPId;
+    const threeDP = await prisma.threeDP.findUnique({
+      where: {
+        id: threeDPId,
+      },
+    });
+
+    if (!threeDP) throw new Error("User not found");
+
+    const threeDPRequest = await prisma.threeDPRequest.findMany({
+      where: {
+        threeDPId: threeDPId,
+      },
+    });
+    if (!threeDPRequest) throw new Error("threeDP request not found!");
+    return threeDPRequest;
+  },
+  
+  GetThreeDPRequestsByUserId: async (
+    _parents,
+    args: { userId: string },
+    _contexts,
+  ) => {
+    const userId = args.userId;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const threeDPRequests = await prisma.threeDPRequest.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return threeDPRequests;
+  },
   // User
   GetAllUsers: async (
     _parents,

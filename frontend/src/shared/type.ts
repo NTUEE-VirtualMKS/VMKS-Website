@@ -107,6 +107,13 @@ export type ThreeDPInput = {
   broken: boolean;
 }
 
+export type ThreeDPRequestInput = {
+  name: string;
+  studentID: string;
+  userId: string;
+  threeDPId: string;
+}
+
 export type ToolInput = {
   name: string;
   partName: string | null;
@@ -262,6 +269,16 @@ export type UserBorrowMaterialType = {
   borrowDate: string;
   returnDate: string;
 };
+
+export type ThreeDPRequestType = {
+  __typename?: "ThreeDPRequest";
+  id: string;
+  name: string;
+  studentID: string;
+  userId: string;
+  threeDPId: string;
+  status: string;
+}
 
 export type UserAvatarUploaderProps = {
   imgUrl: string;

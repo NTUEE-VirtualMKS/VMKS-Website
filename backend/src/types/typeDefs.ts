@@ -94,6 +94,13 @@ const typeDefs = `#graphql
     broken:       Boolean!
   }
 
+  input ThreeDPRequestInput{
+    name: String!
+    studentID: String!
+    userId: String!
+    threeDPId: String!
+  }
+
   input UserInput {
     name: String!
     studentID: String!
@@ -218,14 +225,23 @@ const typeDefs = `#graphql
   }
 
   type ThreeDP {
-    id:           String!
-    name:         String!
-    position:     String!
-    description:  String!
-    photoLink:    String!
+    id: String!
+    name: String!
+    position: String!
+    description: String!
+    photoLink: String!
     tutorialLink: String!
-    waitingId:    [String]
-    broken:       Boolean!
+    threeDPRequestIds: [String]
+    broken: Boolean!
+  }
+
+  type ThreeDPRequest {
+    id: String!
+    name: String!
+    studentID: String!
+    userId: String!
+    threeDPId: String!
+    status: String!
   }
 
   type User {
@@ -498,6 +514,10 @@ const typeDefs = `#graphql
     GetThreeDPById(id: String!): ThreeDP
     SearchThreeDPByCategory(category: String!): [ThreeDP]
     SearchThreeDPByPosition(position: String!): [ThreeDP]
+    # ThreeDPRequest
+    GetAllThreeDPRequests: [ThreeDPRequest]
+    GetThreeDPRequestsByThreeDPId(threeDPId: String!): [ThreeDPRequest]
+    GetThreeDPRequestsByUserId(userId: String!): [ThreeDPRequest]
     # Article
     GetAllArticles(cursor: String, limit: Int): GetAllArticles 
     GetArticleById(id: String!): Article
@@ -557,6 +577,9 @@ const typeDefs = `#graphql
     AddThreeDP(threeDPInput: ThreeDPInput!): ThreeDP
     DeleteThreeDP(id: String!): ThreeDP
     EditThreeDP(id: String!, threeDPInput: ThreeDPInput!): ThreeDP
+    AddThreeDPRequest(threeDPRequestInput: ThreeDPRequestInput!): ThreeDPRequest
+    DeleteThreeDPRequest(id: String!): ThreeDPRequest
+    EditThreeDPRequestStatus(id: String!, status: String!): ThreeDPRequest
     AddUser(userInput: UserInput!) : User
     DeleteUser(id: String!): User
     EditUser(id: String!, userEditInput: UserEditInput!): User

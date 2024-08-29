@@ -85,7 +85,7 @@ model ThreeDP {
   photoLink    String
   tutorialLink String
   threeDPRequest   ThreeDPRequest[]     
-  threeDPIds    String[]
+  threeDPRequestIds    String[]
   broken       Boolean
 }
 
@@ -93,10 +93,10 @@ model ThreeDPRequest{
   id           String     @id @default(uuid())
   name         String
   studentID    String
-  user         User       @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userID       String     @unique
-  threeDP      ThreeDP    @relation(fields: [threeDPID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  threeDPID    String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String     @unique
+  threeDP      ThreeDP    @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  threeDPId    String
   status       String     @default("Processing")
 }
 model User {

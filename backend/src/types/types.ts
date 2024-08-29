@@ -78,6 +78,13 @@ interface ThreeDPInput {
   broken: boolean;
 }
 
+interface ThreeDPRequestInput {
+  name: string;
+  studentID: string;
+  userId: string;
+  threeDPId: string;
+}
+
 interface SignUpInput {
   name: string;
   studentID: string;
@@ -196,6 +203,7 @@ export type {
   AnnouncementInput,
   ToolInput,
   ThreeDPInput,
+  ThreeDPRequestInput,
   UserInput,
   UserEditInput,
   UserPasswordEditInput,

@@ -15,6 +15,7 @@ import {
   MaterialInput,
   MaterialUsageUpdateInput,
   ThreeDPInput,
+  ThreeDPRequestInput,
   UserInput,
   UserEditInput,
   UserPasswordEditInput,
@@ -670,7 +671,7 @@ const Mutation = {
         description: description,
         photoLink: photoLink,
         tutorialLink: tutorialLink,
-        threeDPIds: [],
+        threeDPRequestIds: [],
         broken: broken,
       },
     });
@@ -750,6 +751,147 @@ const Mutation = {
     return updateThreeDP;
   },
 
+  AddThreeDPRequest: async (
+    _parents,
+    args: { threeDPRequestInput: ThreeDPRequestInput },
+    _contexts,
+  ) => {
+    const { name, studentID, userId, threeDPId } = args.threeDPRequestInput;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
+    const threeDP = await prisma.threeDP.findUnique({
+      where: {
+        id: threeDPId,
+      },
+    });
+
+    if (!threeDP) {
+      throw new Error("ThreeDP not found!");
+    }
+
+    const newthreeDPRequset = await prisma.threeDPRequest.create({
+      data: {
+        name: name,
+        studentID: studentID,
+        userId: userId,
+        threeDPId: threeDPId,
+      },
+    });
+
+    await prisma.threeDP.update({
+      where: {
+        id: threeDPId,
+      },
+      data: {
+        threeDPRequestIds: [...threeDP.threeDPRequestIds, newthreeDPRequset.id],
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        threeDPId: newthreeDPRequset.id,
+      },
+    });
+
+    return newthreeDPRequset;
+  },
+  
+  DeleteThreeDPRequest: async (
+    _parents,
+    args: { id: string },
+    _contexts,
+  ) => {
+    const id = args.id;
+    const threeDPRequest = await prisma.threeDPRequest.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!threeDPRequest) {
+      throw new Error("ThreeDP Request Not Found");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: threeDPRequest.userId,
+      },
+    });
+
+    const threeDP = await prisma.threeDP.findUnique({
+      where: {
+        id: threeDPRequest.threeDPId,
+      },
+    });
+
+    const deleteThreeDPRequest = await prisma.threeDPRequest.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    await prisma.threeDP.update({
+      where: {
+        id: threeDPRequest.threeDPId,
+      },
+      data: {
+        threeDPRequestIds: {
+          set: threeDP.threeDPRequestIds.filter(
+            (id) => id !== threeDPRequest.id,
+          ),
+        },
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: threeDPRequest.userId,
+      },
+      data: {
+        threeDPId: null,
+      },  
+    });
+
+    return deleteThreeDPRequest;
+  },
+
+  EditThreeDPRequestStatus: async (
+    _parents,
+    args: { id: string; status: string },
+    _contexts,
+  ) => {
+    const { id, status } = args;
+    const threeDPRequest = await prisma.threeDPRequest.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!threeDPRequest) {
+      throw new Error("User Borrow Material Not Found");
+    }
+
+    const editThreeDPRequest = await prisma.threeDPRequest.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: status,
+      },
+    });
+
+    return editThreeDPRequest;
+  },
   AddUser: async (_parents, args: { userInput: UserInput }, _contexts) => {
     const {
       name,

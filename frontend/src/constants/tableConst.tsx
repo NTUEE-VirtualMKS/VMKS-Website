@@ -11,7 +11,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Share, Trash2, ShoppingCart } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import type { UserBorrowMaterialType, UserBorrowToolType } from "@/shared/type";
+import type { UserBorrowMaterialType, UserBorrowToolType, ThreeDPRequestType } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,8 @@ import {
   GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
   EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
   ADD_USER_BORROW_MATERIAL_MUTATION,
+  DELETE_THREE_DP_REQUEST_MUTATION,
+  EDIT_THREE_DP_REQUEST_STATUS_MUTATION
 } from "@/graphql";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import {
@@ -36,12 +38,13 @@ import {
   materialBaseUrl,
   returnedStatus,
   toolBaseUrl,
+  threedpBaseUrl,
   unborrowedStatus,
   unreturnedStatus,
 } from "@/constants/index";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-
+import { useUser } from "@/contexts/UserContext";
 const determineTextColor = (status: string) => {
   switch (status) {
     case "Success":
@@ -1760,3 +1763,255 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
       ),
     },
   ];
+
+//threedp: user/admin
+export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => (
+      <div className="text-center dark:text-white text-base font-semibold">
+        {row.getValue("name")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "studentID",
+    header: "Student ID",
+    cell: ({ row }) => (
+      <div className="text-center dark:text-white text-base font-semibold uppercase">
+        {row.getValue("studentID")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const { user } = useUser();
+      const { t } = useTranslation();
+      const { toast } = useToast();
+      const [status, setStatus] = useState<string>(row.getValue("status"));
+      const statusOptions = ["Processing", "Pass", "Failed", "Finished"];
+
+      const [
+        editThreeDPRequestStatus,
+        {
+          loading: editThreeDPRequestStatusLoading,
+          error: editThreeDPRequestStatusError,
+        },
+      ] = useMutation(EDIT_THREE_DP_REQUEST_STATUS_MUTATION, {
+        // refetchQueries: [
+        //   {
+        //     query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+        //     variables: { status: allUsersBorrowingStatus },
+        //   },
+        //   {
+        //     query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+        //     variables: { status: unreturnedStatus },
+        //   },
+        // ],
+      });
+
+      const handleStatusChange = async (status: string) => {
+        setStatus(status);
+        await editThreeDPRequestStatus({
+          variables: {
+            editThreeDpRequestStatusId: row.original.id,
+            status: status,
+          },
+        });
+        if (editThreeDPRequestStatusLoading) return <LoaderSpinner />;
+        if (editThreeDPRequestStatusError) {
+          toast({
+            title: `${editThreeDPRequestStatusError.message}`,
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: "Status updated successfully!" });
+        }
+      };
+
+      return (
+        <>
+        {
+          user && user.isAdmin?
+          <RadioGroup defaultValue={status}>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  className={cn(
+                    "text-center font-semibold",
+                    determineTextColor(status)
+                  )}
+                >
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "text-center font-semibold",
+                      determineTextColor(status)
+                    )}
+                  >
+                    {status}
+                  </Button>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="center"
+                className="bg-black bg-opacity-90 border border-white text-white"
+              >
+                <DropdownMenuLabel>{t("status")}</DropdownMenuLabel>
+                {statusOptions.map((status) => (
+                  <div key={status}>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => handleStatusChange(status)}>
+                      <RadioGroupItem
+                        value={status}
+                        id={status}
+                        className="w-3 h-3 mr-2"
+                      />
+                      <Label htmlFor={status}>{status}</Label>
+                    </DropdownMenuItem>
+                  </div>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </RadioGroup>
+        :
+          <>
+          <div
+            className={cn(
+              "text-center font-semibold",
+              determineTextColor(status)
+            )}
+          >
+            <div
+              
+              className={cn(
+                "text-center font-semibold cursor: default",
+                determineTextColor(status)
+              )}
+            >
+              {status}
+            </div>
+            </div>
+          </>
+        }
+        </>
+      );
+    }
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const { user } = useUser();
+      const { toast } = useToast();
+      const threeDPRequest = row.original;
+      const handleShare = () => {
+        navigator.clipboard.writeText(
+          `${window.location.origin}${threedpBaseUrl}/${threeDPRequest.threeDPId}` // TODO: change to deployed link
+        );
+        toast({ title: "Link copied to clipboard!", variant: "share" });
+      };
+
+      const { t } = useTranslation();
+      const [deleteThreeDPRequest, { loading, error }] = useMutation(
+        DELETE_THREE_DP_REQUEST_MUTATION,
+        {
+          // refetchQueries: [
+          //   {
+          //     query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
+          //     variables: {
+          //       userId: userBorrowMaterial.userId,
+          //       status: unborrowedStatus,
+          //     },
+          //   },
+          // ],
+        }
+      );
+
+      const handleDelete = async () => {
+        await deleteThreeDPRequest({
+          variables: {
+            deleteThreeDpRequestId: threeDPRequest.id,
+          },
+        });
+        if (loading) return <LoaderSpinner />;
+        if (error) {
+          toast({ title: `${error.message}`, variant: "destructive" });
+        } else {
+          toast({ title: "Deleted successfully!" });
+        }
+      };
+
+      return (
+        <>          
+          {user && (user.isAdmin || user.studentID === row.getValue("studentID"))? 
+            <div 
+              className="flex flex-row hover:text-red-400 hover:bg-red-100 bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
+              onClick={handleDelete}
+            >
+              <Trash2 className="p-1.5" size={31} />
+              <div className="my-auto mx-auto text-base text-center pr-1">{t("delete")}</div>
+            </div>
+            :
+            <div 
+              className="flex flex-row dark:text-white text-gray-300 bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
+              onClick={!user?
+                ()=> {
+                  toast({
+                    title: "login to delete request",
+                    variant: "destructive"
+                  })
+                }
+                :
+                ()=> {
+                  toast({
+                    title: "not your request",
+                    variant: "destructive"
+                  })
+                }
+              }
+            >  
+              <Trash2 className="p-1.5" size={31} />
+              <div className="my-auto mx-auto text-base text-center pr-1">{t("delete")}</div>
+            </div>
+          }
+        </>
+        
+        // <DropdownMenu>
+        //   <DropdownMenuTrigger asChild>
+            
+        //     <Button variant="ghost" className="h-8 w-8 p-0">
+        //       <span className="sr-only">Open menu</span>
+        //       <MoreHorizontal className="h-4 w-4" />
+        //     </Button>
+        //   </DropdownMenuTrigger>
+        //   <DropdownMenuContent
+        //     align="center"
+        //     className="bg-black bg-opacity-90 border border-white text-white"
+        //   >
+        //     <DropdownMenuLabel>{t("actions")}</DropdownMenuLabel>
+        //     <DropdownMenuSeparator />
+        //     <DropdownMenuItem
+        //       onClick={handleShare}
+        //       className="hover:text-green-400"
+        //     >
+        //       <Share className="p-1.5" size={31} />
+        //       {t("share")}
+        //     </DropdownMenuItem>
+        //     <DropdownMenuSeparator />
+        //     <DropdownMenuItem
+        //       onClick={handleDelete}
+        //       className="hover:text-red-400"
+        //     >
+        //       <Trash2 className="p-1.5" size={31} />
+        //       {t("delete")}
+        //     </DropdownMenuItem>
+        //   </DropdownMenuContent>
+        // </DropdownMenu>
+      );
+    },
+  },
+];

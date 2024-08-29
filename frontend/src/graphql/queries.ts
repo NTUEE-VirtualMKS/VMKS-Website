@@ -413,14 +413,14 @@ const GET_ALL_THREEDPS_QUERY = gql(`
   query GetAllThreeDPs($cursor: String, $limit: Int) {
     GetAllThreeDPs(cursor: $cursor, limit: $limit) {
       threeDPs {
-        broken
-        description
         id
         name
-        photoLink
         position
+        description
+        photoLink
         tutorialLink
-        waitingId
+        threeDPRequestIds
+        broken
       }
       cursor
     }
@@ -436,10 +436,10 @@ const GET_THREEDP_BY_ID_QUERY = gql(`
       description
       photoLink
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
     }
-  }  
+  }
 `);
 
 // const SEARCH_THREEDP_BY_CATEGORY_QUERY = gql(`
@@ -468,8 +468,48 @@ const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
       description
       photoLink
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
+    }
+  }
+`);
+
+//ThreeDPRequest
+const GET_ALL_THREE_DP_REQUESTS_QUERY = gql(`
+  query GetAllThreeDPRequests {
+    GetAllThreeDPRequests {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  }
+`);
+const GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY = gql(`
+  query GetThreeDPRequestsByThreeDPId($threeDpId: String!) {
+    GetThreeDPRequestsByThreeDPId(threeDPId: $threeDpId) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  }
+`);
+
+
+const GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY = gql(`
+  query GetThreeDPRequestsByUserId($userId: String!) {
+    GetThreeDPRequestsByUserId(userId: $userId) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
     }
   }
 `);
@@ -961,6 +1001,10 @@ export {
   GET_THREEDP_BY_ID_QUERY,
   // SEARCH_THREEDP_BY_CATEGORY_QUERY,
   SEARCH_THREEDP_BY_POSITION_QUERY,
+  //ThreeDPRequest
+  GET_ALL_THREE_DP_REQUESTS_QUERY,
+  GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
+  GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
   // User
   GET_ALL_USERS_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
