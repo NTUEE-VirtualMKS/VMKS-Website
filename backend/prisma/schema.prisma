@@ -1,3 +1,4 @@
+// TODO: create new models for "notification" and "rate limit"
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["omitApi"]
@@ -9,7 +10,7 @@ datasource db {
 }
 
 model Announcement {
-  id      String    @id @default(uuid()) // TODO: string & uuid()
+  id      String    @id @default(uuid())
   title   String
   date    String
   content String

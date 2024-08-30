@@ -1243,60 +1243,50 @@ const Mutation = {
       isMinister,
     } = args.signUpInput;
 
-    const studentIDExisted = await prisma.user.findFirst({
-      where: {
+    const salt = await bcrypt.genSalt(costFactor);
+    const hashedpassword = await bcrypt.hash(password, salt);
+    const newUser = await prisma.user.create({
+      data: {
+        name: name,
         studentID: studentID,
+        password: hashedpassword,
+        photoLink: photoLink,
+        language: language,
+        threeDPId: null,
+        laserCutAvailable: laserCutAvailable,
+        isAdmin: isAdmin,
+        isMinister: isMinister,
+        toolLikeIds: [],
+        userBorrowToolIds: [],
+        materialLikeIds: [],
+        userBorrowMaterialIds: [],
       },
     });
 
-    if (studentIDExisted !== null) {
-      throw new Error("This student id is already registered!");
-    } else {
-      const salt = await bcrypt.genSalt(costFactor);
-      const hashedpassword = await bcrypt.hash(password, salt);
-      const newUser = await prisma.user.create({
-        data: {
-          name: name,
-          studentID: studentID,
-          password: hashedpassword,
-          photoLink: photoLink,
-          language: language,
-          threeDPId: null,
-          laserCutAvailable: laserCutAvailable,
-          isAdmin: isAdmin,
-          isMinister: isMinister,
-          toolLikeIds: [],
-          userBorrowToolIds: [],
-          materialLikeIds: [],
-          userBorrowMaterialIds: [],
-        },
-      });
-
-      const token = jwt.sign(
-        {
-          id: newUser.id,
-          name: newUser.name,
-          studentID: newUser.studentID,
-          photoLink: newUser.photoLink,
-          language: newUser.language,
-          threeDPId: newUser.threeDPId,
-          laserCutAvailable: newUser.laserCutAvailable,
-          isAdmin: newUser.isAdmin,
-          isMinister: newUser.isMinister,
-          toolLikeIds: newUser.toolLikeIds,
-          userBorrowToolIds: newUser.userBorrowToolIds,
-          materialLikeIds: newUser.materialLikeIds,
-          userBorrowMaterialIds: newUser.userBorrowMaterialIds,
-        },
-        env.JWT_SECRET,
-        {
-          expiresIn: env.JWT_EXPIRES_IN,
-        },
-      );
-
-      pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
-      return { user: newUser, token: token };
-    }
+    const token = jwt.sign(
+      {
+        id: newUser.id,
+        name: newUser.name,
+        studentID: newUser.studentID,
+        photoLink: newUser.photoLink,
+        language: newUser.language,
+        threeDPId: newUser.threeDPId,
+        laserCutAvailable: newUser.laserCutAvailable,
+        isAdmin: newUser.isAdmin,
+        isMinister: newUser.isMinister,
+        toolLikeIds: newUser.toolLikeIds,
+        userBorrowToolIds: newUser.userBorrowToolIds,
+        materialLikeIds: newUser.materialLikeIds,
+        userBorrowMaterialIds: newUser.userBorrowMaterialIds,
+      },
+      env.JWT_SECRET,
+      {
+        expiresIn: env.JWT_EXPIRES_IN,
+      },
+    );
+    pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
+    return { user: newUser, token: token };
+    
   },
 
   // SignupAuthCode
@@ -1307,7 +1297,14 @@ const Mutation = {
   ) => {
     const { studentID, browser, os, time, timeZone, date } =
       args.signupAuthCodeInput;
-
+    const studentIDExisted = await prisma.user.findFirst({
+      where: {
+        studentID: studentID,
+      },
+    });
+    if (studentIDExisted !== null) {
+      throw new Error("This student id is already registered!");
+    }
     const authCode = Math.floor(100000 + Math.random() * 900000).toString();
     const email = `${studentID.toLowerCase()}@ntu.edu.tw`;
     const accountName = env.EMAIL_ACCOUNT_NAME;
