@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "@/contexts/UserContext";
 import ThreeDPList from "@/components/Machine/ThreeDPList"; 
 import ThreeDPImportButton from "@/components/Machine/ThreeDPImportButton";
+import ThreeDPImportButtonByFile from "@/components/Machine/ThreeDPImportButtonByFile";
 function MachinePage() {
-  const { user } = useUser();
   const { t } = useTranslation();
   // const [materials, setMaterials] = useState<MaterialInput[]>([]);
 
@@ -40,12 +38,13 @@ function MachinePage() {
         </div>
 
         <TabsContent value="3DP" className="w-full">
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-          <ThreeDPImportButton/>
-        </div>
-        <div className="mt-2">
-          <ThreeDPList/>
-        </div>  
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <ThreeDPImportButton/>
+            <ThreeDPImportButtonByFile/>
+          </div>
+          <div className="mt-2">
+            <ThreeDPList/>
+          </div>  
         </TabsContent>
         <TabsContent value="others">
           
