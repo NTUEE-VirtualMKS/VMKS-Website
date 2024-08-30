@@ -81,17 +81,25 @@ model Machine {
 model ThreeDP {
   id           String     @id @default(uuid())
   name         String
-  category     String
   position     String
   description  String
   photoLink    String
-  usage        Int
   tutorialLink String
-  waiting      User[]
-  waitingId    String[]
+  threeDPRequest   ThreeDPRequest[]     
+  threeDPRequestIds    String[]
   broken       Boolean
 }
 
+model ThreeDPRequest{
+  id           String     @id @default(uuid())
+  name         String
+  studentID    String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String     @unique
+  threeDP      ThreeDP    @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  threeDPId    String
+  status       String     @default("Processing")
+}
 model User {
   id                    String                 @id @default(uuid())
   name                  String
@@ -99,8 +107,8 @@ model User {
   password              String
   photoLink             String?
   language              String               @default("en")
-  threeDPUse            ThreeDP?             @relation(fields: [threeDPId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  threeDPId             String?
+  threeDPUse            ThreeDPRequest?
+  threeDPId             String?              @unique
   laserCutAvailable     Boolean              @default(false)
   articles              Article[]
   articlesId            String[]

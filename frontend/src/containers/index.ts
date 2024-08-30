@@ -15,6 +15,7 @@ export * from "./MaterialPage";
 export * from "./NotFound";
 export * from "./SettingsPage";
 export * from "./ShoppingCartPage";
+export * from "./ThreeDPDetailPage";
 export * from "./ToolDetailPage";
 export * from "./ToolPage";
 export * from "./TutorialPage";

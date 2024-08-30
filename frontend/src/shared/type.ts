@@ -72,6 +72,18 @@ export type AuthorizedCodeType = {
   updatedAt: string;
 };
 
+export type ThreeDPType = {
+  __typename?: "ThreeDP";
+  id: string;
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  threeDPIds: Array<string | null> | null;
+  broken: boolean;
+}
+
 export type MaterialInput = {
   name: string;
   partName: string | null;
@@ -85,6 +97,22 @@ export type MaterialInput = {
   fee: number | string;
   remain: number | string;
 };
+
+export type ThreeDPInput = {
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  broken: boolean;
+}
+
+export type ThreeDPRequestInput = {
+  name: string;
+  studentID: string;
+  userId: string;
+  threeDPId: string;
+}
 
 export type ToolInput = {
   name: string;
@@ -186,6 +214,17 @@ export type MaterialDetailCardProps = {
   valuable: boolean;
 };
 
+
+export type ThreeDPDetailCardProps = {
+  id: string;
+  name: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  broken: boolean;
+}
+
 export type AnnouncementCardProps = {
   id: string;
   title: string;
@@ -230,6 +269,16 @@ export type UserBorrowMaterialType = {
   borrowDate: string;
   returnDate: string;
 };
+
+export type ThreeDPRequestType = {
+  __typename?: "ThreeDPRequest";
+  id: string;
+  name: string;
+  studentID: string;
+  userId: string;
+  threeDPId: string;
+  status: string;
+}
 
 export type UserAvatarUploaderProps = {
   imgUrl: string;

@@ -1,5 +1,6 @@
 export const toolBaseUrl = "/ToolPage/Tool";
 export const materialBaseUrl = "/MaterialPage/Material";
+export const threedpBaseUrl = "/MachinePage/ThreeDP";
 export const defaultPhotoUrl =
   "https://firebasestorage.googleapis.com/v0/b/vmks-a0293.appspot.com/o/images%2Fuser.png?alt=media&token=5ac30e77-4881-423c-80ba-1e2c148f9a43";
 export const interaction1Zh =

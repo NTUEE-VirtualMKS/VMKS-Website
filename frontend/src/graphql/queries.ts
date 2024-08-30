@@ -415,13 +415,11 @@ const GET_ALL_THREEDPS_QUERY = gql(`
       threeDPs {
         id
         name
-        category
         position
         description
         photoLink
-        usage
         tutorialLink
-        waitingId
+        threeDPRequestIds
         broken
       }
       cursor
@@ -429,36 +427,89 @@ const GET_ALL_THREEDPS_QUERY = gql(`
   }
 `);
 
-const SEARCH_THREEDP_BY_CATEGORY_QUERY = gql(`
-  query SearchThreeDPByCategory($category: String!) {
-    SearchThreeDPByCategory(category: $category) {
+const GET_THREEDP_BY_ID_QUERY = gql(`
+  query GetThreeDPById($getThreeDpByIdId: String!) {
+    GetThreeDPById(id: $getThreeDpByIdId) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
     }
   }
 `);
+
+// const SEARCH_THREEDP_BY_CATEGORY_QUERY = gql(`
+//   query SearchThreeDPByCategory($category: String!) {
+//     SearchThreeDPByCategory(category: $category) {
+//       id
+//       name
+//       category
+//       position
+//       description
+//       photoLink
+//       usage
+//       tutorialLink
+//       waitingId
+//       broken
+//     }
+//   }
+// `);
 
 const SEARCH_THREEDP_BY_POSITION_QUERY = gql(`
   query SearchThreeDPByPosition($position: String!) {
     SearchThreeDPByPosition(position: $position) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
+    }
+  }
+`);
+
+//ThreeDPRequest
+const GET_ALL_THREE_DP_REQUESTS_QUERY = gql(`
+  query GetAllThreeDPRequests {
+    GetAllThreeDPRequests {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  }
+`);
+const GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY = gql(`
+  query GetThreeDPRequestsByThreeDPId($threeDpId: String!) {
+    GetThreeDPRequestsByThreeDPId(threeDPId: $threeDpId) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  }
+`);
+
+
+const GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY = gql(`
+  query GetThreeDPRequestsByUserId($userId: String!) {
+    GetThreeDPRequestsByUserId(userId: $userId) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
     }
   }
 `);
@@ -947,8 +998,13 @@ export {
   SEARCH_MATERIAL_BY_POSITION_QUERY,
   // ThreeDP
   GET_ALL_THREEDPS_QUERY,
-  SEARCH_THREEDP_BY_CATEGORY_QUERY,
+  GET_THREEDP_BY_ID_QUERY,
+  // SEARCH_THREEDP_BY_CATEGORY_QUERY,
   SEARCH_THREEDP_BY_POSITION_QUERY,
+  //ThreeDPRequest
+  GET_ALL_THREE_DP_REQUESTS_QUERY,
+  GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
+  GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
   // User
   GET_ALL_USERS_QUERY,
   SEARCH_USER_BY_NAME_QUERY,
