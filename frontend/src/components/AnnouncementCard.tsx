@@ -54,7 +54,7 @@ function AnnouncementCard({ id, title, content, date }: AnnouncementCardProps) {
       refetchQueries: [{ query: GET_ALL_ANNOUNCEMENTS_QUERY }],
     });
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     await deleteAnnouncement({
       variables: {
         deleteAnnouncementId: id,

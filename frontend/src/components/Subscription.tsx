@@ -1,4 +1,3 @@
-// TODO: unused?
 import { ANNOUNCEMENT_CREATED_SUBSCRIPTION } from "@/graphql";
 import { useSubscription } from "@apollo/client";
 import LoaderSpinner from "./LoaderSpinner";

@@ -1,3 +1,4 @@
+// TODO: add rate limit on editting user profile
 import type { ProfileCardProps } from "@/shared/type";
 import LoaderSpinner from "./LoaderSpinner";
 import { useEffect, useRef, useState } from "react";
@@ -29,6 +30,18 @@ import { useUser } from "@/contexts/UserContext";
 import PasswordInputDialog from "./PasswordInputDialog";
 import UserAvatarUploader from "@/components/UserAvatarUploader";
 import StudentIDCardUploadDialog from "./StudentIDCardUploadDialog";
+import { z } from "zod";
+
+const editProfileInputSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(15, "Name is too long, max 15 characters"),
+  photoLink: z.string().refine((photoLink) => {
+    const url = new URL(photoLink);
+    return url.protocol === "https:";
+  }, "Invalid URL"),
+});
 
 function ProfileCard({
   id,
@@ -70,8 +83,9 @@ function ProfileCard({
 
   const handleEditUser = async () => {
     try {
+      editProfileInputSchema.parse({ name: username, photoLink: imgUrl });
       setEnterPasswordForEdittingUserProfile(false);
-      const updatedUser = await editUser({
+      await editUser({
         variables: {
           editUserId: id,
           userEditInput: {
@@ -88,15 +102,30 @@ function ProfileCard({
         toast({ title: `${error.message}`, variant: "destructive" });
       }
       toast({ title: "User updated successfully!" });
-      login({ studentId, password: pwd, redirect: false });
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      await login({ studentId, password: pwd, redirect: false });
+      // localStorage.setItem("user", JSON.stringify(updatedUser));
       localStorage.setItem("username", JSON.stringify(username));
       localStorage.setItem("imgUrl", JSON.stringify(imgUrl));
       localStorage.setItem("language", userLanguage);
       setVisible(false);
     } catch (error) {
-      toast({ title: `${error}`.split(":")[1], variant: "destructive" });
+      if (error instanceof z.ZodError) {
+        const errorMessage = error.errors.map((e) => e.message).join(". ");
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: `${error}`.split(":")[1],
+          variant: "destructive",
+        });
+      }
       handleCancel();
+      setUsername(name);
+      setImgUrl(photoLink);
     }
     setPwd("");
   };
@@ -123,7 +152,7 @@ function ProfileCard({
       }
       toast({ title: "User role updated successfully!" });
       setAdmin(true);
-      login({ studentId, password: pwd, redirect: false });
+      await login({ studentId, password: pwd, redirect: false });
     } catch (error) {
       toast({ title: `${error}`.split(":")[1], variant: "destructive" });
       handleCancel();
@@ -134,6 +163,7 @@ function ProfileCard({
 
   const handleCancel = () => {
     setVisible(false);
+    setEnterPasswordForEdittingUserProfile(false);
     setPwd("");
     const storedUsername = localStorage.getItem("username");
     const storedImgUrl = localStorage.getItem("imgUrl");

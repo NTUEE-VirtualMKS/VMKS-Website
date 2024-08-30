@@ -10,7 +10,7 @@ const Query = {
   // Announcement
   GetAllAnnouncements: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -69,7 +69,7 @@ const Query = {
   // Tool
   GetAllTools: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -202,7 +202,7 @@ const Query = {
   // DisposableMaterial
   GetAllDisposableMaterials: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -427,7 +427,7 @@ const Query = {
   // Material
   GetAllMaterials: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -551,7 +551,7 @@ const Query = {
   // ThreeDP
   GetAllThreeDPs: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -637,7 +637,7 @@ const Query = {
   // User
   GetAllUsers: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -719,7 +719,7 @@ const Query = {
   // Article
   GetAllArticles: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -1377,7 +1377,7 @@ const Query = {
       },
     });
 
-    if (!signupAuthCode) throw new Error("Invalid code");
+    if (!signupAuthCode) throw new Error("Invalid auth code");
     return true;
   },
 };

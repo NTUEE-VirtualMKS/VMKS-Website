@@ -40,6 +40,9 @@ const authLink = setContext((_, { headers }) => {
 const wsLink = new GraphQLWsLink(
   createClient({
     url: "ws://localhost:5000/",
+    connectionParams: {
+      Authorization: localStorage.getItem("token"),
+    },
   })
 );
 

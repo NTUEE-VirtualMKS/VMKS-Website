@@ -2,11 +2,9 @@ import { useUser } from "@/contexts/UserContext";
 import ProfileCard from "@/components/ProfileCard";
 import { useTranslation } from "react-i18next";
 import { UserRound } from "lucide-react";
-import { useParams } from "react-router-dom";
 
 function UserProfilePage() {
   const { user } = useUser();
-  const { id } = useParams();
   const { t } = useTranslation();
   return (
     <section className="flex flex-col w-10/12 mx-auto justify-start mt-20">
@@ -16,7 +14,7 @@ function UserProfilePage() {
       </h1>
       <div className="flex flex-row gap-x-5">
         <ProfileCard
-          id={id!}
+          id={user?.id!}
           name={user?.name!}
           studentID={user?.studentID!}
           password={user?.password!}

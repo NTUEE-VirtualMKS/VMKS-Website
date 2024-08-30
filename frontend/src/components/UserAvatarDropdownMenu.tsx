@@ -99,7 +99,6 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
                 English
               </Label>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <RadioGroupItem
                 value="zh"
@@ -114,12 +113,17 @@ function UserAvatarDropdownMenu({ children }: { children: React.ReactNode }) {
             <DropdownMenuSeparator />
           </RadioGroup>
         )}
-        <DropdownMenuItem
-          className="text-base"
-          onClick={() => navigate("/FeedbackPage")}
-        >
+        <DropdownMenuItem className="text-base">
           <MessageSquareWarning className="mr-2 h-5 w-5" />
-          <span>{t("feedback")}</span>
+          <span>
+            <a
+              href="https://github.com/NTUEE-VirtualMKS/VMKS-Website/issues/new/choose"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("feedback")}
+            </a>
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
