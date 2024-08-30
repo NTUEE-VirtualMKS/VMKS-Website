@@ -13,6 +13,7 @@ export * from "./MapPage";
 export * from "./MaterialDetailPage";
 export * from "./MaterialPage";
 export * from "./NotFound";
+export * from "./OtherMachineDetailPage";
 export * from "./SettingsPage";
 export * from "./ShoppingCartPage";
 export * from "./ThreeDPDetailPage";

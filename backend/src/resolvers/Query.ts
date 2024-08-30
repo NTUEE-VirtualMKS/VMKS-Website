@@ -345,6 +345,17 @@ const Query = {
     };
   },
 
+  GetMachineById: async (_parents, args: { id: string }, _contexts) => {
+    const id = args.id;
+    const machine = await prisma.machine.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!machine) throw new Error("Machine not found!");
+    return machine;
+  },
+
   SearchMachineByCategory: async (
     _parents,
     args: {

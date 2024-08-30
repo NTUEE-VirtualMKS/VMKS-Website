@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 import ThreeDPList from "@/components/Machine/ThreeDPList"; 
 import ThreeDPImportButton from "@/components/Machine/ThreeDPImportButton";
 import ThreeDPImportButtonByFile from "@/components/Machine/ThreeDPImportButtonByFile";
+import OtherMachineList from "@/components/Machine/OtherMachineList";
+import OtherMachineImportButton from "@/components/Machine/OtherMachineImportButton";
+import OtherMachineImportButtonByFile from "@/components/Machine/OtherMachineImportButtonByFile";
 function MachinePage() {
   const { t } = useTranslation();
   // const [materials, setMaterials] = useState<MaterialInput[]>([]);
@@ -47,7 +50,13 @@ function MachinePage() {
           </div>  
         </TabsContent>
         <TabsContent value="others">
-          
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <OtherMachineImportButton/>
+            <OtherMachineImportButtonByFile/>
+          </div>
+          <div className="mt-2">
+            <OtherMachineList/>
+          </div>
         </TabsContent>
       </Tabs>
         

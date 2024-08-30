@@ -1,3 +1,4 @@
+import { StringFormat } from "firebase/storage";
 import { RefObject } from "react";
 
 export type AnnouncementType = {
@@ -84,6 +85,19 @@ export type ThreeDPType = {
   broken: boolean;
 }
 
+export type OtherMachineType = {
+  __typename?: "OtherMachine";
+  id: string;
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  usage: number;
+}
+
 export type MaterialInput = {
   name: string;
   partName: string | null;
@@ -97,6 +111,16 @@ export type MaterialInput = {
   fee: number | string;
   remain: number | string;
 };
+
+export type OtherMachineInput = {
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+}
 
 export type ThreeDPInput = {
   name: string;
@@ -223,6 +247,17 @@ export type ThreeDPDetailCardProps = {
   photoLink: string;
   tutorialLink: string;
   broken: boolean;
+}
+
+export type OtherMachineDetailCardProps = {
+  id: string;
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
 }
 
 export type AnnouncementCardProps = {
