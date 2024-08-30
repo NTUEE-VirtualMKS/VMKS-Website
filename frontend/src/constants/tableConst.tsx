@@ -18,18 +18,25 @@ import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
 import {
+  // tool
   DELETE_USER_BORROW_TOOL_MUTATION,
   EDIT_USER_BORROW_TOOL_STATUS_MUTATION,
   GET_USER_BORROW_TOOLS_BY_STATUS_AND_USER_ID_QUERY,
   ADD_USER_BORROW_TOOL_MUTATION,
   GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
+  // material
   DELETE_USER_BORROW_MATERIAL_MUTATION,
   GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
   GET_ALL_USER_BORROW_MATERIALS_BY_STATUS_QUERY,
   EDIT_USER_BORROW_MATERIAL_STATUS_MUTATION,
   ADD_USER_BORROW_MATERIAL_MUTATION,
+  // threedp
   DELETE_THREE_DP_REQUEST_MUTATION,
-  EDIT_THREE_DP_REQUEST_STATUS_MUTATION
+  EDIT_THREE_DP_REQUEST_STATUS_MUTATION,
+  GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
+  GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
+  // user
+  GET_USER_BY_STUDENT_ID_QUERY
 } from "@/graphql";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import {
@@ -38,7 +45,6 @@ import {
   materialBaseUrl,
   returnedStatus,
   toolBaseUrl,
-  threedpBaseUrl,
   unborrowedStatus,
   unreturnedStatus,
 } from "@/constants/index";
@@ -55,6 +61,8 @@ const determineTextColor = (status: string) => {
       return "text-red-500 hover:text-red-500";
     case "Not Returned Yet":
       return "text-zinc-400 hover:text-zinc-400";
+    case "Pass":
+      return "text-green-500 hover:text-green-500 dark:text-green-400 dark:hover:text-green-400";
   }
 };
 
@@ -1800,18 +1808,7 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
           loading: editThreeDPRequestStatusLoading,
           error: editThreeDPRequestStatusError,
         },
-      ] = useMutation(EDIT_THREE_DP_REQUEST_STATUS_MUTATION, {
-        // refetchQueries: [
-        //   {
-        //     query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
-        //     variables: { status: allUsersBorrowingStatus },
-        //   },
-        //   {
-        //     query: GET_ALL_USER_BORROW_TOOLS_BY_STATUS_QUERY,
-        //     variables: { status: unreturnedStatus },
-        //   },
-        // ],
-      });
+      ] = useMutation( EDIT_THREE_DP_REQUEST_STATUS_MUTATION );
 
       const handleStatusChange = async (status: string) => {
         setStatus(status);
@@ -1908,26 +1905,31 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
       const { user } = useUser();
       const { toast } = useToast();
       const threeDPRequest = row.original;
-      const handleShare = () => {
-        navigator.clipboard.writeText(
-          `${window.location.origin}${threedpBaseUrl}/${threeDPRequest.threeDPId}` // TODO: change to deployed link
-        );
-        toast({ title: "Link copied to clipboard!", variant: "share" });
-      };
 
       const { t } = useTranslation();
       const [deleteThreeDPRequest, { loading, error }] = useMutation(
         DELETE_THREE_DP_REQUEST_MUTATION,
         {
-          // refetchQueries: [
-          //   {
-          //     query: GET_USER_BORROW_MATERIALS_BY_STATUS_AND_USER_ID_QUERY,
-          //     variables: {
-          //       userId: userBorrowMaterial.userId,
-          //       status: unborrowedStatus,
-          //     },
-          //   },
-          // ],
+          refetchQueries: [
+            {
+              query: GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
+              variables: {
+                userId: threeDPRequest.userId,
+              },
+            },
+            {
+              query: GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
+              variables: {
+                threeDpId: threeDPRequest.threeDPId,
+              },
+            },
+            {
+              query: GET_USER_BY_STUDENT_ID_QUERY,
+              variables: {
+                studentId: user?.studentID,
+              },
+            },
+          ],
         }
       );
 
@@ -1949,7 +1951,7 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
         <>          
           {user && (user.isAdmin || user.studentID === row.getValue("studentID"))? 
             <div 
-              className="flex flex-row hover:text-red-400 hover:bg-red-100 bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
+              className="flex flex-row hover:text-red-500 hover:bg-red-100 hover:bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
               onClick={handleDelete}
             >
               <Trash2 className="p-1.5" size={31} />
@@ -1958,19 +1960,12 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
             :
             <div 
               className="flex flex-row dark:text-white text-gray-300 bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
-              onClick={!user?
+              onClick={
                 ()=> {
-                  toast({
-                    title: "login to delete request",
-                    variant: "destructive"
-                  })
-                }
-                :
-                ()=> {
-                  toast({
-                    title: "not your request",
-                    variant: "destructive"
-                  })
+                  !user?
+                    toast({ title: "Please login to delete request" })
+                  :
+                    toast({ title: "It's not your request" })
                 }
               }
             >  

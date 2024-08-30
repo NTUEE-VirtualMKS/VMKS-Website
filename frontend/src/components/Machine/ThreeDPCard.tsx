@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import type { ThreeDPType } from "@/shared/type.ts";
 import {
   DELETE_THREE_DP_MUTATION,
+  GET_ALL_THREEDPS_QUERY,
 } from "@/graphql";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { useMutation } from "@apollo/client";
 import { Trash2, Share, Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -27,31 +27,31 @@ import {
 } from "@/components/ui/alert-dialog";
 import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
-import LoaderSpinner from "../LoaderSpinner";
-import {
-  borrowingStatus,
-  threedpBaseUrl,
-  unborrowedStatus,
-} from "@/constants/index";
+import { threedpBaseUrl } from "@/constants/index";
 
 function ThreeDPCard({
   threedp,
-  search,
 }: {
   threedp: ThreeDPType;
-  search: string;
 }) {
   const { toast } = useToast();
   const { user } = useUser();
   const { t } = useTranslation();
+  const cursor = null;
+  const limit = 12;
 
   const [deleteThreeDP, { loading, error }] = useMutation(
-    DELETE_THREE_DP_MUTATION,
-    {
+    DELETE_THREE_DP_MUTATION, {
       refetchQueries: [
+        {
+          query: GET_ALL_THREEDPS_QUERY,
+          variables: {
+            cursor: cursor,
+            limit: limit
+          }
+        }
       ],
-    }
-  );
+    });
 
   const handleDelete = async () => {
     await deleteThreeDP({

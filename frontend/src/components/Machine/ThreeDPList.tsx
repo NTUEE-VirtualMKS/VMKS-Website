@@ -97,7 +97,7 @@ function ThreeDPList() {
       <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
         {threeDPs && threeDPs.length !== 0 ? (
           threeDPs.map((threeDP: ThreeDPType, index: number) => {
-            return <ThreeDPCard key={index} threedp={threeDP} search="" />;
+            return <ThreeDPCard key={index} threedp={threeDP} />;
           })
         ) : (
           <Suggestion search="" name="Material" />

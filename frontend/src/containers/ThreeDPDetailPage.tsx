@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import RouteBar from "@/components/MaterialAndTool/RouteBar.tsx";
 import { useQuery } from "@apollo/client";
 import { GET_THREEDP_BY_ID_QUERY } from "@/graphql/queries";
 import LoaderSpinner from "@/components/LoaderSpinner.tsx";

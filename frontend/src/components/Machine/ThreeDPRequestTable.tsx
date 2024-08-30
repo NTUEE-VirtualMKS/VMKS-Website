@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs } from "../ui/tabs";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client";
 import ThreeDPRequestTableTabsContent from "./ThreeDPRequestTableTabsContent";

@@ -690,14 +690,7 @@ const Mutation = {
       throw new Error("ThreeDP Not Found");
     }
 
-    // checks if any user is linked to this threeDP instead of checking if the
-    // waiting line is empty is to minimize and simplify input variables
-    const findAffiliatedUser = await prisma.user.findMany({
-      where: {
-        threeDPId: id,
-      },
-    });
-    if (findAffiliatedUser.length !== 0) {
+    if (findThreeDP.threeDPRequestIds.length !== 0) {
       throw new Error("There are still people waiting in line");
     }
 

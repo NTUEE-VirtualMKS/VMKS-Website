@@ -21,8 +21,6 @@ import { useState } from "react";
 import { threeDPRequestColumns } from "@/constants/tableConst";
 import { useTranslation } from "react-i18next";
 import type { ThreeDPRequestType } from "@/shared/type";
-import { User } from "lucide-react";
-import { useUser } from "@/contexts/UserContext";
 function ThreeDPRequestTableTabsContent({
   threeDPRequestData,
 }: {
@@ -33,7 +31,6 @@ function ThreeDPRequestTableTabsContent({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const { user } = useUser();
   const threeDPRequestTable = useReactTable({
     data: threeDPRequestData,
     columns: threeDPRequestColumns,

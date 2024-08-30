@@ -33,12 +33,21 @@ function ThreeDPImportButton() {
 	const [position, setPosition] = useState("");
 	const [tutorialLink, setTutorialLink] = useState<string>("");
 	const [broken, setBroken] = useState(false);
+	const cursor = null;
+  const limit = 12;
 
-	const [add3DP, { loading, error }] = useMutation(ADD_THREE_DP_MUTATION,{
-    refetchQueries:[
-      { query: GET_ALL_THREEDPS_QUERY },
-    ]
-  });
+	const [add3DP, { loading, error }] = useMutation(
+		ADD_THREE_DP_MUTATION, {
+			refetchQueries: [
+        {
+          query: GET_ALL_THREEDPS_QUERY,
+          variables: {
+            cursor: cursor,
+            limit: limit
+          }
+        },
+			]
+  	});
 
   const handleAdd3DP = async ({
     name,
