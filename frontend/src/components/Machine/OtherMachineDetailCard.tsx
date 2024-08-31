@@ -7,10 +7,7 @@ import {
 import { Pencil, Share } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import {
-  EDIT_MACHINE_MUTATION,
-  GET_ALL_MACHINES_QUERY
-} from "@/graphql";
+import { EDIT_MACHINE_MUTATION, GET_ALL_MACHINES_QUERY } from "@/graphql";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { OtherMachineInput } from "@/shared/type";
@@ -45,8 +42,8 @@ function OtherMachineDetailCard({
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [machineName, setMachineName] = useState(name);
-	const [machinePartName, setMachinePartName] = useState(partName);
-	const [machineCategory, setMachineCategory] = useState(category);
+  const [machinePartName, setMachinePartName] = useState(partName);
+  const [machineCategory, setMachineCategory] = useState(category);
   const [machineDescription, setMachineDescription] = useState(description);
   const [machinePhotoLink, setMachinePhotoLink] = useState(photoLink);
   const [machinePosition, setMachinePosition] = useState(position);
@@ -115,7 +112,7 @@ function OtherMachineDetailCard({
           variant: "destructive",
         });
       });
-  };  
+  };
 
   return (
     <div className="flex flex-col gap-2 p-3 dark:bg-[#15171C] bg-white w-10/12 mx-auto rounded-lg my-5 border dark:border-[#444444] shadow-md">
@@ -126,7 +123,6 @@ function OtherMachineDetailCard({
           className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
         />
         <div className="w-9/12 flex flex-col ml-5">
-
           <h1 className=" dark:text-white text-4xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl mt-2">
             {machineName}
           </h1>
@@ -146,7 +142,7 @@ function OtherMachineDetailCard({
           <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("description")}: {machineDescription}
           </p>
-          
+
           <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
             {t("position")}: {machinePosition}
           </p>
@@ -160,7 +156,7 @@ function OtherMachineDetailCard({
             >
               {t("tutorialLink")}
             </a>
-          )}            
+          )}
         </div>
       </div>
       <div className="flex flex-row-reverse gap-1.5 mb-1 mx-1">
@@ -231,7 +227,7 @@ function OtherMachineDetailCard({
                     placeholder="category"
                     className="col-span-3 input-class"
                     value={machineCategory}
-                    onChange={(e) =>setMachineCategory(e.target.value)}
+                    onChange={(e) => setMachineCategory(e.target.value)}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -327,7 +323,7 @@ function OtherMachineDetailCard({
               <p className="text-white text-xs">{t("share")}</p>
             </TooltipContent>
           </Tooltip>
-        </div>        
+        </div>
       </div>
     </div>
   );

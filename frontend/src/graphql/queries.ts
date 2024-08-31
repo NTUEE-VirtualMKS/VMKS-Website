@@ -265,7 +265,7 @@ const GET_MACHINE_BY_ID_QUERY = gql(`
       tutorialLink
     }
   }
-`)
+`);
 
 const SEARCH_MACHINE_BY_CATEGORY_QUERY = gql(`
   query SearchMachineByCategory($category: String!) {
@@ -515,7 +515,6 @@ const GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY = gql(`
     }
   }
 `);
-
 
 const GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY = gql(`
   query GetThreeDPRequestsByUserId($userId: String!) {

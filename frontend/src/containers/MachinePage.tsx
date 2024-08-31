@@ -1,8 +1,12 @@
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../components/ui/tabs";
 import { Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import ThreeDPList from "@/components/Machine/ThreeDPList"; 
+import ThreeDPList from "@/components/Machine/ThreeDPList";
 import ThreeDPImportButton from "@/components/Machine/ThreeDPImportButton";
 import ThreeDPImportButtonByFile from "@/components/Machine/ThreeDPImportButtonByFile";
 import OtherMachineList from "@/components/Machine/OtherMachineList";
@@ -14,7 +18,6 @@ function MachinePage() {
 
   return (
     <div className="w-10/12 flex flex-col mx-auto mt-20 mb-8 dark:text-white">
-      
       <h1 className="dark:text-white p-1 flex flex-row items-center gap-2">
         <Bot className="dark:text-white" size={35} />
         {t("allMachines")}
@@ -42,25 +45,23 @@ function MachinePage() {
 
         <TabsContent value="3DP" className="w-full">
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <ThreeDPImportButton/>
-            <ThreeDPImportButtonByFile/>
+            <ThreeDPImportButton />
+            <ThreeDPImportButtonByFile />
           </div>
           <div className="mt-2">
-            <ThreeDPList/>
-          </div>  
+            <ThreeDPList />
+          </div>
         </TabsContent>
         <TabsContent value="others">
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <OtherMachineImportButton/>
-            <OtherMachineImportButtonByFile/>
+            <OtherMachineImportButton />
+            <OtherMachineImportButtonByFile />
           </div>
           <div className="mt-2">
-            <OtherMachineList/>
+            <OtherMachineList />
           </div>
         </TabsContent>
       </Tabs>
-        
-      
     </div>
   );
 }

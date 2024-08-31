@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import type { OtherMachineType } from "@/shared/type.ts";
-import {
-  DELETE_MACHINE_MUTATION,
-  GET_ALL_MACHINES_QUERY,
-} from "@/graphql";
+import { DELETE_MACHINE_MUTATION, GET_ALL_MACHINES_QUERY } from "@/graphql";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
 import { useMutation } from "@apollo/client";
@@ -40,17 +37,19 @@ function OtherMachineCard({
   const limit = 12;
 
   const [deleteOtherMachine, { loading, error }] = useMutation(
-    DELETE_MACHINE_MUTATION, {
+    DELETE_MACHINE_MUTATION,
+    {
       refetchQueries: [
         {
           query: GET_ALL_MACHINES_QUERY,
           variables: {
             cursor: cursor,
-            limit: limit
-          }
-        }
+            limit: limit,
+          },
+        },
       ],
-    });
+    }
+  );
 
   const handleDelete = async () => {
     await deleteOtherMachine({
@@ -67,7 +66,7 @@ function OtherMachineCard({
   };
 
   // Load the star state from local storage
-  
+
   const handleShare = () => {
     const shareableLink = `${window.location.origin}${OtherMachineBaseUrl}/${otherMachine.id}`;
     navigator.clipboard
@@ -98,11 +97,10 @@ function OtherMachineCard({
           />
           <div className="ml-3 mt-2">
             <h2 className="dark:text-white text-24">{otherMachine.name}</h2>
-            
+
             <p className="dark:text-white text-16">
               {t("position")}: {otherMachine.position}
             </p>
-            
           </div>
         </Link>
         <div className="flex flex-row mt-1 justify-center gap-2">
@@ -177,7 +175,6 @@ function OtherMachineCard({
               </div>
             </div>
           </Tooltip>
-
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_ALL_THREEDPS_QUERY } from "@/graphql/queries";
 import type { ThreeDPType } from "@/shared/type.ts";
-import ThreeDPCard from "./ThreeDPCard"; 
+import ThreeDPCard from "./ThreeDPCard";
 import Suggestion from "../Suggestion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Loader } from "lucide-react";
@@ -16,15 +16,12 @@ function ThreeDPList() {
   const limit = 12;
   const observerTarget = useRef(null);
 
-  const { data, loading, error, fetchMore } = useQuery(
-    GET_ALL_THREEDPS_QUERY,
-    {
-      variables: {
-        cursor,
-        limit,
-      },
-    }
-  );
+  const { data, loading, error, fetchMore } = useQuery(GET_ALL_THREEDPS_QUERY, {
+    variables: {
+      cursor,
+      limit,
+    },
+  });
 
   const threeDPs = data?.GetAllThreeDPs?.threeDPs as ThreeDPType[];
   const nextCursor = data?.GetAllThreeDPs?.cursor as string | null;

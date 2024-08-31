@@ -8,11 +8,8 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import {
-  ADD_MACHINE_MUTATION,
-  GET_ALL_MACHINES_QUERY,
-} from "@/graphql";
-import { useUser } from "@/contexts/UserContext"; 
+import { ADD_MACHINE_MUTATION, GET_ALL_MACHINES_QUERY } from "@/graphql";
+import { useUser } from "@/contexts/UserContext";
 
 function OtherMachineImportButtonByFile() {
   const { t } = useTranslation();
@@ -21,23 +18,25 @@ function OtherMachineImportButtonByFile() {
   const [file, setFile] = useState<File | null>(null);
   const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
   const [otherMachines, setOtherMachines] = useState<OtherMachineInput[]>([]);
-	const cursor = null;
+  const cursor = null;
   const limit = 12;
   const { user } = useUser();
   const { toast } = useToast();
 
   const [addOtherMachine, { loading, error }] = useMutation(
-		ADD_MACHINE_MUTATION, {
-			refetchQueries: [
+    ADD_MACHINE_MUTATION,
+    {
+      refetchQueries: [
         {
           query: GET_ALL_MACHINES_QUERY,
           variables: {
             cursor: cursor,
-            limit: limit
-          }
+            limit: limit,
+          },
         },
-			]
-  	});
+      ],
+    }
+  );
 
   const handleAddOtherMachines = async (otherMachines: OtherMachineInput[]) => {
     setIsFileUploadLoading(true);

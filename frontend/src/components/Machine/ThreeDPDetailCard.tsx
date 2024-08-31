@@ -14,7 +14,7 @@ import {
   ADD_THREE_DP_REQUEST_MUTATION,
   GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
   GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
-  GET_USER_BY_STUDENT_ID_QUERY
+  GET_USER_BY_STUDENT_ID_QUERY,
 } from "@/graphql";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
@@ -56,19 +56,21 @@ function ThreeDPDetailCard({
   const [threedpPosition, setThreedpPosition] = useState(position);
   const [threedpTutorialLink, setThreedpTutorialLink] = useState(tutorialLink!);
   const [threedpBroken, setThreedpBroken] = useState(broken);
-  const [editThreeDP, { loading: editLoading, error: editError }] =
-    useMutation(EDIT_THREE_DP_MUTATION, {
+  const [editThreeDP, { loading: editLoading, error: editError }] = useMutation(
+    EDIT_THREE_DP_MUTATION,
+    {
       refetchQueries: [
         {
           query: GET_THREEDP_BY_ID_QUERY,
           variables: { getThreeDpByIdId: id },
         },
       ],
-    });
+    }
+  );
 
-  const [addThreeDPRequest, {loading: addloading, error: adderror}] = 
+  const [addThreeDPRequest, { loading: addloading, error: adderror }] =
     useMutation(ADD_THREE_DP_REQUEST_MUTATION, {
-      refetchQueries:[
+      refetchQueries: [
         {
           query: GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
           variables: {
@@ -79,15 +81,15 @@ function ThreeDPDetailCard({
           query: GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
           variables: {
             threeDpId: id,
-          }
+          },
         },
         {
           query: GET_USER_BY_STUDENT_ID_QUERY,
           variables: {
             studentId: user?.studentID,
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
   const handleReserve = async ({
@@ -122,7 +124,6 @@ function ThreeDPDetailCard({
       localStorage.setItem("threeDPId", threeDPId);
     }
   };
-  
 
   const handleUpdate = async ({
     name,
@@ -175,7 +176,7 @@ function ThreeDPDetailCard({
           variant: "destructive",
         });
       });
-  };  
+  };
 
   return (
     <div className="flex flex-col gap-2 p-3 dark:bg-[#15171C] bg-white w-10/12 mx-auto rounded-lg my-5 border dark:border-[#444444] shadow-md">
@@ -190,11 +191,10 @@ function ThreeDPDetailCard({
             className="w-11/12 mt-3 mx-auto bg-white sm:mx-auto sm:w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12"
           />
           <div className="w-9/12 flex flex-col ml-5">
-
             <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
               {t("description")}: {threedpDescription}
             </p>
-            
+
             <p className=" dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
               {t("position")}: {threedpPosition}
             </p>
@@ -210,13 +210,15 @@ function ThreeDPDetailCard({
               </a>
             )}
 
-            {broken && <p className=" text-red-500 dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
-              {t("broken")}
-            </p>}
+            {broken && (
+              <p className=" text-red-500 dark:text-white text-base sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                {t("broken")}
+              </p>
+            )}
           </div>
         </div>
         <div className="w-8/12">
-          <ThreeDPRequestTable id={id}/>
+          <ThreeDPRequestTable id={id} />
         </div>
       </div>
       <div className="flex flex-row-reverse gap-1.5 mb-1 mx-1">
@@ -338,7 +340,7 @@ function ThreeDPDetailCard({
                       photoLink: threedpPhotoLink,
                       position: threedpPosition,
                       tutorialLink: threedpTutorialLink,
-                      broken: threedpBroken
+                      broken: threedpBroken,
                     })
                   }
                   className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
@@ -372,18 +374,19 @@ function ThreeDPDetailCard({
             </TooltipContent>
           </Tooltip>
         </div>
-        <div className={cn(
-          "w-10 h-10 rounded-full p-2 dark:text-white",
-          (user && localStorage.getItem("threeDPId") === "" && !broken)? 
-              "hover:text-orange-500 dark:hover:text-orange-300 hover:bg-orange-300 hover:bg-opacity-20 bg-transparent"
-            :
-              "dark:text-white text-gray-300 dark:text-opacity-50 bg-transparent",
-          "flex justify-center items-center cursor-pointer"
-        )}>
-          <Tooltip>              
-            {(user && localStorage.getItem("threeDPId") === "" && !broken)? 
-              <TooltipTrigger 
-                asChild 
+        <div
+          className={cn(
+            "w-10 h-10 rounded-full p-2 dark:text-white",
+            user && localStorage.getItem("threeDPId") === "" && !broken
+              ? "hover:text-orange-500 dark:hover:text-orange-300 hover:bg-orange-300 hover:bg-opacity-20 bg-transparent"
+              : "dark:text-white text-gray-300 dark:text-opacity-50 bg-transparent",
+            "flex justify-center items-center cursor-pointer"
+          )}
+        >
+          <Tooltip>
+            {user && localStorage.getItem("threeDPId") === "" && !broken ? (
+              <TooltipTrigger
+                asChild
                 onClick={() =>
                   handleReserve({
                     name: user?.name,
@@ -394,25 +397,22 @@ function ThreeDPDetailCard({
                 }
                 className="transform active:scale-90 transition-transform duration-200 "
               >
-                <Calendar size={33}/>
+                <Calendar size={33} />
               </TooltipTrigger>
-              :
+            ) : (
               <TooltipTrigger
-                onClick={() =>{
-                    user?
-                      broken?
-                        toast({ title: "Machine is broken" })
-                      :  
-                        toast({ title: "You've already reserved" })
-                    :
-                      toast({ title: "Please log in to reserve threeDP" })
-                  }
-                }
+                onClick={() => {
+                  user
+                    ? broken
+                      ? toast({ title: "Machine is broken" })
+                      : toast({ title: "You've already reserved" })
+                    : toast({ title: "Please log in to reserve threeDP" });
+                }}
                 className="transform active:scale-90 transition-transform duration-200 "
               >
                 <Calendar size={26} />
               </TooltipTrigger>
-            }
+            )}
             <TooltipContent
               className="dark:bg-gray-500 bg-black dark:bg-opacity-95 bg-opacity-70"
               side="bottom"
@@ -421,7 +421,6 @@ function ThreeDPDetailCard({
             </TooltipContent>
           </Tooltip>
         </div>
-        
       </div>
     </div>
   );

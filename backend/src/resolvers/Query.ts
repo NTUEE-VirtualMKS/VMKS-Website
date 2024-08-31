@@ -682,7 +682,7 @@ const Query = {
     if (!threeDPRequest) throw new Error("threeDP request not found!");
     return threeDPRequest;
   },
-  
+
   GetThreeDPRequestsByUserId: async (
     _parents,
     args: { userId: string },
@@ -737,9 +737,7 @@ const Query = {
     return {
       users: allUsers,
       cursor:
-        allUsers.length === limit
-          ? allUsers[allUsers.length - 1].id
-          : null,
+        allUsers.length === limit ? allUsers[allUsers.length - 1].id : null,
     };
   },
 
@@ -834,7 +832,7 @@ const Query = {
   },
 
   // LogIn
-  LogIn: async (_parents, args: { logInInput: LogInInput }, _context) => {
+  LogIn: async (_parents, args: { logInInput: LogInInput }, _contexts) => {
     const { studentID, password, browser, os, time, timeZone, date, redirect } =
       args.logInInput;
 

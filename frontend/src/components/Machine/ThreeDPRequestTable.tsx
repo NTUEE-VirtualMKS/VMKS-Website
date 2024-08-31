@@ -6,14 +6,16 @@ import { GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY } from "@/graphql";
 import { ThreeDPRequestType } from "@/shared/type";
 import LoaderSpinner from "../LoaderSpinner";
 import { useToast } from "../ui/use-toast";
-function ThreeDPRequestTable({id}:{ id: string}) {
+function ThreeDPRequestTable({ id }: { id: string }) {
   const { t } = useTranslation();
   const { toast } = useToast();
 
-  const {data, loading, error} = useQuery(GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
-    {variables: {threeDpId: id}}
+  const { data, loading, error } = useQuery(
+    GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
+    { variables: { threeDpId: id } }
   );
-  const threeDPRequests = (data?.GetThreeDPRequestsByThreeDPId as ThreeDPRequestType[]) || [];
+  const threeDPRequests =
+    (data?.GetThreeDPRequestsByThreeDPId as ThreeDPRequestType[]) || [];
   if (loading) return <LoaderSpinner />;
   if (error) {
     toast({
@@ -31,9 +33,10 @@ function ThreeDPRequestTable({id}:{ id: string}) {
           </p>
         </section>
         <div>
-          <ThreeDPRequestTableTabsContent threeDPRequestData={threeDPRequests}/>
+          <ThreeDPRequestTableTabsContent
+            threeDPRequestData={threeDPRequests}
+          />
         </div>
-        
       </Tabs>
     </div>
   );

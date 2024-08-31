@@ -83,7 +83,7 @@ export type ThreeDPType = {
   tutorialLink: string;
   threeDPRequestIds: Array<string | null> | null;
   broken: boolean;
-}
+};
 
 export type OtherMachineType = {
   __typename?: "OtherMachine";
@@ -96,7 +96,7 @@ export type OtherMachineType = {
   photoLink: string;
   tutorialLink: string;
   usage: number;
-}
+};
 
 export type MaterialInput = {
   name: string;
@@ -120,7 +120,7 @@ export type OtherMachineInput = {
   description: string;
   photoLink: string;
   tutorialLink: string;
-}
+};
 
 export type ThreeDPInput = {
   name: string;
@@ -129,14 +129,14 @@ export type ThreeDPInput = {
   photoLink: string;
   tutorialLink: string;
   broken: boolean;
-}
+};
 
 export type ThreeDPRequestInput = {
   name: string;
   studentID: string;
   userId: string;
   threeDPId: string;
-}
+};
 
 export type ToolInput = {
   name: string;
@@ -238,7 +238,6 @@ export type MaterialDetailCardProps = {
   valuable: boolean;
 };
 
-
 export type ThreeDPDetailCardProps = {
   id: string;
   name: string;
@@ -247,7 +246,7 @@ export type ThreeDPDetailCardProps = {
   photoLink: string;
   tutorialLink: string;
   broken: boolean;
-}
+};
 
 export type OtherMachineDetailCardProps = {
   id: string;
@@ -258,7 +257,7 @@ export type OtherMachineDetailCardProps = {
   description: string;
   photoLink: string;
   tutorialLink: string;
-}
+};
 
 export type AnnouncementCardProps = {
   id: string;
@@ -313,7 +312,7 @@ export type ThreeDPRequestType = {
   userId: string;
   threeDPId: string;
   status: string;
-}
+};
 
 export type UserAvatarUploaderProps = {
   imgUrl: string;

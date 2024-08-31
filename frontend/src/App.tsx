@@ -31,7 +31,7 @@ import {
   DisposableMaterialPage,
   MachinePage,
   ThreeDPDetailPage,
-  OtherMachineDetailPage
+  OtherMachineDetailPage,
 } from "@/containers";
 
 const routes: Array<{
@@ -63,7 +63,10 @@ const routes: Array<{
   { path: "/Login", element: <FakeLoginPage /> },
   { path: "/IntroductionPage", element: <IntroductionPage /> },
   { path: "/MachinePage/ThreeDP/:id", element: <ThreeDPDetailPage /> },
-  { path: "/MachinePage/OtherMachine/:id", element: <OtherMachineDetailPage /> },
+  {
+    path: "/MachinePage/OtherMachine/:id",
+    element: <OtherMachineDetailPage />,
+  },
   { path: "/MachinePage", element: <MachinePage /> },
   { path: "/MapPage", element: <MapPage /> },
   { path: "/MaterialPage/Material/:id", element: <MaterialDetailPage /> },

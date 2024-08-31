@@ -8,10 +8,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import {
-  ADD_THREE_DP_MUTATION,
-  GET_ALL_THREEDPS_QUERY
-} from "@/graphql";
+import { ADD_THREE_DP_MUTATION, GET_ALL_THREEDPS_QUERY } from "@/graphql";
 import { useUser } from "@/contexts/UserContext";
 function ThreeDPImportButtonByFile() {
   const { t } = useTranslation();
@@ -20,23 +17,22 @@ function ThreeDPImportButtonByFile() {
   const [file, setFile] = useState<File | null>(null);
   const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
   const [threeDPs, setThreeDPs] = useState<ThreeDPInput[]>([]);
-	const cursor = null;
+  const cursor = null;
   const limit = 12;
 
   const { toast } = useToast();
   const { user } = useUser();
-  const [add3DP, { loading, error }] = useMutation(
-		ADD_THREE_DP_MUTATION, {
-			refetchQueries: [
-        {
-          query: GET_ALL_THREEDPS_QUERY,
-          variables: {
-            cursor: cursor,
-            limit: limit
-          }
+  const [add3DP, { loading, error }] = useMutation(ADD_THREE_DP_MUTATION, {
+    refetchQueries: [
+      {
+        query: GET_ALL_THREEDPS_QUERY,
+        variables: {
+          cursor: cursor,
+          limit: limit,
         },
-			]
-  	});
+      },
+    ],
+  });
 
   const handleAddThreeDPs = async (threeDPs: ThreeDPInput[]) => {
     setIsFileUploadLoading(true);
@@ -97,7 +93,7 @@ function ThreeDPImportButtonByFile() {
                 description: row["description"],
                 photoLink: row["photoLink"],
                 tutorialLink: row["tutorialLink"],
-                broken: row["broken"] === 1? true : false,
+                broken: row["broken"] === 1 ? true : false,
               };
             });
             setThreeDPs(rowThreeDPs);

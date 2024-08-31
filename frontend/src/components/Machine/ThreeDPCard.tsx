@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import type { ThreeDPType } from "@/shared/type.ts";
-import {
-  DELETE_THREE_DP_MUTATION,
-  GET_ALL_THREEDPS_QUERY,
-} from "@/graphql";
+import { DELETE_THREE_DP_MUTATION, GET_ALL_THREEDPS_QUERY } from "@/graphql";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/contexts/UserContext";
@@ -29,11 +26,7 @@ import SkeletonList from "../SkeletonList";
 import { useTranslation } from "react-i18next";
 import { threedpBaseUrl } from "@/constants/index";
 
-function ThreeDPCard({
-  threedp,
-}: {
-  threedp: ThreeDPType;
-}) {
+function ThreeDPCard({ threedp }: { threedp: ThreeDPType }) {
   const { toast } = useToast();
   const { user } = useUser();
   const { t } = useTranslation();
@@ -41,17 +34,19 @@ function ThreeDPCard({
   const limit = 12;
 
   const [deleteThreeDP, { loading, error }] = useMutation(
-    DELETE_THREE_DP_MUTATION, {
+    DELETE_THREE_DP_MUTATION,
+    {
       refetchQueries: [
         {
           query: GET_ALL_THREEDPS_QUERY,
           variables: {
             cursor: cursor,
-            limit: limit
-          }
-        }
+            limit: limit,
+          },
+        },
       ],
-    });
+    }
+  );
 
   const handleDelete = async () => {
     await deleteThreeDP({
@@ -68,7 +63,7 @@ function ThreeDPCard({
   };
 
   // Load the star state from local storage
-  
+
   const handleShare = () => {
     const shareableLink = `${window.location.origin}${threedpBaseUrl}/${threedp.id}`;
     navigator.clipboard
@@ -90,9 +85,12 @@ function ThreeDPCard({
       className="bg-transparent mb-5 w-full xs:w-full sm:w-6/12 md:w-4/12 lg:w-3/12 xl:w-3/12"
       key={threedp.id}
     >
-      <div className={cn("flex flex-col justify-between h-full p-3 dark:bg-[#181b20] w-11/12 mx-auto rounded-lg border dark:border-[#444444] shadow-md bg-white", 
-        threedp.broken && "border-red-500"
-      )}>
+      <div
+        className={cn(
+          "flex flex-col justify-between h-full p-3 dark:bg-[#181b20] w-11/12 mx-auto rounded-lg border dark:border-[#444444] shadow-md bg-white",
+          threedp.broken && "border-red-500"
+        )}
+      >
         <Link to={`/MachinePage/ThreeDP/${threedp.id}`}>
           <img
             src={threedp.photoLink}
@@ -101,11 +99,10 @@ function ThreeDPCard({
           />
           <div className="ml-3 mt-2">
             <h2 className="dark:text-white text-24">{threedp.name}</h2>
-            
+
             <p className="dark:text-white text-16">
               {t("position")}: {threedp.position}
             </p>
-            
           </div>
         </Link>
         <div className="flex flex-row mt-1 justify-center gap-2">
@@ -129,7 +126,7 @@ function ThreeDPCard({
                       <p className="text-white text-xs">{t("delete")}</p>
                     </TooltipContent>
                     <AlertDialogContent className="dark:text-white dark:bg-black">
-                      {threedp.threeDPRequestIds?.length == 0 ?
+                      {threedp.threeDPRequestIds?.length == 0 ? (
                         <>
                           <AlertDialogHeader>
                             <AlertDialogTitle>
@@ -154,12 +151,10 @@ function ThreeDPCard({
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </>
-                      :
+                      ) : (
                         <>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Warning
-                            </AlertDialogTitle>
+                            <AlertDialogTitle>Warning</AlertDialogTitle>
                             <AlertDialogDescription>
                               The threeDP still have some requests
                             </AlertDialogDescription>
@@ -170,14 +165,14 @@ function ThreeDPCard({
                             </AlertDialogCancel>
                           </AlertDialogFooter>
                         </>
-                      }
+                      )}
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
               </div>
             </Tooltip>
           )}
-          
+
           <Tooltip>
             <div className="rounded-full hover:bg-green-400 hover:bg-opacity-20">
               <div className="w-[35px] h-[35px]">
@@ -200,7 +195,6 @@ function ThreeDPCard({
               </div>
             </div>
           </Tooltip>
-
         </div>
       </div>
     </div>

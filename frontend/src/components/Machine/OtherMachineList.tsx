@@ -16,15 +16,12 @@ function OtherMachineList() {
   const limit = 12;
   const observerTarget = useRef(null);
 
-  const { data, loading, error, fetchMore } = useQuery(
-    GET_ALL_MACHINES_QUERY,
-    {
-      variables: {
-        cursor,
-        limit,
-      },
-    }
-  );
+  const { data, loading, error, fetchMore } = useQuery(GET_ALL_MACHINES_QUERY, {
+    variables: {
+      cursor,
+      limit,
+    },
+  });
 
   const otherMachines = data?.GetAllMachines?.machines as OtherMachineType[];
   const nextCursor = data?.GetAllMachines?.cursor as string | null;

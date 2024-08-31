@@ -213,7 +213,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           userBorrowMaterialIds: user?.userBorrowMaterialIds,
         });
         setToken(token!);
-        localStorage.setItem("threeDPId", user?.threeDPId ? user?.threeDPId : "");
+        localStorage.setItem(
+          "threeDPId",
+          user?.threeDPId ? user?.threeDPId : ""
+        );
         i18n.changeLanguage(user.language);
         if (redirect) {
           toast({
