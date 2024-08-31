@@ -129,28 +129,48 @@ function ThreeDPCard({
                       <p className="text-white text-xs">{t("delete")}</p>
                     </TooltipContent>
                     <AlertDialogContent className="dark:text-white dark:bg-black">
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          {t("alertDialogTitle")}
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          {t("alertDialogDescription")}{" "}
-                          <span className="lowercase">
-                            {" " + t("threedp")}
-                          </span>
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="submit-button  hover:bg-blue-500 hover:bg-opacity-90">
-                          {t("cancel")}
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
-                          onClick={handleDelete}
-                        >
-                          {t("continue")}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
+                      {threedp.threeDPRequestIds?.length == 0 ?
+                        <>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              {t("alertDialogTitle")}
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              {t("alertDialogDescription")}{" "}
+                              <span className="lowercase">
+                                {" " + t("threedp")}
+                              </span>
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="submit-button  hover:bg-blue-500 hover:bg-opacity-90">
+                              {t("cancel")}
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              className="cancel-button  hover:bg-red-500 hover:bg-opacity-90"
+                              onClick={handleDelete}
+                            >
+                              {t("continue")}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </>
+                      :
+                        <>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Warning
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              The threeDP still have some requests
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="submit-button  hover:bg-blue-500 hover:bg-opacity-90">
+                              {t("cancel")}
+                            </AlertDialogCancel>
+                          </AlertDialogFooter>
+                        </>
+                      }
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>

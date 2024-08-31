@@ -1934,6 +1934,7 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
       );
 
       const handleDelete = async () => {
+        localStorage.setItem("threeDPId", "");
         await deleteThreeDPRequest({
           variables: {
             deleteThreeDpRequestId: threeDPRequest.id,

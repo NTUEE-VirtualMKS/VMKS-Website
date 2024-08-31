@@ -12,7 +12,7 @@ import {
   ADD_THREE_DP_MUTATION,
   GET_ALL_THREEDPS_QUERY
 } from "@/graphql";
-
+import { useUser } from "@/contexts/UserContext";
 function ThreeDPImportButtonByFile() {
   const { t } = useTranslation();
   const ref = useRef<HTMLInputElement>(null);
@@ -24,7 +24,7 @@ function ThreeDPImportButtonByFile() {
   const limit = 12;
 
   const { toast } = useToast();
-
+  const { user } = useUser();
   const [add3DP, { loading, error }] = useMutation(
 		ADD_THREE_DP_MUTATION, {
 			refetchQueries: [
@@ -110,38 +110,43 @@ function ThreeDPImportButtonByFile() {
   };
 
   return (
-    <div className="hidden sm:flex sm:flex-row sm:justify-end">
-      <div className="w-full" onClick={() => ref?.current?.click()}>
-        <Input
-          type="file"
-          accept=".csv"
-          className="hidden"
-          ref={ref}
-          onChange={handleImport}
-        />
-        <Button
-          className={cn(
-            "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded shadow-lg transform active:scale-95 transition-transform duration-200",
-            file && "rounded-r-none"
-          )}
-          disabled={isFileUploadLoading}
-        >
-          {file ? `${file.name}` : "select file"}
-        </Button>
-      </div>
-      {length !== 0 && (
-        <Button
-          onClick={() => handleAddThreeDPs(threeDPs)}
-          className={
-            "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
-          }
-          disabled={isFileUploadLoading}
-        >
-          {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
-        </Button>
+    <>
+      {user?.isAdmin && (
+        <>
+          <div className="hidden sm:flex sm:flex-row sm:justify-end">
+            <div className="w-full" onClick={() => ref?.current?.click()}>
+              <Input
+                type="file"
+                accept=".csv"
+                className="hidden"
+                ref={ref}
+                onChange={handleImport}
+              />
+              <Button
+                className={cn(
+                  "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded shadow-lg transform active:scale-95 transition-transform duration-200",
+                  file && "rounded-r-none"
+                )}
+                disabled={isFileUploadLoading}
+              >
+                {file ? `${file.name}` : "select file"}
+              </Button>
+            </div>
+            {length !== 0 && (
+              <Button
+                onClick={() => handleAddThreeDPs(threeDPs)}
+                className={
+                  "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
+                }
+                disabled={isFileUploadLoading}
+              >
+                {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
+              </Button>
+            )}
+          </div>
+        </>
       )}
-    </div>
-
+    </>
   );
 }
 

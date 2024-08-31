@@ -12,6 +12,7 @@ import {
   ADD_MACHINE_MUTATION,
   GET_ALL_MACHINES_QUERY,
 } from "@/graphql";
+import { useUser } from "@/contexts/UserContext"; 
 
 function OtherMachineImportButtonByFile() {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ function OtherMachineImportButtonByFile() {
   const [otherMachines, setOtherMachines] = useState<OtherMachineInput[]>([]);
 	const cursor = null;
   const limit = 12;
-
+  const { user } = useUser();
   const { toast } = useToast();
 
   const [addOtherMachine, { loading, error }] = useMutation(
@@ -113,38 +114,43 @@ function OtherMachineImportButtonByFile() {
   };
 
   return (
-    <div className="hidden sm:flex sm:flex-row sm:justify-end">
-      <div className="w-full" onClick={() => ref?.current?.click()}>
-        <Input
-          type="file"
-          accept=".csv"
-          className="hidden"
-          ref={ref}
-          onChange={handleImport}
-        />
-        <Button
-          className={cn(
-            "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded shadow-lg transform active:scale-95 transition-transform duration-200",
-            file && "rounded-r-none"
-          )}
-          disabled={isFileUploadLoading}
-        >
-          {file ? `${file.name}` : "select file"}
-        </Button>
-      </div>
-      {length !== 0 && (
-        <Button
-          onClick={() => handleAddOtherMachines(otherMachines)}
-          className={
-            "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
-          }
-          disabled={isFileUploadLoading}
-        >
-          {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
-        </Button>
+    <>
+      {user?.isAdmin && (
+        <>
+          <div className="hidden sm:flex sm:flex-row sm:justify-end">
+            <div className="w-full" onClick={() => ref?.current?.click()}>
+              <Input
+                type="file"
+                accept=".csv"
+                className="hidden"
+                ref={ref}
+                onChange={handleImport}
+              />
+              <Button
+                className={cn(
+                  "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded shadow-lg transform active:scale-95 transition-transform duration-200",
+                  file && "rounded-r-none"
+                )}
+                disabled={isFileUploadLoading}
+              >
+                {file ? `${file.name}` : "select file"}
+              </Button>
+            </div>
+            {length !== 0 && (
+              <Button
+                onClick={() => handleAddOtherMachines(otherMachines)}
+                className={
+                  "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
+                }
+                disabled={isFileUploadLoading}
+              >
+                {isFileUploadLoading ? t("uploading") + "..." : t("upload")}
+              </Button>
+            )}
+          </div>
+        </>
       )}
-    </div>
-
+    </>
   );
 }
 

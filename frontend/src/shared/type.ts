@@ -81,7 +81,7 @@ export type ThreeDPType = {
   description: string;
   photoLink: string;
   tutorialLink: string;
-  threeDPIds: Array<string | null> | null;
+  threeDPRequestIds: Array<string | null> | null;
   broken: boolean;
 }
 

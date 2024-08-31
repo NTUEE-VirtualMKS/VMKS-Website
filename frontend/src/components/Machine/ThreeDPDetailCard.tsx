@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Pencil, Share, Calendar } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import {
   EDIT_THREE_DP_MUTATION,
   GET_THREEDP_BY_ID_QUERY,
@@ -20,7 +20,7 @@ import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { ThreeDPInput, ThreeDPRequestInput } from "@/shared/type";
 import LoaderSpinner from "../LoaderSpinner";
-import { ThreeDPDetailCardProps, UserType } from "@/shared/type";
+import { ThreeDPDetailCardProps } from "@/shared/type";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -56,7 +56,6 @@ function ThreeDPDetailCard({
   const [threedpPosition, setThreedpPosition] = useState(position);
   const [threedpTutorialLink, setThreedpTutorialLink] = useState(tutorialLink!);
   const [threedpBroken, setThreedpBroken] = useState(broken);
-
   const [editThreeDP, { loading: editLoading, error: editError }] =
     useMutation(EDIT_THREE_DP_MUTATION, {
       refetchQueries: [
@@ -91,21 +90,6 @@ function ThreeDPDetailCard({
       ]
     });
 
-  const { data: fetchedUserData, loading: getUserLoading, error: getUserError } = 
-    useQuery(
-      GET_USER_BY_STUDENT_ID_QUERY,
-      {
-        variables: {
-          studentId: user? user?.studentID : "",
-        }
-      }
-    );
-  if (getUserLoading) return <LoaderSpinner />;
-  if (getUserError) {
-    toast({ title: `${getUserError.message}`, variant: "destructive" });
-  }
-  const fetchedUser = fetchedUserData?.GetUserByStudentID as UserType || [];
-
   const handleReserve = async ({
     name,
     studentID,
@@ -135,6 +119,7 @@ function ThreeDPDetailCard({
         toast({ title: `${error}`, variant: "destructive" });
       }
       setVisible(false);
+      localStorage.setItem("threeDPId", threeDPId);
     }
   };
   
@@ -389,14 +374,14 @@ function ThreeDPDetailCard({
         </div>
         <div className={cn(
           "w-10 h-10 rounded-full p-2 dark:text-white",
-          (user && fetchedUser?.threeDPId === null && !broken)? 
+          (user && localStorage.getItem("threeDPId") === "" && !broken)? 
               "hover:text-orange-500 dark:hover:text-orange-300 hover:bg-orange-300 hover:bg-opacity-20 bg-transparent"
             :
               "dark:text-white text-gray-300 dark:text-opacity-50 bg-transparent",
           "flex justify-center items-center cursor-pointer"
         )}>
           <Tooltip>              
-            {(user && fetchedUser?.threeDPId === null && !broken)? 
+            {(user && localStorage.getItem("threeDPId") === "" && !broken)? 
               <TooltipTrigger 
                 asChild 
                 onClick={() =>
