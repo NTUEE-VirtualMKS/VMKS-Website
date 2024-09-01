@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ADD_THREE_DP_MUTATION, GET_ALL_THREEDPS_QUERY } from "@/graphql";
+import { ADD_MACHINE_MUTATION, GET_ALL_MACHINES_QUERY } from "@/graphql";
 import { useMutation } from "@apollo/client";
-import { ThreeDPInput } from "@/shared/type";
+import { OtherMachineInput } from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
@@ -15,55 +15,61 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import SkeletonList from "@/components/SkeletonList";
 import { useTranslation } from "react-i18next";
 import { useUser } from "@/contexts/UserContext";
 
-function ThreeDPImportButton() {
+function OtherMachineImportButton() {
   const { toast } = useToast();
   const { user } = useUser();
   const { t } = useTranslation();
 
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
+  const [partName, setPartName] = useState("");
+  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [photoLink, setPhotoLink] = useState("");
   const [position, setPosition] = useState("");
   const [tutorialLink, setTutorialLink] = useState<string>("");
-  const [broken, setBroken] = useState(false);
   const cursor = null;
   const limit = 12;
 
-  const [add3DP, { loading, error }] = useMutation(ADD_THREE_DP_MUTATION, {
-    refetchQueries: [
-      {
-        query: GET_ALL_THREEDPS_QUERY,
-        variables: {
-          cursor: cursor,
-          limit: limit,
+  const [addOtherMachine, { loading, error }] = useMutation(
+    ADD_MACHINE_MUTATION,
+    {
+      refetchQueries: [
+        {
+          query: GET_ALL_MACHINES_QUERY,
+          variables: {
+            cursor: cursor,
+            limit: limit,
+          },
         },
-      },
-    ],
-  });
+      ],
+    }
+  );
 
   const handleAdd3DP = async ({
     name,
+    partName,
+    category,
     description,
     photoLink,
     position,
     tutorialLink,
-    broken,
-  }: ThreeDPInput) => {
-    await add3DP({
+  }: OtherMachineInput) => {
+    await addOtherMachine({
       variables: {
-        threeDpInput: {
+        machineInput: {
           name,
+          partName,
+          category,
           description,
           photoLink,
           position,
           tutorialLink,
-          broken,
+          usage: 0,
         },
       },
     });
@@ -73,12 +79,13 @@ function ThreeDPImportButton() {
     } else {
       setVisible(false);
       setName("");
+      setPartName("");
+      setCategory("");
       setDescription("");
       setPhotoLink("");
       setPosition("");
       setTutorialLink("");
-      setBroken(false);
-      toast({ title: "3DP added successfully!" });
+      toast({ title: "Machine added successfully!" });
     }
   };
 
@@ -96,7 +103,7 @@ function ThreeDPImportButton() {
                   className="submit-button hover:bg-blue-500 hover:bg-opacity-90 m-3"
                   onClick={() => setVisible(true)}
                 >
-                  {t("New 3DP Machine")}
+                  {t("New Machine")}
                 </Button>
               </div>
             </DialogTrigger>
@@ -104,7 +111,7 @@ function ThreeDPImportButton() {
             <DialogContent className="w-11/1 sm:w-11/12 rounded-xl dark:text-white dark:bg-black">
               <DialogHeader>
                 <DialogTitle className="text-2xl">
-                  {t("New 3DP Machine")}
+                  {t("New Machine")}
                 </DialogTitle>
                 <DialogDescription className="text-sm">
                   {t("pleaseFillInAllFields")}:
@@ -122,6 +129,32 @@ function ThreeDPImportButton() {
                     className="col-span-3 input-class"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="position" className="text-right">
+                    {t("partName")}
+                  </Label>
+                  <Input
+                    id="partName"
+                    placeholder="partName"
+                    className="col-span-3 input-class"
+                    value={partName}
+                    onChange={(e) => setPartName(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="category" className="text-right">
+                    {t("category")}
+                  </Label>
+                  <Input
+                    id="category"
+                    placeholder="category"
+                    className="col-span-3 input-class"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
                   />
                 </div>
 
@@ -177,18 +210,6 @@ function ThreeDPImportButton() {
                     onChange={(e) => setTutorialLink(e.target.value)}
                   />
                 </div>
-
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="broken" className="text-right">
-                    {t("broken")}
-                  </Label>
-                  <Checkbox
-                    id="broken"
-                    className="checkbox-class"
-                    checked={broken}
-                    onCheckedChange={(checked: boolean) => setBroken(checked)}
-                  />
-                </div>
               </div>
 
               <div className="flex flex-row-reverse gap-2">
@@ -196,11 +217,12 @@ function ThreeDPImportButton() {
                   onClick={() =>
                     handleAdd3DP({
                       name,
+                      partName,
+                      category,
                       description,
                       photoLink,
                       position,
                       tutorialLink,
-                      broken,
                     })
                   }
                   className="submit-button hover:bg-blue-500 hover:bg-opacity-90"
@@ -222,4 +244,4 @@ function ThreeDPImportButton() {
   );
 }
 
-export default ThreeDPImportButton;
+export default OtherMachineImportButton;

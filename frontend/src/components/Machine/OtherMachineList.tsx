@@ -1,14 +1,14 @@
 import { useQuery } from "@apollo/client";
-import { GET_ALL_THREEDPS_QUERY } from "@/graphql/queries";
-import type { ThreeDPType } from "@/shared/type.ts";
-import ThreeDPCard from "./ThreeDPCard";
+import { GET_ALL_MACHINES_QUERY } from "@/graphql/queries";
+import type { OtherMachineType } from "@/shared/type.ts";
+import OtherMachineCard from "./OtherMachineCard";
 import Suggestion from "../Suggestion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Loader } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../ui/use-toast";
 
-function ThreeDPList() {
+function OtherMachineList() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [cursor, setCursor] = useState<string | null>(null);
@@ -16,15 +16,15 @@ function ThreeDPList() {
   const limit = 12;
   const observerTarget = useRef(null);
 
-  const { data, loading, error, fetchMore } = useQuery(GET_ALL_THREEDPS_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(GET_ALL_MACHINES_QUERY, {
     variables: {
       cursor,
       limit,
     },
   });
 
-  const threeDPs = data?.GetAllThreeDPs?.threeDPs as ThreeDPType[];
-  const nextCursor = data?.GetAllThreeDPs?.cursor as string | null;
+  const otherMachines = data?.GetAllMachines?.machines as OtherMachineType[];
+  const nextCursor = data?.GetAllMachines?.cursor as string | null;
 
   const handleLoadMore = useCallback(async () => {
     if (!nextCursor) return;
@@ -39,12 +39,12 @@ function ThreeDPList() {
           return {
             ...prev,
             GetAllMaterials: {
-              ...prev.GetAllThreeDPs,
+              ...prev.GetAllMachines,
               materials: [
-                ...prev.GetAllThreeDPs?.threeDPs!,
-                ...fetchMoreResult.GetAllThreeDPs?.threeDPs!,
+                ...prev.GetAllMachines?.machines!,
+                ...fetchMoreResult.GetAllMachines?.machines!,
               ],
-              cursor: fetchMoreResult.GetAllThreeDPs?.cursor,
+              cursor: fetchMoreResult.GetAllMachines?.cursor,
             },
           };
         },
@@ -92,9 +92,9 @@ function ThreeDPList() {
   return (
     <>
       <div className="flex flex-col gap-4 flex-wrap justify-start xs:flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:gap-5 sm:gap-0 md:gap-0 lg:gap-0 xl:gap-0">
-        {threeDPs && threeDPs.length !== 0 ? (
-          threeDPs.map((threeDP: ThreeDPType, index: number) => {
-            return <ThreeDPCard key={index} threedp={threeDP} />;
+        {otherMachines && otherMachines.length !== 0 ? (
+          otherMachines.map((otherMachine: OtherMachineType, index: number) => {
+            return <OtherMachineCard key={index} otherMachine={otherMachine} />;
           })
         ) : (
           <Suggestion search="" name="Material" />
@@ -108,7 +108,7 @@ function ThreeDPList() {
           />
         ) : (
           <>
-            {threeDPs?.length >= 12 && (
+            {otherMachines?.length >= 12 && (
               <p className="text-gray-500 text-xl mt-3">
                 {t("noMoreMaterial")}
               </p>
@@ -120,4 +120,4 @@ function ThreeDPList() {
   );
 }
 
-export default ThreeDPList;
+export default OtherMachineList;

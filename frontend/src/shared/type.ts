@@ -1,3 +1,4 @@
+import { StringFormat } from "firebase/storage";
 import { RefObject } from "react";
 
 export type AnnouncementType = {
@@ -80,9 +81,22 @@ export type ThreeDPType = {
   description: string;
   photoLink: string;
   tutorialLink: string;
-  threeDPIds: Array<string | null> | null;
+  threeDPRequestIds: Array<string | null> | null;
   broken: boolean;
-}
+};
+
+export type OtherMachineType = {
+  __typename?: "OtherMachine";
+  id: string;
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+  usage: number;
+};
 
 export type MaterialInput = {
   name: string;
@@ -98,6 +112,16 @@ export type MaterialInput = {
   remain: number | string;
 };
 
+export type OtherMachineInput = {
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+};
+
 export type ThreeDPInput = {
   name: string;
   position: string;
@@ -105,14 +129,14 @@ export type ThreeDPInput = {
   photoLink: string;
   tutorialLink: string;
   broken: boolean;
-}
+};
 
 export type ThreeDPRequestInput = {
   name: string;
   studentID: string;
   userId: string;
   threeDPId: string;
-}
+};
 
 export type ToolInput = {
   name: string;
@@ -214,7 +238,6 @@ export type MaterialDetailCardProps = {
   valuable: boolean;
 };
 
-
 export type ThreeDPDetailCardProps = {
   id: string;
   name: string;
@@ -223,7 +246,18 @@ export type ThreeDPDetailCardProps = {
   photoLink: string;
   tutorialLink: string;
   broken: boolean;
-}
+};
+
+export type OtherMachineDetailCardProps = {
+  id: string;
+  name: string;
+  partName: string;
+  category: string;
+  position: string;
+  description: string;
+  photoLink: string;
+  tutorialLink: string;
+};
 
 export type AnnouncementCardProps = {
   id: string;
@@ -278,7 +312,7 @@ export type ThreeDPRequestType = {
   userId: string;
   threeDPId: string;
   status: string;
-}
+};
 
 export type UserAvatarUploaderProps = {
   imgUrl: string;

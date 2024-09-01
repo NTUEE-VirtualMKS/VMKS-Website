@@ -501,7 +501,8 @@ const typeDefs = `#graphql
     SearchMaterialByPosition(position: String!): [Material]
     SearchMaterialByName(name: String!): [Material]
     # Machine
-    GetAllMachines(cursor: String, limit: Int): GetAllMachines 
+    GetAllMachines(cursor: String, limit: Int): GetAllMachines
+    GetMachineById(id: String!): Machine
     SearchMachineByCategory(category: String!): [Machine]
     SearchMachineByPosition(position: String!): [Machine]
     SearchMachineByName(input: String!): [Machine]

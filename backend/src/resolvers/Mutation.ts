@@ -656,14 +656,8 @@ const Mutation = {
     args: { threeDPInput: ThreeDPInput },
     _contexts,
   ) => {
-    const {
-      name,
-      position,
-      description,
-      photoLink,
-      tutorialLink,
-      broken,
-    } = args.threeDPInput;
+    const { name, position, description, photoLink, tutorialLink, broken } =
+      args.threeDPInput;
     const newThreeDP = await prisma.threeDP.create({
       data: {
         name: name,
@@ -710,14 +704,8 @@ const Mutation = {
     _contexts,
   ) => {
     const id = args.id;
-    const {
-      name,
-      position,
-      description,
-      photoLink,
-      tutorialLink,
-      broken,
-    } = args.threeDPInput;
+    const { name, position, description, photoLink, tutorialLink, broken } =
+      args.threeDPInput;
     const findThreeDP = await prisma.threeDP.findFirst({
       where: {
         id: id,
@@ -798,12 +786,8 @@ const Mutation = {
 
     return newthreeDPRequset;
   },
-  
-  DeleteThreeDPRequest: async (
-    _parents,
-    args: { id: string },
-    _contexts,
-  ) => {
+
+  DeleteThreeDPRequest: async (_parents, args: { id: string }, _contexts) => {
     const id = args.id;
     const threeDPRequest = await prisma.threeDPRequest.findFirst({
       where: {
@@ -814,12 +798,6 @@ const Mutation = {
     if (!threeDPRequest) {
       throw new Error("ThreeDP Request Not Found");
     }
-
-    const user = await prisma.user.findUnique({
-      where: {
-        id: threeDPRequest.userId,
-      },
-    });
 
     const threeDP = await prisma.threeDP.findUnique({
       where: {
@@ -852,7 +830,7 @@ const Mutation = {
       },
       data: {
         threeDPId: null,
-      },  
+      },
     });
 
     return deleteThreeDPRequest;
@@ -1413,7 +1391,6 @@ const Mutation = {
     );
     pubsub.publish("USER_SIGNEDUP", { UserSignedUp: newUser });
     return { user: newUser, token: token };
-    
   },
 
   // SignupAuthCode

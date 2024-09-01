@@ -11,7 +11,11 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Share, Trash2, ShoppingCart } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import type { UserBorrowMaterialType, UserBorrowToolType, ThreeDPRequestType } from "@/shared/type";
+import type {
+  UserBorrowMaterialType,
+  UserBorrowToolType,
+  ThreeDPRequestType,
+} from "@/shared/type";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -36,7 +40,7 @@ import {
   GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY,
   GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY,
   // user
-  GET_USER_BY_STUDENT_ID_QUERY
+  GET_USER_BY_STUDENT_ID_QUERY,
 } from "@/graphql";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import {
@@ -1773,7 +1777,7 @@ export const allUsersUnreturnedMaterialColumns: ColumnDef<UserBorrowMaterialType
   ];
 
 //threedp: user/admin
-export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
+export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -1808,7 +1812,7 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
           loading: editThreeDPRequestStatusLoading,
           error: editThreeDPRequestStatusError,
         },
-      ] = useMutation( EDIT_THREE_DP_REQUEST_STATUS_MUTATION );
+      ] = useMutation(EDIT_THREE_DP_REQUEST_STATUS_MUTATION);
 
       const handleStatusChange = async (status: string) => {
         setStatus(status);
@@ -1831,72 +1835,72 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
 
       return (
         <>
-        {
-          user && user.isAdmin?
-          <RadioGroup defaultValue={status}>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div
-                  className={cn(
-                    "text-center font-semibold",
-                    determineTextColor(status)
-                  )}
-                >
-                  <Button
-                    variant="ghost"
+          {user && user.isAdmin ? (
+            <RadioGroup defaultValue={status}>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div
                     className={cn(
                       "text-center font-semibold",
                       determineTextColor(status)
                     )}
                   >
-                    {status}
-                  </Button>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="center"
-                className="bg-black bg-opacity-90 border border-white text-white"
-              >
-                <DropdownMenuLabel>{t("status")}</DropdownMenuLabel>
-                {statusOptions.map((status) => (
-                  <div key={status}>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => handleStatusChange(status)}>
-                      <RadioGroupItem
-                        value={status}
-                        id={status}
-                        className="w-3 h-3 mr-2"
-                      />
-                      <Label htmlFor={status}>{status}</Label>
-                    </DropdownMenuItem>
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        "text-center font-semibold",
+                        determineTextColor(status)
+                      )}
+                    >
+                      {status}
+                    </Button>
                   </div>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </RadioGroup>
-        :
-          <>
-          <div
-            className={cn(
-              "text-center font-semibold",
-              determineTextColor(status)
-            )}
-          >
-            <div
-              
-              className={cn(
-                "text-center font-semibold cursor: default",
-                determineTextColor(status)
-              )}
-            >
-              {status}
-            </div>
-            </div>
-          </>
-        }
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="center"
+                  className="bg-black bg-opacity-90 border border-white text-white"
+                >
+                  <DropdownMenuLabel>{t("status")}</DropdownMenuLabel>
+                  {statusOptions.map((status) => (
+                    <div key={status}>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => handleStatusChange(status)}
+                      >
+                        <RadioGroupItem
+                          value={status}
+                          id={status}
+                          className="w-3 h-3 mr-2"
+                        />
+                        <Label htmlFor={status}>{status}</Label>
+                      </DropdownMenuItem>
+                    </div>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </RadioGroup>
+          ) : (
+            <>
+              <div
+                className={cn(
+                  "text-center font-semibold",
+                  determineTextColor(status)
+                )}
+              >
+                <div
+                  className={cn(
+                    "text-center font-semibold cursor: default",
+                    determineTextColor(status)
+                  )}
+                >
+                  {status}
+                </div>
+              </div>
+            </>
+          )}
         </>
       );
-    }
+    },
   },
   {
     id: "actions",
@@ -1934,6 +1938,7 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
       );
 
       const handleDelete = async () => {
+        localStorage.setItem("threeDPId", "");
         await deleteThreeDPRequest({
           variables: {
             deleteThreeDpRequestId: threeDPRequest.id,
@@ -1948,36 +1953,38 @@ export const threeDPRequestColumns: ColumnDef<ThreeDPRequestType>[] =[
       };
 
       return (
-        <>          
-          {user && (user.isAdmin || user.studentID === row.getValue("studentID"))? 
-            <div 
+        <>
+          {user &&
+          (user.isAdmin || user.studentID === row.getValue("studentID")) ? (
+            <div
               className="flex flex-row hover:text-red-500 hover:bg-red-100 hover:bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
               onClick={handleDelete}
             >
               <Trash2 className="p-1.5" size={31} />
-              <div className="my-auto mx-auto text-base text-center pr-1">{t("delete")}</div>
+              <div className="my-auto mx-auto text-base text-center pr-1">
+                {t("delete")}
+              </div>
             </div>
-            :
-            <div 
+          ) : (
+            <div
               className="flex flex-row dark:text-white text-gray-300 bg-opacity-90 px-0.5 rounded-lg cursor-pointer"
-              onClick={
-                ()=> {
-                  !user?
-                    toast({ title: "Please login to delete request" })
-                  :
-                    toast({ title: "It's not your request" })
-                }
-              }
-            >  
+              onClick={() => {
+                !user
+                  ? toast({ title: "Please login to delete request" })
+                  : toast({ title: "It's not your request" });
+              }}
+            >
               <Trash2 className="p-1.5" size={31} />
-              <div className="my-auto mx-auto text-base text-center pr-1">{t("delete")}</div>
+              <div className="my-auto mx-auto text-base text-center pr-1">
+                {t("delete")}
+              </div>
             </div>
-          }
+          )}
         </>
-        
+
         // <DropdownMenu>
         //   <DropdownMenuTrigger asChild>
-            
+
         //     <Button variant="ghost" className="h-8 w-8 p-0">
         //       <span className="sr-only">Open menu</span>
         //       <MoreHorizontal className="h-4 w-4" />

@@ -251,6 +251,22 @@ const GET_ALL_MACHINES_QUERY = gql(`
   }
 `);
 
+const GET_MACHINE_BY_ID_QUERY = gql(`
+  query GetMachineById($getMachineByIdId: String!) {
+    GetMachineById(id: $getMachineByIdId) {
+      id
+      name
+      partName
+      category
+      position
+      description
+      photoLink
+      usage
+      tutorialLink
+    }
+  }
+`);
+
 const SEARCH_MACHINE_BY_CATEGORY_QUERY = gql(`
   query SearchMachineByCategory($category: String!) {
     SearchMachineByCategory(category: $category) {
@@ -499,7 +515,6 @@ const GET_THREE_DP_REQUESTS_BY_THREE_DP_ID_QUERY = gql(`
     }
   }
 `);
-
 
 const GET_THREE_DP_REQUESTS_BY_USER_ID_QUERY = gql(`
   query GetThreeDPRequestsByUserId($userId: String!) {
@@ -987,6 +1002,7 @@ export {
   SEARCH_DISPOSIABLE_MATERIAL_BY_POSITION_QUERY,
   // Machine
   GET_ALL_MACHINES_QUERY,
+  GET_MACHINE_BY_ID_QUERY,
   SEARCH_MACHINE_BY_CATEGORY_QUERY,
   SEARCH_MACHINE_BY_NAME_QUERY,
   SEARCH_MACHINE_BY_POSITION_QUERY,

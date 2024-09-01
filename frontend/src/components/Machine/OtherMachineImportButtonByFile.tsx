@@ -1,4 +1,4 @@
-import { ThreeDPInput } from "@/shared/type";
+import { OtherMachineInput } from "@/shared/type";
 import { useState, useRef } from "react";
 import { read, utils } from "xlsx";
 import { Input } from "../ui/input";
@@ -8,55 +8,61 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client";
-import { ADD_THREE_DP_MUTATION, GET_ALL_THREEDPS_QUERY } from "@/graphql";
+import { ADD_MACHINE_MUTATION, GET_ALL_MACHINES_QUERY } from "@/graphql";
 import { useUser } from "@/contexts/UserContext";
-function ThreeDPImportButtonByFile() {
+
+function OtherMachineImportButtonByFile() {
   const { t } = useTranslation();
   const ref = useRef<HTMLInputElement>(null);
   const [length, setLength] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
-  const [threeDPs, setThreeDPs] = useState<ThreeDPInput[]>([]);
+  const [otherMachines, setOtherMachines] = useState<OtherMachineInput[]>([]);
   const cursor = null;
   const limit = 12;
-
-  const { toast } = useToast();
   const { user } = useUser();
-  const [add3DP, { loading, error }] = useMutation(ADD_THREE_DP_MUTATION, {
-    refetchQueries: [
-      {
-        query: GET_ALL_THREEDPS_QUERY,
-        variables: {
-          cursor: cursor,
-          limit: limit,
-        },
-      },
-    ],
-  });
+  const { toast } = useToast();
 
-  const handleAddThreeDPs = async (threeDPs: ThreeDPInput[]) => {
+  const [addOtherMachine, { loading, error }] = useMutation(
+    ADD_MACHINE_MUTATION,
+    {
+      refetchQueries: [
+        {
+          query: GET_ALL_MACHINES_QUERY,
+          variables: {
+            cursor: cursor,
+            limit: limit,
+          },
+        },
+      ],
+    }
+  );
+
+  const handleAddOtherMachines = async (otherMachines: OtherMachineInput[]) => {
     setIsFileUploadLoading(true);
-    threeDPs.map(async (threeDP) => {
-      await add3DP({
+    otherMachines.map(async (otherMachine) => {
+      await addOtherMachine({
         variables: {
-          threeDpInput: {
-            name: threeDP.name,
-            position: threeDP.position,
-            description: threeDP.description,
-            photoLink: threeDP.photoLink,
-            tutorialLink: threeDP.tutorialLink,
-            broken: threeDP.broken,
+          machineInput: {
+            name: otherMachine.name,
+            partName: otherMachine.partName,
+            category: otherMachine.category,
+            position: otherMachine.position,
+            description: otherMachine.description,
+            photoLink: otherMachine.photoLink,
+            tutorialLink: otherMachine.tutorialLink,
+            usage: 0,
           },
         },
       });
     });
     if (loading) {
-      toast({ title: "Uploading tools..." });
+      toast({ title: "Uploading machines..." });
     }
     if (error) {
       toast({ title: `${error.message}`, variant: "destructive" });
     } else {
-      setThreeDPs([]);
+      setOtherMachines([]);
       setLength(0);
       toast({ title: "ThreeDPs added successfully!" });
       setFile(null);
@@ -74,7 +80,7 @@ function ThreeDPImportButtonByFile() {
           description: "CSV file only",
           variant: "destructive",
         });
-        setThreeDPs([]);
+        setOtherMachines([]);
         setLength(0);
         setFile(null);
       } else {
@@ -86,18 +92,19 @@ function ThreeDPImportButtonByFile() {
 
           if (sheets.length) {
             const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-            const rowThreeDPs: ThreeDPInput[] = rows.map((row: any) => {
+            const rowMachines: OtherMachineInput[] = rows.map((row: any) => {
               return {
                 name: row["name"],
+                partName: row["partName"],
+                category: row["category"],
                 position: row["position"],
                 description: row["description"],
                 photoLink: row["photoLink"],
                 tutorialLink: row["tutorialLink"],
-                broken: row["broken"] === 1 ? true : false,
               };
             });
-            setThreeDPs(rowThreeDPs);
-            setLength(rowThreeDPs.length);
+            setOtherMachines(rowMachines);
+            setLength(rowMachines.length);
           }
         };
         reader.readAsArrayBuffer(file);
@@ -130,7 +137,7 @@ function ThreeDPImportButtonByFile() {
             </div>
             {length !== 0 && (
               <Button
-                onClick={() => handleAddThreeDPs(threeDPs)}
+                onClick={() => handleAddOtherMachines(otherMachines)}
                 className={
                   "my-3 px-4 py-2 bg-blue-500 hover:bg-blue-500 hover:bg-opacity-90 text-white rounded-r rounded-l-none lowercase shadow-lg transform active:scale-95 transition-transform duration-200"
                 }
@@ -146,4 +153,4 @@ function ThreeDPImportButtonByFile() {
   );
 }
 
-export default ThreeDPImportButtonByFile;
+export default OtherMachineImportButtonByFile;
