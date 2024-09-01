@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "setup": "npm install -g dotenv-cli && npm install ts-node",
+    "setup": "install -g dotenv-cli",
     "generate": "npx prisma generate",
     "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
     "studio": "dotenv -e .env -- npx prisma studio",

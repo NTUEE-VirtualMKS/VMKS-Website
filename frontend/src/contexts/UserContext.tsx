@@ -14,45 +14,22 @@ import { defaultPhotoUrl, validDepartmentCodes } from "@/constants/index";
 import { jwtDecode } from "jwt-decode";
 import { generateLoginInfo } from "@/lib/utils";
 
-const studentIdSchema = z.string().refine((studentId) => {
-  const lastThreeDigits = parseInt(studentId.substring(6, 9), 10);
-  return (
-    studentId.length === 9 &&
-    validDepartmentCodes.has(studentId[0].toUpperCase()) &&
-    /^\d{2}$/.test(studentId.substring(1, 3)) &&
-    /^\d$/.test(studentId[3]) &&
-    /^\d{2}$/.test(studentId.substring(4, 6)) &&
-    lastThreeDigits >= 1 &&
-    lastThreeDigits <= 200
-  );
-}, "Invalid student ID format");
+const studentIdSchema = z
+  .string()
+  .length(9, "Student ID must be 9 characters long")
+  .refine((studentId) => {
+    const lastThreeDigits = parseInt(studentId.substring(6, 9), 10);
+    return (
+      validDepartmentCodes.has(studentId[0].toUpperCase()) &&
+      /^\d{2}$/.test(studentId.substring(1, 3)) &&
+      /^\d$/.test(studentId[3]) &&
+      /^\d{2}$/.test(studentId.substring(4, 6)) &&
+      lastThreeDigits >= 1 &&
+      lastThreeDigits <= 200
+    );
+  }, "Invalid student ID format");
 
 const loginSchema = z.object({
-  studentId: studentIdSchema,
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .refine((password) => {
-      const hasUpperCase = /[A-Z]/.test(password);
-      const hasLowerCase = /[a-z]/.test(password);
-      const hasNumbers = /[0-9]/.test(password);
-      const hasSymbols = /[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]/.test(password);
-
-      const typesCount = [
-        hasUpperCase,
-        hasLowerCase,
-        hasNumbers,
-        hasSymbols,
-      ].filter(Boolean).length;
-      return typesCount >= 3;
-    }, "Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and symbols"),
-});
-
-const signupSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name is required")
-    .max(15, "Name is too long, max 15 characters"),
   studentId: studentIdSchema,
   password: z
     .string()
@@ -152,7 +129,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     useMutation(SIGNUP_MUTATION);
 
   const signup = async ({ name, studentId, password }: SignupProps) => {
-    signupSchema.parse({ name, studentId, password });
     await createUser({
       variables: {
         signUpInput: {
@@ -183,19 +159,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     useLazyQuery(LOGIN_QUERY);
 
   const login = async ({ studentId, password, redirect }: LoginProps) => {
-    if (userLoginLoading) {
-      toast({ title: "Loading..." });
-    }
-    if (userLoginError) {
-      toast({
-        title: `${userLoginError.message}`,
-        variant: "destructive",
-      });
-      throw new Error(userLoginError.message);
-    }
     const { browserName, osName, time, timeZoneShort, date } =
       generateLoginInfo();
-
     try {
       loginSchema.parse({ studentId, password });
       const response = await userLogin({
@@ -212,7 +177,16 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           },
         },
       });
-
+      if (userLoginLoading) {
+        toast({ title: "Loading..." });
+      }
+      if (userLoginError) {
+        toast({
+          title: `${userLoginError.message}`,
+          variant: "destructive",
+        });
+        throw new Error(userLoginError.message);
+      }
       const data = response?.data?.LogIn;
       const user = data?.user;
       const token = data?.token;
@@ -239,6 +213,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           userBorrowMaterialIds: user?.userBorrowMaterialIds,
         });
         setToken(token!);
+        localStorage.setItem(
+          "threeDPId",
+          user?.threeDPId ? user?.threeDPId : ""
+        );
         i18n.changeLanguage(user.language);
         if (redirect) {
           toast({
@@ -280,6 +258,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("language");
+    localStorage.removeItem("threeDPId");
   };
 
   const [

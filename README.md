@@ -6,7 +6,7 @@
 
 ## Development
 ### Step 1 : Use Specific NodeJS Version
-This can switch NodeJS version to v18.16.0(You should first have NodeJS v18.16.0 installed)
+This can switch NodeJS version to v20.10.0(You should first have NodeJS v20.10.0 installed)
 
 ```sh
 nvm use
@@ -17,6 +17,7 @@ nvm use
 This will install all dependencies for the app
 
 ```sh
+# VMKS-Website
 pnpm install:all
 ```
 
@@ -27,20 +28,21 @@ pnpm install:all
 This will have postgres and adminer running for the backend
 
 ```sh
+# VMKS-Website
 docker-compose up -d
 ```
 
-### Step 2 : Install dotenv & ts-node
+### Step 2 : Install dotenv
 
 ```sh
-cd backend
-pnpm setup
+# VMKS-Website/backend
+pnpm install -g dotenv-cli
 ```
 
 ### Step 3 : Run Prisma
 
 ```sh
-cd backend
+# VMKS-Website/backend
 pnpm generate
 pnpm migrate
 ```
@@ -48,7 +50,7 @@ pnpm migrate
 ### Step 4 : Start Apollo Server(backend)
 
 ```sh
-cd ..
+# VMKS-Website
 pnpm backend
 ```
 
@@ -57,16 +59,16 @@ This will run apollo graphql playground at port 5000
 you can then use adminer at port 8080, or run
 
 ```sh
-cd backend
+# VMKS-Website/backend
 pnpm studio
 ```
 
 to open up prisma studio to check whether the data is properly saved
 
-### Step 5 : Initialize Database
+### Step 5 : Initialize Database (user and schedule)
 
 ```sh
-cd backend
+# VMKS-Website/backend
 pnpm initData
 ```
 
@@ -81,14 +83,14 @@ kill the port being stucked : `sudo kill -9 $(sudo lsof -t -i:port)`. If you wan
 ### Step 1 : Update GraphQL Code Generator
 
 ```sh
-cd frontend
+# VMKS-Website/frontend
 pnpm codegen
 ```
 
 ### Step 2 : Start React app(frontend)
 
 ```sh
-cd ..
+# VMKS-Website
 pnpm frontend
 ```
 

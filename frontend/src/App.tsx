@@ -33,7 +33,9 @@ import {
   BlogDashboard,
   CreatePost,
   EditPost,
-  PostView
+  PostView,
+  ThreeDPDetailPage,
+  OtherMachineDetailPage,
 } from "@/containers";
 
 const routes: Array<{
@@ -64,6 +66,11 @@ const routes: Array<{
   { path: "/DisposableMaterialPage", element: <DisposableMaterialPage /> },
   { path: "/Login", element: <FakeLoginPage /> },
   { path: "/IntroductionPage", element: <IntroductionPage /> },
+  { path: "/MachinePage/ThreeDP/:id", element: <ThreeDPDetailPage /> },
+  {
+    path: "/MachinePage/OtherMachine/:id",
+    element: <OtherMachineDetailPage />,
+  },
   { path: "/MachinePage", element: <MachinePage /> },
   { path: "/MapPage", element: <MapPage /> },
   { path: "/MaterialPage/Material/:id", element: <MaterialDetailPage /> },
@@ -75,9 +82,9 @@ const routes: Array<{
   { path: "/TutorialPage", element: <TutorialPage /> },
   { path: "/UserProfilePage", element: <UserProfilePage />, protected: true },
   { path: "/BlogDashboard", element: <BlogDashboard /> },
-  { path: "/create-post", element: <CreatePost />},
-  { path: "/edit-post/:id", element: <EditPost />},
-  { path: "/post/:id", element: <PostView />}
+  { path: "/create-post", element: <CreatePost /> },
+  { path: "/edit-post/:id", element: <EditPost /> },
+  { path: "/post/:id", element: <PostView /> },
 ];
 
 function App() {

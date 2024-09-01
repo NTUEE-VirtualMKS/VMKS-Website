@@ -1,3 +1,4 @@
+// TODO: parse the image and get the student ID from the image
 import { useTranslation } from "react-i18next";
 import {
   Dialog,

@@ -40,7 +40,48 @@ import {
   CHECK_SIGNUP_AUTH_CODE_QUERY,
 } from "@/graphql";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import { generateLoginInfo } from "@/lib/utils";
+import { cn, generateLoginInfo } from "@/lib/utils";
+import { validDepartmentCodes } from "@/constants";
+
+const studentIdSchema = z
+  .string()
+  .length(9, "Student ID must be 9 characters long")
+  .refine((studentId) => {
+    const lastThreeDigits = parseInt(studentId.substring(6, 9), 10);
+    return (
+      validDepartmentCodes.has(studentId[0].toUpperCase()) &&
+      /^\d{2}$/.test(studentId.substring(1, 3)) &&
+      /^\d$/.test(studentId[3]) &&
+      /^\d{2}$/.test(studentId.substring(4, 6)) &&
+      lastThreeDigits >= 1 &&
+      lastThreeDigits <= 200
+    );
+  }, "Invalid student ID format");
+
+const signupSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(15, "Name is too long, max 15 characters"),
+  studentId: studentIdSchema,
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .refine((password) => {
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasNumbers = /[0-9]/.test(password);
+      const hasSymbols = /[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]/.test(password);
+
+      const typesCount = [
+        hasUpperCase,
+        hasLowerCase,
+        hasNumbers,
+        hasSymbols,
+      ].filter(Boolean).length;
+      return typesCount >= 3;
+    }, "Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and symbols"),
+});
 
 const FormSchema = z.object({
   signupAuthCode: z.string().min(6, {
@@ -89,30 +130,48 @@ function LoginPage() {
           variant: "destructive",
         });
       } else {
-        const { browserName, osName, time, timeZoneShort, date } =
-          generateLoginInfo();
-        await addSignupAuthCode({
-          variables: {
-            signupAuthCodeInput: {
-              studentID: studentId.toUpperCase(),
-              browser: browserName,
-              os: osName,
-              time,
-              timeZone: timeZoneShort,
-              date,
+        try {
+          signupSchema.parse({ name, studentId, password });
+          const { browserName, osName, time, timeZoneShort, date } =
+            generateLoginInfo();
+          await addSignupAuthCode({
+            variables: {
+              signupAuthCodeInput: {
+                studentID: studentId.toUpperCase(),
+                browser: browserName,
+                os: osName,
+                time,
+                timeZone: timeZoneShort,
+                date,
+              },
             },
-          },
-        });
-        if (loading) return <LoaderSpinner />;
-        if (error) {
-          toast({
-            title: "Error",
-            description: `${error}`.split(":")[1],
-            variant: "destructive",
           });
-        } else {
-          setEnterSignupAuthCode(true);
-          toast({ title: "Auth code sent to your school email." });
+          if (loading) return <LoaderSpinner />;
+          if (error) {
+            toast({
+              title: "Error",
+              description: `${error}`.split(":")[1],
+              variant: "destructive",
+            });
+          } else {
+            setEnterSignupAuthCode(true);
+            toast({ title: "Auth code sent to your school email." });
+          }
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            const errorMessage = error.errors.map((e) => e.message).join(". ");
+            toast({
+              title: "Invalid format",
+              description: errorMessage,
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Error",
+              description: `${error}`.split(":")[1],
+              variant: "destructive",
+            });
+          }
         }
       }
     }
@@ -156,13 +215,16 @@ function LoginPage() {
   return !enterSignupAuthCode ? (
     <form
       onSubmit={onSubmit}
-      className="w-10/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto mt-12 rounded-lg"
+      className={cn(
+        "w-10/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto rounded-lg",
+        signupMode ? "mt-1.5" : "mt-20"
+      )}
     >
       <Tabs
         value={signupMode ? "signup" : "login"}
         className="text-black bg-white dark:text-white dark:bg-black rounded-lg"
       >
-        <TabsList className="grid grid-cols-2 rounded-t-md p-1 ">
+        <TabsList className="grid grid-cols-2 rounded-t-md p-1">
           <TabsTrigger
             asChild
             key="Login"
@@ -247,22 +309,34 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {!signupMode && (
+                <p className="text-[#71788B] text-sm">
+                  {"Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and special characters. " +
+                    "~`!@#$%^&*()_-+={}[]|\\:;\"'<>,.?/"}
+                </p>
+              )}
             </div>
             {signupMode && (
-              <div className="flex flex-col gap-1">
-                <Label htmlFor="confirm-password" className="dark:text-white">
-                  {t("confirmPassword")}
-                </Label>
-                <PasswordInput
-                  id="confirm-password"
-                  className="input-class"
-                  name="confirm-password"
-                  placeholder={t("confirmPassword")}
-                  required={signupMode}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
+              <>
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="confirm-password" className="dark:text-white">
+                    {t("confirmPassword")}
+                  </Label>
+                  <PasswordInput
+                    id="confirm-password"
+                    className="input-class"
+                    name="confirm-password"
+                    placeholder={t("confirmPassword")}
+                    required={signupMode}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <p className="text-[#71788B] text-sm">
+                  {"Password must contain at least three of the following: uppercase letters, lowercase letters, numbers, and special characters. " +
+                    "~`!@#$%^&*()_-+={}[]|\\:;\"'<>,.?/"}
+                </p>
+              </>
             )}
           </div>
         </CardContent>
@@ -314,7 +388,7 @@ function LoginPage() {
     </form>
   ) : (
     <div className="w-[23rem] mx-auto mt-32 rounded-lg ">
-      <Card className="w-sm bg-black border border-[#444444] p-6">
+      <Card className="w-sm dark:bg-black border dark:border-[#444444] p-6">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSignupAuthCodeSubmit)}
@@ -325,7 +399,7 @@ function LoginPage() {
               name="signupAuthCode"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-center gap-5">
-                  <FormLabel className="text-white text-5xl flex flex-row items-center gap-2">
+                  <FormLabel className="dark:text-white text-5xl flex flex-row items-center gap-2">
                     {showMailOpen ? <MailOpen size={42} /> : <Mail size={42} />}
                     Auth Code
                   </FormLabel>
@@ -370,7 +444,7 @@ function LoginPage() {
             <div className="flex flex-row-reverse">
               <Button
                 type="submit"
-                className="text-white border border-white transform active:scale-90 transition-transform duration-200"
+                className="bg-black hover:bg-black text-white border border-white transform active:scale-90 transition-transform duration-200"
               >
                 Submit
               </Button>

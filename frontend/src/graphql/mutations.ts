@@ -250,30 +250,24 @@ const ADD_THREE_DP_MUTATION = gql(`
     AddThreeDP(threeDPInput: $threeDpInput) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
       broken
     }
-  }
-`);
+}`);
 
 const DELETE_THREE_DP_MUTATION = gql(`
   mutation DeleteThreeDP($deleteThreeDpId: String!) {
     DeleteThreeDP(id: $deleteThreeDpId) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
     }
   }
@@ -284,18 +278,54 @@ const EDIT_THREE_DP_MUTATION = gql(`
     EditThreeDP(id: $editThreeDpId, threeDPInput: $threeDpInput) {
       id
       name
-      category
       position
       description
       photoLink
-      usage
       tutorialLink
-      waitingId
+      threeDPRequestIds
       broken
     }
   }
 `);
+//ThreeDPRequest
+const ADD_THREE_DP_REQUEST_MUTATION = gql(`
+  mutation AddThreeDPRequest($threeDpRequestInput: ThreeDPRequestInput!) {
+    AddThreeDPRequest(threeDPRequestInput: $threeDpRequestInput) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  }
+`);
 
+const DELETE_THREE_DP_REQUEST_MUTATION = gql(`
+  mutation DeleteThreeDPRequest($deleteThreeDpRequestId: String!) {
+    DeleteThreeDPRequest(id: $deleteThreeDpRequestId) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  } 
+`);
+
+const EDIT_THREE_DP_REQUEST_STATUS_MUTATION = gql(`
+  mutation EditThreeDPRequestStatus($editThreeDpRequestStatusId: String!, $status: String!) {
+    EditThreeDPRequestStatus(id: $editThreeDpRequestStatusId, status: $status) {
+      id
+      name
+      studentID
+      userId
+      threeDPId
+      status
+    }
+  } 
+`);
 //Tool
 const ADD_TOOL_MUTATION = gql(`
   mutation AddTool($toolInput: ToolInput!) {
@@ -906,6 +936,9 @@ export {
   ADD_THREE_DP_MUTATION,
   DELETE_THREE_DP_MUTATION,
   EDIT_THREE_DP_MUTATION,
+  ADD_THREE_DP_REQUEST_MUTATION,
+  DELETE_THREE_DP_REQUEST_MUTATION,
+  EDIT_THREE_DP_REQUEST_STATUS_MUTATION,
   ADD_TOOL_MUTATION,
   DELETE_TOOL_MUTATION,
   EDIT_TOOL_MUTATION,

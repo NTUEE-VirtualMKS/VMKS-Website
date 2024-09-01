@@ -10,7 +10,7 @@ const Query = {
   // Announcement
   GetAllAnnouncements: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -69,7 +69,7 @@ const Query = {
   // Tool
   GetAllTools: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -202,7 +202,7 @@ const Query = {
   // DisposableMaterial
   GetAllDisposableMaterials: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -345,6 +345,17 @@ const Query = {
     };
   },
 
+  GetMachineById: async (_parents, args: { id: string }, _contexts) => {
+    const id = args.id;
+    const machine = await prisma.machine.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!machine) throw new Error("Machine not found!");
+    return machine;
+  },
+
   SearchMachineByCategory: async (
     _parents,
     args: {
@@ -427,7 +438,7 @@ const Query = {
   // Material
   GetAllMaterials: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -551,15 +562,12 @@ const Query = {
   // ThreeDP
   GetAllThreeDPs: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
     const allThreeDPs = await prisma.threeDP.findMany({
       orderBy: [
-        {
-          usage: "desc",
-        },
         {
           id: "desc",
         },
@@ -578,33 +586,44 @@ const Query = {
     };
   },
 
-  SearchThreeDPByCategory: async (
-    _parents,
-    args: {
-      category: string;
-    },
-    _contexts,
-  ) => {
-    const { category } = args;
-    const searchThreeDPByCategory = await prisma.threeDP.findMany({
+  GetThreeDPById: async (_parents, args: { id: string }, _contexts) => {
+    const id = args.id;
+    const threeDP = await prisma.threeDP.findUnique({
       where: {
-        category: {
-          contains: category,
-          mode: "insensitive",
-        },
+        id: id,
       },
-      orderBy: [
-        {
-          usage: "desc",
-        },
-        {
-          id: "desc",
-        },
-      ],
     });
-
-    return searchThreeDPByCategory;
+    if (!threeDP) throw new Error("Material not found!");
+    return threeDP;
   },
+
+  // SearchThreeDPByCategory: async (
+  //   _parents,
+  //   args: {
+  //     category: string;
+  //   },
+  //   _contexts,
+  // ) => {
+  //   const { category } = args;
+  //   const searchThreeDPByCategory = await prisma.threeDP.findMany({
+  //     where: {
+  //       category: {
+  //         contains: category,
+  //         mode: "insensitive",
+  //       },
+  //     },
+  //     orderBy: [
+  //       {
+  //         usage: "desc",
+  //       },
+  //       {
+  //         id: "desc",
+  //       },
+  //     ],
+  //   });
+
+  //   return searchThreeDPByCategory;
+  // },
 
   SearchThreeDPByPosition: async (
     _parents,
@@ -623,9 +642,6 @@ const Query = {
       },
       orderBy: [
         {
-          usage: "desc",
-        },
-        {
           id: "desc",
         },
       ],
@@ -633,11 +649,69 @@ const Query = {
 
     return searchThreeDPByPosition;
   },
+  //ThreeDPRequest
+  GetAllThreeDPRequests: async () => {
+    const allThreeDPRequests = await prisma.threeDPRequest.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
 
+    return allThreeDPRequests;
+  },
+
+  GetThreeDPRequestsByThreeDPId: async (
+    _parents,
+    args: { threeDPId: string },
+    _contexts,
+  ) => {
+    const threeDPId = args.threeDPId;
+    const threeDP = await prisma.threeDP.findUnique({
+      where: {
+        id: threeDPId,
+      },
+    });
+
+    if (!threeDP) throw new Error("User not found");
+
+    const threeDPRequest = await prisma.threeDPRequest.findMany({
+      where: {
+        threeDPId: threeDPId,
+      },
+    });
+    if (!threeDPRequest) throw new Error("threeDP request not found!");
+    return threeDPRequest;
+  },
+
+  GetThreeDPRequestsByUserId: async (
+    _parents,
+    args: { userId: string },
+    _contexts,
+  ) => {
+    const userId = args.userId;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    const threeDPRequests = await prisma.threeDPRequest.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    return threeDPRequests;
+  },
   // User
   GetAllUsers: async (
     _parents,
-    args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
+    args: { cursor?: string; limit?: number },
     _contexts,
   ) => {
     const { cursor, limit = 12 } = args;
@@ -663,9 +737,7 @@ const Query = {
     return {
       users: allUsers,
       cursor:
-        allUsers.length === limit
-          ? allUsers[allUsers.length - 1].id
-          : null,
+        allUsers.length === limit ? allUsers[allUsers.length - 1].id : null,
     };
   },
 
@@ -716,55 +788,20 @@ const Query = {
     return user;
   },
 
-  // // Article
-  // GetAllArticles: async (
-  //   _parents,
-  //   args: { cursor?: string; limit?: number }, // TODO: cursor?: number -> cursor?: string, because uuid()
-  //   _contexts,
-  // ) => {
-  //   const { cursor, limit = 12 } = args;
-  //   const allArticles = await prisma.article.findMany({
-  //     orderBy: {
-  //       id: "desc",
-  //     },
-  //     take: limit,
-  //     cursor: cursor ? { id: cursor } : undefined,
-  //     skip: cursor ? 1 : 0, // Skip the cursor itself if provided
-  //   });
-
-  //   return {
-  //     articles: allArticles,
-  //     cursor:
-  //       allArticles.length === limit
-  //         ? allArticles[allArticles.length - 1].id
-  //         : null,
-  //   };
-  // },
-
-  // GetArticleById: async (_parents, args: { id: string }, _contexts) => {
-  //   const id = args.id;
-  //   const article = await prisma.article.findUnique({
-  //     where: {
-  //       id: id,
-  //     },
-  //   });
-  //   if (!article) throw new Error("Article not found!");
-  //   return article;
-  // },
-
   GetAllArticles: async (_, args: { cursor?: string; limit?: number }) => {
     const { cursor, limit = 10 } = args;
     const articles = await prisma.article.findMany({
       take: limit,
       skip: cursor ? 1 : 0,
       cursor: cursor ? { id: cursor } : undefined,
-      orderBy: { time: 'desc' },
+      orderBy: { time: "desc" },
       include: { writer: true },
     });
 
     return {
       articles,
-      cursor: articles.length === limit ? articles[articles.length - 1].id : null,
+      cursor:
+        articles.length === limit ? articles[articles.length - 1].id : null,
     };
   },
 
@@ -785,7 +822,7 @@ const Query = {
   },
 
   // LogIn
-  LogIn: async (_parents, args: { logInInput: LogInInput }, _context) => {
+  LogIn: async (_parents, args: { logInInput: LogInInput }, _contexts) => {
     const { studentID, password, browser, os, time, timeZone, date, redirect } =
       args.logInInput;
 
@@ -1402,7 +1439,7 @@ const Query = {
       },
     });
 
-    if (!signupAuthCode) throw new Error("Invalid code");
+    if (!signupAuthCode) throw new Error("Invalid auth code");
     return true;
   },
 };
