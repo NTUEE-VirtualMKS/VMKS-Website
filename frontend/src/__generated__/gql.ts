@@ -117,6 +117,9 @@ const documents = {
     "\n  query GetSignupAuthCodeByStudentID($studentId: String!) {\n    GetSignupAuthCodeByStudentID(studentID: $studentId) {\n      studentID\n      code\n    }\n  }\n": types.GetSignupAuthCodeByStudentIdDocument,
     "\n  query Query($studentId: String!, $code: String!) {\n    CheckSignupAuthCode(studentID: $studentId, code: $code)\n  }\n": types.QueryDocument,
     "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n": types.AnnouncementCreatedDocument,
+    "\n  subscription ArticleCreated {\n    ArticleCreated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n": types.ArticleCreatedDocument,
+    "\n  subscription ArticleUpdated {\n    ArticleUpdated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n": types.ArticleUpdatedDocument,
+    "\n  subscription ArticleDeleted {\n    ArticleDeleted {\n      id\n    }\n  }\n": types.ArticleDeletedDocument,
 };
 
 /**
@@ -549,6 +552,18 @@ export function gql(source: "\n  query Query($studentId: String!, $code: String!
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  subscription AnnouncementCreated {\n    AnnouncementCreated {\n      id\n      date\n      title\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription ArticleCreated {\n    ArticleCreated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n"): (typeof documents)["\n  subscription ArticleCreated {\n    ArticleCreated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription ArticleUpdated {\n    ArticleUpdated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n"): (typeof documents)["\n  subscription ArticleUpdated {\n    ArticleUpdated {\n      id\n      title\n      description\n      content\n      writerId\n      time\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  subscription ArticleDeleted {\n    ArticleDeleted {\n      id\n    }\n  }\n"): (typeof documents)["\n  subscription ArticleDeleted {\n    ArticleDeleted {\n      id\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

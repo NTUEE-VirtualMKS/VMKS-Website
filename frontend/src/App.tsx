@@ -32,7 +32,8 @@ import {
   MachinePage,
   BlogDashboard,
   CreatePost,
-  EditPost
+  EditPost,
+  PostView
 } from "@/containers";
 
 const routes: Array<{
@@ -75,7 +76,8 @@ const routes: Array<{
   { path: "/UserProfilePage", element: <UserProfilePage />, protected: true },
   { path: "/BlogDashboard", element: <BlogDashboard /> },
   { path: "/create-post", element: <CreatePost />},
-  { path: "/edit-post/:id", element: <EditPost />}
+  { path: "/edit-post/:id", element: <EditPost />},
+  { path: "/post/:id", element: <PostView />}
 ];
 
 function App() {
