@@ -788,39 +788,29 @@ const Query = {
     return user;
   },
 
-  // Article
-  GetAllArticles: async (
-    _parents,
-    args: { cursor?: string; limit?: number },
-    _contexts,
-  ) => {
-    const { cursor, limit = 12 } = args;
-    const allArticles = await prisma.article.findMany({
-      orderBy: {
-        id: "desc",
-      },
+  GetAllArticles: async (_, args: { cursor?: string; limit?: number }) => {
+    const { cursor, limit = 10 } = args;
+    const articles = await prisma.article.findMany({
       take: limit,
+      skip: cursor ? 1 : 0,
       cursor: cursor ? { id: cursor } : undefined,
-      skip: cursor ? 1 : 0, // Skip the cursor itself if provided
+      orderBy: { time: "desc" },
+      include: { writer: true },
     });
 
     return {
-      articles: allArticles,
+      articles,
       cursor:
-        allArticles.length === limit
-          ? allArticles[allArticles.length - 1].id
-          : null,
+        articles.length === limit ? articles[articles.length - 1].id : null,
     };
   },
 
-  GetArticleById: async (_parents, args: { id: string }, _contexts) => {
-    const id = args.id;
+  GetArticleById: async (_, args: { id: string }) => {
     const article = await prisma.article.findUnique({
-      where: {
-        id: id,
-      },
+      where: { id: args.id },
+      include: { writer: true },
     });
-    if (!article) throw new Error("Article not found!");
+    if (!article) throw new Error("Article not found");
     return article;
   },
 

@@ -156,6 +156,22 @@ const GET_ALL_ARTICLES_QUERY = gql(`
   }
 `);
 
+const GET_ARTICLE_BY_ID_QUERY = gql(`
+  query GetArticleById($getArticleByIdId: String!) {
+  GetArticleById(id: $getArticleByIdId) {
+    id
+    writerId
+    description
+    imageURL
+    time
+    title
+    headline
+    content
+    userpic
+  }
+}
+`);
+
 const GET_ALL_DISPOSIABLE_MATERIALS_QUERY = gql(`
   query GetAllDisposableMaterials($cursor: String, $limit: Int) {
     GetAllDisposableMaterials(cursor: $cursor, limit: $limit) {
@@ -995,6 +1011,7 @@ export {
   SEARCH_TOOL_BY_POSITION_QUERY,
   // Article
   GET_ALL_ARTICLES_QUERY,
+  GET_ARTICLE_BY_ID_QUERY,
   // DisposableMaterial
   GET_ALL_DISPOSIABLE_MATERIALS_QUERY,
   SEARCH_DISPOSIABLE_MATERIAL_BY_CATEGORY_QUERY,

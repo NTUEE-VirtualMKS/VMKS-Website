@@ -288,7 +288,7 @@ const typeDefs = `#graphql
     isAdmin: Boolean!
     isMinister: Boolean!
   }
-  
+
   input SignupAuthCodeInput {
     studentID: String!
     browser: String!
@@ -520,7 +520,7 @@ const typeDefs = `#graphql
     GetThreeDPRequestsByThreeDPId(threeDPId: String!): [ThreeDPRequest]
     GetThreeDPRequestsByUserId(userId: String!): [ThreeDPRequest]
     # Article
-    GetAllArticles(cursor: String, limit: Int): GetAllArticles 
+    GetAllArticles(cursor: String, limit: Int): GetAllArticles
     GetArticleById(id: String!): Article
     # AuthorizedCode
     GetAuthorizedCode: AuthorizedCode
@@ -589,6 +589,8 @@ const typeDefs = `#graphql
     DemoteUser(id: String!, demoteUserInput: DemoteUserInput!): User
     UserMachineUsageUpdate(id: String!, userMachineUpdateInput: UserMachineUpdateInput!): User
     AddArticle(articleInput: ArticleInput!): Article
+    UpdateArticle(id: String!, articleInput: ArticleInput!): Article
+    DeleteArticle(id: String!): Article
     UpdateAuthorizedCode(authorizedCodeInput: AuthorizedCodeInput!): AuthorizedCode
     SignUp(signUpInput: SignUpInput!): SignUpRet
     AddSignupAuthCode(signupAuthCodeInput: SignupAuthCodeInput!): SignupAuthCode
@@ -634,6 +636,8 @@ const typeDefs = `#graphql
     UserUpdated: User
     UserMachineUpdate: User
     ArticleCreated: Article
+    ArticleUpdated: Article
+    ArticleDeleted: Article
     UserSignedUp: User
     UserLoggedIn: User
   }

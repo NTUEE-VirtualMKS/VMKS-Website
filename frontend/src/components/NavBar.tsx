@@ -97,7 +97,7 @@ function NavBar() {
             ariaLabel={t("map")}
           />
           <IconButton
-            onClick={() => navigate("/advanced/forum")}
+            onClick={() => navigate("/BlogDashboard")}
             Icon={NotebookPen}
             ariaLabel={t("forum")}
           />

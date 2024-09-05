@@ -70,6 +70,12 @@ const Subscription = {
   ArticleCreated: {
     subscribe: () => pubsub.asyncIterator(["ARTICLE_CREATED"]),
   },
+  ArticleUpdated: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_UPDATED"]),
+  },
+  ArticleDeleted: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_DELETED"]),
+  },
   UserSignedUp: {
     subscribe: () => pubsub.asyncIterator(["USER_SIGNEDUP"]),
   },

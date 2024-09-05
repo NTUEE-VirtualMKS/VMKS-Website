@@ -21,3 +21,8 @@ export * from "./ToolDetailPage";
 export * from "./ToolPage";
 export * from "./TutorialPage";
 export * from "./UserProfilePage";
+export * from "./BlogDashboard";
+export * from "./CreatePost";
+export * from "./EditPost";
+export * from "./PostView";
+
