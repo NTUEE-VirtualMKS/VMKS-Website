@@ -23,7 +23,7 @@ function HomePageForum() {
         </div>
         <button
           className="self-end mt-9 text-sm text-right dark:text-white text-opacity-50 transform active:scale-90 transition-transform duration-200 font-semibold"
-          onClick={() => navigate("/advanced/forum")}
+          onClick={() => navigate("/")}
         >
           {t("seeAll")}
         </button>

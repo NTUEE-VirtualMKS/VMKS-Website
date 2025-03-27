@@ -4,7 +4,6 @@ import {
   Bell,
   Info,
   Globe,
-  NotebookPen,
   KeyRound,
   Database,
   Sun,
@@ -95,11 +94,6 @@ function NavBar() {
             onClick={() => navigate("/MapPage")}
             Icon={Globe}
             ariaLabel={t("map")}
-          />
-          <IconButton
-            onClick={() => navigate("/BlogDashboard")}
-            Icon={NotebookPen}
-            ariaLabel={t("forum")}
           />
           <IconButton
             onClick={() => navigate("/TutorialPage")}

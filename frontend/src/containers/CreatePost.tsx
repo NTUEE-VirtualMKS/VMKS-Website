@@ -7,7 +7,7 @@ import {
 import {
   GET_ALL_USERS_QUERY,
   GET_ARTICLE_BY_ID_QUERY,
-  GET_USER_BY_STUDENT_ID_QUERY,
+  // GET_USER_BY_STUDENT_ID_QUERY,
 } from "../graphql/queries";
 import { useParams, useNavigate } from "react-router-dom";
 import { ApolloError } from "@apollo/client";
