@@ -75,7 +75,6 @@ const DELETE_ARTICLE_MUTATION = gql(`
   }
 `);
 
-
 // DisposableMaterial
 const ADD_DISPOSABLE_MATERIAL_MUTATION = gql(`
   mutation AddDisposableMaterial($disposableMaterialInput: DisposableMaterialInput!) {

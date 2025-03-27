@@ -1252,7 +1252,15 @@ const Mutation = {
   },
 
   AddArticle: async (_, args: { articleInput: ArticleInput }) => {
-    const { writerId, description, imageURL, title, headline, content, userpic } = args.articleInput;
+    const {
+      writerId,
+      description,
+      imageURL,
+      title,
+      headline,
+      content,
+      userpic,
+    } = args.articleInput;
 
     const writer = await prisma.user.findUnique({ where: { id: writerId } });
     if (!writer) throw new Error("Writer not found");
@@ -1286,7 +1294,15 @@ const Mutation = {
     _contexts,
   ) => {
     const { id, articleInput } = args;
-    const { writerId, description, imageURL, title, headline, content, userpic } = articleInput;
+    const {
+      writerId,
+      description,
+      imageURL,
+      title,
+      headline,
+      content,
+      userpic,
+    } = articleInput;
 
     // Check if the article exists
     const existingArticle = await prisma.article.findUnique({

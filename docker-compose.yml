@@ -1,5 +1,4 @@
-# version: '3.3'
-services :
+services:
   db:
     image: postgres
     ports:
@@ -8,10 +7,3 @@ services :
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: VMKS
-  admin:
-    image: adminer
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - "8010:8080"

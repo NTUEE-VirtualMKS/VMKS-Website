@@ -9,7 +9,8 @@
   "scripts": {
     "install:all": "pnpm install && cd frontend && pnpm install && cd ../backend && pnpm install",
     "frontend": "cd frontend && pnpm dev",
-    "backend": "cd backend && pnpm start"
+    "backend": "cd backend && pnpm start",
+    "format": "cd frontend && pnpm format && cd ../backend && pnpm format"
   },
   "dependencies": {
     "dotenv": "^16.4.1",

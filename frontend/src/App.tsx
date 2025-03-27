@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
-import Advanced from "@/Advanced";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import NetworkStatus from "./components/NetworkStatus";
 import useNetworkStatus from "./hooks/useNetworkStatus";

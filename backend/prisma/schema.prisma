@@ -1,7 +1,6 @@
 // TODO: create new models for "notification" and "rate limit"
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["omitApi"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
