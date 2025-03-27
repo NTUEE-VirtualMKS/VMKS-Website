@@ -1,97 +1,118 @@
 <h1 align="center">Virtual Makerspace</h1>
 
-<p align="center">
-    <img src="https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png" alt="Logo" width="150" height="150">
-</p>
+<div align="center">
+    <img src="https://user-images.githubusercontent.com/90591931/262723964-96c0b3ac-ffa2-46cb-967f-b19286ca6dfe.png" alt="Virtual Makerspace Logo" width="150" height="150">
+</div>
 
-## Development
-### Step 1 : Use Specific NodeJS Version
-This can switch NodeJS version to v20.10.0(You should first have NodeJS v20.10.0 installed)
+## 🚀 Project Overview
+
+Virtual Makerspace is a collaborative platform designed to facilitate remote making and creativity. This README provides step-by-step instructions to set up and run the project locally.
+
+## 📋 Prerequisites
+
+- Node.js v20.10.0
+- pnpm
+- Docker (for database)
+
+## 🛠 Development Setup
+
+### 1. Node.js Version Management
+
+Ensure you're using the correct Node.js version:
 
 ```sh
 nvm use
 ```
 
-### Step 2 : Install the dependencies
+### 2. Install Dependencies
 
-This will install all dependencies for the app
+Install all project dependencies:
 
 ```sh
-# VMKS-Website
+# From project root
 pnpm install:all
 ```
 
-## Run Backend
+## 🗃 Backend Setup
 
-### Step 1 : Start database
+### 1. Start Database Services
 
-This will have postgres and adminer running for the backend
+Launch PostgreSQL and Adminer using Docker:
 
 ```sh
-# VMKS-Website
+# From project root
 docker-compose up -d
 ```
 
-### Step 2 : Install dotenv
+### 2. Initialize Prisma
+
+Generate and apply database migrations:
 
 ```sh
-# VMKS-Website/backend
-pnpm install -g dotenv-cli
-```
-
-### Step 3 : Run Prisma
-
-```sh
-# VMKS-Website/backend
+# From backend directory
 pnpm generate
 pnpm migrate
 ```
 
-### Step 4 : Start Apollo Server(backend)
+### 3. Start Apollo Server
+
+Run the backend server:
 
 ```sh
-# VMKS-Website
-pnpm backend
+# From project root
+pnpm backend  # Runs Apollo Sandbox at port 5000
 ```
 
-This will run apollo graphql playground at port 5000
-
-you can then use adminer at port 8080, or run
+Alternatively, open Prisma Studio:
 
 ```sh
-# VMKS-Website/backend
+# From backend directory
 pnpm studio
 ```
 
-to open up prisma studio to check whether the data is properly saved
+### 4. Initialize Database Data
 
-### Step 5 : Initialize Database (user and schedule)
+Populate the database with default user and schedule data:
 
 ```sh
-# VMKS-Website/backend
+# From backend directory
 pnpm initData
 ```
 
-This will add default data to the database
+## 🖥 Frontend Setup
 
-### Problems may occur
-
-kill the port being stucked : `sudo kill -9 $(sudo lsof -t -i:port)`. If you want to kill port 8080, type : `sudo kill -9 $(sudo lsof -t -i:8080)`
-
-## Run Frontend(Backend should run first)
-
-### Step 1 : Update GraphQL Code Generator
+### 1. Update GraphQL Code Generator
 
 ```sh
-# VMKS-Website/frontend
+# From frontend directory
 pnpm codegen
 ```
 
-### Step 2 : Start React app(frontend)
+### 2. Start React Application
 
 ```sh
-# VMKS-Website
-pnpm frontend
+# From project root
+pnpm frontend  # Runs React app at port 5173
 ```
 
-This will run react app at port 3000
+## 🛠 Troubleshooting
+
+### Killing Stuck Ports
+
+To release a port (replace `8080` with your specific port):
+
+```sh
+sudo kill -9 $(sudo lsof -t -i:8080)
+```
+
+## 📚 Additional Resources
+
+- [Apollo Sandbox Documentation](https://www.apollographql.com/docs/graphos/explorer/sandbox/)
+- [Prisma ORM Documentation](https://www.prisma.io/docs/)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [Vite Documentation](https://vitejs.dev/guide/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+## 🤝 Contributors
+
+[![contributors](https://contrib.rocks/image?repo=NTUEE-VirtualMKS/VMKS-Website)](https://github.com/NTUEE-VirtualMKS/VMKS-Website/graphs/contributors)
