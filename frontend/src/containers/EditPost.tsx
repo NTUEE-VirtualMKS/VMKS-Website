@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   ADD_ARTICLE_MUTATION,

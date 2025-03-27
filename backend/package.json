@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "setup": "install -g dotenv-cli",
     "generate": "npx prisma generate",
-    "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
-    "studio": "dotenv -e .env -- npx prisma studio",
-    "start": "dotenv -e .env -- npx tsx ./src/index.ts",
-    "initData": "cd utils && dotenv -e ../.env -- npx tsx ./initDB.ts",
+    "migrate": "npx prisma migrate dev --name init",
+    "studio": "npx prisma studio",
+    "start": "npx tsx ./src/index.ts",
+    "initData": "cd utils && npx tsx ./initDB.ts",
     "format": "pnpm exec prettier . --write",
     "lint": "pnpm eslint ."
   },

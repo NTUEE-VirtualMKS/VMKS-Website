@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config({ path: "./.env" });
-
 type envSchema = {
   DATABASE_URL: string;
   JWT_SECRET: string;
